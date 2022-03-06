@@ -65,21 +65,6 @@ return(
 
 }
 
-const DrawerNavigator = () => {
-  return (
-
-    <Drawer.Navigator initialRouteName='Medicines' drawerContent={(props)=><CustomHeader {...props}></CustomHeader>}>
-    <Drawer.Screen name='Medicines' component={CareTaker} 
-                   options={{title:'Medicines'
-                   ,headerShown:true
-                   ,drawerIcon:()=>(<Icon name="medkit" android='md-medkit'></Icon>)}}/>
-    <Drawer.Screen name='Patient' component={Patientcomp} options={{title:'Patient'}}/>
-    <Drawer.Screen name='Caretaker' component={Caretakercomp} options={{title:'Caretaker'}}/>
-
-    </Drawer.Navigator>
-  )
-}
-
 const App = () => {
   const isDarkMode = useColorScheme() === 'dark';
 
