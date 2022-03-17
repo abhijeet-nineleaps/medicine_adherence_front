@@ -6,7 +6,7 @@ import {API_URL} from '@env'
 
 
 const Mypatient = ({navigation}) => {
-
+//
     const [data , datastate] = React.useState([])
     const [refresh , refeereshstate] = React.useState(false);
 
