@@ -1,0 +1,39 @@
+sudo docker run --network "host" -p 800:8080 user-service.jar
+
+sudo docker image ls
+
+sudo docker build -t user-service.jar .
+
+npx react-native run-android
+
+ {
+                addcaretaker && <Dialog.Container visible={true} onBackdropPress={() => addcaretakerstate(false)}>
+                    <Dialog.Title>Enter caretaker mail</Dialog.Title>
+                    <Dialog.Input label="Enail" onChangeText={Mailchanged}></Dialog.Input>
+                    <Dialog.Button label="Send Request" style={{ color: 'red' }} onPress={sendmailtouser}></Dialog.Button>
+                </Dialog.Container>
+
+            }
+
+
+              <Button title="Add caretaker"
+                onPress={() => addcaretakerstate(true)}
+
+                style={{
+                    backgroundColor: 'black',
+                    borderWidth: 2,
+                    position: 'absolute',
+                    bottom: 10,
+                    right: 10,
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    elevation: 8,
+                    borderColor: 'white',
+                    borderRadius: 30,
+                }}
+                containerStyle={{
+                    width: 200,
+                    marginHorizontal: 50,
+                    marginVertical: 10,
+                }}
+                titleStyle={{ fontWeight: 'bold' }}></Button>

@@ -6,100 +6,64 @@
  * @flow strict-local
  */
 
-import React from 'react';
-import {
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  useColorScheme,
-  View,Image
-} from 'react-native';
+import React, { useEffect, useState } from 'react';
 
-import {
-  Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
+import { NavigationContainer, useFocusEffect } from '@react-navigation/native';
 
-import { NavigationContainer } from '@react-navigation/native';
-import { createDrawerNavigator, DrawerContentScrollView, DrawerItemList} from '@react-navigation/drawer';
-import CareTaker from './src/Caretaker';
-import  Patientcomp  from './src/Patient';
-import Caretakercomp from './src/caretaker/Caretakercomp';
-import Icon from 'react-native-ionicons';
+import Profile from './src/profile/Profile';
+import { createStackNavigator } from '@react-navigation/stack';
+import UserMed from './src/UserMed';
+import Login from './src/login/Googleoauth';
+import { GoogleSignin } from '@react-native-google-signin/google-signin';
+import Reminder from './src/alarm/Reminder';
+import Searchcaretaker from './src/caretaker/Searchcaretaker';
+import ViewPatient from './src/patient/ViewPatientdata';
+import Addevent from './src/alarm/Addevents';
+import Pushnotification from './src/alarm/Pushnotificationconfig';
+import Loginscreen from './src/login/Loginscreen';
+import ProfileHeader from './src/ui/Header';
+import DrawerNavigator from './src/ui/DrawerNavigator';
+import HomeScreen from './src/screens/Homescreen';
+import OnboardingScreen from './src/screens/Onboarding';
 
-const Drawer = createDrawerNavigator();
 
-const CustomHeader = (props) => {
-  
-return(
-  <DrawerContentScrollView>
-  <View
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            padding: 20,
-            backgroundColor: '#f6f6f6',
-            marginBottom: 20,
-          }}
-        >
-          <View>
-            <Text>John Doe</Text>
-            <Text>example@email.com</Text>
-          </View>
-          <Image
-            source={{
-              uri: 'https://images.unsplash.com/photo-1624243225303-261cc3cd2fbc?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=80',
-            }}
-            style={{ width: 60, height: 60, borderRadius: 30 }}
-          />
-        </View>
-    <DrawerItemList {...props}></DrawerItemList>
-  </DrawerContentScrollView>
-)
+const Stack = createStackNavigator();
+
+
+const Gettoprofile = ({ navigation }) => {
+
+  navigation.getParent().navigate('Profile')
+
+  return (
+    <></>
+  )
 
 }
 
 const App = () => {
-  const isDarkMode = useColorScheme() === 'dark';
 
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-  };
 
   return (
-    
+
     <NavigationContainer>
-      
-     <DrawerNavigator></DrawerNavigator>
+      <Stack.Navigator>
+      <Stack.Screen name='Welcome' options={{headerShown:false}} component={OnboardingScreen}></Stack.Screen>
+        <Stack.Screen name='Drawer' options={{ headerShown: false }} component={DrawerNavigator}></Stack.Screen>
+        <Stack.Screen name='UserMeds' options={{ headerShown: true }} component={UserMed}></Stack.Screen>
+        <Stack.Screen name='Login' component={Login}></Stack.Screen>
+        <Stack.Screen name='Profile' component={Profile}></Stack.Screen>
+        <Stack.Screen name='Searchcaretaker' component={Searchcaretaker}></Stack.Screen>
+        <Stack.Screen name='Viewpatient' component={ViewPatient}></Stack.Screen>
+        <Stack.Screen name='Add Reminder' component={Reminder}></Stack.Screen>
+        <Stack.Screen name='Events' component={Addevent}></Stack.Screen>
+        <Stack.Screen name='Loginscreen' component={Loginscreen}></Stack.Screen>
+      </Stack.Navigator>
+      {/* <DrawerNavigator></DrawerNavigator> */}
     </NavigationContainer>
 
 
-    );
+  );
 };
 
-const styles = StyleSheet.create({
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
-  },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-  },
-  highlight: {
-    fontWeight: '700',
-  },
-});
 
 export default App;

@@ -4,6 +4,8 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Home from "./Home";
 import Settings from "./Settings";
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import Mypatient from "./patient/Mypatients";
+import Patientrequest from "./patient/Patientrequest";
 
 
 const Tab = createBottomTabNavigator();
@@ -15,10 +17,17 @@ const Tab = createBottomTabNavigator();
 
  return (
 
-    <Tab.Navigator>
+    <Tab.Navigator screenOptions={({ route }) => ({
+      tabBarActiveTintColor: "#f5610a",
+      tabBarInactiveTintColor: "#555",
+      tabBarLabelStyle: {
+        fontSize: 16,
+      }})}
+    >
 
-      <Tab.Screen name="Home" component={Home} />
-      <Tab.Screen name="Settings" component={Settings} />
+      <Tab.Screen name="MyPatients"  component={Mypatient} options={{headerShown:false}}/>
+      <Tab.Screen name="Patients requests" component={Patientrequest} options={{headerShown:false}}/>
+
     </Tab.Navigator>
  )
 
