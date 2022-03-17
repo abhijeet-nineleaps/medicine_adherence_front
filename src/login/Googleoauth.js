@@ -16,7 +16,7 @@ const Login = ({ navigation }) => {
 
     React.useEffect(() => {
         GoogleSignin.configure({
-            webClientId: '526586885579-90t54t6rmkquqjct1819getnkstse41j.apps.googleusercontent.com'
+            webClientId: ''
         })
     })
     async function onGoogleButtonPress() {
