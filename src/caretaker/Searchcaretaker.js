@@ -1,6 +1,6 @@
 
 import React from "react";
-import { FlatList, ToastAndroid, View } from "react-native";
+import { FlatList, View } from "react-native";
 import { Avatar, Button, ListItem, SearchBar } from "react-native-elements";
 import {API_URL} from '@env'
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -104,6 +104,7 @@ navigation.pop(1);
 
     <View style={{margin:10,backgroundColor:'white',height:'100%'}}>
     <Toast></Toast>
+
     <SearchBar placeholder="Search Caretaker.." value={searchword} onChangeText={searchText} ></SearchBar>
     <Button loading={searchload} buttonStyle={{backgroundColor:'#3743ab'}} title="Search" onPress={()=>sendmailtouser()} containerStyle={{marginTop:10}}></Button>
     <FlatList data={data} renderItem={renderitem}></FlatList>
