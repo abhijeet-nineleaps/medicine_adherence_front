@@ -34,7 +34,7 @@ export const time_data = [{
 
 
 export const day_data = [{
-    name: 'days',
+    name: 'Days',
     id: 1,
     children: [
         { name: 'Monday', id: 'Mon' },

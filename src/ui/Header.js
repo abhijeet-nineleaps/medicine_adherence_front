@@ -8,6 +8,8 @@ import messaging from '@react-native-firebase/messaging';
 const ProfileHeader = () => {
 
     const [umg, imgstate] = React.useState('https://i.stack.imgur.com/l60Hf.png');
+    const [name , namestate] = React.useState('');
+
     useEffect(() => {
       messaging().onMessage(async mssg => {
   
@@ -42,6 +44,7 @@ const ProfileHeader = () => {
           const user = await GoogleSignin.getCurrentUser()
           // console.log(user);
           imgstate(user.user.photo)
+          namestate(user.user.name)
         } catch (err) {
   
         }
@@ -64,7 +67,7 @@ const ProfileHeader = () => {
   
       >
         <View>
-        <Text style={{color:'black',fontWeight:'bold'}}>Name</Text>
+        <Text style={{color:'black',fontWeight:'bold'}}>{name}</Text>
           <Text style={{ fontWeight: 'bold', color: '#2196f3' }}>{"View and edit profile"}</Text>
         </View>
         <Image

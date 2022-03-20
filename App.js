@@ -25,6 +25,9 @@ import ProfileHeader from './src/ui/Header';
 import DrawerNavigator from './src/ui/DrawerNavigator';
 import HomeScreen from './src/screens/Homescreen';
 import OnboardingScreen from './src/screens/Onboarding';
+import Doctercomp from './src/screens/Docterscomp';
+import { Button } from 'react-native-elements';
+import ViewProfile from './src/screens/Patientprofile';
 
 
 const Stack = createStackNavigator();
@@ -49,14 +52,34 @@ const App = () => {
       <Stack.Navigator>
       <Stack.Screen name='Welcome' options={{headerShown:false}} component={OnboardingScreen}></Stack.Screen>
         <Stack.Screen name='Drawer' options={{ headerShown: false }} component={DrawerNavigator}></Stack.Screen>
-        <Stack.Screen name='UserMeds' options={{ headerShown: true }} component={UserMed}></Stack.Screen>
+        <Stack.Screen name='UserMeds' options={{ headerShown: true }}
+        options={{headerStyle:{backgroundColor:'#3743ab'},headerTitleStyle:{color:'white',fontSize:20}}}
+         component={UserMed}></Stack.Screen>
         <Stack.Screen name='Login' component={Login}></Stack.Screen>
-        <Stack.Screen name='Profile' component={Profile}></Stack.Screen>
-        <Stack.Screen name='Searchcaretaker' component={Searchcaretaker}></Stack.Screen>
-        <Stack.Screen name='Viewpatient' component={ViewPatient}></Stack.Screen>
-        <Stack.Screen name='Add Reminder' component={Reminder}></Stack.Screen>
-        <Stack.Screen name='Events' component={Addevent}></Stack.Screen>
+        <Stack.Screen name='Profile'
+        options={{headerStyle:{backgroundColor:'#3743ab'},headerTitleStyle:{color:'white',fontSize:20}}}
+         component={Profile}></Stack.Screen>
+        <Stack.Screen name='Searchcaretaker'
+        options={{headerStyle:{backgroundColor:'#3743ab'},headerTitleStyle:{color:'white',fontSize:20}}}
+         component={Searchcaretaker}></Stack.Screen>
+        <Stack.Screen name='Viewpatient'
+        options={{headerStyle:{backgroundColor:'#3743ab'},headerTitleStyle:{color:'white',fontSize:20}}}
+         component={ViewPatient}></Stack.Screen>
+        <Stack.Screen name='Add Reminder'
+        options={{headerStyle:{backgroundColor:'#3743ab'},headerTitleStyle:{color:'white',fontSize:20}}}
+         component={Reminder} 
+        options={{headerStyle:{backgroundColor:'#3743ab'},headerTitleStyle:{color:'white',fontSize:20}}}></Stack.Screen>
+        <Stack.Screen name='Events'
+        options={{headerStyle:{backgroundColor:'#3743ab'},headerTitleStyle:{color:'white',fontSize:20}}}
+         component={Addevent}></Stack.Screen>
         <Stack.Screen name='Loginscreen' component={Loginscreen}></Stack.Screen>
+        <Stack.Screen name='Docter' component={Doctercomp} options={({ navigation }) => ({
+    title: 'Docter secion',
+    headerRight: () => (
+      <Button title="Add event" onPress={() => navigation.navigate('Events')} />
+    ),
+  })}></Stack.Screen>
+      <Stack.Screen name='Patientprofile' component={ViewProfile}></Stack.Screen>
       </Stack.Navigator>
       {/* <DrawerNavigator></DrawerNavigator> */}
     </NavigationContainer>

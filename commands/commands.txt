@@ -1,4 +1,6 @@
-sudo docker run --network "host" -p 800:8080 user-service.jar
+sudo docker run --network "host" -p 8080:8080 user_service:0.0.1-SNAPSHOT
+
+sudo docker run --network "host" -p 8087:8087 sendeservice.jar
 
 sudo docker image ls
 

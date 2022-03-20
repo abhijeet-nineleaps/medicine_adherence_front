@@ -1,10 +1,13 @@
 import { useFocusEffect } from "@react-navigation/native";
 import React, { useMemo } from "react";
 import { useEffect } from "react";
-import { View } from "react-native";
+import { View ,TouchableOpacity } from "react-native";
 import { ListItem ,Button} from "react-native-elements";
 import { FlatList } from "react-native-gesture-handler";
 import SQLite from 'react-native-sqlite-2';
+import { Card} from 'react-native-paper';
+import { faClock, faTrashCan } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 
 const Addevent = () => {
   const [reminders , reminderstate] = React.useState([]);
@@ -28,16 +31,29 @@ const Addevent = () => {
   },[])
 
   const renderitem = ({item}) => {
-   return( <ListItem style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
-    <ListItem.Content>
-        <ListItem.Title>{item.time}</ListItem.Title>
-        <ListItem.Subtitle>{item.days}</ListItem.Subtitle>
-        <ListItem.Subtitle>{item.start_date}</ListItem.Subtitle>
-        
-    </ListItem.Content>
-    <Button title="Delete"></Button>
-    
-</ListItem>
+   return( 
+    <Card
+    style={{ borderRadius:30,
+    margin:6,
+    borderColor:'lightgrey',
+    elevation:5,
+    shadowColor:'#3743ab'}}>
+      <ListItem style={{flexDirection:'row',alignItems:'center',justifyContent:'center'
+            }}>
+        <ListItem.Content >
+            <ListItem.Title >{item.title}</ListItem.Title>
+            <ListItem.Subtitle >{item.start_date}</ListItem.Subtitle>
+        </ListItem.Content>
+            <TouchableOpacity onPress={() => {}}  >
+                    <View style={{ alignItems: 'center'}}>
+                      <FontAwesomeIcon icon={faTrashCan} color={'#3743ab'} size={25}  />
+
+                    </View>
+            </TouchableOpacity>
+
+
+        </ListItem>
+     </Card>
    )
   }
 

@@ -6,6 +6,8 @@ import InteractiveTextInput from "react-native-text-input-interactive";
 import { Button, Text, useTheme } from "react-native-elements";
 import img from '../assests/caps.png';
 import SQLite from 'react-native-sqlite-2';
+import LottieView from 'lottie-react-native';
+import { TextInput } from "react-native-paper";
 
 
 const UserMed = ({ route, navigation }) => {
@@ -13,8 +15,9 @@ const UserMed = ({ route, navigation }) => {
     console.log(id);
     const height = Dimensions.get('window').height;
     const width = Dimensions.get('window').width;
-    let med_name = '';
-    let med_des = '';
+    const [med_name , med_name_state] = React.useState('');
+    const [med_des , med_des_state] = React.useState('');
+  
     const theme = useTheme();
     const styles = StyleSheet.create({
         round_button: {
@@ -46,35 +49,44 @@ const UserMed = ({ route, navigation }) => {
     }
 
     const savemedicinetodb = () => {
-        
-        const db = SQLite.openDatabase('test.db','1.0','',1)
 
-        db.transaction(function(txn){
-            txn.executeSql('CREATE TABLE IF NOT EXISTS User_meds(user_id INTEGER PRIMARY KEY NOT NULL, medicine_name VARCHAR(230), medicine_des VARCHAR(200))', []);
+        const db = SQLite.openDatabase('test.db', '1.0', '', 1)
 
-            txn.executeSql('INSERT INTO User_meds (medicine_name,medicine_des) VALUES (:medicine_name,:medicine_des)', [med_name,med_des]);
+        db.transaction(function (txn) {
+            txn.executeSql('CREATE TABLE IF NOT EXISTS User_meds(user_id INTEGER PRIMARY KEY NOT NULL, medicine_name VARCHAR(230), medicine_des VARCHAR(200) , reminder INTEGER)', []);
+
+            txn.executeSql('INSERT INTO User_meds (medicine_name,medicine_des,reminder) VALUES (:medicine_name,:medicine_des,:reminder)', [med_name, med_des, 0]);
 
             txn.executeSql('SELECT * FROM `User_meds`', [], function (tx, res) {
                 for (let i = 0; i < res.rows.length; ++i) {
                     console.log('item:', res.rows.item(i));
                 }
             });
-            
+
         })
-        
+
         navigation.navigate('Drawer');
     }
 
     return (
         <View style={{ backgroundColor: 'white', height: height, width: width }}>
-            <View style={{ height: height / 5 }}>
-                <Image source={require('../assests/caps.png')} style={{ height: '100%', flex: 1, width: '100%', resizeMode: 'contain' }}></Image>
+            <View style={{ alignItems: 'center' }}>
+                <LottieView style={{ width: 200, height: 200 }} source={require('../assests/animate/medicine.json')} autoPlay loop speed={4}></LottieView>
 
             </View>
             <View style={{ margin: 12, marginTop: height / 8, height: height / 6, backgroundColor: 'white', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+            <TextInput onChangeText={txt=>med_name_state(txt)} 
+            value ={med_name}
+                       placeholder="Medicine name"
+                       mode='outlined' label='Medicine name'>   
 
-                <InteractiveTextInput onChangeText={medname} mainColor="black" placeholder="Medicine name" style={{ borderColor: 'black', position: 'absolute', }}></InteractiveTextInput>
-                <InteractiveTextInput onChangeText={meddes} mainColor="black" placeholder="Medicine description" style={{ borderColor: 'black', marginTop: 20, position: 'absolute' }}></InteractiveTextInput>
+            </TextInput>
+            <TextInput style={{marginTop:20}} onChangeText={txt=>med_des_state(txt)} 
+            value ={med_des}
+                       placeholder="Description"
+                       mode='outlined' label='Medicine description'>   
+
+            </TextInput>
 
             </View>
             <View style={{ marginTop: 30, alignItems: 'center', justifyContent: 'center' }}>
@@ -82,7 +94,7 @@ const UserMed = ({ route, navigation }) => {
                 <Button
                     title="Add medicine"
 
-                    buttonStyle={{ backgroundColor: 'rgba(39, 39, 39, 1)' }}
+                    buttonStyle={{ backgroundColor: '#3743ab' }}
                     containerStyle={{
                         width: 200,
                         position: 'relative',

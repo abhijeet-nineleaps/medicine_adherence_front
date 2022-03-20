@@ -33,7 +33,7 @@ const Pushnotification = () => {
                 }
                 // loaded successfully
                 console.log('duration in seconds: ' + whoosh.getDuration() + 'number of channels: ' + whoosh.getNumberOfChannels());
-
+                whoosh.setVolume(9.5);
                 // Play the sound with an onEnd callback
                 whoosh.play((success) => {
                     if (success) {

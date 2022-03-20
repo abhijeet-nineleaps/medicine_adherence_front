@@ -16,13 +16,15 @@ const Login = ({ navigation }) => {
 
     React.useEffect(() => {
         GoogleSignin.configure({
-            webClientId: ''
+            webClientId: '526586885579-90t54t6rmkquqjct1819getnkstse41j.apps.googleusercontent.com'
         })
     })
     async function onGoogleButtonPress() {
         try {
             await GoogleSignin.hasPlayServices();
             const userinfo = await GoogleSignin.signIn();
+            console.log(userinfo);
+
             loadingstate(true)
             await fetch(`${API_URL}/api/user/saveuser`, {
                 method: 'POST',
@@ -71,7 +73,6 @@ const Login = ({ navigation }) => {
                         s
                     })
                 })
-            console.log(userinfo);
 
         } catch (err) {
             if(err.code === statusCodes.IN_PROGRESS){
