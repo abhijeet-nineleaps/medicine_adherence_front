@@ -85,7 +85,7 @@ const DrawerNavigator = ({navigation}) => {
             <FontAwesomeIcon size={22} icon={faUserNurse}></FontAwesomeIcon>
           ),
         }}
-        name="Caretaker"
+        name="CARETAKER"
         navig={this.navigation}
         component={Caretakercomp}
       />

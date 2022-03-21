@@ -107,6 +107,7 @@ getuser()
     const renderContent = () => (
       <View
         style={{
+          
           backgroundColor: 'white',
           padding: 16,
           height: 450,

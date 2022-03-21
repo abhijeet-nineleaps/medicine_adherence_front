@@ -22,6 +22,10 @@ var daate;
 var hrs;
 var min;
 const Reminder = ({route, navigation}) => {
+  PushNotification.getChannels(function (ids) {
+    console.log(ids);
+  });
+  
   const sliderOneValuesChange = values => setSliderOneValue(values);
 
   const sliderOneValuesChangeFinish = () => setSliderOneChanging(false);
@@ -52,7 +56,7 @@ const Reminder = ({route, navigation}) => {
   const [timeings, timestate] = React.useState('');
   const [sliderOneChanging, setSliderOneChanging] = React.useState(false);
   const [sliderOneValue, setSliderOneValue] = React.useState([5]);
-  const [multiSliderValue, setMultiSliderValue] = React.useState([3, 7]);
+  const [multiSliderValue, setMultiSliderValue] = React.useState([0]);
   const onSelectedItemsChange = selectedi => {
     console.log(selectedi.id);
     slectedstate(selectedi);
@@ -70,7 +74,7 @@ const Reminder = ({route, navigation}) => {
     time_picker_mode_state(false);
   };
 
-  const setreminderwithselecteddate = () => {
+  const setreminderwithselecteddate = (titl) => {
     var now = new Date();
 
     now.setDate(daate);
@@ -79,13 +83,31 @@ const Reminder = ({route, navigation}) => {
     console.log(now.getDate(), now.getHours(), now.getTime());
     console.log(new Date(Date.now()));
     console.log(Date.parse(now));
+    var num = Math.floor(Math.random() * 90000) + 10000;
+
+    PushNotification.createChannel(
+      {
+        channelId: num.toString(), // (required)
+        channelName: 'Med channel', // (required)
+        channelDescription: 'A channel to categorise your notifications', // (optional) default: undefined.
+        playSound: false, // (optional) default: true
+        soundName: 'default', // (optional) See `soundName` parameter of `localNotification` function
+        importance: Importance.HIGH, // (optional) default: Importance.HIGH. Int value of the Android notification importance
+        vibrate: true, // (optional) default: true. Creates the default vibration pattern if true.
+         
+      },
+      created => console.log(`createChannel returned '${created}'`), // (optional) callback returns whether the channel was created, false means it already existed.
+    );
 
     PushNotification.localNotificationSchedule({
       //... You can use all the options from localNotifications
-      title: 'Medicine reminder',
+      title: titl,
       message: 'Time to eat dolo',
       subText: 'Mark as read if you have taken', // (required)
-      id: '12346',
+      id: num.toString(),
+      color: '#3743ab',
+      visibility: 'public',
+      usesChronometer: true,
       picture:
         'https://www.pngall.com/wp-content/uploads/2/Medicine-Pills-Free-PNG.png',
       date: new Date(now.getTime()), // in 60 secs
@@ -99,8 +121,11 @@ const Reminder = ({route, navigation}) => {
       soundName: 'android.resource://com.project/raw/my_sound.mp3',
       importance: Importance.HIGH,
       repeatType: 'day',
+      smallIcon: '',
       vibrate: true,
-      actions: '["Yes","No"]',
+
+      actions: 'Yes',
+      
       /* Android Only Properties */
       repeatTime: 3, // (optional) Increment of configured repeatType. Check 'Repeating Notifications' section for more info.
     });
@@ -119,10 +144,19 @@ const Reminder = ({route, navigation}) => {
   };
 
   const handleConfirmfortime = date => {
+    date.ge;
     console.log('A time has been picked: ', date.getHours(), date.getMinutes());
     hrs = date.getHours();
     min = date.getMinutes();
-    timestate(timeings + ' ' + date.getHours() + ':' + date.getMinutes());
+    if (date.getHours() > 11) {
+      timestate(
+        timeings + ' ' + date.getHours() + ':' + date.getMinutes() + ' PM ,',
+      );
+    } else {
+      timestate(
+        timeings + ' ' + date.getHours() + ':' + date.getMinutes() + ' AM ,',
+      );
+    }
     hideDatePickerfortime();
   };
 
@@ -131,6 +165,7 @@ const Reminder = ({route, navigation}) => {
     let time = '';
     let days = '';
     if (check2) {
+      
       for (let i = 0; i < selectedItems.length; i++) {
         time += selectedItems[i] + ':';
       }
@@ -143,20 +178,20 @@ const Reminder = ({route, navigation}) => {
     const db = SQLite.openDatabase('test.db', '1.0', '', 1);
     db.transaction(function (txn) {
       txn.executeSql(
-        'CREATE TABLE IF NOT EXISTS reminders(rem_id INTEGER PRIMARY KEY NOT NULL, title VARCHAR(230), time VARCHAR(200) , days VARCHAR(200) , start_date VARCHAR(50))',
+        `CREATE TABLE IF NOT EXISTS reminders(rem_id INTEGER PRIMARY KEY NOT NULL, title VARCHAR(230), time VARCHAR(200) , days VARCHAR(200) , start_date VARCHAR(50) , end_date VARCHAR(50) , med_id INTEGER)`,
         [],
       );
 
       txn.executeSql(
-        'INSERT INTO reminders (title,time,days,start_date) VALUES (:title,:time,:days,:start_date)',
-        [title, time, days, start_date],
+        'INSERT INTO reminders (title,time,days,start_date,end_date,med_id) VALUES (:title,:time,:days,:start_date,:end_date,:med_id)',
+        [title, time, days, start_date, end_date.toISOString().split('T')[0] , id],
       );
 
       txn.executeSql('SELECT * FROM `reminders`', [], function (tx, res) {
         for (let i = 0; i < res.rows.length; ++i) {
           console.log('item:', res.rows.item(i));
         }
-        setreminderwithselecteddate();
+        setreminderwithselecteddate(title);
 
         loadstate(false);
       });
@@ -172,13 +207,16 @@ const Reminder = ({route, navigation}) => {
           onPress={() => {
             pickerstate(true);
           }}
-          style={{height: 70, flexDirection: 'row', marginTop: 10}}>
+          style={{height: 100, flexDirection: 'row', marginTop: 10}}>
           <View style={{flexDirection: 'column', width: '100%'}}>
             <Text style={{fontSize: 15, marginLeft: 8, fontWeight: '700'}}>
               Start Date
             </Text>
             <Text style={{fontSize: 15, marginLeft: 8, color: 'black'}}>
               {start_date}
+            </Text>
+            <Text style={{fontSize: 15, marginLeft: 8, fontWeight: '700'}}>
+              End Date
             </Text>
 
             <Text style={{fontSize: 15, marginLeft: 8, color: 'black'}}>

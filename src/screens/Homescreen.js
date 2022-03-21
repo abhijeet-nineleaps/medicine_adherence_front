@@ -82,7 +82,7 @@ return(
     })}  
       
     >
-      <Tab.Screen name="Report" key={1}     options={{
+      <Tab.Screen name="Report" key={1}     options={{headerShown:false,
       tabBarIcon:()=>(<LottieView style={{width:60,height:60}}  speed={0.8} source={require('../../assests/animate/heart.json')} autoPlay loop />)}}
        component={Medicineadherence} />
    <Tab.Screen name="Events" component={Doctercomp} options={{headerRight:()=>(<Button style={{width:120}} iconRight={()=><FontAwesomeIcon color="white" size={10} icon={faArrowRight}></FontAwesomeIcon>} buttonStyle={{backgroundColor:'#3743ab'}}

@@ -4,7 +4,7 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 import { Kaede, Madoka, Hideo } from "react-native-textinput-effects";
 import InteractiveTextInput from "react-native-text-input-interactive";
 import { Button, Text, useTheme } from "react-native-elements";
-import img from '../assests/caps.png';
+
 import SQLite from 'react-native-sqlite-2';
 import LottieView from 'lottie-react-native';
 import { TextInput } from "react-native-paper";

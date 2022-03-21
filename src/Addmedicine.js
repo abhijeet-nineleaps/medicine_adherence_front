@@ -185,7 +185,7 @@ const Addmedicine = ({navigation}) => {
         loading={load}
         buttonStyle={{backgroundColor: '#3743ab', width: '70%'}}
         onPress={() => fetch_meds()}
-        title="Fetch meds"></Button>
+        title="My Medicines"></Button>
     </View>
   );
 };

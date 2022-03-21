@@ -1,8 +1,8 @@
 import { useFocusEffect } from "@react-navigation/native";
 import React, { useMemo } from "react";
 import { useEffect } from "react";
-import { View ,TouchableOpacity } from "react-native";
-import { ListItem ,Button} from "react-native-elements";
+import { View ,TouchableOpacity,Text } from "react-native";
+import { ListItem ,Button , Divider} from "react-native-elements";
 import { FlatList } from "react-native-gesture-handler";
 import SQLite from 'react-native-sqlite-2';
 import { Card} from 'react-native-paper';
@@ -32,34 +32,34 @@ const Addevent = () => {
 
   const renderitem = ({item}) => {
    return( 
-    <Card
-    style={{ borderRadius:30,
-    margin:6,
-    borderColor:'lightgrey',
-    elevation:5,
-    shadowColor:'#3743ab'}}>
-      <ListItem style={{flexDirection:'row',alignItems:'center',justifyContent:'center'
-            }}>
-        <ListItem.Content >
-            <ListItem.Title >{item.title}</ListItem.Title>
-            <ListItem.Subtitle >{item.start_date}</ListItem.Subtitle>
-        </ListItem.Content>
-            <TouchableOpacity onPress={() => {}}  >
-                    <View style={{ alignItems: 'center'}}>
-                      <FontAwesomeIcon icon={faTrashCan} color={'#3743ab'} size={25}  />
-
-                    </View>
-            </TouchableOpacity>
-
-
-        </ListItem>
-     </Card>
+    <>
+      <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+        <View style={{flexDirection: 'column', margin: 10}}>
+          <Text style={{color: 'black', fontWeight: '600'}}>
+            Pcm suspension 450ml
+          </Text>
+          <Text>Medicine</Text>
+          <View style={{flexDirection: 'row'}}>
+            <Text>Everyday</Text>
+            <Text> | </Text>
+            <Text>10 AM, 2 PM, 6 PM</Text>
+          </View>
+        </View>
+        <View style={{padding: 30}}>
+          <TouchableOpacity
+            onPress={() => {}}>
+            <FontAwesomeIcon size={20} icon={faTrashCan}></FontAwesomeIcon>
+          </TouchableOpacity>
+        </View>
+      </View>
+      <Divider width={1} style={{marginTop: 15}} />
+    </>
    )
   }
 
 return(
 
-<View style={{backgroundColor:'white',height:'100%'}}>
+<View style={{backgroundColor:'white',height:'100%',width:'100%'}}>
  
  <FlatList data={reminders} renderItem={renderitem}></FlatList>
 

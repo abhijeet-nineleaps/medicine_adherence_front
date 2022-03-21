@@ -60,7 +60,7 @@ const Addcaretaker = ({navigation}) => {
              </Avatar>
              <ListItem.Content>
 
-                 <ListItem.Title style={{fontSize:22,marginLeft:3,fontWeight:'bold'}}
+                 <ListItem.Title style={{fontSize:16,marginLeft:3,fontWeight:'bold'}}
                  >{item.caretaker_username + ' Kumar Soni'}
                  </ListItem.Title>
                  <ListItem.Subtitle>{' Created At :' + item.created_at}</ListItem.Subtitle>

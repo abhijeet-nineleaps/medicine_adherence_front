@@ -53,20 +53,20 @@ const App = () => {
       <Stack.Screen name='Welcome' options={{headerShown:false}} component={OnboardingScreen}></Stack.Screen>
         <Stack.Screen name='Drawer' options={{ headerShown: false }} component={DrawerNavigator}></Stack.Screen>
         <Stack.Screen name='UserMeds' options={{ headerShown: true }}
-        options={{headerStyle:{backgroundColor:'#3743ab'},headerTitleStyle:{color:'white',fontSize:20}}}
+        options={{headerTintColor:'white',headerStyle:{backgroundColor:'#3743ab'},headerTitleStyle:{color:'white',fontSize:20}}}
          component={UserMed}></Stack.Screen>
         <Stack.Screen name='Login' component={Login}></Stack.Screen>
         <Stack.Screen name='Profile'
-        options={{headerStyle:{backgroundColor:'#3743ab'},headerTitleStyle:{color:'white',fontSize:20}}}
+        options={{headerTintColor:'white',headerStyle:{backgroundColor:'#3743ab'},headerTitleStyle:{color:'white',fontSize:20}}}
          component={Profile}></Stack.Screen>
         <Stack.Screen name='Searchcaretaker'
-        options={{headerStyle:{backgroundColor:'#3743ab'},headerTitleStyle:{color:'white',fontSize:20}}}
+        options={{headerTintColor:'white',headerStyle:{backgroundColor:'#3743ab'},headerTitleStyle:{color:'white',fontSize:20}}}
          component={Searchcaretaker}></Stack.Screen>
         <Stack.Screen name='Viewpatient'
-        options={{headerStyle:{backgroundColor:'#3743ab'},headerTitleStyle:{color:'white',fontSize:20}}}
+        options={{headerTintColor:'white',headerStyle:{backgroundColor:'#3743ab'},headerTitleStyle:{color:'white',fontSize:20}}}
          component={ViewPatient}></Stack.Screen>
         <Stack.Screen name='Add Reminder'
-        options={{headerStyle:{backgroundColor:'#3743ab'},headerTitleStyle:{color:'white',fontSize:20}}}
+        options={{headerTintColor:'white',headerStyle:{backgroundColor:'#3743ab'},headerTitleStyle:{color:'white',fontSize:20}}}
          component={Reminder} 
         options={{headerStyle:{backgroundColor:'#3743ab'},headerTitleStyle:{color:'white',fontSize:20}}}></Stack.Screen>
         <Stack.Screen name='Events'
