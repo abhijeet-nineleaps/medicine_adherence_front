@@ -7,6 +7,38 @@ var Sound = require('react-native-sound');
 
 const Pushnotification = () => {
 
+React.useEffect(()=>{
+
+    var startdate = new Date();
+
+    var startday = new Date(Date.now()).getDay();
+    
+    var end_date = new Date();
+    console.log(startdate,startday)
+    end_date.setDate(end_date.getDate()+10)
+console.log(end_date)
+console.log(startdate < end_date)
+
+    var dub = new Date(end_date);
+    let i =0 ;
+    var weeks = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+    while(startdate < end_date){
+        dub.setDate(dub.getDate()+1)
+        if(weeks[dub.getDay()] === 'Tuesday'){
+            
+        console.log(dub,dub.getDate() , weeks[dub.getDay()] , dub.getMonth());
+        console.log(startdate)
+        console.log(end_date)
+
+        }
+        startdate.setDate(startdate.getDate()+1)
+
+    }
+   
+
+},[])
+
+
     const Remin = () => {
         async function requestUserPermission() {
             const authStatus = await messaging().requestPermission();

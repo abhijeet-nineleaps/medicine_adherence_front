@@ -5,7 +5,7 @@ import {Icon, Avatar} from 'react-native-elements';
 import {API_URL} from '@env';
 import {ListItem, Button} from 'react-native-elements';
 
-const Patientrequest = () => {
+const Patientrequest = ({navigation}) => {
   const [patients, patientsdata] = React.useState([]);
   const [refresh, refreshstate] = React.useState(false);
 

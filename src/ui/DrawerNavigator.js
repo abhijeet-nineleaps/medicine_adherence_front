@@ -22,7 +22,7 @@ import {
   faPerson,
   faUserNurse,
   faScrewdriver,
-  faGear,
+  faGear,faBell
 } from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 
@@ -31,11 +31,13 @@ const Drawer = createDrawerNavigator();
 const DrawerNavigator = ({navigation}) => {
   return (
     <Drawer.Navigator
-      initialRouteName="Homescreen"
+      initialRouteName="Home"
+      screenOptions={{headerTitleStyle:{color:'black'}}}
       drawerContent={props => <CustomHeader {...props}></CustomHeader>}>
       <Drawer.Screen
-        name="Homescreen"
+        name="Home"
         options={{
+          
           drawerIcon: () => (
             <FontAwesomeIcon
               color="black"
@@ -85,7 +87,7 @@ const DrawerNavigator = ({navigation}) => {
             <FontAwesomeIcon size={22} icon={faUserNurse}></FontAwesomeIcon>
           ),
         }}
-        name="CARETAKER"
+        name="Caretaker"
         navig={this.navigation}
         component={Caretakercomp}
       />
@@ -101,7 +103,10 @@ const DrawerNavigator = ({navigation}) => {
       <Drawer.Screen
         name="Pushnotification"
         component={Pushnotification}
-        options={{title: 'Notification'}}></Drawer.Screen>
+
+        options={{title: 'Notification',drawerIcon: () => (
+            <FontAwesomeIcon size={22} icon={faBell}></FontAwesomeIcon>
+          ),}}></Drawer.Screen>
     </Drawer.Navigator>
   );
 };

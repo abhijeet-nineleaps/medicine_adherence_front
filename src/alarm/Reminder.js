@@ -8,7 +8,6 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import InteractiveTextInput from 'react-native-text-input-interactive';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {color} from 'react-native-reanimated';
-import SQLite from 'react-native-sqlite-2';
 import {time_data, day_data} from './Timedata';
 import PushNotification, {Importance} from 'react-native-push-notification';
 import LottieView from 'lottie-react-native';
@@ -18,14 +17,44 @@ import {TextInput} from 'react-native-paper';
 import CheckBox from 'react-native-check-box';
 import MultiSlider from '@ptomasroos/react-native-multi-slider';
 
+import SQLite from 'react-native-sqlite-storage';
+import {useFocusEffect, useIsFocused} from '@react-navigation/native';
+import commonjs from 'react-native-picker-horizontal/lib/commonjs';
+
 var daate;
 var hrs;
 var min;
 const Reminder = ({route, navigation}) => {
-  PushNotification.getChannels(function (ids) {
-    console.log(ids);
-  });
-  
+  const db = SQLite.openDatabase(
+    {
+      name: 'MedRemdb',
+      location: 'default',
+    },
+    () => {},
+    error => {
+      console.log(error);
+    },
+  );
+  const isfocus = useIsFocused();
+  // PushNotification.getChannels(function (ids) {
+  //   console.log(ids);
+  // });
+
+  useEffect(() => {
+    db.transaction(txn => {
+      console.log('e');
+      txn.executeSql(
+        'SELECT * FROM `User_medicines` where user_id = ? AND status = ?',
+        [id, 1],
+        function (tx, res) {
+          console.log('success');
+          console.log(res.rows.item(0));
+          titlestate(res.rows.item(0).title);
+        },
+      );
+    });
+  }, []);
+
   const sliderOneValuesChange = values => setSliderOneValue(values);
 
   const sliderOneValuesChangeFinish = () => setSliderOneChanging(false);
@@ -36,19 +65,22 @@ const Reminder = ({route, navigation}) => {
 
     console.log(curr_date.getDate(), values);
     end_datestate(curr_date);
+    store_end_date(curr_date);
     setMultiSliderValue(values);
   };
 
   const {id} = route.params;
   console.log(id);
   let height = Dimensions.get('window').height;
+
   const [picker, pickerstate] = React.useState(false);
   const [selectedItems, slectedstate] = React.useState([]);
   const [selecteddaysItems, slecteddaysstate] = React.useState([]);
   const [load, loadstate] = React.useState(false);
-  const [start_date, start_datestate] = React.useState();
+  const [start_date, start_datestate] = React.useState(new Date());
   const [end_date, end_datestate] = React.useState(new Date());
-  const [bottomsheet, bottomsheetstate] = React.useState(true);
+  const [store_start_date, store_start_datestate] = React.useState(new Date());
+  const [store_end_date, store_end_datestate] = React.useState(new Date());
   const [check1, setCheck1] = React.useState(false);
   const [check2, setCheck2] = React.useState(false);
   const [title, titlestate] = React.useState('');
@@ -57,6 +89,8 @@ const Reminder = ({route, navigation}) => {
   const [sliderOneChanging, setSliderOneChanging] = React.useState(false);
   const [sliderOneValue, setSliderOneValue] = React.useState([5]);
   const [multiSliderValue, setMultiSliderValue] = React.useState([0]);
+  const [timearray, timearraystate] = React.useState([]);
+
   const onSelectedItemsChange = selectedi => {
     console.log(selectedi.id);
     slectedstate(selectedi);
@@ -74,15 +108,17 @@ const Reminder = ({route, navigation}) => {
     time_picker_mode_state(false);
   };
 
-  const setreminderwithselecteddate = (titl) => {
+  const setreminderwithselecteddate = titl => {
     var now = new Date();
 
-    now.setDate(daate);
+    now.setDate(start_date.getDate());
     now.setHours(hrs);
     now.setMinutes(min);
     console.log(now.getDate(), now.getHours(), now.getTime());
     console.log(new Date(Date.now()));
     console.log(Date.parse(now));
+        console.log("now",now);
+
     var num = Math.floor(Math.random() * 90000) + 10000;
 
     PushNotification.createChannel(
@@ -94,7 +130,6 @@ const Reminder = ({route, navigation}) => {
         soundName: 'default', // (optional) See `soundName` parameter of `localNotification` function
         importance: Importance.HIGH, // (optional) default: Importance.HIGH. Int value of the Android notification importance
         vibrate: true, // (optional) default: true. Creates the default vibration pattern if true.
-         
       },
       created => console.log(`createChannel returned '${created}'`), // (optional) callback returns whether the channel was created, false means it already existed.
     );
@@ -108,37 +143,36 @@ const Reminder = ({route, navigation}) => {
       color: '#3743ab',
       visibility: 'public',
       usesChronometer: true,
-      picture:
-        'https://www.pngall.com/wp-content/uploads/2/Medicine-Pills-Free-PNG.png',
+
       date: new Date(now.getTime()), // in 60 secs
       allowWhileIdle: false, // (optional) set notification to work while on doze, default: false
       vibrate: true,
       playSound: true,
-      largeIcon:
-        'https://www.pngall.com/wp-content/uploads/2/Medicine-Pills-Free-PNG.png',
-      bigPictureUrl:
-        'https://www.pngall.com/wp-content/uploads/2/Medicine-Pills-Free-PNG.png',
+
       soundName: 'android.resource://com.project/raw/my_sound.mp3',
       importance: Importance.HIGH,
       repeatType: 'day',
+
       smallIcon: '',
       vibrate: true,
 
-      actions: 'Yes',
-      
+      actions: ['Taken', 'Skip', 'Send '],
+
       /* Android Only Properties */
       repeatTime: 3, // (optional) Increment of configured repeatType. Check 'Repeating Notifications' section for more info.
     });
   };
 
   const handleConfirm = date => {
+    console.log(date)
     console.warn(
       'A date has been picked: ',
       date,
       date.getHours(),
       date.getMinutes(),
     );
-    start_datestate(date.toISOString().split('T')[0]);
+    start_datestate(date);
+    store_start_date(date)
     daate = date.getDate();
     hideDatePicker();
   };
@@ -149,13 +183,19 @@ const Reminder = ({route, navigation}) => {
     hrs = date.getHours();
     min = date.getMinutes();
     if (date.getHours() > 11) {
+      console.log(timeings);
+      timearray.push(date.getHours() + ':' + date.getMinutes() + ' PM');
       timestate(
         timeings + ' ' + date.getHours() + ':' + date.getMinutes() + ' PM ,',
       );
+      console.log(timearray);
     } else {
+      timearray.push(date.getHours() + ':' + date.getMinutes() + ' AM');
+
       timestate(
         timeings + ' ' + date.getHours() + ':' + date.getMinutes() + ' AM ,',
       );
+      console.log(timeings);
     }
     hideDatePickerfortime();
   };
@@ -165,29 +205,41 @@ const Reminder = ({route, navigation}) => {
     let time = '';
     let days = '';
     if (check2) {
-      
-      for (let i = 0; i < selectedItems.length; i++) {
-        time += selectedItems[i] + ':';
+      for (let i = 0; i < timearray.length; i++) {
+        if(i === timearray.length-1){
+
+          time += timearray[i];
+           
+        }else{
+          time += timearray[i]+"-";
+
+        }
       }
       for (let i = 0; i < selecteddaysItems.length; i++) {
-        days += selecteddaysItems[i] + ':';
+        if(i == selecteddaysItems.length-1){
+          days += selecteddaysItems[i];
+
+        }else{
+          days += selecteddaysItems[i] + ':';
+
+        }
       }
       console.log(time, days);
     }
-
-    const db = SQLite.openDatabase('test.db', '1.0', '', 1);
+    console.log('date',store_end_date.toISOString())
     db.transaction(function (txn) {
       txn.executeSql(
-        `CREATE TABLE IF NOT EXISTS reminders(rem_id INTEGER PRIMARY KEY NOT NULL, title VARCHAR(230), time VARCHAR(200) , days VARCHAR(200) , start_date VARCHAR(50) , end_date VARCHAR(50) , med_id INTEGER)`,
+        'CREATE TABLE IF NOT EXISTS User_medicines(user_id INTEGER PRIMARY KEY NOT NULL, medicine_name TEXT, medicine_des TEXT , title TEXT, time TEXT , days TEXT , start_date TEXT , end_date TEXT , status INTEGER , sync INTEGER)',
         [],
       );
 
       txn.executeSql(
-        'INSERT INTO reminders (title,time,days,start_date,end_date,med_id) VALUES (:title,:time,:days,:start_date,:end_date,:med_id)',
-        [title, time, days, start_date, end_date.toISOString().split('T')[0] , id],
+        'UPDATE User_medicines SET title=? , time=? , days=? , start_date =? , end_date=? , status=? , sync=? where user_id= ' +
+          id,
+        [title, time, days, store_start_date.toISOString() , store_end_date.toISOString(), 1, 0],
       );
 
-      txn.executeSql('SELECT * FROM `reminders`', [], function (tx, res) {
+      txn.executeSql('SELECT * FROM `User_medicines`', [], function (tx, res) {
         for (let i = 0; i < res.rows.length; ++i) {
           console.log('item:', res.rows.item(i));
         }
@@ -213,7 +265,7 @@ const Reminder = ({route, navigation}) => {
               Start Date
             </Text>
             <Text style={{fontSize: 15, marginLeft: 8, color: 'black'}}>
-              {start_date}
+              {start_date.toISOString().split('T')[0]}
             </Text>
             <Text style={{fontSize: 15, marginLeft: 8, fontWeight: '700'}}>
               End Date
@@ -251,6 +303,7 @@ const Reminder = ({route, navigation}) => {
           label="Title"
           style={{margin: 8, marginBottom: 14, marginTop: 20}}
           mode="outlined"
+          value={title}
           onChangeText={titlechange}></TextInput>
         {/* <InteractiveTextInput mainColor="black" placeholder="Title"
                     style={{ borderColor: 'black', position: 'absolute', justifyContent: 'center' }}

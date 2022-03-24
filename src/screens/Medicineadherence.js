@@ -1,38 +1,89 @@
 import * as React from 'react';
-import {View, Text, Button, Alert, TouchableOpacity} from 'react-native';
+import {View, Text, Button, Alert, TouchableOpacity, FlatList, RefreshControl} from 'react-native';
 import ProgressCircle from 'react-native-progress-circle';
 import {Divider} from 'react-native-elements';
-import {faClock, faTrashCan,faBarsProgress,faCircleCheck} from '@fortawesome/free-solid-svg-icons';
+import {faClock, faTrashCan,faBarsProgress,faCircleCheck,faArrowRightRotate,faArrowRight} from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
+import { useFocusEffect } from '@react-navigation/native';
+import SQLite from 'react-native-sqlite-storage';
 
-const Reminder = ({navigation}) => {
-  return (
-    <>
-      <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-        <View style={{flexDirection: 'column', margin: 10}}>
-          <Text style={{color: 'black', fontWeight: '600',marginBottom:7}}>
-            Pcm suspension 450ml
-          </Text>
-          <Text style={{marginBottom:7}}>Medicine</Text>
-          <View style={{flexDirection: 'row'}}>
-            <Text>Everyday</Text>
-            <Text> | </Text>
-            <Text>10 AM, 2 PM, 6 PM</Text>
-          </View>
-        </View>
-        <View style={{padding: 30}}>
-          <TouchableOpacity
-            onPress={() => {}}>
-<FontAwesomeIcon icon={faCircleCheck} color='#4dd0e1'></FontAwesomeIcon>
-          </TouchableOpacity>
-        </View>
-      </View>
-      <Divider style={{marginTop: 15}} />
-    </>
-  );
-};
+
 
 const Medicineadherence = ({navigation}) => {
+  const [refresh , refeereshstate] = React.useState(false);
+
+  const Reminder = ({item}) => {
+    return (
+      <>
+      {
+        item.status === 1 ?  <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+          <View style={{flexDirection: 'column', margin: 10}}>
+            <Text style={{color: 'black', fontWeight: '600',marginBottom:7}}>
+              {item.medicine_name}
+            </Text>
+            <Text style={{marginBottom:7}}>{item.medicine_des}</Text>
+            <View style={{flexDirection: 'row'}}>
+              <Text>{item.days}</Text>
+              <Text> | </Text>
+              <Text>{item.time}</Text>
+            </View>
+          </View>
+          <View style={{padding: 30}}>
+            <TouchableOpacity
+              onPress={() => {navigation.navigate("Todayperformance",{
+                user_id:item.user_id
+              })}}>
+        <ProgressCircle
+                  percent={0}
+                  radius={26}
+                  borderWidth={3}
+                  color="#4dd0e1"
+                  shadowColor="#999"
+                  bgColor="#fff">
+                  <Text style={{fontSize: 15, color: '#4dd0e1'}}>{'0%'}</Text>
+                </ProgressCircle>
+            </TouchableOpacity>
+          </View>
+        </View> : <></>
+      }
+        
+        <Divider style={{marginTop: 15}} />
+      </>
+    );
+  };
+  
+
+  const db = SQLite.openDatabase({
+    name:'MedRemdb',
+    location:'default'
+  },()=>{
+    console.log('opened')
+  },error=>{
+    console.log(error)
+  })
+
+  const [reminderdata , reminderdatastate] = React.useState([]);
+  async function fetchallreminders(){
+    const reminder_array = [];
+  await  db.transaction(async function (txn) {
+      txn.executeSql('CREATE TABLE IF NOT EXISTS User_medicines(user_id INTEGER PRIMARY KEY NOT NULL, medicine_name TEXT, medicine_des TEXT , title TEXT, time TEXT , days TEXT , start_date TEXT , end_date TEXT , status INTEGER , sync INTEGER)', []);
+
+      txn.executeSql('SELECT * FROM `User_medicines`', [], function (tx, res) {
+        for (let i = 0; i < res.rows.length; ++i) {
+         // meds_array.push(res.rows.item(i));
+         console.log(res.rows.item(i))
+         reminder_array.push(res.rows.item(i));
+        }
+        reminderdatastate(reminder_array);
+      });
+    });
+  }
+  React.useEffect(()=>{
+   
+fetchallreminders()
+     
+  },[])
+
   return (
     <View
       style={{
@@ -85,8 +136,12 @@ const Medicineadherence = ({navigation}) => {
         }}>
         <Text style={{fontWeight: '600'}}>Current</Text>
       </View>
-      <Reminder navigation={navigation} />
-      <Reminder navigation={navigation} />
+      <FlatList data={reminderdata} renderItem={Reminder} refreshControl={
+
+<RefreshControl refreshing={refresh} onRefresh={fetchallreminders}></RefreshControl>
+
+            }
+      ></FlatList>
       {/* <Divider width={1} style={{marginTop: 15}} /> */}
       <View style={{right: 10, left: 10, position: 'absolute', bottom: 10}}>
      

@@ -21,7 +21,10 @@ const Addcaretaker = ({navigation}) => {
             const user_id = await AsyncStorage.getItem('user_id');
             fetch(`${API_URL}/api/caretaker/myCareTakers(Patient)?patient_id=${user_id}`)
                 .then(resp => resp.json())
-                .then(res => caretakerstate(res))
+                .then(res =>{
+                    console.log(res)
+                    caretakerstate(res)
+                } )
             
     }
 
@@ -42,10 +45,10 @@ const Addcaretaker = ({navigation}) => {
         return (
 
             <Card  onPress={() => {navigation.navigate('Patientprofile')}} 
-            style={{ borderRadius:30,
+            style={{ borderRadius:20,
             margin:6,
             borderColor:'lightgrey',
-            elevation:5,
+            elevation:3,
             shadowColor:'#3743ab'}}>
          <View style={{flexDirection:'row',padding:0}}>
          <ListItem style={{ flexDirection: 'row',
@@ -61,7 +64,7 @@ const Addcaretaker = ({navigation}) => {
              <ListItem.Content>
 
                  <ListItem.Title style={{fontSize:16,marginLeft:3,fontWeight:'bold'}}
-                 >{item.caretaker_username + ' Kumar Soni'}
+                 >{item.caretaker_username}
                  </ListItem.Title>
                  <ListItem.Subtitle>{' Created At :' + item.created_at}</ListItem.Subtitle>
 
@@ -70,23 +73,14 @@ const Addcaretaker = ({navigation}) => {
              <TouchableOpacity onPress={() => {}} 
              style={{paddingVertical: 15,}}>
                  <View style={{ alignItems: 'center'}}>
-                     <FontAwesomeIcon icon={faAngleRight} color={'black'} size={25} />
+                     <FontAwesomeIcon icon={faAngleRight} color={'black'} size={17} />
 
                  </View>
              </TouchableOpacity>
          </ListItem>
          </View>
      </Card>
-
-            // <ListItem style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
-            //     <ListItem.Content>
-            //        <Avatar rounded size={50} source={{uri:'https://i.stack.imgur.com/l60Hf.png'}}></Avatar>
-            //         <ListItem.Title style={{fontSize:18}}>{item.caretaker_username}</ListItem.Title>
-            //         <ListItem.Subtitle>{item.created_at}</ListItem.Subtitle>
-            //     </ListItem.Content>
-            //     <Button title="Delete"></Button>
-                
-            // </ListItem>
+   
         )
 
     }

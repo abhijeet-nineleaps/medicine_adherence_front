@@ -5,15 +5,16 @@ import {
   SafeAreaView,
   Image,
   TouchableOpacity,
+  RefreshControl,
 } from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {Avatar, Button, Divider, ListItem} from 'react-native-elements';
-import SQLite from 'react-native-sqlite-2';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
 import {Card} from 'react-native-paper';
 import LottieView from 'lottie-react-native';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
+
 import {
   faStopwatch,
   faRemove,
@@ -22,7 +23,21 @@ import {
   faTrash,
 } from '@fortawesome/free-solid-svg-icons';
 
+import SQLite from 'react-native-sqlite-storage';
+
+const db = SQLite.openDatabase({
+    name:'MedRemdb',
+    location:'default'
+},()=>{
+    console.log('opened')
+},error=>{
+    console.log(error)
+})
+
 const Addmedicine = ({navigation}) => {
+
+  const [refresh , refeereshstate] = React.useState(false);
+
   const [characters, characterstate] = useState([]);
   const [load, loadstate] = useState(false);
   const [logged, loggedstate] = useState(false);
@@ -37,16 +52,15 @@ const Addmedicine = ({navigation}) => {
       }
     }
     checkforlog();
+    fetch_meds()
   }, []);
 
-  const checkformeds = async db => {
+  const checkformeds = async () => {
     return new Promise(function (resolve, reject) {
       db.transaction(async function (txn) {
-        txn.executeSql(
-          'CREATE TABLE IF NOT EXISTS User_meds(user_id INTEGER PRIMARY KEY NOT NULL, medicine_name VARCHAR(230), medicine_des VARCHAR(200) , reminder INTEGER)',
-          [],
-        );
-        txn.executeSql('SELECT * FROM `User_meds`', [], function (tx, res) {
+        txn.executeSql('CREATE TABLE IF NOT EXISTS User_medicines(user_id INTEGER PRIMARY KEY NOT NULL, medicine_name TEXT, medicine_des TEXT , title TEXT, time TEXT , days TEXT , start_date TEXT , end_date TEXT , status INTEGER , sync INTEGER)', []);
+
+        txn.executeSql('SELECT * FROM `User_medicines`', [], function (tx, res) {
           for (let i = 0; i < res.rows.length; ++i) {
             meds_array.push(res.rows.item(i));
           }
@@ -60,9 +74,7 @@ const Addmedicine = ({navigation}) => {
   const fetch_meds = async () => {
     console.log('called');
     loadstate(true);
-    const db = await SQLite.openDatabase('test.db', '1.0', '', 1);
-    console.log(db);
-    const meds_arr = await checkformeds(db);
+    const meds_arr = await checkformeds();
     characterstate(meds_arr);
     console.log(meds_arr);
 
@@ -76,11 +88,10 @@ const Addmedicine = ({navigation}) => {
   const deleteitem = async(id) => {
       console.log(id)
     console.log('del');
-    const db = await SQLite.openDatabase('test.db', '1.0', '', 1);
     let med_del = [];
     db.transaction(function (txn) {
-      txn.executeSql('DELETE FROM `User_meds`  where user_id = ' + id);
-      txn.executeSql('SELECT * FROM `User_meds`', [], function (tx, res) {
+      txn.executeSql('DELETE FROM `User_medicines`  where user_id = ' + id);
+      txn.executeSql('SELECT * FROM `User_medicines`', [], function (tx, res) {
         for (let i = 0; i < res.rows.length; ++i) {
           med_del.push(res.rows.item(i));
         }
@@ -125,7 +136,7 @@ const Addmedicine = ({navigation}) => {
               }>
               <FontAwesomeIcon
                 icon={faClock}
-                color={item.reminder == 0 ? '#3743ab' : '#4caf50'}
+                color={item.status === 0 ? '#3743ab' : '#4dd0e1'}
                 size={24}></FontAwesomeIcon>
             </TouchableOpacity>
             <TouchableOpacity onPress={() => deleteitem(item.user_id)}>
@@ -145,7 +156,12 @@ const Addmedicine = ({navigation}) => {
       <FlatList
         data={characters}
         renderItem={renderitem}
-        initialNumToRender={10}></FlatList>
+        initialNumToRender={10} refreshControl={
+
+<RefreshControl refreshing={refresh} onRefresh={fetch_meds}></RefreshControl>
+
+            }></FlatList>
+        
       <View
         style={{width: '100%', alignItems: 'center', backgroundColor: 'white'}}>
         <TouchableOpacity
@@ -166,7 +182,7 @@ const Addmedicine = ({navigation}) => {
             speed={2}
             style={{
               position: 'absolute',
-              bottom: 10,
+              bottom: 3,
               width: 80,
               height: 80,
               alignItems: 'center',
@@ -176,7 +192,7 @@ const Addmedicine = ({navigation}) => {
         </TouchableOpacity>
       </View>
 
-      <Button
+      {/* <Button
         containerStyle={{
           bottom: 10,
           alignItems: 'center',
@@ -185,7 +201,7 @@ const Addmedicine = ({navigation}) => {
         loading={load}
         buttonStyle={{backgroundColor: '#3743ab', width: '70%'}}
         onPress={() => fetch_meds()}
-        title="My Medicines"></Button>
+        title="My Medicines"></Button> */}
     </View>
   );
 };

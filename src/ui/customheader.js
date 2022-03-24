@@ -5,18 +5,38 @@ import React, { useEffect } from "react";
 import { createDrawerNavigator, DrawerContentScrollView, DrawerItem, DrawerItemList } from '@react-navigation/drawer';
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { Button, Divider, Image, Text } from "react-native-elements";
+import { useFocusEffect } from "@react-navigation/native";
+import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
+import {
+  faSignIn,
+  faSignOut,
+  faRightToBracket,
+  faArrowRightToBracket,
+  
+} from '@fortawesome/free-solid-svg-icons';
+
 
 
 const CustomHeader = (props) => {
+  
+  React.useEffect(() => {
+    GoogleSignin.configure({
+        webClientId: '526586885579-90t54t6rmkquqjct1819getnkstse41j.apps.googleusercontent.com'
+    })
+})
   const [loggedin, loggedinstate] = React.useState(true);
   async function getuser() {
     try {
-      if (!await GoogleSignin.isSignedIn()) {
+      const  isllooged = await GoogleSignin.isSignedIn(); 
+      console.log(isllooged)
+
+      if (isllooged === true) {
+        console.log(isllooged)
         loggedinstate(true)
         return;
       }
 
-      loggedin(false)
+      loggedinstate(false)
     } catch (err) {
 
     }
@@ -32,8 +52,10 @@ const CustomHeader = (props) => {
     return unsubscribe;
 
   }, [props.navigation])
-
-
+useFocusEffect(()=>{
+  console.log('f')
+  getuser()
+})
   return (
     <>
       <DrawerContentScrollView style={{ height: '100%' }}>
@@ -48,14 +70,18 @@ const CustomHeader = (props) => {
         <DrawerItemList {...props}></DrawerItemList>
        
         {
-          loggedin &&
+          !loggedin ?
           <Button
+          iconPosition='right'
+          
+          icon = {()=><FontAwesomeIcon color="white" icon={faRightToBracket}></FontAwesomeIcon>}
             title="Sign up"
             loading={false}
             loadingProps={{ size: 'small', color: 'white' }}
             buttonStyle={{
               backgroundColor: '#0d47a1',
               borderRadius: 5,
+              justifyContent:'space-around'
             }}
             titleStyle={{ fontWeight: 'bold', fontSize: 23 }}
             containerStyle={{
@@ -65,12 +91,32 @@ const CustomHeader = (props) => {
               marginVertical: 10,
             }}
             onPress={() => props.navigation.navigate('Login')}
-          />
+          /> : <Button title="Logout"
+          iconPosition='right'
+          icon={()=><FontAwesomeIcon color="white" icon={faSignOut}></FontAwesomeIcon>}
+          buttonStyle={{
+              backgroundColor: '#0d47a1',
+              borderRadius: 5,
+              justifyContent:'space-around'
+            }}
+            titleStyle={{ fontWeight: 'bold', fontSize: 23 }}
+            containerStyle={{
+              marginHorizontal: 50,
+              height: 50,
+              width: 200,
+              marginVertical: 10,
+            }}
+           onPress={async()=>{
+                 await GoogleSignin.signOut();
+                 loggedinstate(false)
+          }}></Button>
         }
-        <Divider subHeader='OR' subHeaderStyle={{ textAlign: 'center' }}></Divider>
-        <Button
+        {
+          !loggedin ? <Button
           title="Log in"
           loading={false}
+          iconPosition='left'
+          
           loadingProps={{ size: 'small', color: 'white' }}
           buttonStyle={{
             backgroundColor: '#0d47a1',
@@ -84,7 +130,9 @@ const CustomHeader = (props) => {
             marginVertical: 10,
           }}
           onPress={() => props.navigation.navigate('Loginscreen')}
-        />
+        /> : <></>
+        }
+         
 
       </DrawerContentScrollView>
 

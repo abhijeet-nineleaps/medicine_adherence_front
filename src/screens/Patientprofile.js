@@ -25,23 +25,65 @@ import {
   faIdBadge,
 } from '@fortawesome/free-solid-svg-icons';
 import {List} from 'react-native-paper';
+import {API_URL} from '@env';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import * as Progress from 'react-native-progress';
 
 
 const ViewProfile = () => {
-  const args = {
-    number: '+918725952854', // String value with the number to call
-    prompt: true, // Optional boolean property. Determines if the user should be prompt prior to the call
-  };
+
+  const [userdetails , userdetailsstate] = React.useState();
+  const [progress , progress_status] = React.useState(true);
+
+  const sendnotificationtouser = async (fcm_token) => {
+    let url = new URL(`${API_URL}/api/caretaker/notifyuser`);
+    url.searchParams.append('fcm_token', fcm_token);
+   
+      await fetch(url)
+      .then(resp=>console.log(resp))
+
+  }
+
+  React.useEffect(()=>{
+
+    async function getuserdetails(){
+      const user_id = await AsyncStorage.getItem('user_id');
+
+    await  fetch(`${API_URL}/api/user/getuser/`+user_id)
+      .then(resp=>resp.json())
+      .then(res=>{
+        console.log(res);
+        console.log(res.userEntityList[0].userDetails);
+        userdetailsstate(res)
+        progress_status(false)
+      });
+    }
+    getuserdetails();
+   
+
+  },[])
+
+
+
   return (
-    <View style={styles.container}>
-      <Card style={{elevation: 5, borderRadius: 20}}>
+    <View style={{height:'100%',backgroundColor:'white'}}>
+   {
+progress ? 
+<View style={{height:'100%',backgroundColor:'white',alignItems:'center',justifyContent:'center'}}>
+
+<Progress.Circle size={80} indeterminate={true} />
+<Text>Fetching User Details</Text>
+</View>
+ : 
+<View style={styles.container}>
+      <Card style={{elevation: 2, borderRadius: 14}}>
         <View style={styles.top}>
           <View>
             <Image
               style={styles.icon}
               // source={require('../../assests/patient.jpg')}
               source={{
-                uri: 'https://images-ext-1.discordapp.net/external/k4FTtIoLR5PzsbEw7nJqEeOMPamb7bjR-orTFlOqJSM/https/lh3.googleusercontent.com/a-/AOh14Gg1r55ukyjleOVcBDEuTUt283ClmJE4ZSeFOSmD%3Ds96-c',
+                uri: userdetails.userEntityList[0].userDetails.pic_path,
               }}
             />
           </View>
@@ -53,12 +95,12 @@ const ViewProfile = () => {
                 color: 'black',
                 marginBottom: 3,
               }}>
-              Vinay Kumar Soni
+            {userdetails.userEntityList[0].user_name}
             </Text>
             <Text style={{color: 'grey', marginBottom: 3}}>
-              vinaykumarsoni2001@gmail.com
+           {userdetails.userEntityList[0].email}
             </Text>
-            <Text style={{color: 'grey'}}>+91-8725952854</Text>
+            <Text style={{color: 'grey'}}>{userdetails.userEntityList[0].userDetails.usercontact}</Text>
           </View>
           {/* <FontAwesomeIcon
             style={{marginLeft: 30, marginTop: 30, color: '#ff8f00'}}
@@ -91,7 +133,7 @@ const ViewProfile = () => {
               color: '#78909c',
               fontWeight: '400',
             }}>
-            Bio - Allows icons to be subsetted, optimizing your final bundle.
+            {userdetails.userEntityList[0].userDetails.bio}
           </Text>
         </View>
         <View
@@ -115,7 +157,7 @@ const ViewProfile = () => {
               color: '#78909c',
               fontWeight: '400',
             }}>
-            Age - 20
+ {userdetails.userEntityList[0].userDetails.age}
           </Text>
         </View>
         <View
@@ -139,7 +181,7 @@ const ViewProfile = () => {
               color: '#78909c',
               fontWeight: '400',
             }}>
-            Blood Group - AB+
+{userdetails.userEntityList[0].userDetails.blood_group}
           </Text>
         </View>
         <View
@@ -163,7 +205,7 @@ const ViewProfile = () => {
               color: '#78909c',
               fontWeight: '400',
             }}>
-            Marital Status - Unmarried
+ {userdetails.userEntityList[0].userDetails.martial_status}
           </Text>
         </View>
         <View
@@ -187,7 +229,7 @@ const ViewProfile = () => {
               color: '#78909c',
               fontWeight: '400',
             }}>
-            Weight - 60
+{userdetails.userEntityList[0].userDetails.weight}
           </Text>
         </View>
         <View
@@ -211,7 +253,7 @@ const ViewProfile = () => {
               color: '#78909c',
               fontWeight: '400',
             }}>
-            Contact - +91-9876543210
+{userdetails.userEntityList[0].userDetails.usercontact}
           </Text>
         </View>
         <View style={styles.userDetails}>
@@ -250,7 +292,7 @@ const ViewProfile = () => {
                 title="Medicine 1"
                 right={() => (
                   <TouchableOpacity
-                    onPress={() => Alert.alert('Sending Notification...')}>
+                    onPress={() => sendnotificationtouser(userdetails.userEntityList[0].userDetails.fcm_token)}>
                     <FontAwesomeIcon
                       icon={faBell}
                       size={28}
@@ -265,6 +307,9 @@ const ViewProfile = () => {
         </View>
       </ScrollView>
     </View>
+
+   }
+   </View>
   );
 };
 

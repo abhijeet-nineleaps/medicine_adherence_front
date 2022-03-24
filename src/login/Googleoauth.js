@@ -8,12 +8,16 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as Progress from 'react-native-progress';
 import { API_URL } from '@env'
 import Toast from 'react-native-toast-message';
+import messaging from '@react-native-firebase/messaging';
 
 
-const Login = ({ navigation }) => {
+const Login =  ({ navigation }) => {
 
     const [loading, loadingstate] = React.useState(false);
-
+      async function gettoken(){
+       
+      }
+    //  gettoken()
     React.useEffect(() => {
         GoogleSignin.configure({
             webClientId: '526586885579-90t54t6rmkquqjct1819getnkstse41j.apps.googleusercontent.com'
@@ -23,10 +27,17 @@ const Login = ({ navigation }) => {
         try {
             await GoogleSignin.hasPlayServices();
             const userinfo = await GoogleSignin.signIn();
+            const token = await messaging().getToken();
+            console.log(token)
+    
             console.log(userinfo);
 
             loadingstate(true)
-            await fetch(`${API_URL}/api/user/saveuser`, {
+            let url = new URL(`${API_URL}/api/user/saveuser`);
+            url.searchParams.append('fcm_token', token);
+            url.searchParams.append('pic_path', userinfo.user.photo);
+            
+            await fetch(url, {
                 method: 'POST',
                 body: JSON.stringify({
                     user_name: userinfo.user.givenName,

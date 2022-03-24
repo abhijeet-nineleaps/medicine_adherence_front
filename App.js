@@ -28,6 +28,8 @@ import OnboardingScreen from './src/screens/Onboarding';
 import Doctercomp from './src/screens/Docterscomp';
 import { Button } from 'react-native-elements';
 import ViewProfile from './src/screens/Patientprofile';
+import { Title } from 'react-native-paper';
+import TodayPerformance from './src/adherence/TodayPerformance';
 
 
 const Stack = createStackNavigator();
@@ -56,8 +58,8 @@ const App = () => {
         options={{headerTintColor:'white',headerStyle:{backgroundColor:'#3743ab'},headerTitleStyle:{color:'white',fontSize:20}}}
          component={UserMed}></Stack.Screen>
         <Stack.Screen name='Login' component={Login}></Stack.Screen>
-        <Stack.Screen name='Profile'
-        options={{headerTintColor:'white',headerStyle:{backgroundColor:'#3743ab'},headerTitleStyle:{color:'white',fontSize:20}}}
+        <Stack.Screen name='Profile' 
+        options={{headerRight:()=>(<Title onPress={()=>{saveuserdetails()}} style={{color:'white',marginRight:10}}>Save</Title>),headerTintColor:'white',headerStyle:{backgroundColor:'#3743ab'},headerTitleStyle:{color:'white',fontSize:20}}}
          component={Profile}></Stack.Screen>
         <Stack.Screen name='Searchcaretaker'
         options={{headerTintColor:'white',headerStyle:{backgroundColor:'#3743ab'},headerTitleStyle:{color:'white',fontSize:20}}}
@@ -79,7 +81,8 @@ const App = () => {
       <Button title="Add event" onPress={() => navigation.navigate('Events')} />
     ),
   })}></Stack.Screen>
-      <Stack.Screen name='Patientprofile' component={ViewProfile}></Stack.Screen>
+      <Stack.Screen options={{headerTintColor:'white',headerStyle:{backgroundColor:'#3743ab'}}} name='Patientprofile' component={ViewProfile}></Stack.Screen>
+      <Stack.Screen options={{headerTintColor:'white',headerStyle:{backgroundColor:'#3743ab'}}} name='Todayperformance' component={TodayPerformance}></Stack.Screen>
       </Stack.Navigator>
       {/* <DrawerNavigator></DrawerNavigator> */}
     </NavigationContainer>

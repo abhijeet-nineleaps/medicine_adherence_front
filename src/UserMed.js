@@ -5,10 +5,18 @@ import { Kaede, Madoka, Hideo } from "react-native-textinput-effects";
 import InteractiveTextInput from "react-native-text-input-interactive";
 import { Button, Text, useTheme } from "react-native-elements";
 
-import SQLite from 'react-native-sqlite-2';
 import LottieView from 'lottie-react-native';
 import { TextInput } from "react-native-paper";
+import SQLite from 'react-native-sqlite-storage';
 
+const db = SQLite.openDatabase({
+    name:'MedRemdb',
+    location:'default'
+},()=>{
+    console.log('opened')
+},error=>{
+    console.log(error)
+})
 
 const UserMed = ({ route, navigation }) => {
     const { id } = route.params;
@@ -48,16 +56,19 @@ const UserMed = ({ route, navigation }) => {
         console.log(med_des);
     }
 
-    const savemedicinetodb = () => {
+    const savemedicinetodb = async () => {
 
-        const db = SQLite.openDatabase('test.db', '1.0', '', 1)
+       
 
-        db.transaction(function (txn) {
-            txn.executeSql('CREATE TABLE IF NOT EXISTS User_meds(user_id INTEGER PRIMARY KEY NOT NULL, medicine_name VARCHAR(230), medicine_des VARCHAR(200) , reminder INTEGER)', []);
 
-            txn.executeSql('INSERT INTO User_meds (medicine_name,medicine_des,reminder) VALUES (:medicine_name,:medicine_des,:reminder)', [med_name, med_des, 0]);
+        // const db = SQLite.openDatabase('test.db', '1.0', '', 1)
 
-            txn.executeSql('SELECT * FROM `User_meds`', [], function (tx, res) {
+      await  db.transaction( (txn)=> {
+            txn.executeSql('CREATE TABLE IF NOT EXISTS User_medicines(user_id INTEGER PRIMARY KEY NOT NULL, medicine_name TEXT, medicine_des TEXT , title TEXT, time TEXT , days TEXT , start_date TEXT , end_date TEXT , status INTEGER , sync INTEGER)', []);
+
+            txn.executeSql('INSERT INTO User_medicines (medicine_name,medicine_des,title,time,days,start_date,end_date,status,sync) VALUES (?,?,?,?,?,?,?,?,?)', [med_name, med_des, '','','','','',0,0]);
+
+            txn.executeSql('SELECT * FROM `User_medicines`', [], function (tx, res) {
                 for (let i = 0; i < res.rows.length; ++i) {
                     console.log('item:', res.rows.item(i));
                 }

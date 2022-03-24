@@ -52,7 +52,7 @@ const Addevent = () => {
           </TouchableOpacity>
         </View>
       </View>
-      <Divider width={1} style={{marginTop: 15}} />
+      <Divider style={{marginTop: 15}} />
     </>
    )
   }

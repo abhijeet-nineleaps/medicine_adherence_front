@@ -16,12 +16,20 @@ PushNotification.configure({
   
   onNotification: function (notification) {
     console.log("NOTIFICATION:", notification);
-
+  
+    if(notification.action === 'Taken'){
+      console.log('Taken')
+  }else if(notification.action === 'Skip'){
+console.log('Not taken')
+  }
      },
 
   onAction: function (notification) {
+    const {action} = notification.action;
+    console.log(action);
     console.log("ACTION:", notification.action);
-    console.log("NOTIFICATION:", notification);
+    console.log("NOTIFICATION:", notification.action);
+   
 
   },
 
@@ -32,6 +40,7 @@ PushNotification.configure({
     alert: true,
     badge: true,
     sound: true,
+    
   },
 
  

@@ -6,7 +6,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import Login from "../login/Googleoauth";
 import { GoogleSignin } from "@react-native-google-signin/google-signin";
 import { useFocusEffect } from "@react-navigation/native";
-import { View, Text } from "react-native";
+import { View, Text, Alert } from "react-native";
 import { Avatar } from "react-native-elements/dist/avatar/Avatar";
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
@@ -29,6 +29,9 @@ export default function Caretakercomp({ navigation }) {
     async function checkforlog() {
 
       const islogged = await GoogleSignin.isSignedIn();
+      if(!islogged){
+        Alert.alert("Signup first",)
+      }
       console.log(islogged)
       loginstate(islogged);
     }
@@ -36,6 +39,7 @@ export default function Caretakercomp({ navigation }) {
     checkforlog()
 
   })
+  
   const Firstlogin = () => {
 
     return (
@@ -90,27 +94,6 @@ export default function Caretakercomp({ navigation }) {
 
 
 
-    {/* <Tab.Navigator 
-    
-    
-    >
-
-      {login
-        &&
-        <>
-          <Tab.Screen  name="Caretakers" options={{tabBarIcon:()=> (<FontAwesomeIcon color="black" icon={faUserNurse}></FontAwesomeIcon>)}} 
-
-           component={Addcaretaker}></Tab.Screen>
-          <Tab.Screen name="CaretakerRequest"
-          options={{tabBarIcon:()=> (<FontAwesomeIcon color="black" icon={faBell}></FontAwesomeIcon>)}}
-           component={CaretakerReq}></Tab.Screen>
-        </>
-      }
-      {
-        !login && <Tab.Screen name="Login"  options={{ headerShown: false,tabBarIcon:()=> (<FontAwesomeIcon color="white" icon={faUserNurse}></FontAwesomeIcon>) }} component={Firstlogin}></Tab.Screen>
-      }
-
-    </Tab.Navigator> */}
     </>
   )
 
