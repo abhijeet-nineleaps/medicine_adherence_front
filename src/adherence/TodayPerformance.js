@@ -3,7 +3,7 @@ import React, {useState} from 'react';
 import ProgressCircle from 'react-native-progress-circle';
 import BouncyCheckbox from 'react-native-bouncy-checkbox';
 import SQLite from 'react-native-sqlite-storage';
-var weeks = ['Sun','Mon','Tue','Wed','Thur','Fri','Sat'];
+var weeks = ['Sun', 'Mon', 'Tue', 'Wed', 'Thur', 'Fri', 'Sat'];
 
 const TodayPerformance = ({route}) => {
   const db = SQLite.openDatabase(
@@ -24,6 +24,22 @@ const TodayPerformance = ({route}) => {
   const [Timings, setTime] = useState([]);
   const [value, setValue] = useState(0);
 
+  const updatetimes = (time) => {
+console.log(time , ' ' , Timings.indexOf(time))
+const index = Timings.indexOf(time)
+if (index > -1) {
+  Timings.splice(index, 1);
+}
+ 
+    // db.transaction(async function(txxn){
+
+    //   txxn.executeSql('UPDATE reminder_day SET timings = ? WHERE date = '+ + '',[])
+           
+    //   })
+
+
+  }
+
   React.useEffect(() => {
     db.transaction(async function (txn) {
       txn.executeSql(
@@ -39,18 +55,60 @@ const TodayPerformance = ({route}) => {
           console.log(res.rows.item(0).time);
           console.log(res.rows.item(0).start_date);
           console.log(res.rows.item(0).end_date);
-          let arr = res.rows.item(0).days.split(":");
+          let arr = res.rows.item(0).days.split(':');
           let set = new Set(arr);
-          var today = new Date(res.rows.item(0).start_date)
+          var today = new Date(res.rows.item(0).start_date);
           var tody_date = new Date();
-console.log(set.has(weeks[tody_date.getDay()]))
- 
-if(set.has(weeks[tody_date.getDay()])){
-  setTime(res.rows.item(0).time.split('-'));
+          console.log(set.has(weeks[tody_date.getDay()]));
 
-}
-          
-          
+          if (set.has(weeks[tody_date.getDay()])) {
+            txn.executeSql(
+              'CREATE TABLE IF NOT EXISTS reminder_day(rem_id INTEGER PRIMARY KEY NOT NULL , date TEXT , timings TEXT, med_id INTEGER)',
+              [],
+            );
+          txn.executeSql(
+              'SELECT * FROM reminder_day where date = ? AND med_id = ?',
+              [tody_date.toISOString().split('T')[0], user_id],
+              function (tx, resp) {
+                for (let k = 0; k < resp.rows.length; k++) {
+                  console.log(resp.rows.item(k), ' item');
+                }
+                console.log(resp.rows.length, ' item arr');
+
+                if (resp.rows.length === 0) {
+                  console.log('NO id present but created ', resp.rows.item(0));
+                  txn.executeSql(
+                    'INSERT INTO reminder_day (date,timings,med_id) VALUES (?,?,?)',
+                    [
+                      tody_date.toISOString().split('T')[0],
+                      res.rows.item(0).time,
+                      user_id,
+                    ],
+                  );
+
+                  setTime(res.rows.item(0).time.split('-'));
+
+                  txn.executeSql(
+                    'SELECT * FROM reminder_day where date = ? AND med_id = ?',
+                    [tody_date.toISOString().split('T')[0], user_id],
+                    function (tx, respp) {
+                      setTime(respp.rows.item(0).timings.split('-'));
+                    },
+                  );
+                } else {
+                  console.log('id present', resp.rows.item(0));
+                  txn.executeSql(
+                    'SELECT * FROM reminder_day where date = ? AND med_id = ?',
+                    [tody_date.toISOString().split('T')[0], user_id],
+                    function (tx, respp) {
+                      setTime(respp.rows.item(0).timings.split('-'));
+                    },
+                  );
+                }
+              },
+            );
+          }
+
           console.log(Timings);
           // setTime(Timings)
         },
@@ -63,7 +121,6 @@ if(set.has(weeks[tody_date.getDay()])){
     const [med1, setMed1] = useState(false);
     const [taken, takenstatus] = useState(false);
 
-                
     return (
       <View style={{padding: 15, paddingLeft: 30, marginTop: 14}}>
         <BouncyCheckbox
@@ -71,6 +128,7 @@ if(set.has(weeks[tody_date.getDay()])){
           fillColor="#3743ab"
           unfillColor="#FFFFFF"
           text={time}
+          disabled={taken}
           isChecked={med1}
           iconStyle={{borderColor: '#3743ab', borderWidth: 1.3}}
           textStyle={{
@@ -82,6 +140,7 @@ if(set.has(weeks[tody_date.getDay()])){
           onPress={() => {
             setMed1(!med1);
             takenstatus(!taken);
+            updatetimes(time);
           }}
         />
         {taken ? (

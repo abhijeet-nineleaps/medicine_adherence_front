@@ -65,8 +65,9 @@ const UserMed = ({ route, navigation }) => {
 
       await  db.transaction( (txn)=> {
             txn.executeSql('CREATE TABLE IF NOT EXISTS User_medicines(user_id INTEGER PRIMARY KEY NOT NULL, medicine_name TEXT, medicine_des TEXT , title TEXT, time TEXT , days TEXT , start_date TEXT , end_date TEXT , status INTEGER , sync INTEGER)', []);
+            var value = Math.floor(1000 + Math.random() * 9000);
 
-            txn.executeSql('INSERT INTO User_medicines (medicine_name,medicine_des,title,time,days,start_date,end_date,status,sync) VALUES (?,?,?,?,?,?,?,?,?)', [med_name, med_des, '','','','','',0,0]);
+            txn.executeSql('INSERT INTO User_medicines (user_id,medicine_name,medicine_des,title,time,days,start_date,end_date,status,sync) VALUES (?,?,?,?,?,?,?,?,?,?)', [value,med_name, med_des, '','','','','',0,0]);
 
             txn.executeSql('SELECT * FROM `User_medicines`', [], function (tx, res) {
                 for (let i = 0; i < res.rows.length; ++i) {
