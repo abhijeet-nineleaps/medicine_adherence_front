@@ -1,10 +1,12 @@
-import {Button, StyleSheet, Text, View, Alert, FlatList} from 'react-native';
+import {Button, StyleSheet, Text, View, Alert, FlatList,Image} from 'react-native';
 import React, {useState} from 'react';
 import ProgressCircle from 'react-native-progress-circle';
 import BouncyCheckbox from 'react-native-bouncy-checkbox';
 import SQLite from 'react-native-sqlite-storage';
 var weeks = ['Sun', 'Mon', 'Tue', 'Wed', 'Thur', 'Fri', 'Sat'];
-
+import Toast from 'react-native-toast-message';
+import { set } from 'react-native-reanimated';
+var cc = 0;
 const TodayPerformance = ({route}) => {
   const db = SQLite.openDatabase(
     {
@@ -20,25 +22,45 @@ const TodayPerformance = ({route}) => {
   );
 
   const {user_id} = route.params;
-  const [count, setCount] = useState(0);
+  const [count, setCount_state] = useState(0);
+  const [total_reminders, total_reminder_state] = useState(0);
+  
   const [Timings, setTime] = useState([]);
   const [value, setValue] = useState(0);
 
-  const updatetimes = (time) => {
-console.log(time , ' ' , Timings.indexOf(time))
-const index = Timings.indexOf(time)
-if (index > -1) {
-  Timings.splice(index, 1);
-}
- 
-    // db.transaction(async function(txxn){
+  const updatetimes = async(time) => {
+    console.log(time, ' ', Timings.indexOf(time));
+    const index = Timings.indexOf(time);
 
-    //   txxn.executeSql('UPDATE reminder_day SET timings = ? WHERE date = '+ + '',[])
-           
-    //   })
+    if (index > -1) {
+      Timings.splice(index, 1);
+    }
+    console.log(Timings);
+    let new_timing = '';
+    Timings.forEach(eitem => {
+      new_timing += eitem;
+    });
+    console.log(new_timing)
+    var curr_date = new Date();
+    cc+=1;
+    console.log(cc)
+   await db.transaction(async function (txxn) {
+      txxn.executeSql(
+        'UPDATE reminder_day SET timings = ? WHERE date = ? AND med_id = ?',
+        [new_timing,curr_date.toISOString().split('T')[0],user_id],function(err,result){
+          console.log(result.rows.item(0))
+          console.log(err)
+        }
+      );
 
-
-  }
+    await  txxn.executeSql('UPDATE User_medicines SET current_count = ? WHERE user_id = ?',[cc,user_id])
+      Toast.show({
+        type:'info',
+        text1:'Updated successfully',
+        position:'bottom'
+      })
+    });
+  };
 
   React.useEffect(() => {
     db.transaction(async function (txn) {
@@ -53,8 +75,9 @@ if (index > -1) {
         function (tx, res) {
           // meds_array.push(res.rows.item(i));
           console.log(res.rows.item(0).time);
-          console.log(res.rows.item(0).start_date);
-          console.log(res.rows.item(0).end_date);
+          console.log(res.rows.item(0).total_med_reminders);
+          console.log(res.rows.item(0).current_count);
+          cc = res.rows.item(0).current_count;
           let arr = res.rows.item(0).days.split(':');
           let set = new Set(arr);
           var today = new Date(res.rows.item(0).start_date);
@@ -66,7 +89,7 @@ if (index > -1) {
               'CREATE TABLE IF NOT EXISTS reminder_day(rem_id INTEGER PRIMARY KEY NOT NULL , date TEXT , timings TEXT, med_id INTEGER)',
               [],
             );
-          txn.executeSql(
+            txn.executeSql(
               'SELECT * FROM reminder_day where date = ? AND med_id = ?',
               [tody_date.toISOString().split('T')[0], user_id],
               function (tx, resp) {
@@ -104,6 +127,7 @@ if (index > -1) {
                       setTime(respp.rows.item(0).timings.split('-'));
                     },
                   );
+                  console.log(Timings)
                 }
               },
             );
@@ -122,7 +146,9 @@ if (index > -1) {
     const [taken, takenstatus] = useState(false);
 
     return (
+      time.length !==0 &&
       <View style={{padding: 15, paddingLeft: 30, marginTop: 14}}>
+
         <BouncyCheckbox
           size={22}
           fillColor="#3743ab"
@@ -154,6 +180,8 @@ if (index > -1) {
 
   return (
     <View style={{backgroundColor: 'white', height: '100%'}}>
+          <Toast visibilityTime={1000}></Toast>
+
       <View style={{flexDirection: 'column'}}>
         <View
           style={{
@@ -194,7 +222,11 @@ if (index > -1) {
       <View style={{padding: 15, backgroundColor: 'lightgrey'}}>
         <Text style={{fontWeight: 'bold'}}>Timings</Text>
       </View>
-      <View>
+      {
+            (Timings.length !== 0 && Timings[0].length === 0) ? 
+            <View style={{justifyContent:'center' , alignItems:'center'}}> 
+             <Image source={require('../../assests/noremtoday.png')} style={{height:300,width:300}} ></Image>
+            </View> : <View>
         <FlatList
           data={Timings}
           renderItem={({item}) => {
@@ -202,6 +234,8 @@ if (index > -1) {
           }}
         />
       </View>
+      }
+      
     </View>
   );
 };

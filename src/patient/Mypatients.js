@@ -35,7 +35,9 @@ const Mypatient = ({navigation}) => {
 
         return (
  
-            <Card  onPress={() => {navigation.navigate('Patientprofile')}} 
+            <Card  onPress={() => {navigation.navigate('Patientprofile',{
+                user_id:item.patient_id
+            })}} 
             style={{ borderRadius:30,
             margin:6,
             borderColor:'lightgrey',

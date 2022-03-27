@@ -2,7 +2,6 @@ import * as React from 'react';
 import {View, Text, Button, Alert, TouchableOpacity, FlatList, RefreshControl} from 'react-native';
 import ProgressCircle from 'react-native-progress-circle';
 import {Divider} from 'react-native-elements';
-import {faClock, faTrashCan,faBarsProgress,faCircleCheck,faArrowRightRotate,faArrowRight} from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import { useFocusEffect } from '@react-navigation/native';
 import SQLite from 'react-native-sqlite-storage';
@@ -13,10 +12,19 @@ const Medicineadherence = ({navigation}) => {
   const [refresh , refeereshstate] = React.useState(false);
 
   const Reminder = ({item}) => {
+
+   async function fetchadherence(){
+      
+     
+   }
+
     return (
       <>
       {
-        item.status === 1 ?  <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+        item.status === 1 ?  <View style={{}}>
+        <TouchableOpacity style={{flexDirection: 'row', justifyContent: 'space-between'}} onPress={()=>{navigation.navigate("Todayperformance",{
+                user_id:item.user_id
+              })}}>
           <View style={{flexDirection: 'column', margin: 10}}>
             <Text style={{color: 'black', fontWeight: '600',marginBottom:7}}>
               {item.medicine_name}
@@ -30,20 +38,19 @@ const Medicineadherence = ({navigation}) => {
           </View>
           <View style={{padding: 30}}>
             <TouchableOpacity
-              onPress={() => {navigation.navigate("Todayperformance",{
-                user_id:item.user_id
-              })}}>
+              onPress={() => {}}>
         <ProgressCircle
-                  percent={0}
+                  percent={(item.current_count/item.total_med_reminders)*100}
                   radius={26}
                   borderWidth={3}
                   color="#4dd0e1"
                   shadowColor="#999"
                   bgColor="#fff">
-                  <Text style={{fontSize: 15, color: '#4dd0e1'}}>{'0%'}</Text>
+                  <Text style={{fontSize: 15, color: '#4dd0e1'}}>{Math.round((item.current_count/item.total_med_reminders)*100) + '%'}</Text>
                 </ProgressCircle>
             </TouchableOpacity>
           </View>
+          </TouchableOpacity>
         </View> : <></>
       }
         
@@ -78,11 +85,19 @@ const Medicineadherence = ({navigation}) => {
       });
     });
   }
-  React.useEffect(()=>{
-   
-fetchallreminders()
-     
-  },[])
+
+  useFocusEffect(
+    React.useCallback(() => {
+      let isActive = true;
+      
+      fetchallreminders()
+  
+      return () => {
+        isActive = false;
+      };
+    },[])
+  );
+
 
   return (
     <View
@@ -91,7 +106,7 @@ fetchallreminders()
         height: '100%',
         backgroundColor: 'white',
       }}>
-      <TouchableOpacity>
+      <TouchableOpacity onPress={()=>{navigation.navigate('adherencehistory')}}>
         <View style={{flexDirection: 'column'}}>
           <View
             style={{

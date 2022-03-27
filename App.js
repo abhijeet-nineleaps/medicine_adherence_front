@@ -30,6 +30,7 @@ import { Button } from 'react-native-elements';
 import ViewProfile from './src/screens/Patientprofile';
 import { Title } from 'react-native-paper';
 import TodayPerformance from './src/adherence/TodayPerformance';
+import MyComponent from './src/adherence/Adherencehistory';
 
 
 const Stack = createStackNavigator();
@@ -83,6 +84,7 @@ const App = () => {
   })}></Stack.Screen>
       <Stack.Screen options={{headerTintColor:'white',headerStyle:{backgroundColor:'#3743ab'}}} name='Patientprofile' component={ViewProfile}></Stack.Screen>
       <Stack.Screen options={{headerTintColor:'white',headerStyle:{backgroundColor:'#3743ab'}}} name='Todayperformance' component={TodayPerformance}></Stack.Screen>
+      <Stack.Screen options={{headerTintColor:'white',headerStyle:{backgroundColor:'#3743ab'}}} name='adherencehistory' component={MyComponent}></Stack.Screen>
       </Stack.Navigator>
       {/* <DrawerNavigator></DrawerNavigator> */}
     </NavigationContainer>

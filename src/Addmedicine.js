@@ -24,6 +24,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 
 import SQLite from 'react-native-sqlite-storage';
+import { useFocusEffect } from '@react-navigation/native';
 
 const db = SQLite.openDatabase({
     name:'MedRemdb',
@@ -41,27 +42,41 @@ const Addmedicine = ({navigation}) => {
   const [characters, characterstate] = useState([]);
   const [load, loadstate] = useState(false);
   const [logged, loggedstate] = useState(false);
-  var meds_array = [];
 
-  useEffect(() => {
-    async function checkforlog() {
-      if (await GoogleSignin.isSignedIn()) {
-        loggedstate(true);
-      } else {
-        loggedstate(false);
+  useFocusEffect(
+    React.useCallback(() => {
+      let isActive = true;
+      async function checkforlog() {
+        if (await GoogleSignin.isSignedIn()) {
+          loggedstate(true);
+        } else {
+          loggedstate(false);
+        }
       }
-    }
-    checkforlog();
-    fetch_meds()
-  }, []);
+      checkforlog();
+      fetch_meds()
+      
+      
+  
+  
+      return () => {
+        isActive = false;
+      };
+    },[])
+  );
+
+  
 
   const checkformeds = async () => {
     return new Promise(function (resolve, reject) {
+      var meds_array = [];
+
       db.transaction(async function (txn) {
-        txn.executeSql('CREATE TABLE IF NOT EXISTS User_medicines(user_id INTEGER PRIMARY KEY NOT NULL, medicine_name TEXT, medicine_des TEXT , title TEXT, time TEXT , days TEXT , start_date TEXT , end_date TEXT , status INTEGER , sync INTEGER)', []);
+        txn.executeSql('CREATE TABLE IF NOT EXISTS User_medicines(user_id INTEGER PRIMARY KEY NOT NULL, medicine_name TEXT, medicine_des TEXT , title TEXT, time TEXT , days TEXT , start_date TEXT , end_date TEXT , status INTEGER , sync INTEGER, total_med_reminders INTEGER , current_count INTEGER)', []);
 
         txn.executeSql('SELECT * FROM `User_medicines`', [], function (tx, res) {
           for (let i = 0; i < res.rows.length; ++i) {
+
             meds_array.push(res.rows.item(i));
           }
 
@@ -71,18 +86,14 @@ const Addmedicine = ({navigation}) => {
     });
   };
 
-  const fetch_meds = async () => {
-    console.log('called');
-    loadstate(true);
+    const fetch_meds = async () => {
+    console.log('called');    
     const meds_arr = await checkformeds();
     characterstate(meds_arr);
     console.log(meds_arr);
 
     loadstate(false);
-    if (meds_array.length === 0) {
-      console.log('info');
-      loadstate(false);
-    }
+    
   };
 
   const deleteitem = async(id) => {
@@ -152,7 +163,15 @@ const Addmedicine = ({navigation}) => {
   };
 
   return (
-    <View style={{flex: 1, backgroundColor: 'white'}}>
+    <View style={{flex: 1, backgroundColor: 'white',height:'100%'}}>
+
+    {
+      characters.length === 0 ?
+      
+      <View style={{alignItems:'center',justifyContent:'center'}}>
+      <Image source={require('../assests/nomeds.png')}   resizeMode='center'></Image>
+      </View>
+      :
       <FlatList
         data={characters}
         renderItem={renderitem}
@@ -161,9 +180,11 @@ const Addmedicine = ({navigation}) => {
 <RefreshControl refreshing={refresh} onRefresh={fetch_meds}></RefreshControl>
 
             }></FlatList>
+    }
+   
         
       <View
-        style={{width: '100%', alignItems: 'center', backgroundColor: 'white'}}>
+        style={{width: '100%',position:'absolute',alignItems: 'center', backgroundColor: 'white',bottom:10}}>
         <TouchableOpacity
           style={{
             width: '100%',
@@ -181,7 +202,6 @@ const Addmedicine = ({navigation}) => {
             loop
             speed={2}
             style={{
-              position: 'absolute',
               bottom: 3,
               width: 80,
               height: 80,
@@ -192,16 +212,7 @@ const Addmedicine = ({navigation}) => {
         </TouchableOpacity>
       </View>
 
-      {/* <Button
-        containerStyle={{
-          bottom: 10,
-          alignItems: 'center',
-          justifyContent: 'center',
-        }}
-        loading={load}
-        buttonStyle={{backgroundColor: '#3743ab', width: '70%'}}
-        onPress={() => fetch_meds()}
-        title="My Medicines"></Button> */}
+     
     </View>
   );
 };

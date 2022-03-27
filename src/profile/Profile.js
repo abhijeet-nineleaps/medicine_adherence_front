@@ -276,6 +276,7 @@ if(user_bio.length !== 0 || user_contact.isNaN() || user_age.isNaN() ||
               borderRadius: 4,
               margin: 10,
             }}>
+            
             <Picks
               name="BloodGroup"
               mode="dropdown"

@@ -41,10 +41,12 @@ const Addcaretaker = ({navigation}) => {
    }
 
     const renderitem = ({ item }) => {
+        console.log(item.patient_id,"b")
 
         return (
 
-            <Card  onPress={() => {navigation.navigate('Patientprofile')}} 
+            <Card  onPress={() => {
+                navigation.navigate('Patientprofile')}} 
             style={{ borderRadius:20,
             margin:6,
             borderColor:'lightgrey',
@@ -93,7 +95,7 @@ const Addcaretaker = ({navigation}) => {
            
             <FlatList data={caretakers} renderItem={renderitem} refreshControl={
 
-<RefreshControl refreshing={refresh} onRefresh={fetchcaretakers}></RefreshControl>
+            <RefreshControl refreshing={refresh} onRefresh={fetchcaretakers}></RefreshControl>
 
             }></FlatList>
             <View style={{bottom:0,alignItems:'center'}}>

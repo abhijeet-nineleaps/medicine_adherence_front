@@ -30,8 +30,9 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as Progress from 'react-native-progress';
 
 
-const ViewProfile = () => {
-
+const ViewProfile = ({route}) => {
+  
+  const {user_id} = route.params;
   const [userdetails , userdetailsstate] = React.useState();
   const [progress , progress_status] = React.useState(true);
 
@@ -47,7 +48,7 @@ const ViewProfile = () => {
   React.useEffect(()=>{
 
     async function getuserdetails(){
-      const user_id = await AsyncStorage.getItem('user_id');
+     // const user_id = await AsyncStorage.getItem('user_id');
 
     await  fetch(`${API_URL}/api/user/getuser/`+user_id)
       .then(resp=>resp.json())
@@ -75,235 +76,90 @@ progress ?
 <Text>Fetching User Details</Text>
 </View>
  : 
-<View style={styles.container}>
-      <Card style={{elevation: 2, borderRadius: 14}}>
+      <View style={styles.container}>
+      <ScrollView>
         <View style={styles.top}>
-          <View>
+          <View style={{flexDirection: 'column'}}>
+            <Text style={{paddingLeft: 5, paddingTop: 9}}>Name</Text>
+            <Text style={{color: 'black', padding: 5, fontSize: 17}}>
+              {userdetails.userEntityList[0].user_name}
+            </Text>
+          </View>
+          <View style={{justifyContent: 'flex-end'}}>
             <Image
               style={styles.icon}
-              // source={require('../../assests/patient.jpg')}
               source={{
-                uri: userdetails.userEntityList[0].userDetails.pic_path,
+                uri: 'https://images-ext-1.discordapp.net/external/k4FTtIoLR5PzsbEw7nJqEeOMPamb7bjR-orTFlOqJSM/https/lh3.googleusercontent.com/a-/AOh14Gg1r55ukyjleOVcBDEuTUt283ClmJE4ZSeFOSmD%3Ds96-c',
               }}
             />
           </View>
-          <View style={styles.toptext}>
-            <Text
-              style={{
-                fontSize: 20,
-                fontWeight: '500',
-                color: 'black',
-                marginBottom: 3,
-              }}>
-            {userdetails.userEntityList[0].user_name}
-            </Text>
-            <Text style={{color: 'grey', marginBottom: 3}}>
-           {userdetails.userEntityList[0].email}
-            </Text>
-            <Text style={{color: 'grey'}}>{userdetails.userEntityList[0].userDetails.usercontact}</Text>
-          </View>
-          {/* <FontAwesomeIcon
-            style={{marginLeft: 30, marginTop: 30, color: '#ff8f00'}}
-            size={30}
-            icon={faBell}
-          /> */}
         </View>
-      </Card>
+        <Divider width={1} />
+        <View style={styles.items}>
+          <Text style={styles.itemleft}>Bio</Text>
 
-      <ScrollView>
-        <View
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'flex-start',
-            padding: 10,
-            marginTop: 10,
-            marginLeft: 10,
-            marginBottom: 10,
-          }}>
-          <FontAwesomeIcon
-            icon={faUser}
-            size={20}
-            color="black"
-            style={{marginTop: 3}}
-          />
-          <Text
-            style={{
-              marginLeft: 30,
-              fontSize: 18,
-              color: '#78909c',
-              fontWeight: '400',
-            }}>
-            {userdetails.userEntityList[0].userDetails.bio}
-          </Text>
+          <Text style={styles.itemright}>{userdetails.userEntityList[0].userDetails.bio}</Text>
         </View>
-        <View
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'flex-start',
-            padding: 10,
-            marginLeft: 10,
-            marginBottom: 10,
-          }}>
-          <FontAwesomeIcon
-            icon={faSortNumericUp}
-            size={20}
-            color="black"
-            style={{marginTop: 2}}
-          />
-          <Text
-            style={{
-              marginLeft: 30,
-              fontSize: 18,
-              color: '#78909c',
-              fontWeight: '400',
-            }}>
- {userdetails.userEntityList[0].userDetails.age}
-          </Text>
+        <Divider width={0.6} />
+        <View style={styles.items}>
+          <Text style={styles.itemleft}>Contact Number</Text>
+
+          <Text style={styles.itemright}>{userdetails.userEntityList[0].userDetails.usercontact}</Text>
         </View>
-        <View
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'flex-start',
-            padding: 10,
-            marginLeft: 10,
-            marginBottom: 10,
-          }}>
-          <FontAwesomeIcon
-            icon={faDroplet}
-            size={20}
-            color="black"
-            style={{marginTop: 2}}
-          />
-          <Text
-            style={{
-              marginLeft: 30,
-              fontSize: 18,
-              color: '#78909c',
-              fontWeight: '400',
-            }}>
-{userdetails.userEntityList[0].userDetails.blood_group}
-          </Text>
+        <Divider width={0.6}/>
+        <View style={styles.items}>
+          <Text style={styles.itemleft}>Email Id</Text>
+          <Text style={styles.itemright}>{userdetails.userEntityList[0].email}</Text>
         </View>
-        <View
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'flex-start',
-            padding: 10,
-            marginLeft: 10,
-            marginBottom: 10,
-          }}>
-          <FontAwesomeIcon
-            icon={faUserGroup}
-            size={20}
-            color="black"
-            style={{marginTop: 2}}
-          />
-          <Text
-            style={{
-              marginLeft: 30,
-              fontSize: 18,
-              color: '#78909c',
-              fontWeight: '400',
-            }}>
- {userdetails.userEntityList[0].userDetails.martial_status}
-          </Text>
+        <Divider width={0.6} />
+        <View style={styles.items}>
+          <Text style={styles.itemleft}>Gender</Text>
+
+          <Text style={styles.itemright}>{userdetails.userEntityList[0].userDetails.gender}</Text>
         </View>
-        <View
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'flex-start',
-            padding: 10,
-            marginLeft: 10,
-            marginBottom: 10,
-          }}>
-          <FontAwesomeIcon
-            icon={faWeight}
-            size={20}
-            color="black"
-            style={{marginTop: 2}}
-          />
-          <Text
-            style={{
-              marginLeft: 30,
-              fontSize: 18,
-              color: '#78909c',
-              fontWeight: '400',
-            }}>
-{userdetails.userEntityList[0].userDetails.weight}
-          </Text>
+        <Divider width={0.6} />
+        <View style={styles.items}>
+          <Text style={styles.itemleft}>Blood Group</Text>
+
+          <Text style={styles.itemright}>{userdetails.userEntityList[0].userDetails.blood_group}</Text>
         </View>
-        <View
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'flex-start',
-            padding: 10,
-            marginLeft: 10,
-            marginBottom: 10,
-          }}>
-          <FontAwesomeIcon
-            icon={faPhone}
-            size={20}
-            color="black"
-            style={{marginTop: 2}}
-          />
-          <Text
-            style={{
-              marginLeft: 30,
-              fontSize: 18,
-              color: '#78909c',
-              fontWeight: '400',
-            }}>
-{userdetails.userEntityList[0].userDetails.usercontact}
-          </Text>
+        <Divider width={0.6} />
+        <View style={styles.items}>
+          <Text style={styles.itemleft}>Marital Status</Text>
+          <Text style={styles.itemright}>{userdetails.userEntityList[0].userDetails.martial_status}</Text>
         </View>
-        <View style={styles.userDetails}>
-          <List.Section style={{backgroundColor: 'white'}}>
-            <List.Accordion
-              title="Medicine 1"
-              titleStyle={{
-                marginLeft: 20,
-                fontSize: 18,
-                fontWeight: '500',
-              }}
-              left={props => (
-                <FontAwesomeIcon
-                  size={20}
-                  icon={faKitMedical}
-                  color="black"
-                  style={{marginLeft: 14}}
+        <Divider width={0.6} />
+        <View style={styles.items}>
+          <Text style={styles.itemleft}>Weight( i Kg)</Text>
+          <Text style={styles.itemright}>{userdetails.userEntityList[0].userDetails.weight}</Text>
+        </View>
+        <Divider width={0.6} />
+        <View style={{}}>
+          <View>
+            <List.Section style={{backgroundColor: 'white'}}>
+              <List.Accordion
+                title="Medicines"
+                titleStyle={{
+                  //   marginLeft: 20,
+                  fontSize: 15,
+                  fontWeight: '500',
+                }}
+                left={props => (
+                  <FontAwesomeIcon
+                    size={16}
+                    icon={faKitMedical}
+                    color="black"
+                    style={{marginLeft: 8}}
+                  />
+                )}>
+                <List.Item titleStyle={styles.listitem} title="Brufen 400mg" />
+                <List.Item
+                  titleStyle={styles.listitem}
+                  title="PCM suspension 450ml"
                 />
-              )}>
-              <List.Item
-                titleStyle={styles.listitem}
-                title="Medicine 1"
-                right={() => (
-                  <TouchableOpacity
-                    onPress={() => Alert.alert('Sending Notification...')}>
-                    <FontAwesomeIcon
-                      icon={faBell}
-                      size={28}
-                      style={{marginRight: 10, color: '#ff8f00'}}
-                    />
-                  </TouchableOpacity>
-                )}
-              />
-              <List.Item
-                titleStyle={styles.listitem}
-                title="Medicine 1"
-                right={() => (
-                  <TouchableOpacity
-                    onPress={() => sendnotificationtouser(userdetails.userEntityList[0].userDetails.fcm_token)}>
-                    <FontAwesomeIcon
-                      icon={faBell}
-                      size={28}
-                      style={{marginRight: 10, color: '#ff8f00'}}
-                    />
-                  </TouchableOpacity>
-                )}
-              />
-            </List.Accordion>
-          </List.Section>
-          <View style={{height: 1, backgroundColor: 'lightgrey'}} />
+              </List.Accordion>
+            </List.Section>
+          </View>
         </View>
       </ScrollView>
     </View>
@@ -315,34 +171,38 @@ progress ?
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    padding: 10,
+    flexDirection: 'column',
     backgroundColor: 'white',
+    height: '100%',
+  },
+  icon: {
+    height: 90,
+    width: 90,
+    borderRadius: 45,
+    borderColor: 'white',
+    borderWidth: 2,
   },
   top: {
     flexDirection: 'row',
-    marginLeft: 15,
-    marginBottom: 30,
+    justifyContent: 'space-between',
+    padding: 10,
+    height: 110,
   },
-  icon: {
-    height: 70,
-    width: 70,
-    borderRadius: 35,
-    marginTop: 20,
+  items: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    padding: 15,
+    
+    
   },
-  toptext: {
-    flexDirection: 'column',
-    justifyContent: 'flex-start',
-    marginLeft: 20,
-    marginTop: 20,
-  },
-  userDetails: {
-    flex: 1,
-    backgroundColor: 'white',
+  itemleft: {},
+  itemright: {
+    color: 'black',
+    width:200
   },
   listitem: {
-    marginLeft: 20,
-    color: '#78909c',
+    // color: '#78909c',
+    fontSize: 14,
   },
 });
 

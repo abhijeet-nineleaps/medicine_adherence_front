@@ -6,6 +6,7 @@ import {AppRegistry} from 'react-native';
 import App from './App';
 import messaging from '@react-native-firebase/messaging';
 import PushNotification from "react-native-push-notification";
+import SQLite from 'react-native-sqlite-storage';
 
 var Sound = require('react-native-sound');
 
@@ -18,6 +19,15 @@ PushNotification.configure({
     console.log("NOTIFICATION:", notification);
   
     if(notification.action === 'Taken'){
+      const db = SQLite.openDatabase({
+        name:'MedRemdb',
+        location:'default'
+    },()=>{
+        console.log('opened')
+    },error=>{
+        console.log(error)
+    })
+   
       console.log('Taken')
   }else if(notification.action === 'Skip'){
 console.log('Not taken')

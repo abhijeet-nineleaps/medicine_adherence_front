@@ -30,6 +30,7 @@
     "@react-navigation/native-stack": "^6.5.0",
     "@react-navigation/stack": "^6.1.1",
     "fbjs": "^3.0.4",
+    "formik": "^2.2.9",
     "lottie-react-native": "^5.0.1",
     "react": "^17.0.2",
     "react-native": "^0.67.3",
@@ -69,7 +70,8 @@
     "react-native-vector-icons": "^9.1.0",
     "react-navigation": "^4.4.4",
     "reanimated-bottom-sheet": "^1.0.0-alpha.22",
-    "styled-components": "^5.3.3"
+    "styled-components": "^5.3.3",
+    "yup": "^0.32.11"
   },
   "devDependencies": {
     "@babel/core": "7.17.5",

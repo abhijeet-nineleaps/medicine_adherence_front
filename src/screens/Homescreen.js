@@ -75,9 +75,13 @@ return(
          tabBarStyle:{height:60},
       tabBarInactiveTintColor: "#555",
       tabBarInactiveBackgroundColor:'white',
+      tabBarActiveBackgroundColor:'#e3f2fd',
+      
+      tabBarActiveTintColor:'#bbdefb',
       tabBarLabelStyle: {
         fontSize: 16,
-        color:'black'
+        color:'black',
+        
       }
       
     })}  
@@ -92,7 +96,7 @@ return(
      source={require('../../assests/animate/calen.json')} autoPlay loop>
     
    </LottieView>)}}></Tab.Screen> */}
-   <Tab.Screen name="Report" key={1}     options={{headerShown:false,
+   <Tab.Screen name="Report" key={1}     options={{headerShown:false,tabBarBadge:2,
       tabBarIcon:()=>(<LottieView style={{width:60,height:60}}  speed={0.8} source={require('../../assests/animate/heart.json')} autoPlay loop />)}}
        component={Medicineadherence} />
       <Tab.Screen  name="Profile"  key={2}
