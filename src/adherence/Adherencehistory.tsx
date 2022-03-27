@@ -35,7 +35,7 @@ const Reminders = () => {
   );
 };
 
-export default function MyComponent() {
+const MyComponent:React.FC = () => {
   const [selectedMedicine, setSelectedMedicine] = React.useState();
   const [pickerValue, setPickerValue] = React.useState();
 
@@ -81,7 +81,7 @@ export default function MyComponent() {
             borderWidth={3}
             color="#4dd0e1"
             bgColor="#fff">
-            <Text style={{fontSize: 18, color: '#4dd0e1', fontSize: 20}}>
+            <Text style={{fontSize: 18, color: '#4dd0e1'}}>
               {'30%'}
             </Text>
           </ProgressCircle>
@@ -125,3 +125,5 @@ const styles = StyleSheet.create({
     paddingLeft: 20,
   },
 });
+
+export default MyComponent;
