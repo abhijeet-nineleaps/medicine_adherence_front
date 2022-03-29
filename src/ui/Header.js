@@ -10,29 +10,6 @@ const ProfileHeader = () => {
     const [umg, imgstate] = React.useState('https://i.stack.imgur.com/l60Hf.png');
     const [name , namestate] = React.useState('');
 
-    useEffect(() => {
-      messaging().onMessage(async mssg => {
-  
-        Alert.alert(
-          mssg.notification.title,
-          "My Alert Msg",
-          [
-            {
-              text: "Ask me later",
-              onPress: () => console.log("Ask me later pressed")
-            },
-            {
-              text: "Cancel",
-              onPress: () => console.log("Cancel Pressed"),
-              style: "cancel"
-            },
-            { text: "OK", onPress: () => console.log("OK Pressed") }
-          ]
-        );
-  
-        console.log("rece in fore", mssg)
-      })
-    }, [])
     useFocusEffect(() => {
   
       async function getuser() {

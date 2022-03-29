@@ -2,7 +2,7 @@
  * @format
  */
 
-import {AppRegistry} from 'react-native';
+import {Alert, AppRegistry} from 'react-native';
 import App from './App';
 import messaging from '@react-native-firebase/messaging';
 import PushNotification from "react-native-push-notification";
@@ -59,7 +59,27 @@ console.log('Not taken')
 
   requestPermissions: true,
 });
+messaging().onMessage(async mssg => {
 
+  Alert.alert(
+    mssg.notification.title,
+    "My Alert Msg",
+    [
+      {
+        text: "Ask me later",
+        onPress: () => console.log("Ask me later pressed")
+      },
+      {
+        text: "Cancel",
+        onPress: () => console.log("Cancel Pressed"),
+        style: "cancel"
+      },
+      { text: "OK", onPress: () => console.log("OK Pressed") }
+    ]
+  );
+
+  console.log("rece in fore", mssg)
+})
 messaging().setBackgroundMessageHandler(async remoteMessage => {
   Sound.setCategory('Alarm')
     var whoosh = new Sound('sound.mp3', Sound.MAIN_BUNDLE, (error) => {

@@ -1,43 +1,20 @@
-import messaging from '@react-native-firebase/messaging';
+import messaging, { firebase } from '@react-native-firebase/messaging';
 
 import { Alert, View } from 'react-native';
 import { Button, Input } from 'react-native-elements';
 import React from 'react';
+import Checkconnectivity from '../connectivity/Checkconnectivity';
 var Sound = require('react-native-sound');
 
+let token1 = '';
 const Pushnotification = () => {
-
 React.useEffect(()=>{
+     async function check(){
+        console.log(await Checkconnectivity(),'info');
 
-    var startdate = new Date();
-
-    var startday = new Date(Date.now()).getDay();
-    
-    var end_date = new Date();
-    console.log(startdate,startday)
-    end_date.setDate(end_date.getDate()+10)
-console.log(end_date)
-console.log(startdate < end_date)
-
-    var dub = new Date(end_date);
-    let i =0 ;
-    var weeks = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
-    while(startdate < end_date){
-        dub.setDate(dub.getDate()+1)
-        if(weeks[dub.getDay()] === 'Tuesday'){
-            
-        console.log(dub,dub.getDate() , weeks[dub.getDay()] , dub.getMonth());
-        console.log(startdate)
-        console.log(end_date)
-
-        }
-        startdate.setDate(startdate.getDate()+1)
-
-    }
-   
-
+     }
+check()
 },[])
-
 
     const Remin = () => {
         async function requestUserPermission() {
@@ -49,14 +26,17 @@ console.log(startdate < end_date)
             if (enabled) {
                 console.log('Authorization status:', authStatus);
                 const token = await messaging().getToken();
+                token1 = token;
                 console.log(token);
             }
         }
         requestUserPermission()
     }
 
-    const listener = () => {
-
+    const listener = async () => {
+     
+        // const head = await messaging().getIsHeadless();
+        // console.log(head)
         messaging().onNotificationOpenedApp(mss => {
             var whoosh = new Sound('sound.mp3', Sound.MAIN_BUNDLE, (error) => {
                 if (error) {

@@ -21,11 +21,18 @@ import PushNotification, {Importance} from 'react-native-push-notification';
 import LottieView from 'lottie-react-native';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {
+  faBitcoinSign,
+  faCalendarDays,
   faCancel,
   faCaretDown,
   faCheckCircle,
+  faCircle,
   faCross,
+  faInfinity,
+  faInfoCircle,
   faRemove,
+  faSliders,
+  faSlidersH
 } from '@fortawesome/free-solid-svg-icons';
 import {TextInput} from 'react-native-paper';
 import CheckBox from 'react-native-check-box';
@@ -37,6 +44,7 @@ import DateTimePicker from 'react-native-modal-datetime-picker';
 var counter = 0;
 
 const Reminder = ({route, navigation}) => {
+
   const db = SQLite.openDatabase(
     {
       name: 'MedRemdb',
@@ -137,7 +145,8 @@ const Reminder = ({route, navigation}) => {
     console.log(set)
     while(sample_date <= end_date){
       now.setDate(sample_date.getDate());
-     
+      
+      now.setMonth(sample_date.getMonth())
       if(set.has(weeks[now.getDay()])){
        
         timeings.forEach(timee=>{
@@ -162,7 +171,6 @@ const Reminder = ({route, navigation}) => {
             },
             created => console.log(`createChannel returned '${created}'`), // (optional) callback returns whether the channel was created, false means it already existed.
           );
-      
           PushNotification.localNotificationSchedule({
             //... You can use all the options from localNotifications
             title: titl,
@@ -478,6 +486,7 @@ const Reminder = ({route, navigation}) => {
                 onValuesChange={multiSliderValuesChange}
                 max={100}
                 step={1}
+                customMarker={()=><FontAwesomeIcon color='blue' icon={faCircle}></FontAwesomeIcon>}
               />
             </View>
           </View>

@@ -41,13 +41,13 @@ const TodayPerformance = ({route}) => {
       new_timing += eitem;
     });
     console.log(new_timing)
-    var curr_date = new Date();
-    cc+=1;
+    let tody_date = new Date();
+    let td_da = tody_date.getDate()+'-'+(tody_date.getMonth()+1)+'-'+tody_date.getFullYear();    cc+=1;
     console.log(cc)
    await db.transaction(async function (txxn) {
       txxn.executeSql(
         'UPDATE reminder_day SET timings = ? WHERE date = ? AND med_id = ?',
-        [new_timing,curr_date.toISOString().split('T')[0],user_id],function(err,result){
+        [new_timing,td_da,user_id],function(err,result){
           console.log(result.rows.item(0))
           console.log(err)
         }
@@ -82,6 +82,7 @@ const TodayPerformance = ({route}) => {
           let set = new Set(arr);
           var today = new Date(res.rows.item(0).start_date);
           var tody_date = new Date();
+          let td_da = tody_date.getDate()+'-'+(tody_date.getMonth()+1)+'-'+tody_date.getFullYear();
           console.log(set.has(weeks[tody_date.getDay()]));
 
           if (set.has(weeks[tody_date.getDay()])) {
@@ -91,7 +92,7 @@ const TodayPerformance = ({route}) => {
             );
             txn.executeSql(
               'SELECT * FROM reminder_day where date = ? AND med_id = ?',
-              [tody_date.toISOString().split('T')[0], user_id],
+              [td_da, user_id],
               function (tx, resp) {
                 for (let k = 0; k < resp.rows.length; k++) {
                   console.log(resp.rows.item(k), ' item');
@@ -103,7 +104,7 @@ const TodayPerformance = ({route}) => {
                   txn.executeSql(
                     'INSERT INTO reminder_day (date,timings,med_id) VALUES (?,?,?)',
                     [
-                      tody_date.toISOString().split('T')[0],
+                      td_da,
                       res.rows.item(0).time,
                       user_id,
                     ],
@@ -113,7 +114,7 @@ const TodayPerformance = ({route}) => {
 
                   txn.executeSql(
                     'SELECT * FROM reminder_day where date = ? AND med_id = ?',
-                    [tody_date.toISOString().split('T')[0], user_id],
+                    [td_da, user_id],
                     function (tx, respp) {
                       setTime(respp.rows.item(0).timings.split('-'));
                     },
@@ -122,7 +123,7 @@ const TodayPerformance = ({route}) => {
                   console.log('id present', resp.rows.item(0));
                   txn.executeSql(
                     'SELECT * FROM reminder_day where date = ? AND med_id = ?',
-                    [tody_date.toISOString().split('T')[0], user_id],
+                    [td_da, user_id],
                     function (tx, respp) {
                       setTime(respp.rows.item(0).timings.split('-'));
                     },
