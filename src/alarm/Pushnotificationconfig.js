@@ -37,39 +37,7 @@ check()
      
         // const head = await messaging().getIsHeadless();
         // console.log(head)
-        messaging().onNotificationOpenedApp(mss => {
-            var whoosh = new Sound('sound.mp3', Sound.MAIN_BUNDLE, (error) => {
-                if (error) {
-                    console.log('failed to load the sound', error);
-                    return;
-                }
-                // loaded successfully
-                console.log('duration in seconds: ' + whoosh.getDuration() + 'number of channels: ' + whoosh.getNumberOfChannels());
-                whoosh.setVolume(9.5);
-                // Play the sound with an onEnd callback
-                whoosh.play((success) => {
-                    if (success) {
-                        console.log('successfully finished playing');
-                    } else {
-                        console.log('playback failed due to audio decoding errors');
-                    }
-                });
-            });
-            console.log("Back state", mss.notification)
-        })
-
-        messaging().onMessage(async mssg => {
-            Alert.alert(mssg.notification)
-            console.log("rece in fore", mssg.body)
-        })
-
-
-        messaging().getInitialNotification().then(mssg => {
-            if (mssg) {
-
-                console.log('Rece from quit', mssg.notification)
-            }
-        })
+        
     }
 
 

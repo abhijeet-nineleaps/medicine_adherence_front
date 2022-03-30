@@ -31,35 +31,35 @@ const Stackscreen:React.FC = () => {
       <Stack.Screen name='Welcome' options={{headerShown:false}} component={OnboardingScreen}></Stack.Screen>
         <Stack.Screen name='Drawer' options={{ headerShown: false }} component={DrawerNavigator}></Stack.Screen>
         <Stack.Screen name='UserMeds' options={{ headerShown: true }}
-        options={{headerTintColor:'white',headerStyle:{backgroundColor:'#3743ab'},headerTitleStyle:{color:'white',fontSize:20}}}
+        options={{headerTintColor:'white',headerTitleStyle:{color:'white',fontSize:20}}}
          component={UserMed}></Stack.Screen>
         <Stack.Screen name='Login' component={Login}></Stack.Screen>
         <Stack.Screen name='Profile' 
         options={{headerRight:()=>(<Title onPress={()=>{}} style={{color:'white',marginRight:10}}>Save</Title>),headerTintColor:'white',headerStyle:{backgroundColor:'#3743ab'},headerTitleStyle:{color:'white',fontSize:20}}}
          component={Profile}></Stack.Screen>
         <Stack.Screen name='Searchcaretaker'
-        options={{headerTintColor:'white',headerStyle:{backgroundColor:'#3743ab'},headerTitleStyle:{color:'white',fontSize:20}}}
+        options={{headerTintColor:'white',headerTitleStyle:{color:'white',fontSize:20}}}
          component={Searchcaretaker}></Stack.Screen>
         <Stack.Screen name='Viewpatient'
-        options={{headerTintColor:'white',headerStyle:{backgroundColor:'#3743ab'},headerTitleStyle:{color:'white',fontSize:20}}}
+        options={{headerTintColor:'white',headerTitleStyle:{color:'white',fontSize:20}}}
          component={ViewPatient}></Stack.Screen>
         <Stack.Screen name='Add Reminder'
-        options={{headerTintColor:'white',headerStyle:{backgroundColor:'#3743ab'},headerTitleStyle:{color:'white',fontSize:20}}}
+        options={{headerTintColor:'black',headerTitleStyle:{color:'black',fontSize:20}}}
          component={Reminder} 
-         options={{headerStyle:{backgroundColor:'#3743ab'},headerTitleStyle:{color:'white',fontSize:20}}}></Stack.Screen>
+         options={{headerTitleStyle:{color:'black',fontSize:20}}}></Stack.Screen>
         <Stack.Screen name='Events'
-        options={{headerStyle:{backgroundColor:'#3743ab'},headerTitleStyle:{color:'white',fontSize:20}}}
+        options={{headerTitleStyle:{color:'white',fontSize:20}}}
          component={Addevent}></Stack.Screen>
         <Stack.Screen name='Loginscreen' component={Loginscreen}></Stack.Screen>
         <Stack.Screen name='Docter' component={Doctercomp} options={({ navigation }) => ({
     title: 'Docter secion',
     headerRight: () => (
-      <Button title="Add event" onPress={() => navigation.navigate('Events')} />
+        <Button title="Add event" onPress={() => navigation.navigate('Events')} />
     ),
   })}></Stack.Screen>
-      <Stack.Screen options={{headerTintColor:'white',headerStyle:{backgroundColor:'#3743ab'}}} name='Patientprofile' component={ViewProfile}></Stack.Screen>
-      <Stack.Screen options={{headerTintColor:'white',headerStyle:{backgroundColor:'#3743ab'}}} name='Todayperformance' component={TodayPerformance}></Stack.Screen>
-      <Stack.Screen options={{headerTintColor:'white',headerStyle:{backgroundColor:'#3743ab'}}} name='adherencehistory' component={MyComponent}></Stack.Screen>
+      <Stack.Screen options={{headerTintColor:'bblack'}} name='Patientprofile' component={ViewProfile}></Stack.Screen>
+      <Stack.Screen options={{headerTintColor:'black'}} name='Todayperformance' component={TodayPerformance}></Stack.Screen>
+      <Stack.Screen options={{headerTintColor:'black'}} name='adherencehistory' component={MyComponent}></Stack.Screen>
       </Stack.Navigator>
 
 

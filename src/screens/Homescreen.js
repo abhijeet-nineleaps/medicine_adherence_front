@@ -2,7 +2,7 @@ import React, { useState } from "react"
 import SearchBar from "react-native-dynamic-search-bar";
 import LottieView from 'lottie-react-native';
 
-import {View, 
+import {StatusBar, View, 
      
     } from 'react-native'
     import {
@@ -21,6 +21,7 @@ import Addmedicine from "../Addmedicine";
 import Doctercomp from "./Docterscomp";
 import Profile from "../profile/Profile";
 import { Button } from "react-native-elements";
+import { useFocusEffect } from "@react-navigation/native";
 
       const tabs = [
         {
@@ -64,10 +65,13 @@ import { Button } from "react-native-elements";
         
       />;
 const  HomeScreen = ({navigation})=>{
+
+  const [badge , badge_state] = React.useState(0);
    
 return(
     <View style={{backgroundColor:'white',height:'100%'}}>
- 
+     <StatusBar backgroundColor='#3743ab' style={{}}/>
+
  <Tab.Navigator 
 
       
@@ -96,7 +100,7 @@ return(
      source={require('../../assests/animate/calen.json')} autoPlay loop>
     
    </LottieView>)}}></Tab.Screen> */}
-   <Tab.Screen name="Report" key={1}     options={{headerShown:false,tabBarBadge:2,
+   <Tab.Screen name="Report" key={1}     options={{headerShown:false,
       tabBarIcon:()=>(<LottieView style={{width:60,height:60}}  speed={0.8} source={require('../../assests/animate/heart.json')} autoPlay loop />)}}
        component={Medicineadherence} />
       <Tab.Screen  name="Profile"  key={2}

@@ -14,6 +14,7 @@ import {
   faArrowRightToBracket,
   
 } from '@fortawesome/free-solid-svg-icons';
+import { View } from "react-native";
 
 
 
@@ -68,7 +69,8 @@ useFocusEffect(()=>{
         </TouchableOpacity>
         <Divider style={{ marginBottom: 6 }}></Divider>
         <DrawerItemList {...props}></DrawerItemList>
-       
+       <Divider></Divider>
+       <View style={{marginTop:60}}>
         {
           !loggedin ?
           <Button
@@ -132,8 +134,7 @@ useFocusEffect(()=>{
           onPress={() => props.navigation.navigate('Loginscreen')}
         /> : <></>
         }
-         
-
+        </View>
       </DrawerContentScrollView>
 
     </>

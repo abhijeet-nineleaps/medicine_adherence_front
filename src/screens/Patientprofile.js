@@ -12,17 +12,7 @@ import {Card, Divider} from 'react-native-paper';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {
   faKitMedical,
-  faUser,
-  faDroplet,
-  faUserGroup,
-  faListNumeric,
-  faSortNumericUp,
-  faBell,
-  faWeight,
-  faContactCard,
-  faAddressBook,
-  faPhone,
-  faIdBadge,
+  
 } from '@fortawesome/free-solid-svg-icons';
 import {List} from 'react-native-paper';
 import {API_URL} from '@env';

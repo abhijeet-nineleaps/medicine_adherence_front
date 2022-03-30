@@ -6,6 +6,7 @@ import {
   Image,
   TouchableOpacity,
   RefreshControl,
+  Alert,
 } from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {Avatar, Button, Divider, ListItem} from 'react-native-elements';
@@ -14,6 +15,7 @@ import {GoogleSignin} from '@react-native-google-signin/google-signin';
 import {Card} from 'react-native-paper';
 import LottieView from 'lottie-react-native';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
+
 
 import {
   faStopwatch,
@@ -36,6 +38,7 @@ const db = SQLite.openDatabase({
 })
 
 const Addmedicine = ({navigation}) => {
+
 
   const [refresh , refeereshstate] = React.useState(false);
 
@@ -114,6 +117,7 @@ const Addmedicine = ({navigation}) => {
   };
 
   const renderitem = ({item}) => {
+
     return (
       <Card
         style={{
@@ -150,7 +154,16 @@ const Addmedicine = ({navigation}) => {
                 color={item.status === 0 ? '#3743ab' : '#4dd0e1'}
                 size={24}></FontAwesomeIcon>
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => deleteitem(item.user_id)}>
+            <TouchableOpacity onPress={() =>{
+                    Alert.alert("Delete it!","Sure you want delete it",[
+                      {
+                       text:"Delete",
+                       onPress:()=>deleteitem(item.user_id)
+                      },{
+                        text:"Cancel"
+                      }
+                    ])
+            } }>
               <FontAwesomeIcon
                 icon={faTrash}
                 color="#3743ab"

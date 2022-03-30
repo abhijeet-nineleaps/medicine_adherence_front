@@ -486,6 +486,7 @@ const Reminder = ({route, navigation}) => {
                 onValuesChange={multiSliderValuesChange}
                 max={100}
                 step={1}
+                
                 customMarker={()=><FontAwesomeIcon color='blue' icon={faCircle}></FontAwesomeIcon>}
               />
             </View>
