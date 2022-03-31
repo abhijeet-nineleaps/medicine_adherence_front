@@ -15,6 +15,7 @@ import {
   
 } from '@fortawesome/free-solid-svg-icons';
 import { View } from "react-native";
+import { Righttoobracket, Signout } from "../caretaker/AllIcons";
 
 
 
@@ -76,7 +77,7 @@ useFocusEffect(()=>{
           <Button
           iconPosition='right'
           
-          icon = {()=><FontAwesomeIcon color="white" icon={faRightToBracket}></FontAwesomeIcon>}
+          icon = {Righttoobracket()}
             title="Sign up"
             loading={false}
             loadingProps={{ size: 'small', color: 'white' }}
@@ -96,7 +97,7 @@ useFocusEffect(()=>{
           /> : <Button title="Logout"
           iconPosition='right'
           type='outline'
-          icon={()=><FontAwesomeIcon color="black" icon={faSignOut}></FontAwesomeIcon>}
+          icon={Signout()}
           buttonStyle={{
               borderRadius: 5,
               justifyContent:'space-around'

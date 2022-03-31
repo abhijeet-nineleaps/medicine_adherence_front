@@ -16,18 +16,18 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import {List} from 'react-native-paper';
 import {API_URL} from '@env';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as Progress from 'react-native-progress';
+import {IconProp} from '@fortawesome/fontawesome-svg-core';
 
 
 const ViewProfile = ({route}) => {
   
   const {user_id} = route.params;
-  const [userdetails , userdetailsstate] = React.useState();
+  const [userdetails , userdetailsstate] = React.useState<any>();
   const [progress , progress_status] = React.useState(true);
 
   const sendnotificationtouser = async (fcm_token) => {
-    let url = new URL(`${API_URL}/api/caretaker/notifyuser`);
+    let url : any = new URL(`${API_URL}/api/caretaker/notifyuser`);
     url.searchParams.append('fcm_token', fcm_token);
    
       await fetch(url)
@@ -84,46 +84,38 @@ progress ?
             />
           </View>
         </View>
-        <Divider width={1} />
         <View style={styles.items}>
           <Text style={styles.itemleft}>Bio</Text>
 
           <Text style={styles.itemright}>{userdetails.userEntityList[0].userDetails.bio}</Text>
         </View>
-        <Divider width={0.6} />
         <View style={styles.items}>
           <Text style={styles.itemleft}>Contact Number</Text>
 
           <Text style={styles.itemright}>{userdetails.userEntityList[0].userDetails.usercontact}</Text>
         </View>
-        <Divider width={0.6}/>
         <View style={styles.items}>
           <Text style={styles.itemleft}>Email Id</Text>
           <Text style={styles.itemright}>{userdetails.userEntityList[0].email}</Text>
         </View>
-        <Divider width={0.6} />
         <View style={styles.items}>
           <Text style={styles.itemleft}>Gender</Text>
 
           <Text style={styles.itemright}>{userdetails.userEntityList[0].userDetails.gender}</Text>
         </View>
-        <Divider width={0.6} />
         <View style={styles.items}>
           <Text style={styles.itemleft}>Blood Group</Text>
 
           <Text style={styles.itemright}>{userdetails.userEntityList[0].userDetails.blood_group}</Text>
         </View>
-        <Divider width={0.6} />
         <View style={styles.items}>
           <Text style={styles.itemleft}>Marital Status</Text>
           <Text style={styles.itemright}>{userdetails.userEntityList[0].userDetails.martial_status}</Text>
         </View>
-        <Divider width={0.6} />
         <View style={styles.items}>
           <Text style={styles.itemleft}>Weight( i Kg)</Text>
           <Text style={styles.itemright}>{userdetails.userEntityList[0].userDetails.weight}</Text>
         </View>
-        <Divider width={0.6} />
         <View style={{}}>
           <View>
             <List.Section style={{backgroundColor: 'white'}}>
@@ -137,7 +129,7 @@ progress ?
                 left={props => (
                   <FontAwesomeIcon
                     size={16}
-                    icon={faKitMedical}
+                    icon={faKitMedical as IconProp}
                     color="black"
                     style={{marginLeft: 8}}
                   />

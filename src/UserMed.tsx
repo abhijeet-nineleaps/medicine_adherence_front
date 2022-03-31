@@ -56,7 +56,7 @@ const UserMed = ({ route, navigation }) => {
         <View style={{ backgroundColor: 'white', height: height, width: width }}>
         <Toast></Toast>
             <View style={{ alignItems: 'center' ,justifyContent:'center'}}>
-                <LottieView style={{ width: 300, height: 300 }} source={require('../assests/animate/med_des.json')} autoPlay loop speed={2}></LottieView>
+                <LottieView style={{ width: 300, height: 300 }} source={require('../assests/animate/med_des.json')} autoPlay loop speed={1}></LottieView>
 
             </View>
             <View style={{ margin: 12, marginTop:20, height: height / 4, backgroundColor: 'white', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>

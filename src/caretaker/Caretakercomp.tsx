@@ -3,17 +3,9 @@ import React from 'react';
 import CaretakerReq from './Caretakerreq';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
 import {useFocusEffect} from '@react-navigation/native';
-import {View, Text, Alert} from 'react-native';
-import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
+import {Alert} from 'react-native';
 import {Tab, TabView} from 'react-native-elements';
-import {
-  faHome,
-  faMedkit,
-  faPerson,
-  faUserNurse,
-  faUserFriends,
-  faScrewdriver,
-} from '@fortawesome/free-solid-svg-icons';
+import {Caretaker_nurse , Userfriend} from './AllIcons';
 
 export default function Caretakercomp({navigation}) {
   const [index, setIndex] = React.useState(0);
@@ -48,23 +40,13 @@ export default function Caretakercomp({navigation}) {
           title="Caretakers"
           containerStyle={{backgroundColor: '#3743ab'}}
           titleStyle={{fontSize: 12}}
-          icon={() => (
-            <FontAwesomeIcon
-              style={{marginBottom: 6}}
-              color="white"
-              icon={faUserNurse}></FontAwesomeIcon>
-          )}
+          icon={Caretaker_nurse()}
         />
         <Tab.Item
           title="Caretakerrequest"
           titleStyle={{fontSize: 12}}
           containerStyle={{backgroundColor: '#3743ab'}}
-          icon={() => (
-            <FontAwesomeIcon
-              style={{marginBottom: 6}}
-              color="white"
-              icon={faUserFriends}></FontAwesomeIcon>
-          )}
+          icon={Userfriend()}
         />
       </Tab>
 

@@ -25,8 +25,8 @@ const Patientrequest = () => {
     fetchpatientreq();
   }, []);
 
-  const acceptrequest = ci_id => {
-    let url = new URL(`${API_URL}/api/caretaker/updatestatus`);
+  const acceptrequest = (ci_id:String) => {
+    let url : any = new URL(`${API_URL}/api/caretaker/updatestatus`);
     url.searchParams.append('c_id', ci_id);
 
     fetch(url, {method: 'PUT'})

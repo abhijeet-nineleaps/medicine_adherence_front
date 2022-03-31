@@ -5,7 +5,7 @@ import { Alert ,View , Text ,Image} from "react-native";
 import messaging from '@react-native-firebase/messaging';
 
 
-const ProfileHeader = () => {
+const ProfileHeader : React.FC = () => {
 
     const [umg, imgstate] = React.useState('https://i.stack.imgur.com/l60Hf.png');
     const [name , namestate] = React.useState('');

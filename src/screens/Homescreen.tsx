@@ -66,11 +66,10 @@ import { useFocusEffect } from "@react-navigation/native";
       />;
 const  HomeScreen = ({navigation})=>{
 
-  const [badge , badge_state] = React.useState(0);
    
 return(
     <View style={{backgroundColor:'white',height:'100%'}}>
-     <StatusBar backgroundColor='#3743ab' style={{}}/>
+     <StatusBar backgroundColor='#3743ab'/>
 
  <Tab.Navigator 
 

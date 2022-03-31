@@ -10,7 +10,6 @@ import Reminder from "../alarm/Reminder";
 import Searchcaretaker from "../caretaker/Searchcaretaker";
 import Login from "../login/Googleoauth";
 import Loginscreen from "../login/Loginscreen";
-import ViewPatient from "../patient/ViewPatientdata";
 import Profile from "../profile/Profile";
 import Doctercomp from "../screens/Docterscomp";
 import OnboardingScreen from "../screens/Onboarding";
@@ -31,7 +30,7 @@ const Stackscreen:React.FC = () => {
       <Stack.Screen name='Welcome' options={{headerShown:false}} component={OnboardingScreen}></Stack.Screen>
         <Stack.Screen name='Drawer' options={{ headerShown: false }} component={DrawerNavigator}></Stack.Screen>
         <Stack.Screen name='UserMeds' options={{ headerShown: true }}
-        options={{headerTintColor:'white',headerTitleStyle:{color:'white',fontSize:20}}}
+        options={{headerTintColor:'black',headerTitleStyle:{color:'black',fontSize:20}}}
          component={UserMed}></Stack.Screen>
         <Stack.Screen name='Login' component={Login}></Stack.Screen>
         <Stack.Screen name='Profile' 
@@ -40,9 +39,7 @@ const Stackscreen:React.FC = () => {
         <Stack.Screen name='Searchcaretaker'
         options={{headerTintColor:'white',headerTitleStyle:{color:'white',fontSize:20}}}
          component={Searchcaretaker}></Stack.Screen>
-        <Stack.Screen name='Viewpatient'
-        options={{headerTintColor:'white',headerTitleStyle:{color:'white',fontSize:20}}}
-         component={ViewPatient}></Stack.Screen>
+       
         <Stack.Screen name='Add Reminder'
         options={{headerTintColor:'black',headerTitleStyle:{color:'black',fontSize:20}}}
          component={Reminder} 
@@ -57,7 +54,7 @@ const Stackscreen:React.FC = () => {
         <Button title="Add event" onPress={() => navigation.navigate('Events')} />
     ),
   })}></Stack.Screen>
-      <Stack.Screen options={{headerTintColor:'bblack'}} name='Patientprofile' component={ViewProfile}></Stack.Screen>
+      <Stack.Screen options={{headerTintColor:'black'}} name='Patientprofile' component={ViewProfile}></Stack.Screen>
       <Stack.Screen options={{headerTintColor:'black'}} name='Todayperformance' component={TodayPerformance}></Stack.Screen>
       <Stack.Screen options={{headerTintColor:'black'}} name='adherencehistory' component={MyComponent}></Stack.Screen>
       </Stack.Navigator>

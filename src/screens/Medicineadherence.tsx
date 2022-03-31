@@ -2,21 +2,17 @@ import * as React from 'react';
 import {
   View,
   Text,
-  Button,
-  Alert,
   TouchableOpacity,
   FlatList,
   RefreshControl,
 } from 'react-native';
 import ProgressCircle from 'react-native-progress-circle';
 import {Divider} from 'react-native-elements';
-import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {useFocusEffect} from '@react-navigation/native';
 import SQLite from 'react-native-sqlite-storage';
 import * as Progress from 'react-native-progress';
 import {API_URL} from '@env'
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { faL } from '@fortawesome/free-solid-svg-icons';
 
 
 const Medicineadherence = ({navigation}) => {
@@ -112,7 +108,7 @@ const Medicineadherence = ({navigation}) => {
             }
 
             reminderdatastate(reminder_array);
-            resolve();
+            resolve("");
           },
         );
       });
@@ -136,7 +132,7 @@ const Medicineadherence = ({navigation}) => {
 
     console.log(filtered_array)
     let user_id = await AsyncStorage.getItem('user_id');
-    let url = new URL(`${API_URL}/api/usermedicine/syncmedicines`);
+    let url : any = new URL(`${API_URL}/api/usermedicine/syncmedicines`);
     url.searchParams.append('user_id', user_id);
     fetch(url,{
      method:'POST',

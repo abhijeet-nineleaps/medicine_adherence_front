@@ -7,8 +7,6 @@ import Patientcomp from '../Patient';
 import CustomHeader from './customheader';
 import {
   createDrawerNavigator,
-  DrawerContentScrollView,
-  DrawerItemList,
 } from '@react-navigation/drawer';
 import HomeScreen from '../screens/Homescreen';
 import Settings from '../screens/Settings';
@@ -21,10 +19,12 @@ import {
   faGear,faBell
 } from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
+import {IconProp} from '@fortawesome/fontawesome-svg-core';
+
 
 const Drawer = createDrawerNavigator();
 
-const DrawerNavigator = ({navigation}) => {
+const DrawerNavigator = ({navigation} : any) => {
   return (
     <Drawer.Navigator
       initialRouteName="Home"
@@ -38,7 +38,7 @@ const DrawerNavigator = ({navigation}) => {
             <FontAwesomeIcon
               color="black"
               size={22}
-              icon={faHome}></FontAwesomeIcon>
+              icon={faHome as IconProp}></FontAwesomeIcon>
           ),
         }}
         component={HomeScreen}></Drawer.Screen>
@@ -63,7 +63,7 @@ const DrawerNavigator = ({navigation}) => {
             );
           },
           drawerIcon: () => (
-            <FontAwesomeIcon size={22} icon={faMedkit}></FontAwesomeIcon>
+            <FontAwesomeIcon size={22} icon={faMedkit as IconProp}></FontAwesomeIcon>
           ),
         }}
       />
@@ -73,14 +73,14 @@ const DrawerNavigator = ({navigation}) => {
         options={{
           title: 'MyPatient',
           drawerIcon: () => (
-            <FontAwesomeIcon size={22} icon={faPerson}></FontAwesomeIcon>
+            <FontAwesomeIcon size={22} icon={faPerson as IconProp}></FontAwesomeIcon>
           ),
         }}
       />
       <Drawer.Screen
         options={{
           drawerIcon: () => (
-            <FontAwesomeIcon size={22} icon={faUserNurse}></FontAwesomeIcon>
+            <FontAwesomeIcon size={22} icon={faUserNurse as IconProp}></FontAwesomeIcon>
           ),
         }}
         name="Caretaker"
@@ -93,7 +93,7 @@ const DrawerNavigator = ({navigation}) => {
         component={Settings}
         options={{
           drawerIcon: () => (
-            <FontAwesomeIcon size={22} icon={faGear}></FontAwesomeIcon>
+            <FontAwesomeIcon size={22} icon={faGear as IconProp}></FontAwesomeIcon>
           ),
         }}></Drawer.Screen>
       <Drawer.Screen
@@ -101,7 +101,7 @@ const DrawerNavigator = ({navigation}) => {
         component={Pushnotification}
 
         options={{title: 'Notification',drawerIcon: () => (
-            <FontAwesomeIcon size={22} icon={faBell}></FontAwesomeIcon>
+            <FontAwesomeIcon size={22} icon={faBell as IconProp}></FontAwesomeIcon>
           ),}}></Drawer.Screen>
     </Drawer.Navigator>
   );

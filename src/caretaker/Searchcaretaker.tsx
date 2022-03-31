@@ -2,7 +2,7 @@
 import React from "react";
 import { FlatList, View } from "react-native";
 import { Avatar, Button, ListItem, SearchBar } from "react-native-elements";
-import {API_URL} from '@env'
+import {API_URL} from '@env';
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Toast from 'react-native-toast-message';
 
@@ -14,7 +14,7 @@ const Searchcaretaker = ({navigation}) => {
     const [load , loadstate] = React.useState(false);
     const [searchload , searchloadstate] = React.useState(false);
 
-    const searchText = (text) => {
+    const searchText = (text:any) => {
         searchstate(text)
         console.log(searchword)
          
@@ -47,7 +47,7 @@ const Searchcaretaker = ({navigation}) => {
 
     }
 
-    const sendreqtocaretaker = async (caret_id , caret_username) => {
+    const sendreqtocaretaker = async (caret_id :String , caret_username : String) => {
       const pnt_id = await  AsyncStorage.getItem('user_id');
       const pt_name = await AsyncStorage.getItem('user_name');
        console.log(caret_id , pnt_id , pt_name);
@@ -73,7 +73,7 @@ const Searchcaretaker = ({navigation}) => {
         console.log(res.json())
 navigation.pop(1);
        })
-       .catch(err=>console.log(er))
+       .catch((err)=>console.log(err))
 
     }
 

@@ -28,14 +28,11 @@ const Loginscreen = () => {
             })
                 .then(resp => resp.json())
                 .then(async res => {
-                    console.log(res)
                     if(res.status === 'success'){
-                        console.info(res.user_id)
                         await AsyncStorage.setItem('user_id',res.userentity[0].user_id)
                         await AsyncStorage.setItem('user_name',res.userentity[0].user_name)
                         
-              console.info(await AsyncStorage.getItem('user_id')
-                         ,await AsyncStorage.getItem('user_name'))
+             
                          loadingstate(false);
                     Toast.show({
                         type: 'success',
@@ -59,7 +56,6 @@ const Loginscreen = () => {
                    
                    
                 }).catch(err=>{
-                    console.log(err);
                     Toast.show({
                         type: 'info',
                         text1: 'Failed',
@@ -68,7 +64,6 @@ const Loginscreen = () => {
                 })
 
         } catch (err) {
-            console.log(err);
             Toast.show({
                 type: 'info',
                 text1: 'Failed',

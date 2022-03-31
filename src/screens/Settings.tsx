@@ -2,8 +2,11 @@ import {StyleSheet, Alert, Linking,Share, View} from 'react-native';
 import React from 'react';
 import SettingsList from 'react-native-settings-list';
 
+interface Props{
+  navigation : any
+}
 
-const Settings = ({navigation}) => {
+const Settings:React.FC<Props> = ({navigation} : Props) => {
  
   return (
     <View style={{height:'100%',backgroundColor:'white'}}>
@@ -67,17 +70,10 @@ const Settings = ({navigation}) => {
                message:'Hello Nikunj invited to use Medstick '+'https://play.google.com/store/apps/details?id=com.animesafar.dinterviewkit',
                url:'https://cdn.discordapp.com/attachments/941592669933682699/955175698568462437/vinaylogo.png'
            })
-           if (result.action === Share.sharedAction) {
-        if (result.activityType) {
-          // shared with activity type of result.activityType
-        } else {
-          // shared
-        }
-      } else if (result.action === Share.dismissedAction) {
-        // dismissed
-      }
+          
+      
     } catch (error) {
-      alert(error.message);
+      
     }
         }}
       />

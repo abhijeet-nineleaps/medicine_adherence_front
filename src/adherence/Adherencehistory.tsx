@@ -22,39 +22,38 @@ interface singledate {
 }
 
 const Reminders: React.FC = ({item}:any) => {
-  console.log(item);
 
   return (
     <>
-      <View
+      <View key={item.medicine_name+'1'}
         style={{
           padding: 4,
           marginBottom: 15,
         }}>
-        <Card style={styles.dateday}>
-          <View style={{flexDirection: 'row', justifyContent: 'space-around'}}>
-            <Text>Date - {item.date}</Text>
+        <Card key={item.medicine_name+'2'} style={styles.dateday}>
+          <View key={item.medicine_name+'3'} style={{flexDirection: 'row', justifyContent: 'space-around'}}>
+            <Text key={item.medicine_name+'7'}>Date - {item.date}</Text>
           </View>
         </Card>
       </View>
       {item.key.not_taken.map((nti: any) => {
         return (
-          <View
+          <View key={item.medicine_name+'4'}
             style={{
               flexDirection: 'row',
               justifyContent: 'space-around',
               marginBottom: 12,
             }}>
-            <Text>{nti}</Text>
-            <Text style={{color: 'red'}}> Not Taken</Text>
+            <Text key={item.medicine_name+'5'}>{nti}</Text>
+            <Text key={item.medicine_name+'6'} style={{color: 'red'}}> Not Taken</Text>
           </View>
         );
       })}
       {item.key.taken.map((tti: any) => {
         return (
-          <View style={{flexDirection: 'row', justifyContent: 'space-around'}}>
-            <Text>{tti}</Text>
-            <Text style={{color: 'green'}}> Taken</Text>
+          <View key={item.medicine_name+'12'} style={{flexDirection: 'row', justifyContent: 'space-around'}}>
+            <Text key={item.medicine_name+'22'}>{tti}</Text>
+            <Text key={item.medicine_name+'23'} style={{color: 'green'}}> Taken</Text>
           </View>
         );
       })}
@@ -64,13 +63,10 @@ const Reminders: React.FC = ({item}:any) => {
 
 const MyComponent: React.FC = () => {
 
-  const [selectedMedicine, setSelectedMedicine] = React.useState();
   const [pickerValue, setPickerValue] = React.useState<String>('');
   const [allreminders, reminders_state] = React.useState<[]>([]);
-  const [filteredreminders, filterreminderstate] = React.useState<[]>([]);
-  const [reminder_map_fetched_data, reminder_map_fetched_data_state] =
-    React.useState<[]>([]);
-  const [med_detail,med_detail_state] = React.useState();
+  const [reminder_map_fetched_data, reminder_map_fetched_data_state] = React.useState<[]>([]);
+  const [med_detail,med_detail_state] = React.useState<any>();
 
   const fetchreminders = async (db: any) => {
     const reminder_array: any = [];
@@ -86,8 +82,6 @@ const MyComponent: React.FC = () => {
         [],
         function (tx: any, res: any) {
           for (let i = 0; i < res.rows.length; ++i) {
-            // meds_array.push(res.rows.item(i));
-            console.log(res.rows.item(i));
             reminder_array.push(res.rows.item(i));
           }
           reminders_state(reminder_array);
@@ -98,11 +92,10 @@ const MyComponent: React.FC = () => {
 
   const remindersofparticular_medicine = async (med_name: any) => {
     console.log(med_name);
-    const output_map = await Allreminderdata(med_name);
+    const output_map : any = await Allreminderdata(med_name);
     console.log('out', output_map);
     let f_array: any = [];
     for (let [key, value] of output_map.entries()) {
-      console.log(key, value);
       let arr = {date: key, key: {taken: [], not_taken: []}};
       arr.key.taken = value.taken;
       arr.key.not_taken = value.not_taken;
@@ -171,6 +164,7 @@ const MyComponent: React.FC = () => {
             {allreminders.map((it: any) => {
               return (
                 <Picker.Item
+                key={it.medicine_name}
                   label={it.medicine_name}
                   value={it.medicine_name}
                 />
@@ -234,10 +228,11 @@ const styles = StyleSheet.create({
     paddingLeft: 25,
   },
   dateday: {
-    borderRadius: 25,
+    borderRadius: 6,
     elevation: 2,
     padding: 10,
     paddingLeft: 20,
+    marginTop:8
   },
 });
 
