@@ -1,46 +1,33 @@
 import React, {useEffect} from 'react';
 import {
-  Alert,
   View,
   Text,
   Dimensions,
-  Image,
-  FlatList,
   ScrollView,
 } from 'react-native';
-import {Button, Input} from 'react-native-elements';
+import {Button} from 'react-native-elements';
 import {Divider} from 'react-native-elements/dist/divider/Divider';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import SectionedMultiSelect from 'react-native-sectioned-multi-select';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import InteractiveTextInput from 'react-native-text-input-interactive';
 import {TouchableOpacity} from 'react-native-gesture-handler';
-import {color} from 'react-native-reanimated';
-import {time_data, day_data} from './Timedata';
+import { day_data} from './Timedata';
 import PushNotification, {Importance} from 'react-native-push-notification';
-import LottieView from 'lottie-react-native';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {
-  faBitcoinSign,
-  faCalendarDays,
-  faCancel,
   faCaretDown,
-  faCheckCircle,
   faCircle,
-  faCross,
-  faInfinity,
-  faInfoCircle,
   faRemove,
-  faSliders,
-  faSlidersH
 } from '@fortawesome/free-solid-svg-icons';
 import {TextInput} from 'react-native-paper';
 import CheckBox from 'react-native-check-box';
 import MultiSlider from '@ptomasroos/react-native-multi-slider';
 
 import SQLite from 'react-native-sqlite-storage';
-import {useFocusEffect, useIsFocused} from '@react-navigation/native';
+import {useIsFocused} from '@react-navigation/native';
 import DateTimePicker from 'react-native-modal-datetime-picker';
+import {IconProp} from '@fortawesome/fontawesome-svg-core';
+
 var counter = 0;
 
 const Reminder = ({route, navigation}) => {
@@ -55,10 +42,7 @@ const Reminder = ({route, navigation}) => {
       console.log(error);
     },
   );
-  const isfocus = useIsFocused();
-  // PushNotification.getChannels(function (ids) {
-  //   console.log(ids);
-  // });
+  
 
   useEffect(() => {
     db.transaction(txn => {
@@ -99,17 +83,17 @@ const Reminder = ({route, navigation}) => {
   const [load, loadstate] = React.useState(false);
   const [start_date, start_datestate] = React.useState(new Date());
   const [end_date, end_datestate] = React.useState(new Date());
-  const [store_start_date, store_start_datestate] = React.useState(new Date());
+  const [store_start_date, store_start_datestate] = React.useState<any>(new Date());
   const [store_end_date, store_end_datestate] = React.useState(new Date());
   const [check1, setCheck1] = React.useState(false);
   const [check2, setCheck2] = React.useState(false);
   const [title, titlestate] = React.useState('');
   const [time_picker_mode, time_picker_mode_state] = React.useState(false);
-  const [timeings, timestate] = React.useState([]);
+  const [timeings, timestate] = React.useState<any[]>([]);
   const [sliderOneChanging, setSliderOneChanging] = React.useState(false);
   const [sliderOneValue, setSliderOneValue] = React.useState([5]);
   const [multiSliderValue, setMultiSliderValue] = React.useState([0]);
-  const [timearray, timearraystate] = React.useState([]);
+  const [timearray, timearraystate] = React.useState<any[]>([]);
   const [total_medicine , total_med_state] = React.useState(0);
 
   const onSelectedItemsChange = selectedi => {
@@ -129,7 +113,7 @@ const Reminder = ({route, navigation}) => {
     time_picker_mode_state(false);
   };
 
-  const setreminderwithselecteddate = titl => {
+  const setreminderwithselecteddate = (titl:any) => {
     counter = 0;
     var now = new Date();
     
@@ -137,11 +121,10 @@ const Reminder = ({route, navigation}) => {
     
     console.log(now.getDate(), now.getHours(), now.getTime());
     console.log(new Date(Date.now()));
-    console.log(Date.parse(now));
     console.log('now', now);
     let sample_date = new Date(start_date);
-    var weeks = ['Sun', 'Mon', 'Tue', 'Wed', 'Thur', 'Fri', 'Sat'];
-    var set = new Set(selecteddaysItems)
+    var weeks:string[] = ['Sun', 'Mon', 'Tue', 'Wed', 'Thur', 'Fri', 'Sat'];
+    var set = new Set<String>(selecteddaysItems)
     console.log(set)
     while(sample_date <= end_date){
       now.setDate(sample_date.getDate());
@@ -149,7 +132,7 @@ const Reminder = ({route, navigation}) => {
       now.setMonth(sample_date.getMonth())
       if(set.has(weeks[now.getDay()])){
        
-        timeings.forEach(timee=>{
+        timeings.forEach((timee:any)=>{
           var num = Math.floor(Math.random() * 90000) + 10000;
           counter+=1;
           let timm_array = timee.split(":")
@@ -193,7 +176,6 @@ const Reminder = ({route, navigation}) => {
             repeatType: 'day',
       
             smallIcon: 'android.resource://com.project/raw/icon.png',
-            vibrate: true,
       
             actions: ['Taken', 'Skip', 'Send '],
       
@@ -229,8 +211,7 @@ const Reminder = ({route, navigation}) => {
 
   const handleConfirmfortime = date => {
     console.log('A time has been picked: ', date.getHours(), date.getMinutes());
-    hrs = date.getHours();
-    min = date.getMinutes();
+  
     if (date.getHours() > 11) {
       console.log(timeings);
       timearray.push(date.getHours() + ':' + date.getMinutes() + ' PM');
@@ -335,7 +316,7 @@ const Reminder = ({route, navigation}) => {
             </View>
 
             <FontAwesomeIcon
-              icon={faCaretDown}
+              icon={faCaretDown as IconProp}
               style={{right: 0, position: 'absolute'}}
               color=""></FontAwesomeIcon>
           </TouchableOpacity>
@@ -396,7 +377,7 @@ const Reminder = ({route, navigation}) => {
               </View>
 
               <FontAwesomeIcon
-                icon={faCaretDown}
+                icon={faCaretDown as IconProp}
                 style={{right: 0, position: 'absolute'}}
                 color=""></FontAwesomeIcon>
             </TouchableOpacity>
@@ -422,7 +403,7 @@ const Reminder = ({route, navigation}) => {
                     }}>
                     <FontAwesomeIcon
                       color="red"
-                      icon={faRemove}></FontAwesomeIcon>
+                      icon={faRemove as IconProp}></FontAwesomeIcon>
                   </TouchableOpacity>
                 </View>
               );
@@ -487,7 +468,7 @@ const Reminder = ({route, navigation}) => {
                 max={100}
                 step={1}
                 
-                customMarker={()=><FontAwesomeIcon color='blue' icon={faCircle}></FontAwesomeIcon>}
+                customMarker={()=><FontAwesomeIcon color='blue' icon={faCircle as IconProp}></FontAwesomeIcon>}
               />
             </View>
           </View>

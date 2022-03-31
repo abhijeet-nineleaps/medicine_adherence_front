@@ -7,6 +7,8 @@ var weeks = ['Sun', 'Mon', 'Tue', 'Wed', 'Thur', 'Fri', 'Sat'];
 import Toast from 'react-native-toast-message';
 import { set } from 'react-native-reanimated';
 var cc = 0;
+
+
 const TodayPerformance = ({route}) => {
   const db = SQLite.openDatabase(
     {
@@ -28,7 +30,7 @@ const TodayPerformance = ({route}) => {
   const [Timings, setTime] = useState([]);
   const [value, setValue] = useState(0);
 
-  const updatetimes = async(time) => {
+  const updatetimes = async(time:never) => {
     console.log(time, ' ', Timings.indexOf(time));
     const index = Timings.indexOf(time);
 
@@ -72,7 +74,7 @@ const TodayPerformance = ({route}) => {
       txn.executeSql(
         'SELECT * FROM `User_medicines` where user_id = ?',
         [user_id],
-        function (tx, res) {
+        function (tx:any, res:any) {
           // meds_array.push(res.rows.item(i));
           console.log(res.rows.item(0).time);
           console.log(res.rows.item(0).total_med_reminders);
@@ -132,6 +134,9 @@ const TodayPerformance = ({route}) => {
                 }
               },
             );
+          }else{
+            setTime([""]);
+
           }
 
           console.log(Timings);
@@ -141,7 +146,7 @@ const TodayPerformance = ({route}) => {
     });
   }, []);
 
-  const Box = props => {
+  const Box = (props:any) => {
     const {time} = props;
     const [med1, setMed1] = useState(false);
     const [taken, takenstatus] = useState(false);

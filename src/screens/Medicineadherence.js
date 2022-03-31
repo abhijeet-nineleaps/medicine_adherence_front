@@ -16,6 +16,7 @@ import SQLite from 'react-native-sqlite-storage';
 import * as Progress from 'react-native-progress';
 import {API_URL} from '@env'
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { faL } from '@fortawesome/free-solid-svg-icons';
 
 
 const Medicineadherence = ({navigation}) => {
@@ -23,7 +24,6 @@ const Medicineadherence = ({navigation}) => {
   const [sync, syncstate] = React.useState(false);
 
   const Reminder = ({item}) => {
-    async function fetchadherence() {}
 
     return (
       <>
@@ -144,7 +144,11 @@ const Medicineadherence = ({navigation}) => {
      headers: {
       "Content-type": "application/json"
   }
-   }).then((response)=>console.log(response))
+   }).then((response)=>{
+     if(response.status === 200){
+       syncstate(false)
+     }
+   })
   }
 
   useFocusEffect(

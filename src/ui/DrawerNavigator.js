@@ -11,11 +11,7 @@ import {
   DrawerItemList,
 } from '@react-navigation/drawer';
 import HomeScreen from '../screens/Homescreen';
-import Doctercomp from '../screens/Docterscomp';
-import Pharmacies from '../screens/Pharmacies';
 import Settings from '../screens/Settings';
-import {Divider} from 'react-native-elements/dist/divider/Divider';
-import Icon from 'react-native-vector-icons/FontAwesome';
 import {
   faHome,
   faMedkit,

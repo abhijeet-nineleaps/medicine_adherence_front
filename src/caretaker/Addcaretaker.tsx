@@ -3,13 +3,18 @@ import React, { useEffect } from "react";
 import { Avatar, Button, ListItem, SearchBar, SpeedDial } from "react-native-elements";
 import Dialog from "react-native-dialog";
 import { useFocusEffect } from "@react-navigation/native";
-import {API_URL} from '@env'
+import {API_URL} from '@env';
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faAngleRight } from '@fortawesome/free-solid-svg-icons'
 import { Card} from 'react-native-paper';
+import {IconProp} from '@fortawesome/fontawesome-svg-core';
 
-const Addcaretaker = ({navigation}) => {
+interface Props{
+    navigation:any
+}
+
+const Addcaretaker:React.FC<Props> = ({navigation}:Props) => {
 
 
     const [caretakers, caretakerstate] = React.useState([]);
@@ -75,7 +80,7 @@ const Addcaretaker = ({navigation}) => {
              <TouchableOpacity onPress={() => {}} 
              style={{paddingVertical: 15,}}>
                  <View style={{ alignItems: 'center'}}>
-                     <FontAwesomeIcon icon={faAngleRight} color={'black'} size={17} />
+                     <FontAwesomeIcon icon={faAngleRight as IconProp} color={'black'} size={17} />
 
                  </View>
              </TouchableOpacity>

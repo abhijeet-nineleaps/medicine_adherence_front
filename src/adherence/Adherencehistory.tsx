@@ -14,13 +14,14 @@ import {Card} from 'react-native-paper';
 import {useFocusEffect} from '@react-navigation/native';
 import SQLite from 'react-native-sqlite-storage';
 import Allreminderdata from './Allreminderdata';
+
 var db:any;
 interface singledate {
   not_taken: [];
   taken: [];
 }
 
-const Reminders: React.FC = ({item}) => {
+const Reminders: React.FC = ({item}:any) => {
   console.log(item);
 
   return (
@@ -107,10 +108,7 @@ const MyComponent: React.FC = () => {
       arr.key.not_taken = value.not_taken;
       f_array.push(arr);
     }
-    //  output_map.forEach((it:any)=>{
-    //    arr[it].taken = it.taken;
-    //    arr[it].not_taken = it.not_taken
-    //  })
+    
 
     reminder_map_fetched_data_state(f_array);
   };

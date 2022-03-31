@@ -11,7 +11,7 @@
       "strict": true,
       "target": "esnext",
       "noImplicitAny": false
-
+,"strictNullChecks": false
     },
     "exclude": [
       "node_modules",

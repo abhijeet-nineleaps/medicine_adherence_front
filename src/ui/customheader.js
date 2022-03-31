@@ -95,13 +95,13 @@ useFocusEffect(()=>{
             onPress={() => props.navigation.navigate('Login')}
           /> : <Button title="Logout"
           iconPosition='right'
-          icon={()=><FontAwesomeIcon color="white" icon={faSignOut}></FontAwesomeIcon>}
+          type='outline'
+          icon={()=><FontAwesomeIcon color="black" icon={faSignOut}></FontAwesomeIcon>}
           buttonStyle={{
-              backgroundColor: '#0d47a1',
               borderRadius: 5,
               justifyContent:'space-around'
             }}
-            titleStyle={{ fontWeight: 'bold', fontSize: 23 }}
+            titleStyle={{ fontWeight: '500', fontSize: 16 }}
             containerStyle={{
               marginHorizontal: 50,
               height: 50,

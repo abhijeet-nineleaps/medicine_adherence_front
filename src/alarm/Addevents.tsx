@@ -8,15 +8,16 @@ import SQLite from 'react-native-sqlite-2';
 import { Card} from 'react-native-paper';
 import { faClock, faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
+import {IconProp} from '@fortawesome/fontawesome-svg-core';
 
 const Addevent = () => {
-  const [reminders , reminderstate] = React.useState([]);
+  const [reminders , reminderstate] = React.useState<any[]>([]);
 
   useEffect(()=>{
 
     const db = SQLite.openDatabase('test.db','1.0','',1)
-        db.transaction(function(txn){
-           let reminder_array = [];
+        db.transaction(function(txn:any){
+           let reminder_array:any[] = [];
             txn.executeSql('SELECT * FROM `reminders`', [], function (tx, res) {
                 for (let i = 0; i < res.rows.length; ++i) {
                     console.log('item:', res.rows.item(i));
@@ -48,7 +49,7 @@ const Addevent = () => {
         <View style={{padding: 30}}>
           <TouchableOpacity
             onPress={() => {}}>
-            <FontAwesomeIcon size={20} icon={faTrashCan}></FontAwesomeIcon>
+            <FontAwesomeIcon size={20} icon={faTrashCan as IconProp}></FontAwesomeIcon>
           </TouchableOpacity>
         </View>
       </View>

@@ -1,8 +1,5 @@
 import { Dimensions, Image, StyleSheet, View, ViewBase } from "react-native"
 import React from "react";
-import { TouchableOpacity } from "react-native-gesture-handler";
-import { Kaede, Madoka, Hideo } from "react-native-textinput-effects";
-import InteractiveTextInput from "react-native-text-input-interactive";
 import { Button, Text, useTheme } from "react-native-elements";
 import * as yup from 'yup';
 import Toast from 'react-native-toast-message';
@@ -10,54 +7,23 @@ import LottieView from 'lottie-react-native';
 import { TextInput } from "react-native-paper";
 import SQLite from 'react-native-sqlite-storage';
 import { Formik } from 'formik';
-import {Picker, Picker as Picks} from '@react-native-picker/picker';
 
 const db = SQLite.openDatabase({
     name:'MedRemdb',
     location:'default'
 },()=>{
     console.log('opened')
-},error=>{
+},(error:any)=>{
     console.log(error)
 })
 
 const UserMed = ({ route, navigation }) => {
-    const [pickerValue, setPickerValue] = React.useState('');
 
     const { id } = route.params;
     console.log(id);
     const height = Dimensions.get('window').height;
     const width = Dimensions.get('window').width;
-    const [med_name , med_name_state] = React.useState('');
-    const [med_des , med_des_state] = React.useState('');
-   
-   
-
-    const theme = useTheme();
-    const styles = StyleSheet.create({
-        round_button: {
-
-
-            right: 10,
-            borderRadius: 100,
-            backgroundColor: 'orange'
-
-        },
-        container: {
-            flex: 1,
-            justifyContent: 'center',
-            alignItems: 'center'
-        }, text: {
-            textAlign: 'center',
-            padding: 5,
-        }
-    })
-
-   
-
     const savemedicinetodb = async ({name,des}) => {
-
-        // const db = SQLite.openDatabase('test.db', '1.0', '', 1)
 
       await  db.transaction( (txn)=> {
             txn.executeSql('CREATE TABLE IF NOT EXISTS User_medicines(user_id INTEGER PRIMARY KEY NOT NULL, medicine_name TEXT, medicine_des TEXT , title TEXT, time TEXT , days TEXT , start_date TEXT , end_date TEXT , status INTEGER , sync INTEGER , total_med_reminders INTEGER , current_count INTEGER)', []);
