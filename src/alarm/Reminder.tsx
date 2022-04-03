@@ -24,7 +24,6 @@ import CheckBox from 'react-native-check-box';
 import MultiSlider from '@ptomasroos/react-native-multi-slider';
 
 import SQLite from 'react-native-sqlite-storage';
-import {useIsFocused} from '@react-navigation/native';
 import DateTimePicker from 'react-native-modal-datetime-picker';
 import {IconProp} from '@fortawesome/fontawesome-svg-core';
 
@@ -484,6 +483,7 @@ const Reminder = ({route, navigation}) => {
             }}></Button>
         </View>
       </View>
+      
     </ScrollView>
   );
 };

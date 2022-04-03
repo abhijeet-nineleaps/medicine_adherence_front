@@ -92,7 +92,6 @@ const Addmedicine  = ({navigation}:Props) => {
     console.log('called');
     const meds_arr: any = await checkformeds();
     characterstate(meds_arr);
-    console.log(meds_arr);
 
     loadstate(false);
   };
@@ -146,6 +145,7 @@ const Addmedicine  = ({navigation}:Props) => {
               onPress={() =>
                 navigation.navigate('Add Reminder', {id: item.user_id})
               }>
+                
               <FontAwesomeIcon
                 icon={faClock as IconProp}
                 color={item.status === 0 ? '#3743ab' : '#4dd0e1'}
@@ -199,9 +199,9 @@ const Addmedicine  = ({navigation}:Props) => {
           width: '100%',
           position: 'absolute',
           alignItems: 'center',
-          backgroundColor: 'white',
           bottom: 10,
-        }}>
+        
+}}>
         <TouchableOpacity
           style={{
             width: '100%',

@@ -7,7 +7,7 @@ import {StatusBar, View,
     } from 'react-native'
     import {
         faHome,
-        faKitMedical,
+        faKitMedical,faCamera,
         faReceipt,faPercentage,faArrowRight
       } from '@fortawesome/free-solid-svg-icons';
       import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
@@ -20,7 +20,7 @@ import Medicineadherence from "./Medicineadherence";
 import Addmedicine from "../Addmedicine";
 import Doctercomp from "./Docterscomp";
 import Profile from "../profile/Profile";
-import { Button } from "react-native-elements";
+import { Button, Text } from "react-native-elements";
 import { useFocusEffect } from "@react-navigation/native";
 
       const tabs = [
@@ -42,21 +42,6 @@ import { useFocusEffect } from "@react-navigation/native";
 
       const Tab = createBottomTabNavigator();
 
-      const CustomTabBar = ({
-        state, descriptors, navigation,
-      }) => {
-        return (
-          <BubbleTabBar
-            state={state}
-            descriptors={descriptors}
-            navigation={navigation}
-            tabs={tabs}
-            allowFontScaling={true}
-            style={{width:'100%',justifyContent:'space-between',padding:7}}
-            iconRenderer={fontAwesomeIconRenderer}
-          />
-        );
-      };
       const fontAwesomeIconRenderer = ({ icon, color }) =>
       <FontAwesomeIcon
         icon={icon}
@@ -73,13 +58,13 @@ return(
 
  <Tab.Navigator 
 
-      
        screenOptions={({ route }) => ({
          tabBarStyle:{height:60},
       tabBarInactiveTintColor: "#555",
       tabBarInactiveBackgroundColor:'white',
       tabBarActiveBackgroundColor:'#e3f2fd',
       
+      headerRight:()=>(<FontAwesomeIcon color="black" size={40} icon={faCamera}></FontAwesomeIcon>),
       tabBarActiveTintColor:'#bbdefb',
       tabBarLabelStyle: {
         fontSize: 16,
@@ -91,7 +76,7 @@ return(
       
     >
       <Tab.Screen name="Medicine"  key={2}
-      options={{headerShown:false,
+      options={{headerShown:false,headerRight:()=>(<FontAwesomeIcon color="black" size={40} icon={faCamera}></FontAwesomeIcon>),
       tabBarIcon:()=>(<LottieView style={{width:40,height:40}} source={require('../../assests/animate/med2.json')} autoPlay loop />)}}
        component={Addmedicine} />
    {/* <Tab.Screen name="Events" component={Doctercomp} options={{headerRight:()=>(<Button style={{width:120}} iconRight={()=><FontAwesomeIcon color="white" size={10} icon={faArrowRight}></FontAwesomeIcon>} buttonStyle={{backgroundColor:'#3743ab'}}

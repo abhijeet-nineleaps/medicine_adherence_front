@@ -28,7 +28,7 @@ const Medicineadherence = ({navigation}) => {
             <TouchableOpacity
               style={{flexDirection: 'row', justifyContent: 'space-between'}}
               onPress={() => {
-                navigation.navigate('Todayperformance', {
+                navigation.navigate('Today Performance', {
                   user_id: item.user_id,
                 });
               }}>
@@ -188,7 +188,7 @@ const Medicineadherence = ({navigation}) => {
 
       <TouchableOpacity
         onPress={() => {
-          navigation.navigate('adherencehistory');
+          navigation.navigate('Adherence History');
         }}>
         <View style={{flexDirection: 'column'}}>
           <View

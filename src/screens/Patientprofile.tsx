@@ -93,7 +93,14 @@ progress ?
           <Text style={styles.itemleft}>Contact Number</Text>
 
           <Text style={styles.itemright}>{userdetails.userEntityList[0].userDetails.usercontact}</Text>
+
         </View>
+        <View
+  style={{
+    borderBottomColor: 'black',
+    borderBottomWidth: 1,
+  }}
+/>
         <View style={styles.items}>
           <Text style={styles.itemleft}>Email Id</Text>
           <Text style={styles.itemright}>{userdetails.userEntityList[0].email}</Text>
@@ -134,7 +141,7 @@ progress ?
                     style={{marginLeft: 8}}
                   />
                 )}>
-                <List.Item titleStyle={styles.listitem} title="Brufen 400mg" />
+                <List.Item titleStyle={styles.listitem} onPress={()=>sendnotificationtouser(userdetails.userEntityList[0].userDetails.fcm_token)} title="Brufen 400mg" />
                 <List.Item
                   titleStyle={styles.listitem}
                   title="PCM suspension 450ml"

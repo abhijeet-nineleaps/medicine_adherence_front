@@ -107,7 +107,7 @@ const Patientrequest = () => {
                       borderRadius: 25,
                       backgroundColor: 'lightgrey',
                     }}
-                    color="lightgrey"></Button>
+                    color="#e53935"></Button>
                 </View>
               </View>
             </View>

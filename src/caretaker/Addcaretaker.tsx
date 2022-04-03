@@ -121,7 +121,7 @@ const Addcaretaker:React.FC<Props> = ({navigation}:Props) => {
       style={{height:50,}}
       buttonStyle={{backgroundColor:'#3743ab'}}
 
-      onPress={() => navigation.navigate('Searchcaretaker')}
+      onPress={() => navigation.navigate('Search Caretaker')}
     />
     <SpeedDial.Action
       icon={{ name: 'delete', color: 'white' }}

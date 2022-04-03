@@ -16,10 +16,11 @@ import {
   faPerson,
   faUserNurse,
   faScrewdriver,
-  faGear,faBell
+  faGear,faBell, faClipboardCheck
 } from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {IconProp} from '@fortawesome/fontawesome-svg-core';
+import CameraScreen from '../adherence/ClickSendimage';
 
 
 const Drawer = createDrawerNavigator();
@@ -71,7 +72,7 @@ const DrawerNavigator = ({navigation} : any) => {
         name="Patient"
         component={Patientcomp}
         options={{
-          title: 'MyPatient',
+          title: 'My Patient',
           drawerIcon: () => (
             <FontAwesomeIcon size={22} icon={faPerson as IconProp}></FontAwesomeIcon>
           ),
@@ -83,7 +84,7 @@ const DrawerNavigator = ({navigation} : any) => {
             <FontAwesomeIcon size={22} icon={faUserNurse as IconProp}></FontAwesomeIcon>
           ),
         }}
-        name="Caretaker"
+        name="My Caretaker"
         navig={this.navigation}
         component={Caretakercomp}
       />
@@ -96,13 +97,15 @@ const DrawerNavigator = ({navigation} : any) => {
             <FontAwesomeIcon size={22} icon={faGear as IconProp}></FontAwesomeIcon>
           ),
         }}></Drawer.Screen>
-      <Drawer.Screen
-        name="Pushnotification"
-        component={Pushnotification}
-
-        options={{title: 'Notification',drawerIcon: () => (
-            <FontAwesomeIcon size={22} icon={faBell as IconProp}></FontAwesomeIcon>
-          ),}}></Drawer.Screen>
+       <Drawer.Screen
+        name="Send Image"
+        component={CameraScreen}
+        options={{
+          drawerIcon: () => (
+            <FontAwesomeIcon size={22} icon={faGear as IconProp}></FontAwesomeIcon>
+          ),
+        }}></Drawer.Screen>
+     
     </Drawer.Navigator>
   );
 };

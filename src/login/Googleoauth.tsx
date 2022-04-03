@@ -1,4 +1,4 @@
-import {View} from 'react-native';
+import {Alert, View} from 'react-native';
 import React from 'react';
 import {
   GoogleSignin,
@@ -12,6 +12,7 @@ import * as Progress from 'react-native-progress';
 import {API_URL} from '@env';
 import Toast from 'react-native-toast-message';
 import messaging from '@react-native-firebase/messaging';
+import Checkconnectivity from '../connectivity/Checkconnectivity';
 
 interface Props {
   navigation: any;
@@ -28,6 +29,12 @@ const Login: React.FC<Props> = ({navigation}: Props) => {
   });
   async function onGoogleButtonPress() {
     try {
+      if(! await Checkconnectivity()){
+ 
+        Alert.alert("Not connected To Internet");
+        return;
+
+      }
       await GoogleSignin.hasPlayServices();
       const userinfo = await GoogleSignin.signIn();
       const token = await messaging().getToken();

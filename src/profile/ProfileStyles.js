@@ -8,7 +8,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderBottomLeftRadius: 30,
     borderBottomRightRadius: 30,
-    height:200
   },
   avatar: {
     width: 100,
@@ -107,6 +106,28 @@ const styles = StyleSheet.create({
     width: '97%',
     backgroundColor: 'white',
     justifyContent: 'center',
+  },
+  sdContainer: {
+    flex: 1,
+    flexDirection: 'row',
+    marginLeft: 0,
+    borderBottomWidth: 1,
+    borderColor: 'lightgrey',
+    marginBottom: 12,
+    padding: 15,
+  },
+  sd: {
+    backgroundColor: 'white',
+    marginTop: 10,
+    marginLeft: 8,
+    width: '95%',
+  },
+  sdText: {
+    paddingLeft: 18,
+  },
+  sdText1: {
+    fontSize: 17,
+    color: 'grey',
   },
 });
 

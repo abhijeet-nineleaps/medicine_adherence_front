@@ -105,7 +105,7 @@ navigation.pop(1);
     <View style={{margin:10,backgroundColor:'white',height:'100%'}}>
     <Toast></Toast>
 
-    <SearchBar placeholder="Search Caretaker.." value={searchword} onChangeText={searchText} ></SearchBar>
+    <SearchBar style={{}} placeholder="Search Caretaker.." value={searchword} onChangeText={searchText} ></SearchBar>
     <Button loading={searchload} buttonStyle={{backgroundColor:'#3743ab'}} title="Search" onPress={()=>sendmailtouser()} containerStyle={{marginTop:10}}></Button>
     <FlatList data={data} renderItem={renderitem}></FlatList>
     </View>
