@@ -14,7 +14,7 @@ import {
   faArrowRightToBracket,
   
 } from '@fortawesome/free-solid-svg-icons';
-import { View } from "react-native";
+import { Alert, View } from "react-native";
 import { Righttoobracket, Signout } from "../caretaker/AllIcons";
 
 
@@ -60,7 +60,7 @@ useFocusEffect(()=>{
 })
   return (
     <>
-      <DrawerContentScrollView style={{ height: '100%' }}>
+      <DrawerContentScrollView style={{ height: '100%' ,backgroundColor:'#e3f2fd'}}>
         <TouchableOpacity style={{ marginBottom: 8 }} onPress={() => props.navigation.getParent().navigate('Profile')}>
 
           {
@@ -71,13 +71,12 @@ useFocusEffect(()=>{
         <Divider style={{ marginBottom: 6 }}></Divider>
         <DrawerItemList {...props}></DrawerItemList>
        <Divider></Divider>
-       <View style={{marginTop:60}}>
+       <View style={{marginTop:60,alignItems:'center'}}>
         {
           !loggedin ?
           <Button
           iconPosition='right'
           
-          icon = {Righttoobracket()}
             title="Sign up"
             loading={false}
             loadingProps={{ size: 'small', color: 'white' }}
@@ -96,11 +95,12 @@ useFocusEffect(()=>{
             onPress={() => props.navigation.navigate('Login')}
           /> : <Button title="Logout"
           iconPosition='right'
-          type='outline'
+          
           icon={Signout()}
           buttonStyle={{
               borderRadius: 5,
-              justifyContent:'space-around'
+              justifyContent:'space-around',
+              backgroundColor:'#3743ab'
             }}
             titleStyle={{ fontWeight: '500', fontSize: 16 }}
             containerStyle={{
@@ -110,20 +110,34 @@ useFocusEffect(()=>{
               marginVertical: 10,
             }}
            onPress={async()=>{
-                 await GoogleSignin.signOut();
-                 loggedinstate(false)
+             Alert.alert("Do you want to Logout?","",[{
+
+                 text:"Logout",
+                 onPress:async()=>{
+                  await GoogleSignin.signOut();
+                  loggedinstate(false)
+                 },
+
+             },{
+               text:"Cancel",
+               onPress:()=>{
+                 
+               }
+             }
+            ])
+                 
           }}></Button>
         }
         {
           !loggedin ? <Button
           title="Log in"
           loading={false}
-          iconPosition='left'
           
           loadingProps={{ size: 'small', color: 'white' }}
           buttonStyle={{
             backgroundColor: '#0d47a1',
             borderRadius: 5,
+            
           }}
           titleStyle={{ fontWeight: 'bold', fontSize: 23 }}
           containerStyle={{

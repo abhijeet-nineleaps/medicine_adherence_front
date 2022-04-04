@@ -82,12 +82,12 @@ const TodayPerformance = ({route}) => {
           cc = res.rows.item(0).current_count;
           let arr = res.rows.item(0).days.split(':');
           let set = new Set(arr);
-          var today = new Date(res.rows.item(0).start_date);
+          var today = new Date(res.rows.item(0).end_date);
           var tody_date = new Date();
           let td_da = tody_date.getDate()+'-'+(tody_date.getMonth()+1)+'-'+tody_date.getFullYear();
           console.log(set.has(weeks[tody_date.getDay()]));
 
-          if (set.has(weeks[tody_date.getDay()])) {
+          if (set.has(weeks[tody_date.getDay()]) && tody_date <=  today) {
             txn.executeSql(
               'CREATE TABLE IF NOT EXISTS reminder_day(rem_id INTEGER PRIMARY KEY NOT NULL , date TEXT , timings TEXT, med_id INTEGER)',
               [],
@@ -189,41 +189,7 @@ const TodayPerformance = ({route}) => {
           <Toast visibilityTime={1000}></Toast>
 
       <View style={{flexDirection: 'column'}}>
-        <View
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'flex-start',
-          }}>
-          <View style={{paddingTop: 15, paddingLeft: 15, marginLeft: 18}}>
-            <ProgressCircle
-              percent={value}
-              radius={26}
-              borderWidth={3}
-              color="#3399FF"
-              shadowColor="#999"
-              bgColor="#fff">
-              <Text style={{fontSize: 15, color: '#3743ab'}}>{value}</Text>
-            </ProgressCircle>
-          </View>
-          <View
-            style={{
-              flexDirection: 'column',
-              paddingLeft: 30,
-              paddingTop: 15,
-            }}>
-            <Text style={{color: 'black', fontWeight: '600', fontSize: 16}}>
-              Performance for past 7 days
-            </Text>
-            <Text>You have some active reminders.</Text>
-          </View>
-        </View>
-        <View
-          style={{
-            alignItems: 'flex-end',
-            paddingBottom: 10,
-            paddingRight: 45,
-            margin: 15,
-          }}></View>
+       
       </View>
       <View style={{padding: 15, backgroundColor: 'lightgrey'}}>
         <Text style={{fontWeight: 'bold'}}>Timings</Text>

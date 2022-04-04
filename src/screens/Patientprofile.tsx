@@ -11,6 +11,8 @@ import {
 import {Card, Divider} from 'react-native-paper';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {
+  faBell,
+  faCaretDown,
   faKitMedical,
   
 } from '@fortawesome/free-solid-svg-icons';
@@ -79,16 +81,29 @@ progress ?
             <Image
               style={styles.icon}
               source={{
-                uri: 'https://images-ext-1.discordapp.net/external/k4FTtIoLR5PzsbEw7nJqEeOMPamb7bjR-orTFlOqJSM/https/lh3.googleusercontent.com/a-/AOh14Gg1r55ukyjleOVcBDEuTUt283ClmJE4ZSeFOSmD%3Ds96-c',
+                uri: userdetails.userEntityList[0].userDetails.pic_path,
               }}
             />
           </View>
+          
         </View>
+        <View
+  style={{
+    borderBottomColor: 'grey',
+    borderBottomWidth: 0.2,
+  }}
+/>
         <View style={styles.items}>
           <Text style={styles.itemleft}>Bio</Text>
 
           <Text style={styles.itemright}>{userdetails.userEntityList[0].userDetails.bio}</Text>
         </View>
+        <View
+  style={{
+    borderBottomColor: 'grey',
+    borderBottomWidth: 0.3,
+  }}
+/>
         <View style={styles.items}>
           <Text style={styles.itemleft}>Contact Number</Text>
 
@@ -97,30 +112,54 @@ progress ?
         </View>
         <View
   style={{
-    borderBottomColor: 'black',
-    borderBottomWidth: 1,
+    borderBottomColor: 'grey',
+    borderBottomWidth: 0.2,
   }}
 />
         <View style={styles.items}>
           <Text style={styles.itemleft}>Email Id</Text>
           <Text style={styles.itemright}>{userdetails.userEntityList[0].email}</Text>
         </View>
+        <View
+  style={{
+    borderBottomColor: 'grey',
+    borderBottomWidth: 0.3,
+  }}
+/>
         <View style={styles.items}>
           <Text style={styles.itemleft}>Gender</Text>
 
           <Text style={styles.itemright}>{userdetails.userEntityList[0].userDetails.gender}</Text>
         </View>
+        <View
+  style={{
+    borderBottomColor: 'grey',
+    borderBottomWidth: 0.3,
+  }}
+/>
         <View style={styles.items}>
           <Text style={styles.itemleft}>Blood Group</Text>
 
           <Text style={styles.itemright}>{userdetails.userEntityList[0].userDetails.blood_group}</Text>
         </View>
+        <View
+  style={{
+    borderBottomColor: 'grey',
+    borderBottomWidth: 0.3,
+  }}
+/>
         <View style={styles.items}>
           <Text style={styles.itemleft}>Marital Status</Text>
           <Text style={styles.itemright}>{userdetails.userEntityList[0].userDetails.martial_status}</Text>
         </View>
+        <View
+  style={{
+    borderBottomColor: 'grey',
+    borderBottomWidth: 0.3,
+  }}
+/>
         <View style={styles.items}>
-          <Text style={styles.itemleft}>Weight( i Kg)</Text>
+          <Text style={styles.itemleft}>Weight(in Kg)</Text>
           <Text style={styles.itemright}>{userdetails.userEntityList[0].userDetails.weight}</Text>
         </View>
         <View style={{}}>
@@ -140,12 +179,13 @@ progress ?
                     color="black"
                     style={{marginLeft: 8}}
                   />
+                )} 
+                right={props=>(
+                  <FontAwesomeIcon icon={faCaretDown as IconProp}></FontAwesomeIcon>
                 )}>
-                <List.Item titleStyle={styles.listitem} onPress={()=>sendnotificationtouser(userdetails.userEntityList[0].userDetails.fcm_token)} title="Brufen 400mg" />
-                <List.Item
-                  titleStyle={styles.listitem}
-                  title="PCM suspension 450ml"
-                />
+                <List.Item style={{padding:25}} titleStyle={styles.listitem}s right={()=>(<FontAwesomeIcon size={25} icon={faBell} color='#fdd835'></FontAwesomeIcon>)}
+                onPress={()=>sendnotificationtouser(userdetails.userEntityList[0].userDetails.fcm_token)} title="Brufen 400mg" />
+               
               </List.Accordion>
             </List.Section>
           </View>
@@ -181,6 +221,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     padding: 15,
+    marginBottom:12
     
     
   },
@@ -190,8 +231,8 @@ const styles = StyleSheet.create({
     width:200
   },
   listitem: {
-    // color: '#78909c',
     fontSize: 14,
+  
   },
 });
 

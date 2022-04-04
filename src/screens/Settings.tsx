@@ -21,34 +21,7 @@ const Settings:React.FC<Props> = ({navigation} : Props) => {
         titleStyle={{color: 'black', fontSize: 18}}
         onPress={() => Linking.openSettings()}
       />
-      <SettingsList.Header
-        headerText="Reminder Settings"
-        headerStyle={{color: 'gray', fontSize: 16}}
-      />
-      <SettingsList.Item
-        hasNavArrow={false}
-        hasSwitch={true}
-        title="Reminder volume"
-        titleStyle={{color: 'black', fontSize: 18}}
-      />
-      <SettingsList.Item
-        hasNavArrow={false}
-        hasSwitch={true}
-        title="Vibrate"
-        titleStyle={{color: 'black', fontSize: 18}}
-      />
-      <SettingsList.Item
-        hasNavArrow={true}
-        title="Snooze duration"
-        titleStyle={{color: 'black', fontSize: 18}}
-        onPress={() => Alert.alert('Coming soon')}
-      />
-      <SettingsList.Item
-        hasNavArrow={true}
-        title="Popup notification"
-        titleStyle={{color: 'black', fontSize: 18}}
-        onPress={() => Alert.alert('Coming soon')}
-      />
+      
       <SettingsList.Header
         headerText="General"
         headerStyle={{color: 'gray', fontSize: 16}}
@@ -57,7 +30,7 @@ const Settings:React.FC<Props> = ({navigation} : Props) => {
         hasNavArrow={false}
         title="About Medstick"
         titleStyle={{color: 'black', fontSize: 18}}
-        onPress={() => Alert.alert('Coming soon')}
+        onPress={() => navigation.navigate('About')}
       />
       <SettingsList.Item
         hasNavArrow={false}

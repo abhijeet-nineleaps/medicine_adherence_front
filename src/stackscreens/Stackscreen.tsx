@@ -4,6 +4,7 @@ import React from "react"
 import { Button } from "react-native-elements";
 import { Title } from "react-native-paper";
 import MyComponent from "../adherence/Adherencehistory";
+import CameraScreen from "../adherence/ClickSendimage";
 import SendImageToCaretaker from "../adherence/SendImagetocaretaker";
 import TodayPerformance from "../adherence/TodayPerformance";
 import Addevent from "../alarm/Addevents";
@@ -12,6 +13,7 @@ import Searchcaretaker from "../caretaker/Searchcaretaker";
 import Login from "../login/Googleoauth";
 import Loginscreen from "../login/Loginscreen";
 import Profile from "../profile/Profile";
+import About from "../screens/Aboutapp";
 import Doctercomp from "../screens/Docterscomp";
 import OnboardingScreen from "../screens/Onboarding";
 import ViewProfile from "../screens/Patientprofile";
@@ -30,7 +32,7 @@ const Stackscreen:React.FC = () => {
         <Stack.Navigator>
       <Stack.Screen name='Welcome' options={{headerShown:false}} component={OnboardingScreen}></Stack.Screen>
         <Stack.Screen name='Drawer' options={{ headerShown: false }} component={DrawerNavigator}></Stack.Screen>
-        <Stack.Screen name='UserMeds' options={{ headerShown: true }}
+        <Stack.Screen name='Add Medicine' options={{ headerShown: true }}
         options={{headerTintColor:'black',headerTitleStyle:{color:'black',fontSize:20}}}
          component={UserMed}></Stack.Screen>
         <Stack.Screen name='Login' component={Login}></Stack.Screen>
@@ -48,11 +50,17 @@ const Stackscreen:React.FC = () => {
         <Stack.Screen name='Events'
         options={{headerTitleStyle:{color:'white',fontSize:20}}}
          component={Addevent}></Stack.Screen>
+          <Stack.Screen name='Camera' component={CameraScreen} options={({ navigation }) => ({
+         title: 'Send Image',
+  })}></Stack.Screen>
         <Stack.Screen name='Loginscreen' component={Loginscreen}></Stack.Screen>
         <Stack.Screen name='Sentocaretaker' component={SendImageToCaretaker} options={({ navigation }) => ({
          title: 'Send Image',
   })}></Stack.Screen>
-      <Stack.Screen options={{headerTintColor:'black'}} name='Patientprofile' component={ViewProfile}></Stack.Screen>
+   <Stack.Screen name='About' component={About} options={({ navigation }) => ({
+         title: 'About',
+  })}></Stack.Screen>
+      <Stack.Screen options={{headerTintColor:'black'}} name='Patient Profile' component={ViewProfile}></Stack.Screen>
       <Stack.Screen options={{headerTintColor:'black'}} name='Today Performance' component={TodayPerformance}></Stack.Screen>
       <Stack.Screen options={{headerTintColor:'black'}} name='Adherence History' component={MyComponent}></Stack.Screen>
       </Stack.Navigator>

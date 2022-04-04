@@ -1,6 +1,4 @@
 import React, {useEffect} from 'react';
-import {Button, Image, Text} from 'react-native-elements';
-import Pushnotification from '../alarm/Pushnotificationconfig';
 import CareTaker from '../Caretaker';
 import Caretakercomp from '../caretaker/Caretakercomp';
 import Patientcomp from '../Patient';
@@ -16,11 +14,12 @@ import {
   faPerson,
   faUserNurse,
   faScrewdriver,
-  faGear,faBell, faClipboardCheck
+  faGear,faBell, faClipboardCheck, faCamera
 } from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {IconProp} from '@fortawesome/fontawesome-svg-core';
 import CameraScreen from '../adherence/ClickSendimage';
+import { TouchableOpacity } from 'react-native';
 
 
 const Drawer = createDrawerNavigator();
@@ -33,8 +32,15 @@ const DrawerNavigator = ({navigation} : any) => {
       drawerContent={props => <CustomHeader {...props}></CustomHeader>}>
       <Drawer.Screen
         name="Home"
-        options={{
-          
+        options={{headerRightContainerStyle:{marginRight:15},
+          headerRight:()=>{
+         return (
+           <TouchableOpacity onPress={()=>navigation.navigate("Camera")}>
+          <FontAwesomeIcon size={30}  icon={faCamera as IconProp} color="#3743ab"></FontAwesomeIcon>
+          </TouchableOpacity>
+         )
+         }
+          ,
           drawerIcon: () => (
             <FontAwesomeIcon
               color="black"
@@ -49,20 +55,6 @@ const DrawerNavigator = ({navigation} : any) => {
         options={{
           title: 'Medicines',
           headerShown: true,
-          headerRight: () => {
-            return (
-              <Button
-                titleStyle={{fontWeight: '400', fontSize: 13}}
-                title="Saved Reminders"
-                buttonStyle={{
-                  backgroundColor: '#3743ab',
-                  marginRight: 10,
-                  borderRadius: 30,
-                }}
-                onPress={() => navigation.navigate('Events')}
-                style={{fontSize: 10}}></Button>
-            );
-          },
           drawerIcon: () => (
             <FontAwesomeIcon size={22} icon={faMedkit as IconProp}></FontAwesomeIcon>
           ),
@@ -102,7 +94,7 @@ const DrawerNavigator = ({navigation} : any) => {
         component={CameraScreen}
         options={{
           drawerIcon: () => (
-            <FontAwesomeIcon size={22} icon={faGear as IconProp}></FontAwesomeIcon>
+            <FontAwesomeIcon size={22} icon={faCamera as IconProp}></FontAwesomeIcon>
           ),
         }}></Drawer.Screen>
      

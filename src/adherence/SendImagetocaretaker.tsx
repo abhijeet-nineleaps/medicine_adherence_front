@@ -1,15 +1,24 @@
-import {FlatList, Image, ScrollView, View, ViewBase} from 'react-native';
+import {FlatList, Image, Modal, ScrollView, View, ViewBase} from 'react-native';
 import {API_URL} from '@env';
 import React, {useState} from 'react';
 import BouncyCheckbox from 'react-native-bouncy-checkbox';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useFocusEffect} from '@react-navigation/native';
 import { BottomSheet, Button, Text } from 'react-native-elements';
+import * as Progress from 'react-native-progress';
 
-const SendImageToCaretaker = ({route}) => {
+interface Props{
+route : any,
+navigation:any
+}
+
+const SendImageToCaretaker : React.FC<Props> = ({route,navigation} : Props) => {
+
   const {image_uri} = route.params;
   const [mycaretakers, mycaretakerstate] = useState([]);
   const [send_to, send_to_state] = useState('');
+  const [modalVisible, setModalVisible] = useState(false);
+  
   console.log(send_to);
 
   const Renderitem = ({item}) => {
@@ -52,6 +61,8 @@ const SendImageToCaretaker = ({route}) => {
         .then(res => {
           console.log(res);
           resl(res);
+        }).catch(err=>{
+          setModalVisible(false)
         });
     });
   };
@@ -61,7 +72,7 @@ const SendImageToCaretaker = ({route}) => {
       let isActive = true;
       let caretakers = [];
       async function name() {
-        let value = await fetchcaretakers();
+        let value : any = await fetchcaretakers();
         mycaretakerstate(value);
       }
       name();
@@ -72,6 +83,7 @@ const SendImageToCaretaker = ({route}) => {
   );
 
   function SendImage() {
+    setModalVisible(true)
     const formdata = new FormData();
     var dt = new Date().getTime();
     var file_name = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
@@ -96,18 +108,38 @@ const SendImageToCaretaker = ({route}) => {
       body: formdata,
     })
       .then(response => {
+        setModalVisible(false)
         console.log('image uploaded');
       })
       .catch(err => {
         console.log(err);
+        setModalVisible(false)
       });
   }
 
   return (
-    <View style={{height: '100%',padding:20,backgroundColor:'white'}}>
-     <View style={{flexDirection:'row',justifyContent:'space-between',alignItems:'center',margin:10}}>
+     <View style={{height: '100%',padding:20,backgroundColor:'white'}}>
+      <Modal
+        animationType='fade'
+        
+        transparent={true}
+        visible={modalVisible}
+        style={{alignItems:'center'}}
+      >
+        <View style={{alignItems:'center',justifyContent:'center',marginTop:200}}>
+          <View style={{alignItems:'center',backgroundColor:'white',width:'70%',height:'50%'}}>
+            <Text style={{}}>Please wait Uploading Image!</Text>
+            <Progress.CircleSnail
+          spinDuration={500}
+          size={80}
+          color={['red', 'green', 'yellow']}
+        />
+          </View>
+        </View>
+      </Modal>
+      <View style={{flexDirection:'row',justifyContent:'space-between',alignItems:'center',margin:10}}>
      <Text style={{fontWeight:'900'}}>Image</Text>
-     <Button title="Retake"></Button>
+     <Button title="Retake" onPress={()=>{navigation.pop(1)}}></Button>
      </View>
       <Image
         source={{uri: image_uri}}
@@ -119,11 +151,7 @@ const SendImageToCaretaker = ({route}) => {
            return (<Renderitem  item={item}></Renderitem>)
           })
         }
-      {/* <FlatList
-        data={mycaretakers}
-        renderItem={({item}) => (
-          <Renderitem></Renderitem>
-        )}></FlatList> */}
+      
         <Button disabled={send_to === ''} onPress={SendImage} title="Send" buttonStyle={{backgroundColor:'#3743ab'}} containerStyle={{marginTop:25}}></Button>
       </ScrollView>
       </View>

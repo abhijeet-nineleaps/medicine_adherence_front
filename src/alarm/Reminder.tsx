@@ -172,11 +172,11 @@ const Reminder = ({route, navigation}) => {
             
             soundName: 'android.resource://com.project/raw/my_sound.mp3',
             importance: Importance.HIGH,
-            repeatType: 'day',
+            
       
             smallIcon: 'android.resource://com.project/raw/icon.png',
       
-            actions: ['Taken', 'Skip', 'Send '],
+            actions: ['Open app to mark', 'Skip'],
       
             /* Android Only Properties */
             repeatTime: 3, // (optional) Increment of configured repeatType. Check 'Repeating Notifications' section for more info.
@@ -289,7 +289,7 @@ const Reminder = ({route, navigation}) => {
   return (
     <ScrollView style={{height: '100%', backgroundColor: 'white'}}>
       <View style={{height: '100%', backgroundColor: 'white'}}>
-        <View style={{height: '100%', padding: 7}}>
+        <View style={{height: '100%', padding: 7,marginBottom:15}}>
           <TouchableOpacity
             onPress={() => {
               console.log('p');
@@ -302,7 +302,7 @@ const Reminder = ({route, navigation}) => {
               <Text style={{fontSize: 15, marginLeft: 8, fontWeight: '700'}}>
                 Start Date
               </Text>
-              <Text style={{fontSize: 15, marginLeft: 8, color: 'black'}}>
+              <Text style={{fontSize: 15, marginLeft: 8, color: 'black',marginBottom:15}}>
                 {start_date.toISOString().split('T')[0]}
               </Text>
               <Text style={{fontSize: 15, marginLeft: 8, fontWeight: '700'}}>
@@ -411,7 +411,7 @@ const Reminder = ({route, navigation}) => {
           <Divider></Divider>
           <View style={{padding: 10}}>
             <TouchableOpacity>
-              <Text style={{fontSize: 16, fontWeight: '700'}}>Select Days</Text>
+              <Text style={{fontSize: 15, fontWeight: '700'}}>Select Days</Text>
             </TouchableOpacity>
             <CheckBox
               style={{padding: 10}}
@@ -444,6 +444,7 @@ const Reminder = ({route, navigation}) => {
                 selectText="Choose days"
                 showDropDowns={true}
                 expandDropDowns={true}
+                styles={{listContainer:{height:400},container:{maxHeight:400,marginTop:200,padding:20},backdrop:{height:400},modalWrapper:{height:400}}}
                 readOnlyHeadings={true}
                 onSelectedItemsChange={onSelecteddaysItemsChange}
                 selectedItems={selecteddaysItems}></SectionedMultiSelect>

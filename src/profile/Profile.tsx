@@ -79,27 +79,33 @@ const Profile = () => {
     await AsyncStorage.setItem('maritalstatus', values.MaritalStatus);
     await AsyncStorage.setItem('bloodgroup', values.BloodGroup);
 
-    await AsyncStorage.getItem('bio');
-    await AsyncStorage.getItem('contact');
-    await AsyncStorage.getItem('age');
-    await AsyncStorage.getItem('weight');
-    await AsyncStorage.getItem('gender');
-    await AsyncStorage.getItem('maritalstatus');
-    await AsyncStorage.getItem('bloodgroup');
-
+  let sbio =   await AsyncStorage.getItem('bio');
+  let scontact =  await AsyncStorage.getItem('contact');
+  let sage =   await AsyncStorage.getItem('age');
+  let sweight =   await AsyncStorage.getItem('weight');
+  let sgender =   await AsyncStorage.getItem('gender');
+  let maritalstatus =  await AsyncStorage.getItem('maritalstatus');
+  let sblood =  await AsyncStorage.getItem('bloodgroup');
+    
+    const user_id = await AsyncStorage.getItem('user_id');
+     
     await fetch(
-      `${API_URL}/api/userdetails/updateuserdetails/1d3b1114-ae2a-4cb7-a235-89f1cf442b67`,
+      
+      `${API_URL}/api/userdetails/updateuserdetails/${user_id}`,
       {
         method: 'PUT',
         body: JSON.stringify({
-          Bio: user_bio,
-          Age: user_age,
-          Contact: user_contact,
-          Gender: user_gender,
-          martial_status: marriedpicker,
-          blood_group: pickerValue,
-          weight: Items[selected],
+          bio: sbio,
+          age: sage,
+          usercontact: scontact,
+          gender: sgender,
+          martial_status: maritalstatus,
+          blood_group: sblood,
+          weight: sweight,
         }),
+        headers: {
+          'Content-type': 'application/json',
+        }
       },
     )
       .then(resp => {

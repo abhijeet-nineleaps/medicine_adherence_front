@@ -35,7 +35,7 @@ const Mypatient : React.FC<Props> = ({navigation} : Props) => {
 
         return (
  
-            <Card  onPress={() => {navigation.navigate('Patientprofile',{
+            <Card  onPress={() => {navigation.navigate('Patient Profile',{
                 user_id:item.patient_id
             })}} 
             style={{ borderRadius:30,
@@ -51,7 +51,7 @@ const Mypatient : React.FC<Props> = ({navigation} : Props) => {
           <Avatar 
              size={64}
              rounded source={
-             {uri:'https://lh3.googleusercontent.com/a-/AOh14Gg1r55ukyjleOVcBDEuTUt283ClmJE4ZSeFOSmD=s96-c'}}>
+             {uri:'https://i.stack.imgur.com/l60Hf.png'}}>
 
              </Avatar>
              <ListItem.Content>

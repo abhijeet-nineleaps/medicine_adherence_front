@@ -43,7 +43,7 @@ export default function Caretakercomp({navigation}) {
           icon={Caretaker_nurse()}
         />
         <Tab.Item
-          title="Caretakerrequest"
+          title="Caretaker request"
           titleStyle={{fontSize: 12}}
           containerStyle={{backgroundColor: '#3743ab'}}
           icon={Userfriend()}

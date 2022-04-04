@@ -209,7 +209,7 @@ const Addmedicine  = ({navigation}:Props) => {
             alignItems: 'center',
           }}
           onPress={() =>
-            navigation.getParent().navigate('UserMeds', {
+            navigation.getParent().navigate('Add Medicine', {
               id: '1234',
             })
           }>

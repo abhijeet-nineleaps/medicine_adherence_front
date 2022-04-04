@@ -5,6 +5,7 @@ import {
   TouchableOpacity,
   FlatList,
   RefreshControl,
+  Alert,
 } from 'react-native';
 import ProgressCircle from 'react-native-progress-circle';
 import {Divider} from 'react-native-elements';
@@ -18,30 +19,48 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 const Medicineadherence = ({navigation}) => {
   const [refresh, refeereshstate] = React.useState(false);
   const [sync, syncstate] = React.useState(false);
+  const [totalpercent , totalpercentstate] = React.useState(0);
 
   const Reminder = ({item}) => {
-
+     
+    let currdate = new Date();
+    let click  = currdate >= new Date(item.end_date)
     return (
       <>
         {item.status === 1 ? (
           <View style={{}}>
-            <TouchableOpacity
+            <TouchableOpacity 
               style={{flexDirection: 'row', justifyContent: 'space-between'}}
               onPress={() => {
-                navigation.navigate('Today Performance', {
-                  user_id: item.user_id,
-                });
+                if(click){
+                    Alert.alert("Reminder duration over","",[
+                      {
+                        text:"Ok",
+                        onPress:()=>{
+
+                        }
+                      }
+                    ])
+                }else{
+                  navigation.navigate('Today Performance', {
+                    user_id: item.user_id,
+                  });
+                }
+                
               }}>
               <View style={{flexDirection: 'column', margin: 10}}>
                 <Text
                   style={{color: 'black', fontWeight: '600', marginBottom: 7}}>
                   {item.medicine_name}
                 </Text>
-                <Text style={{marginBottom: 7}}>{item.medicine_des}</Text>
+                <Text style={{marginBottom: 3}}>{item.medicine_des}</Text>
                 <View style={{flexDirection: 'row'}}>
                   <Text>{item.days}</Text>
                   <Text> | </Text>
                   <Text>{item.time}</Text>
+                </View>
+                <View style={{marginTop:15}}>
+                  <Text>{'End Date : ' +new Date(item.end_date).toDateString()}</Text>
                 </View>
               </View>
               <View style={{padding: 30}}>
@@ -101,11 +120,18 @@ const Medicineadherence = ({navigation}) => {
           'SELECT * FROM `User_medicines`',
           [],
           function (tx, res) {
+            let tcurrenttaken = 0;
+            let ttotaltaken = 0;
+
             for (let i = 0; i < res.rows.length; ++i) {
               // meds_array.push(res.rows.item(i));
               console.log(res.rows.item(i));
+              tcurrenttaken+=res.rows.item(i).current_count;
+              ttotaltaken+=res.rows.item(i).total_med_reminders;
+              
               reminder_array.push(res.rows.item(i));
             }
+            totalpercentstate(Math.round((tcurrenttaken/ttotaltaken)*100));
 
             reminderdatastate(reminder_array);
             resolve("");
@@ -124,8 +150,20 @@ const Medicineadherence = ({navigation}) => {
                             .filter(reminder_item => reminder_item.sync === 0)
                             .map(reminder_item => {
                               let obj = {
+                                   
                                 medicine_name : reminder_item.medicine_name,
-                                medicine_des  : reminder_item.medicine_des
+                                medicine_des  : reminder_item.medicine_des,
+                                current_count  : reminder_item.current_count,
+                                total_med_reminders  : reminder_item.total_med_reminders,
+                                title  : reminder_item.title,
+                                start_date  : reminder_item.start_date,
+                                status : reminder_item.status,
+                                time:reminder_item.time,
+                                days:reminder_item.days,
+                                end_date : reminder_item.end_date,
+                                user_id : reminder_item.user_id
+
+                                
                               }
                               return obj;
                             })
@@ -143,7 +181,12 @@ const Medicineadherence = ({navigation}) => {
    }).then((response)=>{
      if(response.status === 200){
        syncstate(false)
+     }else if(response.status === 500){
+       syncstate(false)
      }
+   }).catch(err=>{
+     console.log(err)
+     syncstate(false)
    })
   }
 
@@ -186,7 +229,7 @@ const Medicineadherence = ({navigation}) => {
         <></>
       )}
 
-      <TouchableOpacity
+      <TouchableOpacity 
         onPress={() => {
           navigation.navigate('Adherence History');
         }}>
@@ -198,13 +241,13 @@ const Medicineadherence = ({navigation}) => {
             }}>
             <View style={{paddingTop: 15, paddingLeft: 15, marginLeft: 18}}>
               <ProgressCircle
-                percent={0}
+                percent={totalpercent}
                 radius={26}
                 borderWidth={3}
                 color="#00bcd4"
                 shadowColor="#999"
                 bgColor="#fff">
-                <Text style={{fontSize: 15, color: '#4dd0e1'}}>{'0%'}</Text>
+                <Text style={{fontSize: 15, color: '#4dd0e1'}}>{totalpercent+'%'}</Text>
               </ProgressCircle>
             </View>
             <View
@@ -232,7 +275,7 @@ const Medicineadherence = ({navigation}) => {
           backgroundColor: 'lightgrey',
           marginBottom: 5,
         }}>
-        <Text style={{fontWeight: '600'}}>Current</Text>
+        <Text style={{fontWeight: '600'}}>Reminders</Text>
       </View>
       <FlatList
         data={reminderdata}

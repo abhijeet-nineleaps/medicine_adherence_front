@@ -20,8 +20,14 @@ interface Props {
 
 const Login: React.FC<Props> = ({navigation}: Props) => {
   const [loading, loadingstate] = React.useState(false);
-  async function gettoken() {}
+  const [connected , connectedstate] = React.useState(false);
+
+  async function checkconnection() {
+    let conn : any =  await Checkconnectivity();
+connectedstate(conn);
+  }
   React.useEffect(() => {
+     checkconnection()
     GoogleSignin.configure({
       webClientId:
         '526586885579-90t54t6rmkquqjct1819getnkstse41j.apps.googleusercontent.com',
@@ -29,7 +35,7 @@ const Login: React.FC<Props> = ({navigation}: Props) => {
   });
   async function onGoogleButtonPress() {
     try {
-      if(! await Checkconnectivity()){
+      if(!connected){
  
         Alert.alert("Not connected To Internet");
         return;
@@ -137,18 +143,14 @@ const Login: React.FC<Props> = ({navigation}: Props) => {
       <GoogleSigninButton
         style={{width: 292, height: 58, margin: 20}}
         size={GoogleSigninButton.Size.Wide}
+      
         color={GoogleSigninButton.Color.Dark}
         onPress={() =>
           onGoogleButtonPress()
             .then(() => console.log('Google'))
             .catch(err => console.log('error'))
         }></GoogleSigninButton>
-      <Button
-        style={{width: 292, height: 58}}
-        title="Logout"
-        onPress={() =>
-          onGooglelogout().then(() => console.log('logout'))
-        }></Button>
+      
       {loading && (
         <Progress.CircleSnail
           spinDuration={1500}

@@ -20,7 +20,7 @@ return (
 
 function Signout(){
 
-   return(<FontAwesomeIcon color="black" icon={faSignOut}></FontAwesomeIcon>)
+   return(<FontAwesomeIcon color="white" icon={faSignOut}></FontAwesomeIcon>)
 
 }
 

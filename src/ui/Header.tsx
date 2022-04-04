@@ -38,7 +38,7 @@ const ProfileHeader : React.FC = () => {
           justifyContent: 'space-between',
           alignItems: 'center',
           padding: 20,
-          backgroundColor: 'white',
+          backgroundColor: '#e3f2fd',
           marginBottom: 20,
         }}
   
@@ -52,7 +52,7 @@ const ProfileHeader : React.FC = () => {
           source={{
             uri: umg,
           }}
-          style={{ width: 60, height: 60, borderRadius: 30 }}
+          style={{ width: 80, height: 80, borderRadius: 70 }}
   
         />
         

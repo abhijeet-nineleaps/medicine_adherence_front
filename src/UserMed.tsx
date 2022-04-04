@@ -23,13 +23,13 @@ const UserMed = ({ route, navigation }) => {
     console.log(id);
     const height = Dimensions.get('window').height;
     const width = Dimensions.get('window').width;
-    const savemedicinetodb = async ({name,des}) => {
+    const savemedicinetodb = async ({Name,Description}) => {
 
-      await  db.transaction( (txn)=> {
+      await  db.transaction((txn)=> {
             txn.executeSql('CREATE TABLE IF NOT EXISTS User_medicines(user_id INTEGER PRIMARY KEY NOT NULL, medicine_name TEXT, medicine_des TEXT , title TEXT, time TEXT , days TEXT , start_date TEXT , end_date TEXT , status INTEGER , sync INTEGER , total_med_reminders INTEGER , current_count INTEGER)', []);
             var value = Math.floor(1000 + Math.random() * 9000);
 
-            txn.executeSql('INSERT INTO User_medicines (user_id,medicine_name,medicine_des,title,time,days,start_date,end_date,status,sync,total_med_reminders,current_count) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)', [value,name, des, '','','','','',0,0,0,0]);
+            txn.executeSql('INSERT INTO User_medicines (user_id,medicine_name,medicine_des,title,time,days,start_date,end_date,status,sync,total_med_reminders,current_count) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)', [value,Name, Description, '','','','','',0,0,0,0]);
 
             txn.executeSql('SELECT * FROM `User_medicines`', [], function (tx, res) {
                 for (let i = 0; i < res.rows.length; ++i) {
@@ -49,8 +49,8 @@ const UserMed = ({ route, navigation }) => {
         },1500)
     }
     const schema = yup.object({
-        name:yup.string().required().min(4),
-        des:yup.string().required().min(10)
+        Name:yup.string().required().min(4),
+        Description:yup.string().required().min(10)
         })
     return (
         <View style={{ backgroundColor: 'white', height: height, width: width }}>
@@ -60,7 +60,7 @@ const UserMed = ({ route, navigation }) => {
 
             </View>
             <View style={{ margin: 12, marginTop:20, height: height / 4, backgroundColor: 'white', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
-            <Formik initialValues={{name:'',des:''}}
+            <Formik initialValues={{Name:'',Description:''}}
                     validationSchema={schema}
                     
                     onSubmit={(values)=>{
@@ -69,20 +69,20 @@ const UserMed = ({ route, navigation }) => {
                     }}>
                     {
                         (formikprops)=>(
-            <><TextInput onChangeText={formikprops.handleChange('name')} 
-            value ={formikprops.values.name}
+            <><TextInput onChangeText={formikprops.handleChange('Name')} 
+            value ={formikprops.values.Name}
                        placeholder="Medicine name"
                        mode='outlined' label='Medicine name'>   
 
             </TextInput>
-            <Text style={{color:'red'}}>{formikprops.touched.name && formikprops.errors.name}</Text>
-            <TextInput style={{marginTop:20}} onChangeText={formikprops.handleChange('des')} 
-                       value ={formikprops.values.des}
+            <Text style={{color:'red'}}>{formikprops.touched.Name && formikprops.errors.Name}</Text>
+            <TextInput style={{marginTop:20}} onChangeText={formikprops.handleChange('Description')} 
+                       value ={formikprops.values.Description}
                        placeholder="Description"
                        mode='outlined' label='Medicine description'>   
 
             </TextInput>
-            <Text style={{color:'red'}}>{formikprops.touched.des && formikprops.errors.des}</Text>
+            <Text style={{color:'red'}}>{formikprops.touched.Description && formikprops.errors.Description}</Text>
            
 
             <Button

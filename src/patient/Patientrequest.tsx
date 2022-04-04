@@ -69,7 +69,7 @@ const Patientrequest = () => {
                       style={{
                         fontSize: 18,
                         marginLeft: 15,
-                        fontWeight: 'bold',
+                        fontWeight: '900',
                         textTransform: 'uppercase',
                       }}>
                       {item.patient_name}
@@ -81,7 +81,7 @@ const Patientrequest = () => {
                         color: 'black',
                         marginLeft: 13,
                       }}>
-                      {' Created At :' + item.created_at}
+                      {' Sent on : ' + item.created_at}
                     </ListItem.Subtitle>
                   </ListItem.Content>
                 </ListItem>
@@ -105,7 +105,7 @@ const Patientrequest = () => {
                     buttonStyle={{
                       width: 100,
                       borderRadius: 25,
-                      backgroundColor: 'lightgrey',
+                      backgroundColor: '#d32f2f',
                     }}
                     color="#e53935"></Button>
                 </View>
