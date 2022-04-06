@@ -4,6 +4,7 @@ import {
   Text,
   Dimensions,
   ScrollView,
+  Alert,
 } from 'react-native';
 import {Button} from 'react-native-elements';
 import {Divider} from 'react-native-elements/dist/divider/Divider';
@@ -53,6 +54,8 @@ const Reminder = ({route, navigation}) => {
           console.log('success');
           console.log(res.rows.item(0));
           titlestate(res.rows.item(0).title);
+          timearraystate(res.rows.item(0).time.split("-"));
+
         },
       );
     });
@@ -79,6 +82,7 @@ const Reminder = ({route, navigation}) => {
   const [picker, pickerstate] = React.useState(false);
   const [selectedItems, slectedstate] = React.useState([]);
   const [selecteddaysItems, slecteddaysstate] = React.useState([]);
+  const [everyday , everydaystate] = React.useState([]);
   const [load, loadstate] = React.useState(false);
   const [start_date, start_datestate] = React.useState(new Date());
   const [end_date, end_datestate] = React.useState(new Date());
@@ -132,6 +136,7 @@ const Reminder = ({route, navigation}) => {
       if(set.has(weeks[now.getDay()])){
        
         timeings.forEach((timee:any)=>{
+
           var num = Math.floor(Math.random() * 90000) + 10000;
           counter+=1;
           let timm_array = timee.split(":")
@@ -169,7 +174,7 @@ const Reminder = ({route, navigation}) => {
             allowWhileIdle: true, // (optional) set notification to work while on doze, default: false
             vibrate: true,
             playSound: true,
-            
+            invokeApp : false,
             soundName: 'android.resource://com.project/raw/my_sound.mp3',
             importance: Importance.HIGH,
             
@@ -195,12 +200,7 @@ const Reminder = ({route, navigation}) => {
 
   const handleConfirm = date => {
     console.log(date);
-    console.warn(
-      'A date has been picked: ',
-      date,
-      date.getHours(),
-      date.getMinutes(),
-    );
+  
     pickerstate(false);
 
     start_datestate(date);
@@ -228,17 +228,29 @@ const Reminder = ({route, navigation}) => {
   };
 
   const savereminder = () => {
+    if(multiSliderValue[0] === 0 || title.length === 0 || timearray.length === 0){
+           Alert.alert("Make sure you have valid reminder" , " ",[
+             {
+               text:"OK",
+               onPress:()=>{
+
+               }
+             }
+           ])
+           return;
+    }
     loadstate(true);
     let time = '';
     let days = '';
-    if (check2) {
-      for (let i = 0; i < timearray.length; i++) {
-        if (i === timearray.length - 1) {
-          time += timearray[i];
-        } else {
-          time += timearray[i] + '-';
-        }
+    for (let i = 0; i < timearray.length; i++) {
+      if (i === timearray.length - 1) {
+        time += timearray[i];
+      } else {
+        time += timearray[i] + '-';
       }
+    }
+    if (check2) {
+      
       for (let i = 0; i < selecteddaysItems.length; i++) {
         if (i == selecteddaysItems.length - 1) {
           days += selecteddaysItems[i];
@@ -247,6 +259,9 @@ const Reminder = ({route, navigation}) => {
         }
       }
       console.log(time, days);
+    }else if(check1){
+      days+='Everyday';
+      slecteddaysstate(['Sun', 'Mon', 'Tue', 'Wed', 'Thur', 'Fri', 'Sat'])
     }
     setreminderwithselecteddate(title);
 

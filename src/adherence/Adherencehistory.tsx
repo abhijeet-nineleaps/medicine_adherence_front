@@ -43,6 +43,7 @@ const Reminders: React.FC = ({item}:any) => {
               flexDirection: 'row',
               justifyContent: 'space-around',
               marginBottom: 12,
+              marginLeft:7
             }}>
             <Text key={item.medicine_name+'5'}>{nti}</Text>
             <Text key={item.medicine_name+'6'} style={{color: 'red'}}> Not Taken</Text>
@@ -51,7 +52,7 @@ const Reminders: React.FC = ({item}:any) => {
       })}
       {item.key.taken.map((tti: any) => {
         return (
-          <View key={item.medicine_name+'12'} style={{flexDirection: 'row', justifyContent: 'space-around'}}>
+          <View key={item.medicine_name+'12'} style={{flexDirection: 'row', justifyContent: 'space-around',marginBottom:12}}>
             <Text key={item.medicine_name+'22'}>{tti}</Text>
             <Text key={item.medicine_name+'23'} style={{color: 'green'}}> Taken</Text>
           </View>

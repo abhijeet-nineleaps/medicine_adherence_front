@@ -37,7 +37,7 @@ const Stackscreen:React.FC = () => {
          component={UserMed}></Stack.Screen>
         <Stack.Screen name='Login' component={Login}></Stack.Screen>
         <Stack.Screen name='Profile' 
-        options={{headerRight:()=>(<Title onPress={()=>{}} style={{color:'white',marginRight:10}}>Save</Title>),headerTintColor:'white',headerStyle:{backgroundColor:'#3743ab'},headerTitleStyle:{color:'white',fontSize:20}}}
+        options={{headerTintColor:'white',headerStyle:{backgroundColor:'#3743ab'},headerTitleStyle:{color:'white',fontSize:20}}}
          component={Profile}></Stack.Screen>
         <Stack.Screen name='Search Caretaker'
         options={{headerTintColor:'black',headerTitleStyle:{color:'black',fontSize:20}}}

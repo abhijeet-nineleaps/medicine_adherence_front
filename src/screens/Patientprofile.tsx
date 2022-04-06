@@ -20,6 +20,7 @@ import {List} from 'react-native-paper';
 import {API_URL} from '@env';
 import * as Progress from 'react-native-progress';
 import {IconProp} from '@fortawesome/fontawesome-svg-core';
+import ProgressCircle from 'react-native-progress-circle';
 
 
 const ViewProfile = ({route}) => {
@@ -28,10 +29,12 @@ const ViewProfile = ({route}) => {
   const [userdetails , userdetailsstate] = React.useState<any>();
   const [progress , progress_status] = React.useState(true);
 
-  const sendnotificationtouser = async (fcm_token) => {
+  const sendnotificationtouser = async (fcm_token : any , medname : any) => {
     let url : any = new URL(`${API_URL}/api/caretaker/notifyuser`);
-    url.searchParams.append('fcm_token', fcm_token);
-   
+    url.searchParams.append('fcmToken', fcm_token);
+    url.searchParams.append('medname', medname);
+     
+
       await fetch(url)
       .then(resp=>console.log(resp))
 
@@ -74,14 +77,14 @@ progress ?
           <View style={{flexDirection: 'column'}}>
             <Text style={{paddingLeft: 5, paddingTop: 9}}>Name</Text>
             <Text style={{color: 'black', padding: 5, fontSize: 17}}>
-              {userdetails.userEntityList[0].user_name}
+              {userdetails.userEntityList[0].userName}
             </Text>
           </View>
           <View style={{justifyContent: 'flex-end'}}>
             <Image
               style={styles.icon}
               source={{
-                uri: userdetails.userEntityList[0].userDetails.pic_path,
+                uri: userdetails.userEntityList[0].userDetails.picPath,
               }}
             />
           </View>
@@ -140,7 +143,7 @@ progress ?
         <View style={styles.items}>
           <Text style={styles.itemleft}>Blood Group</Text>
 
-          <Text style={styles.itemright}>{userdetails.userEntityList[0].userDetails.blood_group}</Text>
+          <Text style={styles.itemright}>{userdetails.userEntityList[0].userDetails.bloodGroup}</Text>
         </View>
         <View
   style={{
@@ -150,7 +153,7 @@ progress ?
 />
         <View style={styles.items}>
           <Text style={styles.itemleft}>Marital Status</Text>
-          <Text style={styles.itemright}>{userdetails.userEntityList[0].userDetails.martial_status}</Text>
+          <Text style={styles.itemright}>{userdetails.userEntityList[0].userDetails.martialStatus}</Text>
         </View>
         <View
   style={{
@@ -159,8 +162,8 @@ progress ?
   }}
 />
         <View style={styles.items}>
-          <Text style={styles.itemleft}>Weight(in Kg)</Text>
-          <Text style={styles.itemright}>{userdetails.userEntityList[0].userDetails.weight}</Text>
+          <Text style={styles.itemleft}>Age(in yrs)</Text>
+          <Text style={styles.itemright}>{userdetails.userEntityList[0].userDetails.age}</Text>
         </View>
         <View style={{}}>
           <View>
@@ -183,8 +186,40 @@ progress ?
                 right={props=>(
                   <FontAwesomeIcon icon={faCaretDown as IconProp}></FontAwesomeIcon>
                 )}>
-                <List.Item style={{padding:25}} titleStyle={styles.listitem}s right={()=>(<FontAwesomeIcon size={25} icon={faBell} color='#fdd835'></FontAwesomeIcon>)}
-                onPress={()=>sendnotificationtouser(userdetails.userEntityList[0].userDetails.fcm_token)} title="Brufen 400mg" />
+               {
+                 userdetails.medicinesList.map(mlistitem=>{
+                   return(
+                    <List.Item description={`${mlistitem.days}\n${mlistitem.time}`} style={{padding:17,alignItems:'center'}} titleStyle={styles.listitem} right={()=>
+                      {
+                         return(
+                            <View style={{flexDirection:'row'}}>
+                              <Text style={{marginTop:14,marginRight:8}}>Click to Notify</Text>
+                               <ProgressCircle percent={
+                      (mlistitem.currentCount / mlistitem.totalMedReminders) * 100
+                    }
+                    radius={26}
+                    borderWidth={3}
+                    color="#00bcd4"
+                    shadowColor="#999"
+                    bgColor="#ffff">
+                    <Text style={{fontSize: 15, color: '#00bcd4'}}>
+                      {Math.round(
+                        (mlistitem.currentCount / mlistitem.totalMedReminders) * 100,
+                      ) + '%'}
+                    </Text>
+                  </ProgressCircle>
+                          </View>
+                          )
+                          
+                         
+                      }
+                      }
+                    onPress={()=>sendnotificationtouser(userdetails.userEntityList[0].userDetails.fcmToken , mlistitem.medicineName)} title={mlistitem.medicineName} >
+                    
+                    </List.Item>
+                   )
+                 })
+               }
                
               </List.Accordion>
             </List.Section>
@@ -232,7 +267,7 @@ const styles = StyleSheet.create({
   },
   listitem: {
     fontSize: 14,
-  
+  marginTop:-13
   },
 });
 

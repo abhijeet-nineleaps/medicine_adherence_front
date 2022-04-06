@@ -16,7 +16,17 @@ export default function Caretakercomp({navigation}) {
     async function checkforlog() {
       const islogged = await GoogleSignin.isSignedIn();
       if (!islogged) {
-        Alert.alert('Signup first');
+
+        Alert.alert("Sign in first to use this feature","Click ok to proceed",[
+          {
+            text:"Ok",
+            onPress:()=>{navigation.navigate('Login')},
+          },
+          {
+            text:"Cancel",
+            onPress:()=>{navigation.navigate('Home')},
+          }
+        ]);
       }
       console.log(islogged);
       loginstate(islogged);

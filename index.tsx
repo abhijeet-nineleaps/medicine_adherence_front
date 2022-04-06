@@ -13,7 +13,7 @@ PushNotification.configure({
   onNotification: function (notification: any) {
     console.log('NOTIFICATION:', notification);
 
-    if (notification.action === 'Taken') {
+    if (notification.action === 'Open app to mark') {
       const db = SQLite.openDatabase(
         {
           name: 'MedRemdb',
@@ -38,8 +38,13 @@ PushNotification.configure({
   onAction: function (notification : any) {
     const {action} = notification.action;
     console.log(action);
+
     console.log('ACTION:', notification.action);
     console.log('NOTIFICATION:', notification.action);
+    if(notification.action === 'Open app to mark'){
+      PushNotification.invokeApp(notification);
+    }
+  
   },
 
   onRegistrationError: function (err : any) {

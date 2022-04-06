@@ -57,6 +57,7 @@ const Profile = () => {
   });
   const [img, imgstate] = React.useState('https://i.stack.imgur.com/l60Hf.png');
 
+  const [load , loadstate] = React.useState(false);
   const [user_bio, biostate] = React.useState('');
   const [user_contact, contactstate] = React.useState();
   const [user_age, agestate] = React.useState();
@@ -71,6 +72,7 @@ const Profile = () => {
 
 
   async function storeuserdetails(values : any) {
+    loadstate(true)
     await AsyncStorage.setItem('bio', values.Bio);
     await AsyncStorage.setItem('contact', values.Contact);
     await AsyncStorage.setItem('age', values.Age);
@@ -99,8 +101,8 @@ const Profile = () => {
           age: sage,
           usercontact: scontact,
           gender: sgender,
-          martial_status: maritalstatus,
-          blood_group: sblood,
+          martialStatus: maritalstatus,
+          bloodGroup: sblood,
           weight: sweight,
         }),
         headers: {
@@ -109,7 +111,10 @@ const Profile = () => {
       },
     )
       .then(resp => {
-        if (resp.status == 200) return resp.json();
+        if (resp.status === 200){
+          loadstate(false)
+          editstate(false)
+        } 
       })
       .then(res => {
         Toast.show({
@@ -458,6 +463,8 @@ const Profile = () => {
                           </View>
                           <View style={{paddingBottom: 20}}>
                             <Button
+                              
+                              loading={load}
                               onPress={handleSubmit}
                               title="SAVE"
                               buttonStyle={{

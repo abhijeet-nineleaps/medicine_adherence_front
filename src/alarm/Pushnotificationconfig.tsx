@@ -107,7 +107,7 @@ const generatenotificationforpatient = (mssg : any , body : any) => {
   
       smallIcon: 'android.resource://com.project/raw/icon.png',
   
-      actions: ['Notifie Caretaker' , 'Send snap']
+      actions: ['Notify Caretaker']
       // (optional) Increment of configured repeatType. Check 'Repeating Notifications' section for more info.
     });
    

@@ -4,6 +4,7 @@ import {Card, Paragraph, Title} from 'react-native-paper';
 import {Icon, Avatar} from 'react-native-elements';
 import {API_URL} from '@env';
 import {ListItem, Button} from 'react-native-elements';
+import { useFocusEffect } from '@react-navigation/native';
 
 const Patientrequest = () => {
   const [patients, patientsdata] = React.useState([]);
@@ -12,22 +13,30 @@ const Patientrequest = () => {
   const fetchpatientreq = () => {
     console.log('called');
     fetch(
-      `${API_URL}/api/caretaker/patientRequests(Caretaker)?caretaker_id=673e8f15-20ca-499b-8022-9781836a90c7`,
+      `${API_URL}/api/caretaker/patientRequests(Caretaker)?caretakerId=673e8f15-20ca-499b-8022-9781836a90c7`,
     )
       .then(res => res.json())
       .then(resp => {
         console.log(resp);
         patientsdata(resp);
-      });
+      }).catch(err=>{});
   };
 
-  React.useEffect(() => {
-    fetchpatientreq();
-  }, []);
+ 
+  useFocusEffect(
+    React.useCallback(() => {
+      let isActive = true;
+      
+      fetchpatientreq();
 
+      return () => {
+        isActive = false;
+      };
+    }, []),
+  );
   const acceptrequest = (ci_id:String) => {
     let url : any = new URL(`${API_URL}/api/caretaker/updatestatus`);
-    url.searchParams.append('c_id', ci_id);
+    url.searchParams.append('cId', ci_id);
 
     fetch(url, {method: 'PUT'})
       .then(res => {
@@ -39,6 +48,12 @@ const Patientrequest = () => {
 
   return (
     <View style={{flex: 1, backgroundColor: 'white'}}>
+      {
+        patients.length === 0 &&  <View style={{alignItems:'center',justifyContent:'center'}}>
+
+        <Image source={require('../../assests/nopatientreq.png')} style={{width:400}} resizeMode='contain'></Image>
+    </View> 
+      }
       <FlatList
         refreshControl={
           <RefreshControl
@@ -54,7 +69,7 @@ const Patientrequest = () => {
                   size={100}
                   rounded
                   source={{
-                    uri: 'https://cdn.discordapp.com/attachments/941592669933682699/955123585343717466/download.jpeg',
+                    uri: 'https://lh3.googleusercontent.com/a-/AOh14GgrRBm3gFrvPSRlLYSiaY5KO-HpPKl1IhK3Z3rePg=s96-c',
                   }}></Avatar>
               </View>
               <View style={{flexDirection: 'column'}}>
@@ -72,7 +87,7 @@ const Patientrequest = () => {
                         fontWeight: '900',
                         textTransform: 'uppercase',
                       }}>
-                      {item.patient_name}
+                      {item.patientName}
                     </ListItem.Title>
                     <ListItem.Subtitle
                       style={{
@@ -81,14 +96,14 @@ const Patientrequest = () => {
                         color: 'black',
                         marginLeft: 13,
                       }}>
-                      {' Sent on : ' + item.created_at}
+                      {' Sent on : ' + item.createdAt}
                     </ListItem.Subtitle>
                   </ListItem.Content>
                 </ListItem>
                 <View style={{flexDirection: 'row', marginLeft: 25}}>
                   <Button
                     onPress={() => {
-                      acceptrequest(item.c_id);
+                      acceptrequest(item.cid);
                     }}
                     title="Confirm"
                     buttonStyle={{

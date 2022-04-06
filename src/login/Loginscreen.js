@@ -8,8 +8,6 @@ import {
   } from 'react-native';
   import React from 'react';
   import {
-    GoogleSignin,
-    GoogleSigninButton,
   } from '@react-native-google-signin/google-signin';
   import AsyncStorage from '@react-native-async-storage/async-storage';
   import * as Progress from 'react-native-progress';

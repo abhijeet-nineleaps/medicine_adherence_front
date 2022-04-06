@@ -16,6 +16,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { Alert, View } from "react-native";
 import { Righttoobracket, Signout } from "../caretaker/AllIcons";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 
 
@@ -114,7 +115,15 @@ useFocusEffect(()=>{
 
                  text:"Logout",
                  onPress:async()=>{
+                   
                   await GoogleSignin.signOut();
+                  await AsyncStorage.setItem('bio', '-');
+    await AsyncStorage.setItem('contact', '-');
+    await AsyncStorage.setItem('age', '-');
+    await AsyncStorage.setItem('weight', '-');
+    await AsyncStorage.setItem('gender', '-');
+    await AsyncStorage.setItem('maritalstatus', '-');
+    await AsyncStorage.setItem('bloodgroup', '-');
                   loggedinstate(false)
                  },
 

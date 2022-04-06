@@ -151,17 +151,17 @@ const Medicineadherence = ({navigation}) => {
                             .map(reminder_item => {
                               let obj = {
                                    
-                                medicine_name : reminder_item.medicine_name,
-                                medicine_des  : reminder_item.medicine_des,
-                                current_count  : reminder_item.current_count,
-                                total_med_reminders  : reminder_item.total_med_reminders,
+                                medicineName : reminder_item.medicine_name,
+                                medicineDes  : reminder_item.medicine_des,
+                                currentCount  : reminder_item.current_count,
+                                totalMedReminders  : reminder_item.total_med_reminders,
                                 title  : reminder_item.title,
-                                start_date  : reminder_item.start_date,
+                                startDate  : reminder_item.start_date,
                                 status : reminder_item.status,
                                 time:reminder_item.time,
                                 days:reminder_item.days,
-                                end_date : reminder_item.end_date,
-                                user_id : reminder_item.user_id
+                                endDate : reminder_item.end_date,
+                                userId : reminder_item.user_id
 
                                 
                               }
@@ -171,7 +171,7 @@ const Medicineadherence = ({navigation}) => {
     console.log(filtered_array)
     let user_id = await AsyncStorage.getItem('user_id');
     let url : any = new URL(`${API_URL}/api/usermedicine/syncmedicines`);
-    url.searchParams.append('user_id', user_id);
+    url.searchParams.append('userId', user_id);
     fetch(url,{
      method:'POST',
      body:JSON.stringify(filtered_array),
@@ -257,7 +257,7 @@ const Medicineadherence = ({navigation}) => {
                 paddingTop: 15,
               }}>
               <Text style={{color: 'black', fontWeight: '600', fontSize: 16}}>
-                Performance for past 7 days
+               Overall Performance Till Date
               </Text>
               <Text>You have some active reminders.</Text>
             </View>

@@ -47,13 +47,13 @@ connectedstate(conn);
 
       loadingstate(true);
       let url :any = new URL(`${API_URL}/api/user/saveuser`);
-      url.searchParams.append('fcm_token', token);
-      url.searchParams.append('pic_path', userinfo.user.photo);
+      url.searchParams.append('fcmToken', token);
+      url.searchParams.append('picPath', userinfo.user.photo);
 
       await fetch(url, {
         method: 'POST',
         body: JSON.stringify({
-          user_name: userinfo.user.givenName,
+          userName: userinfo.user.givenName,
           email: userinfo.user.email,
         }),
         headers: {
@@ -65,10 +65,10 @@ connectedstate(conn);
           console.log(res);
           if (res.status === 'success') {
             console.info(res.userentity[0].user_id);
-            await AsyncStorage.setItem('user_id', res.userentity[0].user_id);
+            await AsyncStorage.setItem('user_id', res.userentity[0].userId);
             await AsyncStorage.setItem(
               'user_name',
-              res.userentity[0].user_name,
+              res.userentity[0].userName,
             );
 
             console.info(

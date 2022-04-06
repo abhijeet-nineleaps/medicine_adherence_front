@@ -6,6 +6,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useFocusEffect} from '@react-navigation/native';
 import { BottomSheet, Button, Text } from 'react-native-elements';
 import * as Progress from 'react-native-progress';
+import Toast from 'react-native-toast-message';
 
 interface Props{
 route : any,
@@ -26,12 +27,12 @@ const SendImageToCaretaker : React.FC<Props> = ({route,navigation} : Props) => {
 
 
     return (
-      <View>
+      <View style={{flexDirection:'row'}}>
         <BouncyCheckbox
           size={22}
           fillColor="#3743ab"
           unfillColor="#FFFFFF"
-          text={item.caretaker_username}
+         
           isChecked={med1}
           iconStyle={{borderColor: '#3743ab', borderWidth: 1.3}}
           textStyle={{
@@ -43,9 +44,10 @@ const SendImageToCaretaker : React.FC<Props> = ({route,navigation} : Props) => {
           disableBuiltInState
           onPress={() => {
             setMed1(!med1);
-            !med1 ? send_to_state(item.caretaker_id) : send_to_state('');
+            !med1 ? send_to_state(item.caretakerId) : send_to_state('');
           }}
         />
+        <Text style={{fontWeight:'600',fontSize:18}}>{item.caretakerUsername}</Text>
       </View>
     );
   };
@@ -55,7 +57,7 @@ const SendImageToCaretaker : React.FC<Props> = ({route,navigation} : Props) => {
 
     return new Promise((resl, rej) => {
       fetch(
-        `${API_URL}/api/caretaker/myCareTakers(Patient)?patient_id=${user_id}`,
+        `${API_URL}/api/caretaker/myCareTakers(Patient)?patientId=${user_id}`,
       )
         .then(resp => resp.json())
         .then(res => {
@@ -110,6 +112,15 @@ const SendImageToCaretaker : React.FC<Props> = ({route,navigation} : Props) => {
       .then(response => {
         setModalVisible(false)
         console.log('image uploaded');
+        Toast.show({
+          type: 'success',
+          text1: 'Image uploaded',
+          position:'top'
+        });
+        setTimeout(()=>{
+          navigation.pop(1)
+
+        },2000)
       })
       .catch(err => {
         console.log(err);
@@ -119,6 +130,7 @@ const SendImageToCaretaker : React.FC<Props> = ({route,navigation} : Props) => {
 
   return (
      <View style={{height: '100%',padding:20,backgroundColor:'white'}}>
+       <Toast visibilityTime={1500}></Toast>
       <Modal
         animationType='fade'
         
