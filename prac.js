@@ -1,16 +1,13 @@
-var start_date = new Date('');
-var end_date = new Date(start_date.toString());
-console.log(end_date)
-let  i = 0;
-var weeks = ['Sun', 'Mon', 'Tue', 'Wed', 'Thur', 'Fri', 'Sat'];
-var set = new Set(['Mon','Tue'])
-var time = ['2:21','4:21']
-if(start_date.getUTCDate() < start_date.getDate()){
+const obj = {
 
-start_date.setDate(start_date.getDate()+1);
-console.log(start_date.toISOString())
+ get : ()=>{
+console.log('hello')
+ }
 
 }
+
+obj.get();
+
 // while(start_date < end_date){
 
 //     var now = start_date;

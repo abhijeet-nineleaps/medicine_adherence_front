@@ -3,7 +3,7 @@ import { useFocusEffect } from "@react-navigation/native";
 import React, { useEffect } from "react";
 import { Alert ,View , Text ,Image} from "react-native";
 import messaging from '@react-native-firebase/messaging';
-
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const ProfileHeader : React.FC = () => {
 
@@ -15,10 +15,20 @@ const ProfileHeader : React.FC = () => {
       async function getuser() {
         try {
           if (!await GoogleSignin.isSignedIn()) {
+
             imgstate('https://i.stack.imgur.com/l60Hf.png')
+            await AsyncStorage.getItem('user_id');
+            let username = await AsyncStorage.getItem('user_name');
+              if(username !== null){
+                username = '';
+              }
+            namestate(username)
             return;
           }
           const user = await GoogleSignin.getCurrentUser()
+
+          
+          
           // console.log(user);
           imgstate(user.user.photo)
           namestate(user.user.name)

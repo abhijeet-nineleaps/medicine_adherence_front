@@ -6,6 +6,8 @@ import {useFocusEffect} from '@react-navigation/native';
 import {Alert} from 'react-native';
 import {Tab, TabView} from 'react-native-elements';
 import {Caretaker_nurse , Userfriend} from './AllIcons';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 
 export default function Caretakercomp({navigation}) {
   const [index, setIndex] = React.useState(0);
@@ -15,7 +17,9 @@ export default function Caretakercomp({navigation}) {
   useFocusEffect(() => {
     async function checkforlog() {
       const islogged = await GoogleSignin.isSignedIn();
-      if (!islogged) {
+      const checkforlogin = await AsyncStorage.getItem('user_id');
+           
+      if (checkforlogin===null) {
 
         Alert.alert("Sign in first to use this feature","Click ok to proceed",[
           {

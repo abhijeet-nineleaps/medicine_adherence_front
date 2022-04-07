@@ -3,8 +3,7 @@ import {
     View,
     Text,
     TouchableOpacity,
-    Image,
-    StyleSheet,
+  
   } from 'react-native';
   import React from 'react';
   import {
@@ -14,11 +13,13 @@ import {
   import {API_URL} from '@env';
   import Toast from 'react-native-toast-message';
   import {TextInput} from 'react-native-paper';
-  import {Button} from 'react-native-elements';
+  import {Button, Divider} from 'react-native-elements';
   
   import {Formik} from 'formik';
   import * as yup from 'yup';
-  
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+import LottieView from 'lottie-react-native';
+
   const loginValidationSchema = yup.object().shape({
     email: yup
       .string()
@@ -30,11 +31,11 @@ import {
     const [loading, loadingstate] = React.useState(false);
     const [text, setText] = React.useState('');
   
-    async function loginuser() {
+    async function loginuser(email) {
       try {
         loadingstate(true);
         let url = new URL(`${API_URL}/api/user/login`);
-        url.searchParams.append('email', text);
+        url.searchParams.append('email', email);
         await fetch(url, {
           method: 'POST',
         })
@@ -43,10 +44,10 @@ import {
             console.log(res);
             if (res.status === 'success') {
               console.info(res.user_id);
-              await AsyncStorage.setItem('user_id', res.userentity[0].user_id);
+              await AsyncStorage.setItem('user_id', res.userentity[0].userId);
               await AsyncStorage.setItem(
                 'user_name',
-                res.userentity[0].user_name,
+                res.userentity[0].userName,
               );
   
               console.info(
@@ -59,7 +60,7 @@ import {
                 text1: 'Loggedin successfully',
               });
               setTimeout(() => {
-                navigation.pop(1);
+                props.navigation.pop(1);
               }, 3000);
             } else if (res.status === 'Not found') {
               loadingstate(false);
@@ -97,7 +98,6 @@ import {
           justifyContent: 'center',
           width: '100%',
           backgroundColor: 'white',
-          marginTop: -40,
         }}>
         <Toast visibilityTime={3000}></Toast>
         {/* <Image style={{height:100, width:'30%'}} source={require("../../assests/Medstick.png")} /> */}
@@ -108,7 +108,7 @@ import {
         <Formik
           validationSchema={loginValidationSchema}
           initialValues={{email: ''}}
-          onSubmit={values => loginuser()}>
+          onSubmit={values => loginuser(values.email)}>
           {({
             handleChange,
             handleBlur,
@@ -132,13 +132,6 @@ import {
                 <Text style={{fontSize: 16, color: 'red'}}>{errors.email}</Text>
               )}
   
-              <TouchableOpacity
-                style={{margin: 8}}
-                onPress={() => props.navigation.navigate('Login')}>
-                <Text style={{fontWeight: 'bold', fontSize: 16, color: 'gray'}}>
-                  Not signed up?
-                </Text>
-              </TouchableOpacity>
               <Button
                 style={{alignItems: 'center'}}
                 buttonStyle={{
@@ -156,7 +149,16 @@ import {
                   width: 200,
                   alignItems: 'center',
                 }}></Button>
-  
+          <Text style={{marginTop:10}}>OR</Text>
+                <TouchableOpacity onPress={() => props.navigation.navigate('Login')}>
+                <View style={{flexDirection:'row',justifyContent:'center',alignItems:'center'}}>
+
+<Text>Signup with </Text>
+<LottieView style={{width:80,height:80}} source={require('../../assests/animate/google.json')} autoPlay loop />
+
+                </View>
+
+                </TouchableOpacity>
               {loading && (
                 <Progress.CircleSnail
                   spinDuration={1500}

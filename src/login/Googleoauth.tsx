@@ -64,7 +64,7 @@ connectedstate(conn);
         .then(async res => {
           console.log(res);
           if (res.status === 'success') {
-            console.info(res.userentity[0].user_id);
+            console.info(res.userentity[0].userId);
             await AsyncStorage.setItem('user_id', res.userentity[0].userId);
             await AsyncStorage.setItem(
               'user_name',
