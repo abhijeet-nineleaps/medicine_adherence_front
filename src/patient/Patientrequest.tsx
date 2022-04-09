@@ -1,10 +1,13 @@
-import React, {Component} from 'react';
-import {View, Text, FlatList, Image, Alert, RefreshControl} from 'react-native';
-import {Card, Paragraph, Title} from 'react-native-paper';
-import {Icon, Avatar} from 'react-native-elements';
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable react/self-closing-comp */
+/* eslint-disable react-native/no-inline-styles */
+import React from 'react';
+import {View, FlatList, Image, RefreshControl} from 'react-native';
+import {Card} from 'react-native-paper';
+import {Avatar} from 'react-native-elements';
 import {API_URL} from '@env';
 import {ListItem, Button} from 'react-native-elements';
-import { useFocusEffect } from '@react-navigation/native';
+import {useFocusEffect} from '@react-navigation/native';
 
 const Patientrequest = () => {
   const [patients, patientsdata] = React.useState([]);
@@ -13,20 +16,20 @@ const Patientrequest = () => {
   const fetchpatientreq = () => {
     console.log('called');
     fetch(
-      `${API_URL}/api/caretaker/patientRequests(Caretaker)?caretakerId=673e8f15-20ca-499b-8022-9781836a90c7`,
+      `${API_URL}/api/caretaker/patientRequests(Caretaker)?caretakerId=f9c67686-55f9-495a-b214-eb89d5606678`,
     )
       .then(res => res.json())
       .then(resp => {
         console.log(resp);
         patientsdata(resp);
-      }).catch(err=>{});
+      })
+      .catch(err => {});
   };
 
- 
   useFocusEffect(
     React.useCallback(() => {
       let isActive = true;
-      
+
       fetchpatientreq();
 
       return () => {
@@ -34,8 +37,8 @@ const Patientrequest = () => {
       };
     }, []),
   );
-  const acceptrequest = (ci_id:String) => {
-    let url : any = new URL(`${API_URL}/api/caretaker/updatestatus`);
+  const acceptrequest = (ci_id: String) => {
+    let url: any = new URL(`${API_URL}/api/caretaker/updatestatus`);
     url.searchParams.append('cId', ci_id);
 
     fetch(url, {method: 'PUT'})
@@ -45,15 +48,27 @@ const Patientrequest = () => {
       })
       .catch(err => console.log(err));
   };
+  const deletereq = (ci_id: String) => {
+    let url: any = new URL(`${API_URL}/api/caretaker/deletePatientRequest`);
+    url.searchParams.append('cId', ci_id);
 
+    fetch(url)
+      .then(res => {
+        console.log(res);
+        fetchpatientreq();
+      })
+      .catch(err => console.log(err));
+  };
   return (
     <View style={{flex: 1, backgroundColor: 'white'}}>
-      {
-        patients.length === 0 &&  <View style={{alignItems:'center',justifyContent:'center'}}>
-
-        <Image source={require('../../assests/nopatientreq.png')} style={{width:400}} resizeMode='contain'></Image>
-    </View> 
-      }
+      {patients.length === 0 && (
+        <View style={{alignItems: 'center', justifyContent: 'center'}}>
+          <Image
+            source={require('../../assests/nopatientreq.png')}
+            style={{width: 400}}
+            resizeMode="contain"></Image>
+        </View>
+      )}
       <FlatList
         refreshControl={
           <RefreshControl
@@ -78,7 +93,9 @@ const Patientrequest = () => {
                     flexDirection: 'row',
                     justifyContent: 'space-between',
                     alignItems: 'center',
-                  }}>
+                  }}
+                  hasTVPreferredFocus={undefined}
+                  tvParallaxProperties={undefined}>
                   <ListItem.Content>
                     <ListItem.Title
                       style={{
@@ -115,7 +132,9 @@ const Patientrequest = () => {
                     color="#4267B2"></Button>
                   <View style={{margin: 5}} />
                   <Button
-                    onPress={() => {}}
+                    onPress={() => {
+                      deletereq(item.cid);
+                    }}
                     title="Delete"
                     buttonStyle={{
                       width: 100,

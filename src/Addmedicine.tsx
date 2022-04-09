@@ -1,3 +1,7 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable react/self-closing-comp */
+/* eslint-disable react-native/no-inline-styles */
 import {
   FlatList,
   View,
@@ -32,12 +36,11 @@ const db = SQLite.openDatabase(
   },
 );
 
-interface Props{
-  navigation:any
+interface Props {
+  navigation: any;
 }
 
-const Addmedicine  = ({navigation}:Props) => {
-  
+const Addmedicine = ({navigation}: Props) => {
   const [refresh, refeereshstate] = React.useState(false);
 
   const [characters, characterstate] = useState<any[]>([]);
@@ -145,7 +148,6 @@ const Addmedicine  = ({navigation}:Props) => {
               onPress={() =>
                 navigation.navigate('Add Reminder', {id: item.user_id})
               }>
-                
               <FontAwesomeIcon
                 icon={faClock as IconProp}
                 color={item.status === 0 ? '#3743ab' : '#4dd0e1'}
@@ -180,7 +182,8 @@ const Addmedicine  = ({navigation}:Props) => {
         <View style={{alignItems: 'center', justifyContent: 'center'}}>
           <Image
             source={require('../assests/nomeds.png')}
-            resizeMode="center"></Image>
+            style={{width: 300}}
+            resizeMode="contain"></Image>
         </View>
       ) : (
         <FlatList
@@ -200,8 +203,7 @@ const Addmedicine  = ({navigation}:Props) => {
           position: 'absolute',
           alignItems: 'center',
           bottom: 10,
-        
-}}>
+        }}>
         <TouchableOpacity
           style={{
             width: '100%',

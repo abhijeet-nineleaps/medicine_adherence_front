@@ -1,3 +1,7 @@
+/* eslint-disable prettier/prettier */
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable react/self-closing-comp */
+/* eslint-disable react-native/no-inline-styles */
 import {Alert, View} from 'react-native';
 import React from 'react';
 import {
@@ -5,7 +9,6 @@ import {
   GoogleSigninButton,
   statusCodes,
 } from '@react-native-google-signin/google-signin';
-import {Button} from 'react-native-elements';
 import TypeWriter from 'react-native-typewriter';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as Progress from 'react-native-progress';
@@ -13,6 +16,8 @@ import {API_URL} from '@env';
 import Toast from 'react-native-toast-message';
 import messaging from '@react-native-firebase/messaging';
 import Checkconnectivity from '../connectivity/Checkconnectivity';
+import LottieView from 'lottie-react-native';
+import { Text } from 'react-native-elements';
 
 interface Props {
   navigation: any;
@@ -20,14 +25,14 @@ interface Props {
 
 const Login: React.FC<Props> = ({navigation}: Props) => {
   const [loading, loadingstate] = React.useState(false);
-  const [connected , connectedstate] = React.useState(false);
+  const [connected, connectedstate] = React.useState(false);
 
   async function checkconnection() {
-    let conn : any =  await Checkconnectivity();
-connectedstate(conn);
+    let conn: any = await Checkconnectivity();
+    connectedstate(conn);
   }
   React.useEffect(() => {
-     checkconnection()
+    checkconnection();
     GoogleSignin.configure({
       webClientId:
         '526586885579-90t54t6rmkquqjct1819getnkstse41j.apps.googleusercontent.com',
@@ -35,18 +40,16 @@ connectedstate(conn);
   });
   async function onGoogleButtonPress() {
     try {
-      if(!connected){
- 
-        Alert.alert("Not connected To Internet");
+      if (!connected) {
+        Alert.alert('Not connected To Internet');
         return;
-
       }
       await GoogleSignin.hasPlayServices();
       const userinfo = await GoogleSignin.signIn();
       const token = await messaging().getToken();
 
       loadingstate(true);
-      let url :any = new URL(`${API_URL}/api/user/saveuser`);
+      let url: any = new URL(`${API_URL}/api/user/saveuser`);
       url.searchParams.append('fcmToken', token);
       url.searchParams.append('picPath', userinfo.user.photo);
 
@@ -66,10 +69,7 @@ connectedstate(conn);
           if (res.status === 'success') {
             console.info(res.userentity[0].userId);
             await AsyncStorage.setItem('user_id', res.userentity[0].userId);
-            await AsyncStorage.setItem(
-              'user_name',
-              res.userentity[0].userName,
-            );
+            await AsyncStorage.setItem('user_name', res.userentity[0].userName);
 
             console.info(
               await AsyncStorage.getItem('user_id'),
@@ -114,16 +114,16 @@ connectedstate(conn);
     }
   }
 
-  async function onGooglelogout() {
-    try {
-      const logout = await GoogleSignin.signOut();
-      console.log(logout);
+  // async function onGooglelogout() {
+  //   try {
+  //     const logout = await GoogleSignin.signOut();
+  //     console.log(logout);
 
-      navigation.navigate('Drawer');
-    } catch (err) {
-      console.log(err);
-    }
-  }
+  //     navigation.navigate('Drawer');
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // }
 
   return (
     <View
@@ -135,22 +135,25 @@ connectedstate(conn);
         backgroundColor: 'white',
       }}>
       <Toast visibilityTime={3000}></Toast>
-
-      <TypeWriter typing={1} style={{fontSize: 30, margin: 35}} maxDelay={500}>
-        Login with google
-      </TypeWriter>
+      <Text style={{fontSize:25,fontWeight:'500'}}>Create an account</Text>
+      <LottieView
+        style={{width: 130, height: 130}}
+        source={require('../../assests/animate/google.json')}
+        autoPlay
+        loop
+      />
 
       <GoogleSigninButton
-        style={{width: 292, height: 58, margin: 20}}
+        style={{width: 292, height: 58, margin: 20,borderRadius:40}}
         size={GoogleSigninButton.Size.Wide}
-      
         color={GoogleSigninButton.Color.Dark}
         onPress={() =>
           onGoogleButtonPress()
             .then(() => console.log('Google'))
             .catch(err => console.log('error'))
-        }></GoogleSigninButton>
-      
+        }
+      />
+
       {loading && (
         <Progress.CircleSnail
           spinDuration={1500}

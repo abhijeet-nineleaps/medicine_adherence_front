@@ -1,5 +1,6 @@
+/* eslint-disable radix */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import SQLite from 'react-native-sqlite-storage';
-import {string} from 'yup/lib/locale';
 
 const db = SQLite.openDatabase(
   {

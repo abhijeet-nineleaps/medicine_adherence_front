@@ -1,12 +1,10 @@
+/* eslint-disable prettier/prettier */
+/* eslint-disable react/self-closing-comp */
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable no-shadow */
+/* eslint-disable react-native/no-inline-styles */
 import React from 'react';
-import {
-  Text,
-  View,
-  Image,
-  ScrollView,
-  StyleSheet,
-  FlatList,
-} from 'react-native';
+import {Text, View, StyleSheet, FlatList} from 'react-native';
 import ProgressCircle from 'react-native-progress-circle';
 import {Picker} from '@react-native-picker/picker';
 import {Divider} from 'react-native-elements';
@@ -14,47 +12,64 @@ import {Card} from 'react-native-paper';
 import {useFocusEffect} from '@react-navigation/native';
 import SQLite from 'react-native-sqlite-storage';
 import Allreminderdata from './Allreminderdata';
-
-var db:any;
+import { LogBox } from 'react-native';
+LogBox.ignoreLogs(["Require cycle:"])
+LogBox.ignoreAllLogs();
+var db: any;
 interface singledate {
   not_taken: [];
   taken: [];
 }
 
-const Reminders: React.FC = ({item}:any) => {
-
+const Reminders: React.FC = ({item}: any) => {
   return (
     <>
-      <View key={item.medicine_name+'1'}
+      <View
+        key={item.medicine_name + '1'}
         style={{
           padding: 4,
           marginBottom: 15,
         }}>
-        <Card key={item.medicine_name+'2'} style={styles.dateday}>
-          <View key={item.medicine_name+'3'} style={{flexDirection: 'row', justifyContent: 'space-around'}}>
-            <Text key={item.medicine_name+'7'}>Date - {item.date}</Text>
+        <Card key={item.medicine_name + '2'} style={styles.dateday}>
+          <View
+            key={item.medicine_name + '3'}
+            style={{flexDirection: 'row', justifyContent: 'space-around'}}>
+            <Text key={item.medicine_name + '7'}>Date - {item.date}</Text>
           </View>
         </Card>
       </View>
       {item.key.not_taken.map((nti: any) => {
         return (
-          <View key={item.medicine_name+'4'}
+          <View
+            key={item.medicine_name + '4'}
             style={{
               flexDirection: 'row',
               justifyContent: 'space-around',
               marginBottom: 12,
-              marginLeft:7
+              marginLeft: 7,
             }}>
-            <Text key={item.medicine_name+'5'}>{nti}</Text>
-            <Text key={item.medicine_name+'6'} style={{color: 'red'}}> Not Taken</Text>
+            <Text key={item.medicine_name + '5'}>{nti}</Text>
+            <Text key={item.medicine_name + '6'} style={{color: 'red'}}>
+              {' '}
+              Not Taken
+            </Text>
           </View>
         );
       })}
       {item.key.taken.map((tti: any) => {
         return (
-          <View key={item.medicine_name+'12'} style={{flexDirection: 'row', justifyContent: 'space-around',marginBottom:12}}>
-            <Text key={item.medicine_name+'22'}>{tti}</Text>
-            <Text key={item.medicine_name+'23'} style={{color: 'green'}}> Taken</Text>
+          <View
+            key={item.medicine_name + '12'}
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-around',
+              marginBottom: 12,
+            }}>
+            <Text key={item.medicine_name + '22'}>{tti}</Text>
+            <Text key={item.medicine_name + '23'} style={{color: 'green'}}>
+              {' '}
+              Taken
+            </Text>
           </View>
         );
       })}
@@ -63,11 +78,11 @@ const Reminders: React.FC = ({item}:any) => {
 };
 
 const MyComponent: React.FC = () => {
-
   const [pickerValue, setPickerValue] = React.useState<String>('');
   const [allreminders, reminders_state] = React.useState<[]>([]);
-  const [reminder_map_fetched_data, reminder_map_fetched_data_state] = React.useState<[]>([]);
-  const [med_detail,med_detail_state] = React.useState<any>();
+  const [reminder_map_fetched_data, reminder_map_fetched_data_state] =
+    React.useState<[]>([]);
+  const [med_detail, med_detail_state] = React.useState<any>();
 
   const fetchreminders = async (db: any) => {
     const reminder_array: any = [];
@@ -93,7 +108,7 @@ const MyComponent: React.FC = () => {
 
   const remindersofparticular_medicine = async (med_name: any) => {
     console.log(med_name);
-    const output_map : any = await Allreminderdata(med_name);
+    const output_map: any = await Allreminderdata(med_name);
     console.log('out', output_map);
     let f_array: any = [];
     for (let [key, value] of output_map.entries()) {
@@ -102,27 +117,25 @@ const MyComponent: React.FC = () => {
       arr.key.not_taken = value.not_taken;
       f_array.push(arr);
     }
-    
 
     reminder_map_fetched_data_state(f_array);
   };
 
-  const getmed_details = async (med_name:any) => {
+  const getmed_details = async (med_name: any) => {
     await db.transaction(async function (txn: any) {
-
-    txn.executeSql(
-      'SELECT * FROM `User_medicines` WHERE medicine_name = ?',
-      [med_name],
-      function (tx: any, res: any) {
-          med_detail_state(res.rows.item(0))
-      })
-    })
-     
-  }
+      txn.executeSql(
+        'SELECT * FROM `User_medicines` WHERE medicine_name = ?',
+        [med_name],
+        function (tx: any, res: any) {
+          med_detail_state(res.rows.item(0));
+        },
+      );
+    });
+  };
 
   useFocusEffect(
     React.useCallback(() => {
-       db = SQLite.openDatabase(
+      db = SQLite.openDatabase(
         {
           name: 'MedRemdb',
           location: 'default',
@@ -160,12 +173,12 @@ const MyComponent: React.FC = () => {
             onValueChange={itemValue => {
               setPickerValue(itemValue);
               remindersofparticular_medicine(itemValue);
-              getmed_details(itemValue)
+              getmed_details(itemValue);
             }}>
             {allreminders.map((it: any) => {
               return (
                 <Picker.Item
-                key={it.medicine_name}
+                  key={it.medicine_name}
                   label={it.medicine_name}
                   value={it.medicine_name}
                 />
@@ -187,12 +200,24 @@ const MyComponent: React.FC = () => {
         </View>
         <View style={{alignItems: 'center', paddingRight: 20, margin: 10}}>
           <ProgressCircle
-            percent={med_detail && Math.round((med_detail.current_count/med_detail.total_med_reminders)*100)}
+            percent={
+              med_detail &&
+              Math.round(
+                (med_detail.current_count / med_detail.total_med_reminders) *
+                  100,
+              )
+            }
             radius={35}
             borderWidth={3}
             color="#4dd0e1"
             bgColor="#fff">
-            <Text style={{fontSize: 18, color: '#4dd0e1'}}>{med_detail && Math.round((med_detail.current_count/med_detail.total_med_reminders)*100) + '%'}</Text>
+            <Text style={{fontSize: 18, color: '#4dd0e1'}}>
+              {med_detail &&
+                Math.round(
+                  (med_detail.current_count / med_detail.total_med_reminders) *
+                    100,
+                ) + '%'}
+            </Text>
           </ProgressCircle>
         </View>
       </View>
@@ -233,7 +258,7 @@ const styles = StyleSheet.create({
     elevation: 2,
     padding: 10,
     paddingLeft: 20,
-    marginTop:8
+    marginTop: 8,
   },
 });
 

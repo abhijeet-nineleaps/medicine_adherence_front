@@ -1,13 +1,13 @@
-import {Button, StyleSheet, Text, View, Alert, FlatList,Image} from 'react-native';
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable react/self-closing-comp */
+/* eslint-disable react-native/no-inline-styles */
+import {Text, View, FlatList, Image} from 'react-native';
 import React, {useState} from 'react';
-import ProgressCircle from 'react-native-progress-circle';
 import BouncyCheckbox from 'react-native-bouncy-checkbox';
 import SQLite from 'react-native-sqlite-storage';
 var weeks = ['Sun', 'Mon', 'Tue', 'Wed', 'Thur', 'Fri', 'Sat'];
 import Toast from 'react-native-toast-message';
-import { set } from 'react-native-reanimated';
 var cc = 0;
-
 
 const TodayPerformance = ({route}) => {
   const db = SQLite.openDatabase(
@@ -24,13 +24,9 @@ const TodayPerformance = ({route}) => {
   );
 
   const {user_id} = route.params;
-  const [count, setCount_state] = useState(0);
-  const [total_reminders, total_reminder_state] = useState(0);
-  
   const [Timings, setTime] = useState([]);
-  const [value, setValue] = useState(0);
 
-  const updatetimes = async(time:never) => {
+  const updatetimes = async (time: any) => {
     console.log(time, ' ', Timings.indexOf(time));
     const index = Timings.indexOf(time);
 
@@ -42,25 +38,35 @@ const TodayPerformance = ({route}) => {
     Timings.forEach(eitem => {
       new_timing += eitem;
     });
-    console.log(new_timing)
+    console.log(new_timing);
     let tody_date = new Date();
-    let td_da = tody_date.getDate()+'-'+(tody_date.getMonth()+1)+'-'+tody_date.getFullYear();    cc+=1;
-    console.log(cc)
-   await db.transaction(async function (txxn) {
+    let td_da =
+      tody_date.getDate() +
+      '-' +
+      (tody_date.getMonth() + 1) +
+      '-' +
+      tody_date.getFullYear();
+    cc += 1;
+    console.log(cc);
+    await db.transaction(async function (txxn) {
       txxn.executeSql(
         'UPDATE reminder_day SET timings = ? WHERE date = ? AND med_id = ?',
-        [new_timing,td_da,user_id],function(err,result){
-          console.log(result.rows.item(0))
-          console.log(err)
-        }
+        [new_timing, td_da, user_id],
+        function (err, result) {
+          console.log(result.rows.item(0));
+          console.log(err);
+        },
       );
 
-    await  txxn.executeSql('UPDATE User_medicines SET current_count = ? WHERE user_id = ?',[cc,user_id])
+      await txxn.executeSql(
+        'UPDATE User_medicines SET current_count = ? WHERE user_id = ?',
+        [cc, user_id],
+      );
       Toast.show({
-        type:'info',
-        text1:'Updated successfully',
-        position:'bottom'
-      })
+        type: 'info',
+        text1: 'Updated successfully',
+        position: 'bottom',
+      });
     });
   };
 
@@ -74,7 +80,7 @@ const TodayPerformance = ({route}) => {
       txn.executeSql(
         'SELECT * FROM `User_medicines` where user_id = ?',
         [user_id],
-        function (tx:any, res:any) {
+        function (tx: any, res: any) {
           // meds_array.push(res.rows.item(i));
           console.log(res.rows.item(0).time);
           console.log(res.rows.item(0).total_med_reminders);
@@ -84,10 +90,15 @@ const TodayPerformance = ({route}) => {
           let set = new Set(arr);
           var today = new Date(res.rows.item(0).end_date);
           var tody_date = new Date();
-          let td_da = tody_date.getDate()+'-'+(tody_date.getMonth()+1)+'-'+tody_date.getFullYear();
+          let td_da =
+            tody_date.getDate() +
+            '-' +
+            (tody_date.getMonth() + 1) +
+            '-' +
+            tody_date.getFullYear();
           console.log(set.has(weeks[tody_date.getDay()]));
 
-          if (set.has(weeks[tody_date.getDay()]) && tody_date <=  today) {
+          if (set.has(weeks[tody_date.getDay()]) && tody_date <= today) {
             txn.executeSql(
               'CREATE TABLE IF NOT EXISTS reminder_day(rem_id INTEGER PRIMARY KEY NOT NULL , date TEXT , timings TEXT, med_id INTEGER)',
               [],
@@ -105,11 +116,7 @@ const TodayPerformance = ({route}) => {
                   console.log('NO id present but created ', resp.rows.item(0));
                   txn.executeSql(
                     'INSERT INTO reminder_day (date,timings,med_id) VALUES (?,?,?)',
-                    [
-                      td_da,
-                      res.rows.item(0).time,
-                      user_id,
-                    ],
+                    [td_da, res.rows.item(0).time, user_id],
                   );
 
                   setTime(res.rows.item(0).time.split('-'));
@@ -130,13 +137,12 @@ const TodayPerformance = ({route}) => {
                       setTime(respp.rows.item(0).timings.split('-'));
                     },
                   );
-                  console.log(Timings)
+                  console.log(Timings);
                 }
               },
             );
-          }else{
-            setTime([""]);
-
+          } else {
+            setTime(['']);
           }
 
           console.log(Timings);
@@ -146,68 +152,68 @@ const TodayPerformance = ({route}) => {
     });
   }, []);
 
-  const Box = (props:any) => {
+  const Box = (props: any) => {
     const {time} = props;
     const [med1, setMed1] = useState(false);
     const [taken, takenstatus] = useState(false);
 
     return (
-      time.length !==0 &&
-      <View style={{padding: 15, paddingLeft: 30, marginTop: 14}}>
-
-        <BouncyCheckbox
-          size={22}
-          fillColor="#3743ab"
-          unfillColor="#FFFFFF"
-          text={time}
-          disabled={taken}
-          isChecked={med1}
-          iconStyle={{borderColor: '#3743ab', borderWidth: 1.3}}
-          textStyle={{
-            fontFamily: 'JosefinSans-Regular',
-            fontSize: 17,
-            color: 'black',
-          }}
-          disableBuiltInState
-          onPress={() => {
-            setMed1(!med1);
-            takenstatus(!taken);
-            updatetimes(time);
-          }}
-        />
-        {taken ? (
-          <Text style={{color: 'green', marginLeft: 40}}>Taken</Text>
-        ) : (
-          <Text style={{color: 'red', marginLeft: 40}}>Not Taken</Text>
-        )}
-      </View>
+      time.length !== 0 && (
+        <View style={{padding: 15, paddingLeft: 30, marginTop: 14}}>
+          <BouncyCheckbox
+            size={22}
+            fillColor="#3743ab"
+            unfillColor="#FFFFFF"
+            text={time}
+            disabled={taken}
+            isChecked={med1}
+            iconStyle={{borderColor: '#3743ab', borderWidth: 1.3}}
+            textStyle={{
+              fontFamily: 'JosefinSans-Regular',
+              fontSize: 17,
+              color: 'black',
+            }}
+            disableBuiltInState
+            onPress={() => {
+              setMed1(!med1);
+              takenstatus(!taken);
+              updatetimes(time);
+            }}
+          />
+          {taken ? (
+            <Text style={{color: 'green', marginLeft: 40}}>Taken</Text>
+          ) : (
+            <Text style={{color: 'red', marginLeft: 40}}>Not Taken</Text>
+          )}
+        </View>
+      )
     );
   };
 
   return (
     <View style={{backgroundColor: 'white', height: '100%'}}>
-          <Toast visibilityTime={1000}></Toast>
+      <Toast visibilityTime={1000}></Toast>
 
-      <View style={{flexDirection: 'column'}}>
-       
-      </View>
+      <View style={{flexDirection: 'column'}}></View>
       <View style={{padding: 15, backgroundColor: 'lightgrey'}}>
         <Text style={{fontWeight: 'bold'}}>Timings</Text>
       </View>
-      {
-            (Timings.length !== 0 && Timings[0].length === 0) ? 
-            <View style={{justifyContent:'center' , alignItems:'center'}}> 
-             <Image source={require('../../assests/noremtoday.png')} style={{height:300,width:300}} ></Image>
-            </View> : <View>
-        <FlatList
-          data={Timings}
-          renderItem={({item}) => {
-            return <Box time={item} />;
-          }}
-        />
-      </View>
-      }
-      
+      {Timings.length !== 0 && Timings[0].length === 0 ? (
+        <View style={{justifyContent: 'center', alignItems: 'center'}}>
+          <Image
+            source={require('../../assests/noremtoday.png')}
+            style={{height: 300, width: 300}}></Image>
+        </View>
+      ) : (
+        <View>
+          <FlatList
+            data={Timings}
+            renderItem={({item}) => {
+              return <Box time={item} />;
+            }}
+          />
+        </View>
+      )}
     </View>
   );
 };

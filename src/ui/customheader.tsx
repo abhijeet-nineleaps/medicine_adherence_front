@@ -1,18 +1,18 @@
+/* eslint-disable react/self-closing-comp */
+/* eslint-disable react-native/no-inline-styles */
 import ProfileHeader from './Header';
 
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
 import React, {useEffect} from 'react';
 import {
-  createDrawerNavigator,
   DrawerContentScrollView,
-  DrawerItem,
   DrawerItemList,
 } from '@react-navigation/drawer';
 import {TouchableOpacity} from 'react-native-gesture-handler';
-import {Button, Divider, Image, Text} from 'react-native-elements';
+import {Button, Divider} from 'react-native-elements';
 import {useFocusEffect} from '@react-navigation/native';
 import {Alert, View} from 'react-native';
-import {Righttoobracket, Signout} from '../caretaker/AllIcons';
+import {Signout} from '../caretaker/AllIcons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const CustomHeader = props => {

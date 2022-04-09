@@ -1,3 +1,8 @@
+/* eslint-disable prettier/prettier */
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable react/self-closing-comp */
+/* eslint-disable react-native/no-inline-styles */
 import * as React from 'react';
 import {
   View,
@@ -6,61 +11,70 @@ import {
   FlatList,
   RefreshControl,
   Alert,
+  Image,
 } from 'react-native';
 import ProgressCircle from 'react-native-progress-circle';
 import {Divider} from 'react-native-elements';
 import {useFocusEffect} from '@react-navigation/native';
 import SQLite from 'react-native-sqlite-storage';
 import * as Progress from 'react-native-progress';
-import {API_URL} from '@env'
+import {API_URL} from '@env';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-
 const Medicineadherence = ({navigation}) => {
+  const [reminderdata, reminderdatastate] = React.useState([]);
   const [refresh, refeereshstate] = React.useState(false);
   const [sync, syncstate] = React.useState(false);
-  const [totalpercent , totalpercentstate] = React.useState(0);
+  const [totalpercent, totalpercentstate] = React.useState(0);
 
   const Reminder = ({item}) => {
-     
     let currdate = new Date();
-    let click  = currdate >= new Date(item.end_date)
+    let click = currdate >= new Date(item.end_date);
     return (
       <>
         {item.status === 1 ? (
           <View style={{}}>
-            <TouchableOpacity 
+            <TouchableOpacity
               style={{flexDirection: 'row', justifyContent: 'space-between'}}
               onPress={() => {
-                if(click){
-                    Alert.alert("Reminder duration over","",[
-                      {
-                        text:"Ok",
-                        onPress:()=>{
-
-                        }
-                      }
-                    ])
-                }else{
+                if (click) {
+                  Alert.alert('Reminder duration over', '', [
+                    {
+                      text: 'Ok',
+                      onPress: () => {},
+                    },
+                  ]);
+                } else {
                   navigation.navigate('Today Performance', {
                     user_id: item.user_id,
                   });
                 }
-                
               }}>
-              <View style={{flexDirection: 'column', margin: 10}}>
+              <View style={{flexDirection: 'column', margin: 10, width: '60%'}}>
                 <Text
                   style={{color: 'black', fontWeight: '600', marginBottom: 7}}>
                   {item.medicine_name}
                 </Text>
                 <Text style={{marginBottom: 3}}>{item.medicine_des}</Text>
-                <View style={{flexDirection: 'row'}}>
-                  <Text>{item.days}</Text>
-                  <Text> | </Text>
-                  <Text>{item.time}</Text>
+                <View style={{flexDirection: 'row', width: '50%'}}>
+                  <Text>Days - </Text>
+                  {item.days.split(':').map((mday: any) => {
+                    return <Text key={mday}>{mday + ','}</Text>;
+                  })}
                 </View>
-                <View style={{marginTop:15}}>
-                  <Text>{'End Date : ' +new Date(item.end_date).toDateString()}</Text>
+                <View style={{flexDirection: 'row', width: '60%'}}>
+                  <Text>Timings - </Text>
+                  <Text>
+                    {item.time.split('-').map((mtime: any) => {
+                      
+                      return <Text key={mtime}>{mtime + ','}</Text>;
+                    })}
+                  </Text>
+                </View>
+                <View style={{marginTop: 15}}>
+                  <Text>
+                    {'End Date : ' + new Date(item.end_date).toDateString()}
+                  </Text>
                 </View>
               </View>
               <View style={{padding: 30}}>
@@ -106,7 +120,6 @@ const Medicineadherence = ({navigation}) => {
     },
   );
 
-  const [reminderdata, reminderdatastate] = React.useState([]);
   async function fetchallreminders() {
     const reminder_array = [];
     return new Promise((resolve, rej) => {
@@ -126,15 +139,22 @@ const Medicineadherence = ({navigation}) => {
             for (let i = 0; i < res.rows.length; ++i) {
               // meds_array.push(res.rows.item(i));
               console.log(res.rows.item(i));
-              tcurrenttaken+=res.rows.item(i).current_count;
-              ttotaltaken+=res.rows.item(i).total_med_reminders;
-              
+              tcurrenttaken += res.rows.item(i).current_count;
+              ttotaltaken += res.rows.item(i).total_med_reminders;
+
               reminder_array.push(res.rows.item(i));
             }
-            totalpercentstate(Math.round((tcurrenttaken/ttotaltaken)*100));
+
+            if (tcurrenttaken === 0 && ttotaltaken === 0) {
+              totalpercentstate(0);
+            } else {
+              totalpercentstate(
+                Math.round((tcurrenttaken / ttotaltaken) * 100),
+              );
+            }
 
             reminderdatastate(reminder_array);
-            resolve("");
+            resolve(reminder_array);
           },
         );
       });
@@ -142,59 +162,61 @@ const Medicineadherence = ({navigation}) => {
   }
 
   async function fetchallremindersandsync() {
-    await fetchallreminders();
-
-    console.log('fetchd');
+    let remdata : any = await fetchallreminders();
+console.log('send')
+    console.log(remdata);
     syncstate(true);
-    const filtered_array =  reminderdata
-                            .filter(reminder_item => reminder_item.sync === 0)
-                            .map(reminder_item => {
-                              let obj = {
-                                   
-                                medicineName : reminder_item.medicine_name,
-                                medicineDes  : reminder_item.medicine_des,
-                                currentCount  : reminder_item.current_count,
-                                totalMedReminders  : reminder_item.total_med_reminders,
-                                title  : reminder_item.title,
-                                startDate  : reminder_item.start_date,
-                                status : reminder_item.status,
-                                time:reminder_item.time,
-                                days:reminder_item.days,
-                                endDate : reminder_item.end_date,
-                                userId : reminder_item.user_id
+    const filtered_array = remdata
+    .filter(reminder_item => reminder_item.sync === 0)
+      .map(reminder_item => {
+        let obj = {
+          medicineName: reminder_item.medicine_name,
+          medicineDes: reminder_item.medicine_des,
+          currentCount: reminder_item.current_count,
+          totalMedReminders: reminder_item.total_med_reminders,
+          title: reminder_item.title,
+          startDate: reminder_item.start_date,
+          status: reminder_item.status,
+          time: reminder_item.time,
+          days: reminder_item.days,
+          endDate: reminder_item.end_date,
+          userId: reminder_item.user_id,
+        };
+        return obj;
+      });
 
-                                
-                              }
-                              return obj;
-                            })
-
-    console.log(filtered_array)
+   
     let user_id = await AsyncStorage.getItem('user_id');
-    let url : any = new URL(`${API_URL}/api/usermedicine/syncmedicines`);
+    let url: any = new URL(`${API_URL}/api/usermedicine/syncmedicines`);
     url.searchParams.append('userId', user_id);
-    fetch(url,{
-     method:'POST',
-     body:JSON.stringify(filtered_array),
-     headers: {
-      "Content-type": "application/json"
-  }
-   }).then((response)=>{
-     if(response.status === 200){
-       syncstate(false)
-     }else if(response.status === 500){
-       syncstate(false)
-     }
-   }).catch(err=>{
-     console.log(err)
-     syncstate(false)
-   })
+    try {
+      await fetch(url, {
+        method: 'POST',
+        body: JSON.stringify(filtered_array),
+        headers: {
+          'Content-type': 'application/json',
+        },
+      })
+        .then(response => {
+          if (response.status === 200) {
+          } else if (response.status === 500 || response.status === 400) {
+          }
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    } catch (err) {}
+    syncstate(false);
   }
 
   useFocusEffect(
     React.useCallback(() => {
       let isActive = true;
 
-      fetchallreminders();
+      fetchallreminders().then((d) => {
+        console.log('ssyyncc' + reminderdata)
+        fetchallremindersandsync();
+      });
 
       return () => {
         isActive = false;
@@ -229,9 +251,11 @@ const Medicineadherence = ({navigation}) => {
         <></>
       )}
 
-      <TouchableOpacity 
+      <TouchableOpacity
         onPress={() => {
-          navigation.navigate('Adherence History');
+          reminderdata.length === 0
+            ? Alert.alert('No reminders set')
+            : navigation.navigate('Adherence History');
         }}>
         <View style={{flexDirection: 'column'}}>
           <View
@@ -247,7 +271,9 @@ const Medicineadherence = ({navigation}) => {
                 color="#00bcd4"
                 shadowColor="#999"
                 bgColor="#fff">
-                <Text style={{fontSize: 15, color: '#4dd0e1'}}>{totalpercent+'%'}</Text>
+                <Text style={{fontSize: 15, color: '#4dd0e1'}}>
+                  {totalpercent + '%'}
+                </Text>
               </ProgressCircle>
             </View>
             <View
@@ -257,7 +283,7 @@ const Medicineadherence = ({navigation}) => {
                 paddingTop: 15,
               }}>
               <Text style={{color: 'black', fontWeight: '600', fontSize: 16}}>
-               Overall Performance Till Date
+                Overall Performance Till Date
               </Text>
               <Text>You have some active reminders.</Text>
             </View>
@@ -277,6 +303,7 @@ const Medicineadherence = ({navigation}) => {
         }}>
         <Text style={{fontWeight: '600'}}>Reminders</Text>
       </View>
+
       <FlatList
         data={reminderdata}
         renderItem={Reminder}
@@ -285,6 +312,14 @@ const Medicineadherence = ({navigation}) => {
             refreshing={refresh}
             onRefresh={fetchallremindersandsync}></RefreshControl>
         }></FlatList>
+      {reminderdata.length === 0 && (
+        <View style={{alignItems: 'center'}}>
+          <Image
+            source={require('../../assests/noreminders.png')}
+            style={{width: 300}}
+            resizeMode="contain"></Image>
+        </View>
+      )}
       {/* <Divider width={1} style={{marginTop: 15}} /> */}
       <View
         style={{right: 10, left: 10, position: 'absolute', bottom: 10}}></View>

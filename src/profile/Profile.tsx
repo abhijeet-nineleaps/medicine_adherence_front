@@ -1,15 +1,15 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable react/self-closing-comp */
+/* eslint-disable react-native/no-inline-styles */
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
 
-import {useFocusEffect} from '@react-navigation/native';
-import React, {useEffect, useRef, useCallback} from 'react';
+import React, {useEffect} from 'react';
 import {Text, View, Image, ScrollView, Alert} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {
   faContactBook,
   faDroplet,
-  faGenderless,
   faMarsAndVenus,
-  faPerson,
   faRing,
   faSortNumericUp,
   faUser,
@@ -26,8 +26,7 @@ import * as yup from 'yup';
 import styles from './ProfileStyles';
 import SavedDetails from './SavedDetails';
 import {IconProp} from '@fortawesome/fontawesome-svg-core';
-import { Icon } from 'react-native-vector-icons/Icon';
-
+import {Icon} from 'react-native-vector-icons/Icon';
 
 const loginValidationSchema = yup.object().shape({
   Bio: yup.string().required('Bio is Required'),
@@ -57,22 +56,12 @@ const Profile = () => {
   });
   const [img, imgstate] = React.useState('https://i.stack.imgur.com/l60Hf.png');
 
-  const [load , loadstate] = React.useState(false);
-  const [user_bio, biostate] = React.useState('');
-  const [user_contact, contactstate] = React.useState();
-  const [user_age, agestate] = React.useState();
-  const [pickerValue, setPickerValue] = React.useState('');
-  const [marriedpicker, setmarriedpicker] = React.useState('');
-  const [user_gender, setgenderpicker] = React.useState('');
+  const [load, loadstate] = React.useState(false);
+
   const [editenabled, editstate] = React.useState(false);
 
-  const Items = Array.from(Array(150).keys());
-
-  const [selected, setSelected] = React.useState(0);
-
-
-  async function storeuserdetails(values : any) {
-    loadstate(true)
+  async function storeuserdetails(values: any) {
+    loadstate(true);
     await AsyncStorage.setItem('bio', values.Bio);
     await AsyncStorage.setItem('contact', values.Contact);
     await AsyncStorage.setItem('age', values.Age);
@@ -81,40 +70,36 @@ const Profile = () => {
     await AsyncStorage.setItem('maritalstatus', values.MaritalStatus);
     await AsyncStorage.setItem('bloodgroup', values.BloodGroup);
 
-  let sbio =   await AsyncStorage.getItem('bio');
-  let scontact =  await AsyncStorage.getItem('contact');
-  let sage =   await AsyncStorage.getItem('age');
-  let sweight =   await AsyncStorage.getItem('weight');
-  let sgender =   await AsyncStorage.getItem('gender');
-  let maritalstatus =  await AsyncStorage.getItem('maritalstatus');
-  let sblood =  await AsyncStorage.getItem('bloodgroup');
-    
+    let sbio = await AsyncStorage.getItem('bio');
+    let scontact = await AsyncStorage.getItem('contact');
+    let sage = await AsyncStorage.getItem('age');
+    let sweight = await AsyncStorage.getItem('weight');
+    let sgender = await AsyncStorage.getItem('gender');
+    let maritalstatus = await AsyncStorage.getItem('maritalstatus');
+    let sblood = await AsyncStorage.getItem('bloodgroup');
+
     const user_id = await AsyncStorage.getItem('user_id');
-     
-    await fetch(
-      
-      `${API_URL}/api/userdetails/updateuserdetails/${user_id}`,
-      {
-        method: 'PUT',
-        body: JSON.stringify({
-          bio: sbio,
-          age: sage,
-          usercontact: scontact,
-          gender: sgender,
-          martialStatus: maritalstatus,
-          bloodGroup: sblood,
-          weight: sweight,
-        }),
-        headers: {
-          'Content-type': 'application/json',
-        }
+
+    await fetch(`${API_URL}/api/userdetails/updateuserdetails/${user_id}`, {
+      method: 'PUT',
+      body: JSON.stringify({
+        bio: sbio,
+        age: sage,
+        usercontact: scontact,
+        gender: sgender,
+        martialStatus: maritalstatus,
+        bloodGroup: sblood,
+        weight: sweight,
+      }),
+      headers: {
+        'Content-type': 'application/json',
       },
-    )
+    })
       .then(resp => {
-        if (resp.status === 200){
-          loadstate(false)
-          editstate(false)
-        } 
+        if (resp.status === 200) {
+          loadstate(false);
+          editstate(false);
+        }
       })
       .then(res => {
         Toast.show({
@@ -133,12 +118,14 @@ const Profile = () => {
     async function getuser() {
       try {
         if (!(await GoogleSignin.isSignedIn())) {
-          Alert.alert("Sign in first to Edit Profile",'Sign In',[
+          Alert.alert('Sign in first to Edit Profile', 'Sign In', [
             {
-              text:'',
-              onPress:()=>{console.log('d')}
-            }
-          ])
+              text: '',
+              onPress: () => {
+                console.log('d');
+              },
+            },
+          ]);
           return;
         }
         const user = await GoogleSignin.getCurrentUser();
@@ -149,21 +136,7 @@ const Profile = () => {
     }
     getuser();
   }, []);
-  const renderItem = item => (
-    <Text
-      style={{
-        width: 50,
 
-        color: '#3743ab',
-        textAlign: 'center',
-        justifyContent: 'center',
-        alignItems: 'center',
-      }}>
-      {item}
-    </Text>
-  );
-
-  const itemWidth = 50;
   return (
     <View style={{height: '100%', backgroundColor: 'white'}}>
       <ScrollView>
@@ -226,7 +199,6 @@ const Profile = () => {
                       }) => (
                         <View style={{backgroundColor: 'white', width: '99%'}}>
                           <TextInput
-                            name="Bio"
                             label=" Bio"
                             mode="flat"
                             style={styles.textInput}
@@ -248,7 +220,6 @@ const Profile = () => {
                             <Text style={styles.errorText}>{errors.Bio}</Text>
                           )}
                           <TextInput
-                            name="Contact"
                             label=" Contact"
                             mode="flat"
                             keyboardType="numeric"
@@ -273,7 +244,6 @@ const Profile = () => {
                             </Text>
                           )}
                           <TextInput
-                            name="Age"
                             label=" Age(in years)"
                             mode="flat"
                             keyboardType="numeric"
@@ -296,7 +266,6 @@ const Profile = () => {
                             <Text style={styles.errorText}>{errors.Age}</Text>
                           )}
                           <TextInput
-                            name="Weight"
                             label=" Weight(in kg)"
                             mode="flat"
                             keyboardType="numeric"
@@ -341,14 +310,12 @@ const Profile = () => {
                             </View>
                             <View style={styles.picker}>
                               <Picker
-                                name="Gender"
                                 mode="dropdown"
                                 selectedValue={values.Gender}
                                 onValueChange={itemchange =>
                                   setFieldValue('Gender', itemchange)
                                 }>
                                 <Picker.Item
-                                  mode="outlined"
                                   label="Gender"
                                   value="Gender"
                                   style={{color: 'grey'}}
@@ -383,16 +350,14 @@ const Profile = () => {
                             </View>
                             <View style={styles.picker}>
                               <Picker
-                                name="MaritalStatus"
                                 mode="dropdown"
                                 selectedValue={values.MaritalStatus}
                                 onValueChange={itemchange =>
                                   setFieldValue('MaritalStatus', itemchange)
                                 }>
                                 <Picker.Item
-                                  mode="outlined"
-                                  label="MaritalStatus"
-                                  value="MaritalStatus"
+                                  label="Marital Status"
+                                  value="Marital Status"
                                   style={{
                                     color: 'grey',
                                   }}
@@ -430,7 +395,6 @@ const Profile = () => {
                             </View>
                             <View style={styles.bgpicker}>
                               <Picker
-                                name="BloodGroup"
                                 mode="dropdown"
                                 style={{
                                   backgroundColor: 'white',
@@ -443,7 +407,6 @@ const Profile = () => {
                                 <Picker.Item
                                   label="BloodGroup"
                                   value="BloodGroup"
-                                  mode="outlined"
                                   style={{color: 'grey'}}
                                 />
 
@@ -463,7 +426,6 @@ const Profile = () => {
                           </View>
                           <View style={{paddingBottom: 20}}>
                             <Button
-                              
                               loading={load}
                               onPress={handleSubmit}
                               title="SAVE"

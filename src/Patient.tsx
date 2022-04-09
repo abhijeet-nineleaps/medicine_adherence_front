@@ -1,44 +1,52 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable react-native/no-inline-styles */
+/* eslint-disable react/self-closing-comp */
 import React from 'react';
 import Mypatient from './patient/Mypatients';
 import Patientrequest from './patient/Patientrequest';
 import {Tab, TabView} from 'react-native-elements';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
-import {
-  faUserFriends,
-  faScrewdriver,
-  faHospitalUser,
-} from '@fortawesome/free-solid-svg-icons';
+import {faUserFriends, faHospitalUser} from '@fortawesome/free-solid-svg-icons';
 import {IconProp} from '@fortawesome/fontawesome-svg-core';
-import { useFocusEffect } from '@react-navigation/native';
-import { Alert } from 'react-native';
+import {useFocusEffect} from '@react-navigation/native';
+import {Alert} from 'react-native';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
 
 const Patientcomp = ({navigation}) => {
   const [login, loginstate] = React.useState(false);
 
   const [index, setIndex] = React.useState(0);
-  const Iconcomp1 = () =>  {
-    return ( <FontAwesomeIcon
+  const Iconcomp1 = () => {
+    return (
+      <FontAwesomeIcon
         style={{marginBottom: 6}}
         color="white"
         icon={faHospitalUser as IconProp}></FontAwesomeIcon>
-    )
-    }
+    );
+  };
 
-useFocusEffect(() => {
+  useFocusEffect(() => {
     async function checkforlog() {
       const islogged = await GoogleSignin.isSignedIn();
       if (!islogged) {
-        Alert.alert("Sign in first to use this feature","Click ok to proceed",[
-          {
-            text:"Ok",
-            onPress:()=>{navigation.navigate('Login')},
-          },
-          {
-            text:"Cancel",
-            onPress:()=>{navigation.navigate('Home')},
-          }
-        ]);
+        Alert.alert(
+          'Sign in first to use this feature',
+          'Click ok to proceed',
+          [
+            {
+              text: 'Ok',
+              onPress: () => {
+                navigation.navigate('Login');
+              },
+            },
+            {
+              text: 'Cancel',
+              onPress: () => {
+                navigation.navigate('Home');
+              },
+            },
+          ],
+        );
       }
       console.log(islogged);
       loginstate(islogged);
@@ -47,17 +55,15 @@ useFocusEffect(() => {
     checkforlog();
   });
 
+  const Iconcomp2 = () => {
+    return (
+      <FontAwesomeIcon
+        style={{marginBottom: 6}}
+        color="white"
+        icon={faUserFriends as IconProp}></FontAwesomeIcon>
+    );
+  };
 
-    const Iconcomp2 = () =>  {
-      return ( 
-        <FontAwesomeIcon
-          style={{marginBottom: 6}}
-          color="white"
-          icon={faUserFriends as IconProp}></FontAwesomeIcon>
-      )
-      
-      }
-  
   return (
     <>
       <Tab

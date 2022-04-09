@@ -1,3 +1,5 @@
+/* eslint-disable no-new */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import NetInfo from '@react-native-community/netinfo';
 
 const Checkconnectivity = async () => {
@@ -9,14 +11,13 @@ const Checkconnectivity = async () => {
         console.log('Is connected?', state.isConnected);
         state_type = state.isConnected;
         res(state_type);
-
       });
 
       unsubscribe();
     });
   }
 
-    await checkstatus().then(val=>console.log(val));
+  await checkstatus().then(val => console.log(val));
   return state_type;
 };
 

@@ -1,38 +1,43 @@
-import {FlatList, Image, Modal, ScrollView, View, ViewBase} from 'react-native';
+/* eslint-disable prettier/prettier */
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable no-bitwise */
+/* eslint-disable handle-callback-err */
+/* eslint-disable react/self-closing-comp */
+/* eslint-disable react-native/no-inline-styles */
+import {Image, Modal, ScrollView, View} from 'react-native';
 import {API_URL} from '@env';
 import React, {useState} from 'react';
 import BouncyCheckbox from 'react-native-bouncy-checkbox';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useFocusEffect} from '@react-navigation/native';
-import { BottomSheet, Button, Text } from 'react-native-elements';
+import {Button, Text} from 'react-native-elements';
 import * as Progress from 'react-native-progress';
 import Toast from 'react-native-toast-message';
-
-interface Props{
-route : any,
-navigation:any
+// eslint-disable-next-line prettier/prettier
+import { LogBox } from 'react-native';
+LogBox.ignoreLogs(["Require cycle:"])
+interface Props {
+  route: any;
+  navigation: any;
 }
 
-const SendImageToCaretaker : React.FC<Props> = ({route,navigation} : Props) => {
-
+const SendImageToCaretaker: React.FC<Props> = ({route, navigation}: Props) => {
   const {image_uri} = route.params;
   const [mycaretakers, mycaretakerstate] = useState([]);
   const [send_to, send_to_state] = useState('');
   const [modalVisible, setModalVisible] = useState(false);
-  
+
   console.log(send_to);
 
   const Renderitem = ({item}) => {
     const [med1, setMed1] = useState(false);
 
-
     return (
-      <View style={{flexDirection:'row'}}>
+      <View style={{flexDirection: 'row'}}>
         <BouncyCheckbox
           size={22}
           fillColor="#3743ab"
           unfillColor="#FFFFFF"
-         
           isChecked={med1}
           iconStyle={{borderColor: '#3743ab', borderWidth: 1.3}}
           textStyle={{
@@ -40,14 +45,15 @@ const SendImageToCaretaker : React.FC<Props> = ({route,navigation} : Props) => {
             fontSize: 17,
             color: 'black',
           }}
-          
           disableBuiltInState
           onPress={() => {
             setMed1(!med1);
             !med1 ? send_to_state(item.caretakerId) : send_to_state('');
           }}
         />
-        <Text style={{fontWeight:'600',fontSize:18}}>{item.caretakerUsername}</Text>
+        <Text style={{fontWeight: '600', fontSize: 18}}>
+          {item.caretakerUsername}
+        </Text>
       </View>
     );
   };
@@ -63,8 +69,9 @@ const SendImageToCaretaker : React.FC<Props> = ({route,navigation} : Props) => {
         .then(res => {
           console.log(res);
           resl(res);
-        }).catch(err=>{
-          setModalVisible(false)
+        })
+        .catch(err => {
+          setModalVisible(false);
         });
     });
   };
@@ -72,9 +79,8 @@ const SendImageToCaretaker : React.FC<Props> = ({route,navigation} : Props) => {
   useFocusEffect(
     React.useCallback(() => {
       let isActive = true;
-      let caretakers = [];
       async function name() {
-        let value : any = await fetchcaretakers();
+        let value: any = await fetchcaretakers();
         mycaretakerstate(value);
       }
       name();
@@ -85,21 +91,24 @@ const SendImageToCaretaker : React.FC<Props> = ({route,navigation} : Props) => {
   );
 
   function SendImage() {
-    setModalVisible(true)
+    setModalVisible(true);
     const formdata = new FormData();
     var dt = new Date().getTime();
-    var file_name = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
-      var r = (dt + Math.random()*16)%16 | 0;
-      dt = Math.floor(dt/16);
-      return (c=='x' ? r :(r&0x3|0x8)).toString(16);
-  });
+    var file_name = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(
+      /[xy]/g,
+      function (c) {
+        var r = (dt + Math.random() * 16) % 16 | 0;
+        dt = Math.floor(dt / 16);
+        return (c == 'x' ? r : (r & 0x3) | 0x8).toString(16);
+      },
+    );
     formdata.append('image', {
       name: 'care',
       uri: image_uri,
       type: 'image/jpg',
     });
-    formdata.append("name" , file_name)
-    formdata.append("id",send_to)
+    formdata.append('name', file_name);
+    formdata.append('id', send_to);
     console.log(formdata);
     const url = `${API_URL}`;
     fetch(url + '/api/caretaker/sendimage', {
@@ -110,62 +119,79 @@ const SendImageToCaretaker : React.FC<Props> = ({route,navigation} : Props) => {
       body: formdata,
     })
       .then(response => {
-        setModalVisible(false)
+        setModalVisible(false);
         console.log('image uploaded');
-        Toast.show({
-          type: 'success',
-          text1: 'Image uploaded',
-          position:'top'
-        });
-        setTimeout(()=>{
-          navigation.pop(1)
 
-        },2000)
+        setTimeout(() => {
+          navigation.pop(1);
+        }, 1000);
       })
       .catch(err => {
         console.log(err);
-        setModalVisible(false)
+        setModalVisible(false);
       });
   }
 
   return (
-     <View style={{height: '100%',padding:20,backgroundColor:'white'}}>
-       <Toast visibilityTime={1500}></Toast>
+    <View style={{height: '100%', padding: 20, backgroundColor: 'white'}}>
+      <Toast visibilityTime={1500}></Toast>
       <Modal
-        animationType='fade'
-        
+        animationType="fade"
         transparent={true}
         visible={modalVisible}
-        style={{alignItems:'center'}}
-      >
-        <View style={{alignItems:'center',justifyContent:'center',marginTop:200}}>
-          <View style={{alignItems:'center',backgroundColor:'white',width:'70%',height:'50%'}}>
+        style={{alignItems: 'center'}}>
+        <View
+          style={{
+            alignItems: 'center',
+            justifyContent: 'center',
+            marginTop: 200,
+          }}>
+          <View
+            style={{
+              alignItems: 'center',
+              backgroundColor: 'white',
+              width: '70%',
+              height: '50%',
+            }}>
             <Text style={{}}>Please wait Uploading Image!</Text>
             <Progress.CircleSnail
-          spinDuration={500}
-          size={80}
-          color={['red', 'green', 'yellow']}
-        />
+              spinDuration={500}
+              size={80}
+              color={['red', 'green', 'yellow']}
+            />
           </View>
         </View>
       </Modal>
-      <View style={{flexDirection:'row',justifyContent:'space-between',alignItems:'center',margin:10}}>
-     <Text style={{fontWeight:'900'}}>Image</Text>
-     <Button title="Retake" onPress={()=>{navigation.pop(1)}}></Button>
-     </View>
+      <View
+        style={{
+          flexDirection: 'row',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          margin: 10,
+        }}>
+        <Text style={{fontWeight: '900'}}>Image</Text>
+        <Button
+          title="Retake"
+          onPress={() => {
+            navigation.pop(1);
+          }}></Button>
+      </View>
       <Image
         source={{uri: image_uri}}
         style={{height: '70%', width: '100%'}}></Image>
-        <View style={{padding:50}}>
-      <ScrollView>
-        {
-          mycaretakers.map(item=>{
-           return (<Renderitem  item={item}></Renderitem>)
-          })
-        }
-      
-        <Button disabled={send_to === ''} onPress={SendImage} title="Send" buttonStyle={{backgroundColor:'#3743ab'}} containerStyle={{marginTop:25}}></Button>
-      </ScrollView>
+      <View style={{padding: 50}}>
+        <ScrollView>
+          {mycaretakers.map(item => {
+            return <Renderitem item={item}></Renderitem>;
+          })}
+
+          <Button
+            disabled={send_to === ''}
+            onPress={SendImage}
+            title="Send"
+            buttonStyle={{backgroundColor: '#3743ab'}}
+            containerStyle={{marginTop: 25}}></Button>
+        </ScrollView>
       </View>
     </View>
   );
