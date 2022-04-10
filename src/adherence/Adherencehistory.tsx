@@ -13,6 +13,7 @@ import {useFocusEffect} from '@react-navigation/native';
 import SQLite from 'react-native-sqlite-storage';
 import Allreminderdata from './Allreminderdata';
 import { LogBox } from 'react-native';
+import Fetchdata from '../database/Querydata';
 LogBox.ignoreLogs(["Require cycle:"])
 LogBox.ignoreAllLogs();
 var db: any;
@@ -85,24 +86,25 @@ const MyComponent: React.FC = () => {
   const [med_detail, med_detail_state] = React.useState<any>();
 
   const fetchreminders = async (db: any) => {
-    const reminder_array: any = [];
+    let reminder_array: any = [];
 
     await db.transaction(async function (txn: any) {
       txn.executeSql(
         'CREATE TABLE IF NOT EXISTS User_medicines(user_id INTEGER PRIMARY KEY NOT NULL, medicine_name TEXT, medicine_des TEXT , title TEXT, time TEXT , days TEXT , start_date TEXT , end_date TEXT , status INTEGER , sync INTEGER)',
         [],
       );
-
-      txn.executeSql(
-        'SELECT * FROM `User_medicines`',
-        [],
-        function (tx: any, res: any) {
-          for (let i = 0; i < res.rows.length; ++i) {
-            reminder_array.push(res.rows.item(i));
-          }
-          reminders_state(reminder_array);
-        },
-      );
+       reminder_array = await Fetchdata.getusermeds(txn);
+       reminders_state(reminder_array);
+      // txn.executeSql(
+      //   'SELECT * FROM `User_medicines`',
+      //   [],
+      //   function (tx: any, res: any) {
+      //     for (let i = 0; i < res.rows.length; ++i) {
+      //       reminder_array.push(res.rows.item(i));
+      //     }
+      //     
+      //   },
+      // );
     });
   };
 

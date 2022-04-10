@@ -216,8 +216,8 @@ const Reminder = ({route, navigation}) => {
             soundName: 'android.resource://com.project/raw/my_sound.mp3',
             importance: Importance.HIGH,
 
-            smallIcon: 'android.resource://com.project/raw/icon.png',
-
+            smallIcon: 'ic_launcher',
+            largeIcon : 'ic_launcher',
             actions: ['Open app to mark', 'Skip'],
 
             /* Android Only Properties */
@@ -279,17 +279,17 @@ const Reminder = ({route, navigation}) => {
       let mtime = timearray[i].split(" ")[0].split(":")[0];
         if (parseInt(timearray[i].split(" ")[0].split(':')[1]) < 10) {
   
-         mtime+=':0'+timearray[i].split(" ")[0].split(":")[1];
+         mtime += ':0' + timearray[i].split(" ")[0].split(":")[1];
 
-        }else{
-          mtime+=':'+timearray[i].split(" ")[0].split(":")[1];
+        } else {
+          mtime += ':' + timearray[i].split(" ")[0].split(":")[1];
 
         }
       if (i === timearray.length - 1) {
         
-        time += mtime+' '+timearray[i].split(" ")[1];
+        time += mtime + ' ' + timearray[i].split(" ")[1];
       } else {
-        time += mtime+' '+timearray[i].split(" ")[1] + '-';
+        time += mtime + ' ' + timearray[i].split(" ")[1] + '-';
       }
     }
     if (check2) {

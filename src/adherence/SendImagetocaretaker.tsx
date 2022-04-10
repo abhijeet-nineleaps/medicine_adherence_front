@@ -13,7 +13,6 @@ import {useFocusEffect} from '@react-navigation/native';
 import {Button, Text} from 'react-native-elements';
 import * as Progress from 'react-native-progress';
 import Toast from 'react-native-toast-message';
-// eslint-disable-next-line prettier/prettier
 import { LogBox } from 'react-native';
 LogBox.ignoreLogs(["Require cycle:"])
 interface Props {
@@ -22,12 +21,12 @@ interface Props {
 }
 
 const SendImageToCaretaker: React.FC<Props> = ({route, navigation}: Props) => {
+
   const {image_uri} = route.params;
   const [mycaretakers, mycaretakerstate] = useState([]);
   const [send_to, send_to_state] = useState('');
   const [modalVisible, setModalVisible] = useState(false);
 
-  console.log(send_to);
 
   const Renderitem = ({item}) => {
     const [med1, setMed1] = useState(false);
@@ -99,7 +98,7 @@ const SendImageToCaretaker: React.FC<Props> = ({route, navigation}: Props) => {
       function (c) {
         var r = (dt + Math.random() * 16) % 16 | 0;
         dt = Math.floor(dt / 16);
-        return (c == 'x' ? r : (r & 0x3) | 0x8).toString(16);
+        return (c === 'x' ? r : (r & 0x3) | 0x8).toString(16);
       },
     );
     formdata.append('image', {

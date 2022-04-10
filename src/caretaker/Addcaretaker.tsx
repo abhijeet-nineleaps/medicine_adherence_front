@@ -10,7 +10,6 @@ import {
 } from 'react-native';
 import React from 'react';
 import {Avatar, Button, ListItem, SpeedDial} from 'react-native-elements';
-
 import {API_URL} from '@env';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
@@ -23,10 +22,12 @@ interface Props {
   navigation: any;
 }
 
-const Addcaretaker: React.FC<Props> = ({navigation}: Props) => {
+const Addcaretaker: React.FC<{navigation}> = Props => {
+  const {navigation} = Props;
   const [caretakers, caretakerstate] = React.useState([]);
   const [refresh, refeereshstate] = React.useState(false);
   const [open, setOpen] = React.useState(false);
+
   const fetchcaretakers = async () => {
     const user_id = await AsyncStorage.getItem('user_id');
     fetch(`${API_URL}/api/caretaker/myCareTakers(Patient)?patientId=${user_id}`)
@@ -128,7 +129,7 @@ const Addcaretaker: React.FC<Props> = ({navigation}: Props) => {
             style={{backgroundColor: 'white'}}
             overlayColor="white"
             buttonStyle={{backgroundColor: '#3743ab'}}
-            icon={{name: 'edit', color: 'white'}}
+            icon={{name: 'add', color: 'white'}}
             openIcon={{name: 'close', color: 'white'}}
             onOpen={() => setOpen(!open)}
             onClose={() => setOpen(!open)}>

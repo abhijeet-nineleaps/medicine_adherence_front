@@ -20,6 +20,8 @@ import SQLite from 'react-native-sqlite-storage';
 import * as Progress from 'react-native-progress';
 import {API_URL} from '@env';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {GoogleSignin} from '@react-native-google-signin/google-signin';
+
 
 const Medicineadherence = ({navigation}) => {
   const [reminderdata, reminderdatastate] = React.useState([]);
@@ -66,7 +68,7 @@ const Medicineadherence = ({navigation}) => {
                   <Text>Timings - </Text>
                   <Text>
                     {item.time.split('-').map((mtime: any) => {
-                      
+
                       return <Text key={mtime}>{mtime + ','}</Text>;
                     })}
                   </Text>
@@ -162,8 +164,9 @@ const Medicineadherence = ({navigation}) => {
   }
 
   async function fetchallremindersandsync() {
+    if (await GoogleSignin.isSignedIn()){
     let remdata : any = await fetchallreminders();
-console.log('send')
+    console.log('send');
     console.log(remdata);
     syncstate(true);
     const filtered_array = remdata
@@ -208,6 +211,7 @@ console.log('send')
     } catch (err) {}
     syncstate(false);
   }
+}
 
   useFocusEffect(
     React.useCallback(() => {

@@ -23,7 +23,8 @@ interface Props {
   navigation: any;
 }
 
-const Login: React.FC<Props> = ({navigation}: Props) => {
+const Login: React.FC<{navigation}> = (Props) => {
+  const {navigation} = Props;
   const [loading, loadingstate] = React.useState(false);
   const [connected, connectedstate] = React.useState(false);
 
@@ -47,7 +48,7 @@ const Login: React.FC<Props> = ({navigation}: Props) => {
       await GoogleSignin.hasPlayServices();
       const userinfo = await GoogleSignin.signIn();
       const token = await messaging().getToken();
-
+      console.log(token);
       loadingstate(true);
       let url: any = new URL(`${API_URL}/api/user/saveuser`);
       url.searchParams.append('fcmToken', token);
@@ -93,12 +94,17 @@ const Login: React.FC<Props> = ({navigation}: Props) => {
             });
           }
         })
-        .catch(err => {
+        .catch(async(err) => {
           console.log(err);
           Toast.show({
             type: 'info',
             text1: 'Failed',
           });
+          if (err.code === statusCodes.IN_PROGRESS) {
+            if (await GoogleSignin.isSignedIn()) {
+              await GoogleSignin.signOut();
+            }
+          }
         });
     } catch (err: any) {
       if (err.code === statusCodes.IN_PROGRESS) {

@@ -43,7 +43,7 @@ function Pushnotificationforeground(mssg: any) {
     console.log(big_picure_url, ' Pi', mssg.notification);
   } else {
     body = mssg.notification.body;
-    generatenotificationforpatient(mssg, body);
+    generatenotificationforpatient(mssg,body);
   }
 }
 
@@ -51,11 +51,7 @@ function Pushnotification(mssg: any) {
   var num = Math.floor(Math.random() * 90000) + 10000;
   console.log(mssg);
   console.log(num);
-  let body: String;
   console.log(mssg, mssg.notification, mssg.notification.message);
-
-  body = mssg.notification.body;
-  generatenotificationforpatient(mssg, body);
 }
 
 const generatenotificationforpatient = (mssg: any, body: any) => {
@@ -133,7 +129,7 @@ const generatenotificationforcaretaker = (
     bigLargeIconUrl: big_picure_url,
     soundName: 'android.resource://com.project/raw/my_sound.mp3',
 
-    smallIcon: 'android.resource://com.project/raw/icon.png',
+    smallIcon: 'ic_launcher',
     // (optional) Increment of configured repeatType. Check 'Repeating Notifications' section for more info.
   });
 };
