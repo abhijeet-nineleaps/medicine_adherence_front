@@ -125,27 +125,6 @@ const CustomHeader = props => {
                 ]);
               }}></Button>
           )}
-          {!loggedin ? (
-            <Button
-              title="Log in"
-              loading={false}
-              loadingProps={{size: 'small', color: 'white'}}
-              buttonStyle={{
-                backgroundColor: '#0d47a1',
-                borderRadius: 5,
-              }}
-              titleStyle={{fontWeight: 'bold', fontSize: 23}}
-              containerStyle={{
-                marginHorizontal: 50,
-                height: 50,
-                width: 200,
-                marginVertical: 10,
-              }}
-              onPress={() => props.navigation.navigate('Loginscreen')}
-            />
-          ) : (
-            <></>
-          )}
         </View>
       </DrawerContentScrollView>
     </>
