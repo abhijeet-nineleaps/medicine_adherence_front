@@ -6,6 +6,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable react-native/no-inline-styles */
 /* eslint-disable react/self-closing-comp */
+
 import React, {useEffect} from 'react';
 import {View, Text, Dimensions, ScrollView, Alert} from 'react-native';
 import {Button} from 'react-native-elements';
@@ -108,7 +109,21 @@ const Reminder = ({route, navigation}) => {
   const setreminderwithselecteddate = (titl: any) => {
     counter = 0;
     var now = new Date();
+    var num = Math.floor(Math.random() * 90000) + 10000;
 
+    PushNotification.createChannel(
+      {
+        
+        channelId: num.toString(), // (required)
+        channelName: titl + 'Med channel', // (required)
+        channelDescription: 'A channel to categorise your notifications', // (optional) default: undefined.
+        playSound: false, // (optional) default: true
+        soundName: 'default', // (optional) See `soundName` parameter of `localNotification` function
+        importance: Importance.HIGH, // (optional) default: Importance.HIGH. Int value of the Android notification importance
+        vibrate: true, // (optional) default: true. Creates the default vibration pattern if true.
+      },
+      created => console.log(`createChannel returned '${created}'`), // (optional) callback returns whether the channel was created, false means it already existed.
+    );
     now.setDate(start_date.getDate());
 
     console.log(now.getDate(), now.getHours(), now.getTime());
@@ -126,20 +141,9 @@ const Reminder = ({route, navigation}) => {
 
         now.setHours(timm_array[0]);
         now.setMinutes(timm_array[1]);
-        var num = Math.floor(Math.random() * 90000) + 10000;
-
-        PushNotification.createChannel(
-          {
-            channelId: num.toString(), // (required)
-            channelName: 'Med channel', // (required)
-            channelDescription: 'A channel to categorise your notifications', // (optional) default: undefined.
-            playSound: false, // (optional) default: true
-            soundName: 'default', // (optional) See `soundName` parameter of `localNotification` function
-            importance: Importance.HIGH, // (optional) default: Importance.HIGH. Int value of the Android notification importance
-            vibrate: true, // (optional) default: true. Creates the default vibration pattern if true.
-          },
-          created => console.log(`createChannel returned '${created}'`), // (optional) callback returns whether the channel was created, false means it already existed.
-        );
+ 
+        
+        
         PushNotification.localNotificationSchedule({
           //... You can use all the options from localNotifications
           title: titl,
