@@ -100,18 +100,14 @@ const Login: React.FC<{navigation}> = (Props) => {
             type: 'info',
             text1: 'Failed',
           });
-          if (err.code === statusCodes.IN_PROGRESS) {
             if (await GoogleSignin.isSignedIn()) {
               await GoogleSignin.signOut();
             }
-          }
         });
     } catch (err: any) {
-      if (err.code === statusCodes.IN_PROGRESS) {
         if (await GoogleSignin.isSignedIn()) {
           await GoogleSignin.signOut();
         }
-      }
       console.log(err);
       Toast.show({
         type: 'info',

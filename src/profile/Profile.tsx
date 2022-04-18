@@ -118,13 +118,15 @@ const Profile = () => {
     async function getuser() {
       try {
         if (!(await GoogleSignin.isSignedIn())) {
-          Alert.alert('Sign in first to Edit Profile', 'Sign In', [
+          Alert.alert("Sign in first to Edit Profile","Click ok to proceed",[
             {
-              text: '',
-              onPress: () => {
-                console.log('d');
-              },
+              text:'Ok',
+              onPress:()=>{navigation.navigate('Login')},
             },
+            {
+              text:"Cancel",
+              onPress:()=>{navigation.navigate('Home')},
+            }
           ]);
           return;
         }

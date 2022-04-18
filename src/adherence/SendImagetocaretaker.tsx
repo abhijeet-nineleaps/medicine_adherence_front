@@ -4,7 +4,7 @@
 /* eslint-disable handle-callback-err */
 /* eslint-disable react/self-closing-comp */
 /* eslint-disable react-native/no-inline-styles */
-import {Image, Modal, ScrollView, View} from 'react-native';
+import {Image, Modal, ScrollView, TouchableOpacity, View} from 'react-native';
 import {API_URL} from '@env';
 import React, {useState} from 'react';
 import BouncyCheckbox from 'react-native-bouncy-checkbox';
@@ -13,20 +13,37 @@ import {useFocusEffect} from '@react-navigation/native';
 import {Button, Text} from 'react-native-elements';
 import * as Progress from 'react-native-progress';
 import Toast from 'react-native-toast-message';
-import { LogBox } from 'react-native';
-LogBox.ignoreLogs(["Require cycle:"])
+import Share from 'react-native-share';
+import SQLite from 'react-native-sqlite-storage';
+
+import {LogBox} from 'react-native';
+import Fetchdata from '../database/Querydata';
+import {Title} from 'react-native-paper';
+LogBox.ignoreLogs(['Require cycle:']);
 interface Props {
   route: any;
   navigation: any;
 }
 
+const db = SQLite.openDatabase(
+  {
+    name: 'MedRemdb',
+    location: 'default',
+  },
+  () => {
+    console.log('opened');
+  },
+  (error: any) => {
+    console.log(error);
+  },
+);
+let medName = '';
 const SendImageToCaretaker: React.FC<Props> = ({route, navigation}: Props) => {
-
   const {image_uri} = route.params;
   const [mycaretakers, mycaretakerstate] = useState([]);
   const [send_to, send_to_state] = useState('');
   const [modalVisible, setModalVisible] = useState(false);
-
+  const [medsArray, medsArrayState] = useState<any[]>([]);
 
   const Renderitem = ({item}) => {
     const [med1, setMed1] = useState(false);
@@ -57,6 +74,39 @@ const SendImageToCaretaker: React.FC<Props> = ({route, navigation}: Props) => {
     );
   };
 
+  const RenderMeds = ({item}) => {
+
+    const [clicked , clickedstate] = useState(false);
+    const [borderColo , borderColorstate] = useState('white');
+    const [tcolor , tcolorstate] = useState('black')
+
+    return (
+
+      <View style={{padding:10,margin:10 ,
+                    borderColor:'black',borderWidth:0.1
+                    ,height:40,alignItems:'center',justifyContent:'center',
+                    backgroundColor:borderColo,
+                    borderRadius:20}}>
+        <TouchableOpacity onPress={()=>{
+          medName = item.medicine_name;
+          clickedstate(!clicked);
+          if (clicked){
+            borderColorstate('white');
+
+          } else {
+            borderColorstate('#4dd0e1');
+            tcolorstate('white')
+          }
+        }}>
+        <Text style={{fontWeight: '500', fontSize: 15,color:tcolor}}>
+          {item.medicine_name}
+        </Text>
+        </TouchableOpacity>
+      </View>
+    );
+
+  }
+
   const fetchcaretakers = async () => {
     const user_id = await AsyncStorage.getItem('user_id');
 
@@ -75,10 +125,17 @@ const SendImageToCaretaker: React.FC<Props> = ({route, navigation}: Props) => {
     });
   };
 
+  const fetchMedicines = async () => {
+    db.transaction(async txn => {
+      let medsArray: any = await Fetchdata.getusermeds(txn);
+      medsArrayState(medsArray);
+    });
+  };
   useFocusEffect(
     React.useCallback(() => {
       let isActive = true;
       async function name() {
+        await fetchMedicines();
         let value: any = await fetchcaretakers();
         mycaretakerstate(value);
       }
@@ -170,16 +227,34 @@ const SendImageToCaretaker: React.FC<Props> = ({route, navigation}: Props) => {
         }}>
         <Text style={{fontWeight: '900'}}>Image</Text>
         <Button
-          title="Retake"
-          onPress={() => {
-            navigation.pop(1);
+          title="Share"
+          onPress={async () => {
+            const shareOptions = {
+              title: 'Share file',
+              email: 'email@example.com',
+              social: Share.Social.EMAIL,
+              failOnCancel: false,
+              urls: [image_uri],
+            };
+            await Share.open(shareOptions);
+            // navigation.pop(1);
           }}></Button>
       </View>
       <Image
         source={{uri: image_uri}}
-        style={{height: '70%', width: '100%'}}></Image>
-      <View style={{padding: 50}}>
-        <ScrollView>
+        style={{height: '60%', width: '100%',borderRadius:20}}></Image>
+      <ScrollView>
+        <View style={{marginTop:10}}>
+          <Text style={{marginLeft:8}}>Select Medicine</Text>
+          <ScrollView horizontal={true} 
+           showsHorizontalScrollIndicator={true}>
+          {medsArray.map(medItem => {
+
+            return <RenderMeds item={medItem}></RenderMeds>;
+          })}
+          </ScrollView>
+        </View>
+        <View style={{padding: 50}}>
           {mycaretakers.map(item => {
             return <Renderitem item={item}></Renderitem>;
           })}
@@ -190,8 +265,8 @@ const SendImageToCaretaker: React.FC<Props> = ({route, navigation}: Props) => {
             title="Send"
             buttonStyle={{backgroundColor: '#3743ab'}}
             containerStyle={{marginTop: 25}}></Button>
-        </ScrollView>
-      </View>
+        </View>
+      </ScrollView>
     </View>
   );
 };

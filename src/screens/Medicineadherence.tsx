@@ -22,7 +22,6 @@ import {API_URL} from '@env';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
 
-
 const Medicineadherence = ({navigation}) => {
   const [reminderdata, reminderdatastate] = React.useState([]);
   const [refresh, refeereshstate] = React.useState(false);
@@ -34,7 +33,7 @@ const Medicineadherence = ({navigation}) => {
     let click = currdate >= new Date(item.end_date);
     return (
       <>
-        {item.status === 1 ? (
+        {item.status === 1 && (
           <View style={{}}>
             <TouchableOpacity
               style={{flexDirection: 'row', justifyContent: 'space-between'}}
@@ -68,7 +67,6 @@ const Medicineadherence = ({navigation}) => {
                   <Text>Timings - </Text>
                   <Text>
                     {item.time.split('-').map((mtime: any) => {
-
                       return <Text key={mtime}>{mtime + ','}</Text>;
                     })}
                   </Text>
@@ -100,11 +98,8 @@ const Medicineadherence = ({navigation}) => {
               </View>
             </TouchableOpacity>
           </View>
-        ) : (
-          <></>
         )}
-
-        <Divider style={{marginTop: 15}} />
+        <Divider style={{}} />
       </>
     );
   };
@@ -164,61 +159,60 @@ const Medicineadherence = ({navigation}) => {
   }
 
   async function fetchallremindersandsync() {
-    if (await GoogleSignin.isSignedIn()){
-    let remdata : any = await fetchallreminders();
-    console.log('send');
-    console.log(remdata);
-    syncstate(true);
-    const filtered_array = remdata
-    .filter(reminder_item => reminder_item.sync === 0)
-      .map(reminder_item => {
-        let obj = {
-          medicineName: reminder_item.medicine_name,
-          medicineDes: reminder_item.medicine_des,
-          currentCount: reminder_item.current_count,
-          totalMedReminders: reminder_item.total_med_reminders,
-          title: reminder_item.title,
-          startDate: reminder_item.start_date,
-          status: reminder_item.status,
-          time: reminder_item.time,
-          days: reminder_item.days,
-          endDate: reminder_item.end_date,
-          userId: reminder_item.user_id,
-        };
-        return obj;
-      });
-
-   
-    let user_id = await AsyncStorage.getItem('user_id');
-    let url: any = new URL(`${API_URL}/api/usermedicine/syncmedicines`);
-    url.searchParams.append('userId', user_id);
-    try {
-      await fetch(url, {
-        method: 'POST',
-        body: JSON.stringify(filtered_array),
-        headers: {
-          'Content-type': 'application/json',
-        },
-      })
-        .then(response => {
-          if (response.status === 200) {
-          } else if (response.status === 500 || response.status === 400) {
-          }
-        })
-        .catch(err => {
-          console.log(err);
+    if (await GoogleSignin.isSignedIn()) {
+      let remdata: any = await fetchallreminders();
+      console.log('send');
+      console.log(remdata);
+      syncstate(true);
+      const filtered_array = remdata
+        .filter(reminder_item => reminder_item.sync === 0)
+        .map(reminder_item => {
+          let obj = {
+            medicineName: reminder_item.medicine_name,
+            medicineDes: reminder_item.medicine_des,
+            currentCount: reminder_item.current_count,
+            totalMedReminders: reminder_item.total_med_reminders,
+            title: reminder_item.title,
+            startDate: reminder_item.start_date,
+            status: reminder_item.status,
+            time: reminder_item.time,
+            days: reminder_item.days,
+            endDate: reminder_item.end_date,
+            userId: reminder_item.user_id,
+          };
+          return obj;
         });
-    } catch (err) {}
-    syncstate(false);
+
+      let user_id = await AsyncStorage.getItem('user_id');
+      let url: any = new URL(`${API_URL}/api/v1/medicines/sync`);
+      url.searchParams.append('userId', user_id);
+      try {
+        await fetch(url, {
+          method: 'POST',
+          body: JSON.stringify(filtered_array),
+          headers: {
+            'Content-type': 'application/json',
+          },
+        })
+          .then(response => {
+            if (response.status === 200) {
+            } else if (response.status === 500 || response.status === 400) {
+            }
+          })
+          .catch(err => {
+            console.log(err);
+          });
+      } catch (err) {}
+      syncstate(false);
+    }
   }
-}
 
   useFocusEffect(
     React.useCallback(() => {
       let isActive = true;
 
-      fetchallreminders().then((d) => {
-        console.log('ssyyncc' + reminderdata)
+      fetchallreminders().then(d => {
+        console.log('ssyyncc' + reminderdata);
         fetchallremindersandsync();
       });
 

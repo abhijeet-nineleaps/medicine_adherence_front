@@ -114,9 +114,11 @@ const TodayPerformance = ({route}) => {
 
                 if (resp.rows.length === 0) {
                   console.log('NO id present but created ', resp.rows.item(0));
+                  let remId = Math.floor(10000000 + Math.random() * 90000000);
+
                   txn.executeSql(
-                    'INSERT INTO reminder_day (date,timings,med_id) VALUES (?,?,?)',
-                    [td_da, res.rows.item(0).time, user_id],
+                    'INSERT INTO reminder_day (rem_id,date,timings,med_id) VALUES (?,?,?,?)',
+                    [remId, td_da, res.rows.item(0).time, user_id],
                   );
 
                   setTime(res.rows.item(0).time.split('-'));
@@ -125,6 +127,7 @@ const TodayPerformance = ({route}) => {
                     'SELECT * FROM reminder_day where date = ? AND med_id = ?',
                     [td_da, user_id],
                     function (tx, respp) {
+                      console.log(respp.rows.item(0));
                       setTime(respp.rows.item(0).timings.split('-'));
                     },
                   );

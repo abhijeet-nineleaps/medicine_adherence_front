@@ -4,17 +4,28 @@
 /* eslint-disable no-shadow */
 /* eslint-disable react-native/no-inline-styles */
 import React from 'react';
-import {Text, View, StyleSheet, FlatList} from 'react-native';
+import {
+  Text,
+  View,
+  StyleSheet,
+  FlatList,
+  PermissionsAndroid,
+} from 'react-native';
 import ProgressCircle from 'react-native-progress-circle';
 import {Picker} from '@react-native-picker/picker';
-import {Divider} from 'react-native-elements';
+import {Button, Divider} from 'react-native-elements';
 import {Card} from 'react-native-paper';
 import {useFocusEffect} from '@react-navigation/native';
 import SQLite from 'react-native-sqlite-storage';
 import Allreminderdata from './Allreminderdata';
-import { LogBox } from 'react-native';
+import {LogBox} from 'react-native';
 import Fetchdata from '../database/Querydata';
-LogBox.ignoreLogs(["Require cycle:"])
+import RNFetchBlob from 'rn-fetch-blob';
+import {API_URL} from '@env';
+
+const {config, fs} = RNFetchBlob;
+
+LogBox.ignoreLogs(['Require cycle:']);
 LogBox.ignoreAllLogs();
 var db: any;
 interface singledate {
@@ -84,6 +95,18 @@ const MyComponent: React.FC = () => {
   const [reminder_map_fetched_data, reminder_map_fetched_data_state] =
     React.useState<[]>([]);
   const [med_detail, med_detail_state] = React.useState<any>();
+  const sheetRef = React.useRef(null);
+
+  const renderContent = () => (
+    <View
+      style={{
+        backgroundColor: '#2c2c2fAA',
+        padding: 16,
+        height: 450,
+      }}>
+      <Text style={{color: 'white'}}>Swipe down to close</Text>
+    </View>
+  );
 
   const fetchreminders = async (db: any) => {
     let reminder_array: any = [];
@@ -93,34 +116,42 @@ const MyComponent: React.FC = () => {
         'CREATE TABLE IF NOT EXISTS User_medicines(user_id INTEGER PRIMARY KEY NOT NULL, medicine_name TEXT, medicine_des TEXT , title TEXT, time TEXT , days TEXT , start_date TEXT , end_date TEXT , status INTEGER , sync INTEGER)',
         [],
       );
-       reminder_array = await Fetchdata.getusermeds(txn);
-       reminders_state(reminder_array);
-      // txn.executeSql(
-      //   'SELECT * FROM `User_medicines`',
-      //   [],
-      //   function (tx: any, res: any) {
-      //     for (let i = 0; i < res.rows.length; ++i) {
-      //       reminder_array.push(res.rows.item(i));
-      //     }
-      //     
-      //   },
-      // );
+      reminder_array = await Fetchdata.getusermeds(txn);
+      reminders_state(reminder_array);
     });
   };
 
   const remindersofparticular_medicine = async (med_name: any) => {
     console.log(med_name);
-    const output_map: any = await Allreminderdata(med_name);
-    console.log('out', output_map);
+    const histoy_obj: any = await Allreminderdata(med_name);
+    const output_map: any = histoy_obj.mapper;
+    const {meds_id} = histoy_obj;
     let f_array: any = [];
     for (let [key, value] of output_map.entries()) {
-      let arr = {date: key, key: {taken: [], not_taken: []}};
+      let arr = {date: key, key: {taken: [], not_taken: [],remId:''}};
       arr.key.taken = value.taken;
       arr.key.not_taken = value.not_taken;
+      arr.key.remId = value.remId;
       f_array.push(arr);
     }
-
     reminder_map_fetched_data_state(f_array);
+    let syncData = [];
+     f_array.map(mdata => {
+        let mobj = {date:'',taken:[],not_taken:[],remId:''};
+        mobj.date = mdata.date;
+        mobj.taken = mdata.key.taken;
+        mobj.not_taken = mdata.key.not_taken;
+        mobj.remId = mdata.key.remId;
+        syncData.push(mobj);
+    })
+    console.log(syncData);
+    fetch(`${API_URL}/api/v1/medicinehistory/sync?medId=${meds_id}`, {
+      method: 'POST',
+      body:JSON.stringify(syncData),
+      headers: {
+        'Content-type': 'application/json',
+      }
+    }).then(res => {});
   };
 
   const getmed_details = async (med_name: any) => {
@@ -237,6 +268,35 @@ const MyComponent: React.FC = () => {
           data={reminder_map_fetched_data}
           renderItem={Reminders}></FlatList>
       }
+      <Button
+        title="Download as Pdf"
+        onPress={async () => {
+          const date = new Date();
+          await PermissionsAndroid.request(
+            PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
+          );
+          await PermissionsAndroid.request(
+            PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE,
+          );
+          let downloaddir = RNFetchBlob.fs.dirs.DownloadDir;
+          let downloadPath = `${downloaddir}/report_${Math.floor(
+            date.getTime() + date.getSeconds() / 2,
+          )}.pdf`;
+          const options = {
+            fileCache: true,
+            addAndroidDownloads: {
+              useDownloadManager: true, // true will use native manager and be shown on notification bar.
+              notification: true,
+              path: downloadPath,
+              description: 'Downloading your report',
+            },
+          };
+          await config(options).fetch(
+            'GET',
+            'https://7224-103-225-204-61.ngrok.io/upload/static/pdf/sample.pdf',
+          );
+          console.log('complete');
+        }}></Button>
     </View>
   );
 };

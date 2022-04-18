@@ -17,6 +17,7 @@ const db = SQLite.openDatabase(
 const Allreminderdata = async (med_name: any) => {
   let reminder_obj: any;
   let map = new Map<String, Object>();
+  let med_id: Number = 0;
 
   function reminder_promise() {
     return new Promise((resolve, reject) => {
@@ -25,7 +26,6 @@ const Allreminderdata = async (med_name: any) => {
           'CREATE TABLE IF NOT EXISTS User_medicines(user_id INTEGER PRIMARY KEY NOT NULL, medicine_name TEXT, medicine_des TEXT , title TEXT, time TEXT , days TEXT , start_date TEXT , end_date TEXT , status INTEGER , sync INTEGER)',
           [],
         );
-        let med_id: Number = 0;
         txn.executeSql(
           'SELECT * FROM `User_medicines` WHERE medicine_name = ?',
           [med_name],
@@ -49,7 +49,11 @@ const Allreminderdata = async (med_name: any) => {
                     curr_rem_obj.timings.split('-'),
                   );
                   console.log(overall_timings, ' ', taken_missed_times);
-                  let final_timeings_obj = {taken: Array(), not_taken: Array()};
+                  let final_timeings_obj = {
+                    remId: respp.rows.item(o).rem_id,
+                    taken: Array(),
+                    not_taken: Array(),
+                  };
 
                   overall_timings.forEach((m_time: any) => {
                     if (taken_missed_times.has(m_time)) {
@@ -70,8 +74,8 @@ const Allreminderdata = async (med_name: any) => {
   }
   map = await reminder_promise();
 
-  // console.log(map)
-  return map;
+  console.log(map);
+  return {mapper: map, meds_id: med_id};
 };
 
 export default Allreminderdata;
