@@ -17,7 +17,7 @@ import {Card} from 'react-native-paper';
 import LottieView from 'lottie-react-native';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {IconProp} from '@fortawesome/fontawesome-svg-core';
-
+import * as Animatable from 'react-native-animatable';
 import {faClock, faTrash} from '@fortawesome/free-solid-svg-icons';
 
 import SQLite from 'react-native-sqlite-storage';
@@ -116,63 +116,65 @@ const Addmedicine = ({navigation}: Props) => {
     });
   };
 
-  const renderitem: React.FC = ({item}: any) => {
+  const renderitem: React.FC = ({item, index}: any) => {
     return (
-      <Card
-        style={{
-          borderRadius: 30,
-          margin: 3,
-          borderColor: 'lightgrey',
-          elevation: 1,
-          shadowColor: '#3743ab',
-        }}>
-        <View style={{marginBottom: 7}}>
-          <ListItem style={{backgroundColor: 'white', height: 80}}>
-            <ListItem.Content>
-              <View style={{flexDirection: 'row'}}>
-                <Avatar
-                  rounded
-                  size={50}
-                  source={require('../assests/meddis.png')}></Avatar>
-                <View style={{flexDirection: 'column', margin: 3}}>
-                  <ListItem.Title style={{fontWeight: '600'}}>
-                    {item.medicine_name}
-                  </ListItem.Title>
-                  <ListItem.Subtitle>{item.medicine_des}</ListItem.Subtitle>
+      <Animatable.View animation="zoomInUp" duration={500} delay={index * 180}>
+        <Card
+          style={{
+            borderRadius: 30,
+            margin: 3,
+            borderColor: 'lightgrey',
+            elevation: 1,
+            shadowColor: '#3743ab',
+          }}>
+          <View style={{marginBottom: 7}}>
+            <ListItem style={{backgroundColor: 'white', height: 80}}>
+              <ListItem.Content>
+                <View style={{flexDirection: 'row'}}>
+                  <Avatar
+                    rounded
+                    size={50}
+                    source={require('../assests/meddis.png')}></Avatar>
+                  <View style={{flexDirection: 'column', margin: 3}}>
+                    <ListItem.Title style={{fontWeight: '600'}}>
+                      {item.medicine_name}
+                    </ListItem.Title>
+                    <ListItem.Subtitle>{item.medicine_des}</ListItem.Subtitle>
+                  </View>
                 </View>
-              </View>
-            </ListItem.Content>
+              </ListItem.Content>
 
-            <TouchableOpacity
-              style={{marginRight: 10}}
-              onPress={() =>
-                navigation.navigate('Add Reminder', {id: item.user_id})
-              }>
-              <FontAwesomeIcon
-                icon={faClock as IconProp}
-                color={item.status === 0 ? '#3743ab' : '#4dd0e1'}
-                size={24}></FontAwesomeIcon>
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={() => {
-                Alert.alert('Delete it!', 'Sure you want delete it', [
-                  {
-                    text: 'Delete',
-                    onPress: () => deleteitem(item.user_id),
-                  },
-                  {
-                    text: 'Cancel',
-                  },
-                ]);
-              }}>
-              <FontAwesomeIcon
-                icon={faTrash as IconProp}
-                color="#3743ab"
-                size={24}></FontAwesomeIcon>
-            </TouchableOpacity>
-          </ListItem>
-        </View>
-      </Card>
+              <TouchableOpacity
+                style={{marginRight: 10}}
+                onPress={() =>
+                  navigation.navigate('Add Reminder', {id: item.user_id})
+                }>
+                <FontAwesomeIcon
+                  icon={faClock as IconProp}
+                  color={item.status === 0 ? '#3743ab' : '#4dd0e1'}
+                  size={24}></FontAwesomeIcon>
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => {
+                  Alert.alert('Delete it!', 'Sure you want delete it', [
+                    {
+                      text: 'Delete',
+                      onPress: () => deleteitem(item.user_id),
+                    },
+                    {
+                      text: 'Cancel',
+                    },
+                  ]);
+                }}>
+                <FontAwesomeIcon
+                  icon={faTrash as IconProp}
+                  color="#3743ab"
+                  size={24}></FontAwesomeIcon>
+              </TouchableOpacity>
+            </ListItem>
+          </View>
+        </Card>
+      </Animatable.View>
     );
   };
 

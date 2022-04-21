@@ -21,6 +21,7 @@ import * as Progress from 'react-native-progress';
 import {API_URL} from '@env';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
+import * as Animatable from 'react-native-animatable';
 
 const Medicineadherence = ({navigation}) => {
   const [reminderdata, reminderdatastate] = React.useState([]);
@@ -28,78 +29,85 @@ const Medicineadherence = ({navigation}) => {
   const [sync, syncstate] = React.useState(false);
   const [totalpercent, totalpercentstate] = React.useState(0);
 
-  const Reminder = ({item}) => {
+  const Reminder = ({item,index}) => {
     let currdate = new Date();
     let click = currdate >= new Date(item.end_date);
     return (
       <>
-        {item.status === 1 && (
-          <View style={{}}>
-            <TouchableOpacity
-              style={{flexDirection: 'row', justifyContent: 'space-between'}}
-              onPress={() => {
-                if (click) {
-                  Alert.alert('Reminder duration over', '', [
-                    {
-                      text: 'Ok',
-                      onPress: () => {},
-                    },
-                  ]);
-                } else {
-                  navigation.navigate('Today Performance', {
-                    user_id: item.user_id,
-                  });
-                }
-              }}>
-              <View style={{flexDirection: 'column', margin: 10, width: '60%'}}>
-                <Text
-                  style={{color: 'black', fontWeight: '600', marginBottom: 7}}>
-                  {item.medicine_name}
-                </Text>
-                <Text style={{marginBottom: 3}}>{item.medicine_des}</Text>
-                <View style={{flexDirection: 'row', width: '50%'}}>
-                  <Text>Days - </Text>
-                  {item.days.split(':').map((mday: any) => {
-                    return <Text key={mday}>{mday + ','}</Text>;
-                  })}
-                </View>
-                <View style={{flexDirection: 'row', width: '60%'}}>
-                  <Text>Timings - </Text>
-                  <Text>
-                    {item.time.split('-').map((mtime: any) => {
-                      return <Text key={mtime}>{mtime + ','}</Text>;
+          {item.status === 1 ? (
+            <View style={{}}>
+              <TouchableOpacity
+                style={{flexDirection: 'row', justifyContent: 'space-between'}}
+                onPress={() => {
+                  if (click) {
+                    Alert.alert('Reminder duration over', '', [
+                      {
+                        text: 'Ok',
+                        onPress: () => {},
+                      },
+                    ]);
+                  } else {
+                    navigation.navigate('Today Performance', {
+                      user_id: item.user_id,
+                    });
+                  }
+                }}>
+                <View
+                  style={{flexDirection: 'column', margin: 10, width: '60%'}}>
+                  <Text
+                    style={{
+                      color: 'black',
+                      fontWeight: '600',
+                      marginBottom: 7,
+                    }}>
+                    {item.medicine_name}
+                  </Text>
+                  <Text style={{marginBottom: 3}}>{item.medicine_des}</Text>
+                  <View style={{flexDirection: 'row', width: '50%'}}>
+                    <Text>Days - </Text>
+                    {item.days.split(':').map((mday: any) => {
+                      return <Text key={mday}>{mday + ','}</Text>;
                     })}
-                  </Text>
-                </View>
-                <View style={{marginTop: 15}}>
-                  <Text>
-                    {'End Date : ' + new Date(item.end_date).toDateString()}
-                  </Text>
-                </View>
-              </View>
-              <View style={{padding: 30}}>
-                <TouchableOpacity onPress={() => {}}>
-                  <ProgressCircle
-                    percent={
-                      (item.current_count / item.total_med_reminders) * 100
-                    }
-                    radius={26}
-                    borderWidth={3}
-                    color="#00bcd4"
-                    shadowColor="#999"
-                    bgColor="#ffff">
-                    <Text style={{fontSize: 15, color: '#00bcd4'}}>
-                      {Math.round(
-                        (item.current_count / item.total_med_reminders) * 100,
-                      ) + '%'}
+                  </View>
+                  <View style={{flexDirection: 'row', width: '60%'}}>
+                    <Text>Timings - </Text>
+                    <Text>
+                      {item.time.split('-').map((mtime: any) => {
+                        return <Text key={mtime}>{mtime + ','}</Text>;
+                      })}
                     </Text>
-                  </ProgressCircle>
-                </TouchableOpacity>
-              </View>
-            </TouchableOpacity>
-          </View>
-        )}
-        <Divider style={{}} />
+                  </View>
+                  <View style={{marginTop: 15}}>
+                    <Text>
+                      {'End Date : ' + new Date(item.end_date).toDateString()}
+                    </Text>
+                  </View>
+                </View>
+                <View style={{padding: 30}}>
+                  <TouchableOpacity onPress={() => {}}>
+                    <ProgressCircle
+                      percent={
+                        (item.current_count / item.total_med_reminders) * 100
+                      }
+                      radius={26}
+                      borderWidth={3}
+                      color="#00bcd4"
+                      shadowColor="#999"
+                      bgColor="#ffff">
+                      <Text style={{fontSize: 15, color: '#00bcd4'}}>
+                        {Math.round(
+                          (item.current_count / item.total_med_reminders) * 100,
+                        ) + '%'}
+                      </Text>
+                    </ProgressCircle>
+                  </TouchableOpacity>
+                </View>
+              </TouchableOpacity>
+              <Divider style={{}} />
+            </View>
+          ) : (
+            <></>
+          )}
       </>
     );
   };
@@ -165,7 +173,7 @@ const Medicineadherence = ({navigation}) => {
       console.log(remdata);
       syncstate(true);
       const filtered_array = remdata
-        .filter(reminder_item => reminder_item.sync === 0)
+        .filter(reminder_item => reminder_item.status === 1)
         .map(reminder_item => {
           let obj = {
             medicineName: reminder_item.medicine_name,
@@ -229,7 +237,12 @@ const Medicineadherence = ({navigation}) => {
         height: '100%',
         backgroundColor: 'white',
       }}>
+       
       {sync ? (
+         <Animatable.View
+         animation="slideInDown"
+         duration={200}
+         >
         <View
           style={{
             flexDirection: 'row',
@@ -245,10 +258,10 @@ const Medicineadherence = ({navigation}) => {
             color={['white']}
           />
         </View>
+        </Animatable.View>
       ) : (
         <></>
       )}
-
       <TouchableOpacity
         onPress={() => {
           reminderdata.length === 0

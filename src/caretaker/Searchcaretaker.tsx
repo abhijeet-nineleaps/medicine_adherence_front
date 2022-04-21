@@ -17,7 +17,7 @@ const Searchcaretaker = ({navigation}) => {
 
   const sendmailtouser = (email: any) => {
     searchloadstate(true);
-    fetch(`${API_URL}/api/user/getbyemail?email=${email}&sender=Nikunj bisht`)
+    fetch(`${API_URL}/api/v1/email?email=${email}&sender=Nikunj bisht`)
       .then(res => res.json())
       .then(resp => {
         console.log(resp);
@@ -45,7 +45,7 @@ const Searchcaretaker = ({navigation}) => {
     const pt_name = await AsyncStorage.getItem('user_name');
     console.log(caret_id, pnt_id, pt_name);
 
-    fetch(`${API_URL}/api/caretaker/savecaretaker`, {
+    fetch(`${API_URL}/api/v1/request`, {
       method: 'POST',
       body: JSON.stringify({
         caretakerId: caret_id,

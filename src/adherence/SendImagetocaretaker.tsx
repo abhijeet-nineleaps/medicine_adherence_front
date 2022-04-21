@@ -112,12 +112,12 @@ const SendImageToCaretaker: React.FC<Props> = ({route, navigation}: Props) => {
 
     return new Promise((resl, rej) => {
       fetch(
-        `${API_URL}/api/caretaker/myCareTakers(Patient)?patientId=${user_id}`,
+        `${API_URL}/api/v1/caretakers?patientId=${user_id}`,
       )
         .then(resp => resp.json())
         .then(res => {
           console.log(res);
-          resl(res);
+          resl(res.userCaretakerList);
         })
         .catch(err => {
           setModalVisible(false);
@@ -167,7 +167,7 @@ const SendImageToCaretaker: React.FC<Props> = ({route, navigation}: Props) => {
     formdata.append('id', send_to);
     console.log(formdata);
     const url = `${API_URL}`;
-    fetch(url + '/api/caretaker/sendimage', {
+    fetch(url + '/api/v1/image', {
       method: 'post',
       headers: {
         'Content-Type': 'multipart/form-data',

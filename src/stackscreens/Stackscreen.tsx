@@ -18,6 +18,7 @@ import Profile from '../profile/Profile';
 import About from '../screens/Aboutapp';
 import OnboardingScreen from '../screens/Onboarding';
 import ViewProfile from '../screens/Patientprofile';
+import PatientReport from '../screens/PatientReport';
 import DrawerNavigator from '../ui/DrawerNavigator';
 import UserMed from '../UserMed';
 
@@ -104,6 +105,10 @@ const Stackscreen: React.FC = () => {
         options={{headerTintColor: 'black'}}
         name="Adherence History"
         component={MyComponent}></Stack.Screen>
+      <Stack.Screen
+        options={{headerTintColor: 'white',headerStyle:{backgroundColor:'#3743ab'}}}
+        name="Patient report"
+        component={PatientReport}></Stack.Screen>
     </Stack.Navigator>
   );
 };

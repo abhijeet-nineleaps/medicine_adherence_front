@@ -10,20 +10,23 @@ import {
   StyleSheet,
   FlatList,
   PermissionsAndroid,
+  ToastAndroid
 } from 'react-native';
 import ProgressCircle from 'react-native-progress-circle';
 import {Picker} from '@react-native-picker/picker';
 import {Button, Divider} from 'react-native-elements';
-import {Card} from 'react-native-paper';
 import {useFocusEffect} from '@react-navigation/native';
 import SQLite from 'react-native-sqlite-storage';
 import Allreminderdata from './Allreminderdata';
-import {LogBox} from 'react-native';
+import {LogBox,Modal} from 'react-native';
 import Fetchdata from '../database/Querydata';
-import RNFetchBlob from 'rn-fetch-blob';
-import {API_URL} from '@env';
+import * as Progress from 'react-native-progress';
+import LottieView from 'lottie-react-native';
+import NetworkCalls from '../connectivity/Network';
+import Downloadpdf from './Downloadpdf';
+import MedicinehistoryList from './components/MedicineHistoryList';
 
-const {config, fs} = RNFetchBlob;
+let globalmedId;
 
 LogBox.ignoreLogs(['Require cycle:']);
 LogBox.ignoreAllLogs();
@@ -33,80 +36,17 @@ interface singledate {
   taken: [];
 }
 
-const Reminders: React.FC = ({item}: any) => {
-  return (
-    <>
-      <View
-        key={item.medicine_name + '1'}
-        style={{
-          padding: 4,
-          marginBottom: 15,
-        }}>
-        <Card key={item.medicine_name + '2'} style={styles.dateday}>
-          <View
-            key={item.medicine_name + '3'}
-            style={{flexDirection: 'row', justifyContent: 'space-around'}}>
-            <Text key={item.medicine_name + '7'}>Date - {item.date}</Text>
-          </View>
-        </Card>
-      </View>
-      {item.key.not_taken.map((nti: any) => {
-        return (
-          <View
-            key={item.medicine_name + '4'}
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'space-around',
-              marginBottom: 12,
-              marginLeft: 7,
-            }}>
-            <Text key={item.medicine_name + '5'}>{nti}</Text>
-            <Text key={item.medicine_name + '6'} style={{color: 'red'}}>
-              {' '}
-              Not Taken
-            </Text>
-          </View>
-        );
-      })}
-      {item.key.taken.map((tti: any) => {
-        return (
-          <View
-            key={item.medicine_name + '12'}
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'space-around',
-              marginBottom: 12,
-            }}>
-            <Text key={item.medicine_name + '22'}>{tti}</Text>
-            <Text key={item.medicine_name + '23'} style={{color: 'green'}}>
-              {' '}
-              Taken
-            </Text>
-          </View>
-        );
-      })}
-    </>
-  );
-};
-
 const MyComponent: React.FC = () => {
+
   const [pickerValue, setPickerValue] = React.useState<String>('');
   const [allreminders, reminders_state] = React.useState<[]>([]);
   const [reminder_map_fetched_data, reminder_map_fetched_data_state] =
     React.useState<[]>([]);
   const [med_detail, med_detail_state] = React.useState<any>();
-  const sheetRef = React.useRef(null);
+  const [sync, syncstate] = React.useState(false);
+  const [disableDownload, downloadState] = React.useState(true);
+  const [modalVisible, setModalVisible] = React.useState(false);
 
-  const renderContent = () => (
-    <View
-      style={{
-        backgroundColor: '#2c2c2fAA',
-        padding: 16,
-        height: 450,
-      }}>
-      <Text style={{color: 'white'}}>Swipe down to close</Text>
-    </View>
-  );
 
   const fetchreminders = async (db: any) => {
     let reminder_array: any = [];
@@ -126,32 +66,33 @@ const MyComponent: React.FC = () => {
     const histoy_obj: any = await Allreminderdata(med_name);
     const output_map: any = histoy_obj.mapper;
     const {meds_id} = histoy_obj;
+    globalmedId = meds_id;
     let f_array: any = [];
     for (let [key, value] of output_map.entries()) {
-      let arr = {date: key, key: {taken: [], not_taken: [],remId:''}};
+      let arr = {date: key, key: {taken: [], not_taken: [], remId: ''}};
       arr.key.taken = value.taken;
       arr.key.not_taken = value.not_taken;
       arr.key.remId = value.remId;
       f_array.push(arr);
     }
+    console.log(JSON.stringify(f_array));
     reminder_map_fetched_data_state(f_array);
     let syncData = [];
-     f_array.map(mdata => {
-        let mobj = {date:'',taken:[],not_taken:[],remId:''};
-        mobj.date = mdata.date;
-        mobj.taken = mdata.key.taken;
-        mobj.not_taken = mdata.key.not_taken;
-        mobj.remId = mdata.key.remId;
-        syncData.push(mobj);
-    })
+    f_array.map(mdata => {
+      let mobj = {date: '', taken: [], not_taken: [], remId: ''};
+      mobj.date = mdata.date;
+      mobj.taken = mdata.key.taken;
+      mobj.not_taken = mdata.key.not_taken;
+      mobj.remId = mdata.key.remId;
+      syncData.push(mobj);
+    });
     console.log(syncData);
-    fetch(`${API_URL}/api/v1/medicinehistory/sync?medId=${meds_id}`, {
-      method: 'POST',
-      body:JSON.stringify(syncData),
-      headers: {
-        'Content-type': 'application/json',
-      }
-    }).then(res => {});
+    downloadState(true);
+    syncstate(true);
+    await NetworkCalls.synchistory(meds_id, syncData);
+    syncstate(false);
+
+    downloadState(false);
   };
 
   const getmed_details = async (med_name: any) => {
@@ -190,6 +131,40 @@ const MyComponent: React.FC = () => {
 
   return (
     <View style={{height: '100%', backgroundColor: 'white'}}>
+        <Modal
+        animationType='fade'
+        transparent={true}
+        visible={modalVisible}
+        style={{alignItems: 'center',backgroundColor:'red'}}>
+          <View style={{height:'100%',alignItems:'center',justifyContent:'center',backgroundColor: 'rgba(52, 52, 52, 0.8)'}}>
+          <LottieView
+                style={{width: 70, height: 70}}
+                speed={0.8}
+                source={require('../../assests/animate/generatepdf.json')}
+                autoPlay
+                loop
+              />
+          </View>
+      </Modal>
+      {sync ? (
+        <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            padding: 15,
+            backgroundColor: 'grey',
+            alignItems: 'center',
+          }}>
+          <Text style={{fontWeight: '800', color: 'white'}}>Syncing Data</Text>
+          <Progress.CircleSnail
+            spinDuration={400}
+            size={30}
+            color={['white']}
+          />
+        </View>
+      ) : (
+        <></>
+      )}
       <View style={{flexDirection: 'row'}}>
         <View
           style={{width: '100%', borderColor: 'lightgrey', borderEndWidth: 1}}>
@@ -208,15 +183,17 @@ const MyComponent: React.FC = () => {
               remindersofparticular_medicine(itemValue);
               getmed_details(itemValue);
             }}>
-            {allreminders.map((it: any) => {
-              return (
-                <Picker.Item
-                  key={it.medicine_name}
-                  label={it.medicine_name}
-                  value={it.medicine_name}
-                />
-              );
-            })}
+            {allreminders
+              .filter((it: any) => it.status === 1)
+              .map((it: any) => {
+                return (
+                  <Picker.Item
+                    key={it.medicine_name}
+                    label={it.medicine_name}
+                    value={it.medicine_name}
+                  />
+                );
+              })}
           </Picker>
         </View>
       </View>
@@ -266,36 +243,28 @@ const MyComponent: React.FC = () => {
       {
         <FlatList
           data={reminder_map_fetched_data}
-          renderItem={Reminders}></FlatList>
+          renderItem={MedicinehistoryList}></FlatList>
       }
       <Button
-        title="Download as Pdf"
+        disabled={disableDownload}
+        title="Download PDF"
+        buttonStyle={{backgroundColor: '#3743ab'}}
         onPress={async () => {
-          const date = new Date();
           await PermissionsAndroid.request(
             PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
           );
           await PermissionsAndroid.request(
             PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE,
           );
-          let downloaddir = RNFetchBlob.fs.dirs.DownloadDir;
-          let downloadPath = `${downloaddir}/report_${Math.floor(
-            date.getTime() + date.getSeconds() / 2,
-          )}.pdf`;
-          const options = {
-            fileCache: true,
-            addAndroidDownloads: {
-              useDownloadManager: true, // true will use native manager and be shown on notification bar.
-              notification: true,
-              path: downloadPath,
-              description: 'Downloading your report',
-            },
-          };
-          await config(options).fetch(
-            'GET',
-            'https://7224-103-225-204-61.ngrok.io/upload/static/pdf/sample.pdf',
-          );
-          console.log('complete');
+          setModalVisible(true)
+          const downloadResp = await Downloadpdf(globalmedId);
+          setModalVisible(false);
+          if (downloadResp !== 'err'){
+            ToastAndroid.show('Downloaded successfully',ToastAndroid.LONG);
+          } else {
+            ToastAndroid.show('Error while downloading',ToastAndroid.LONG);
+
+          }
         }}></Button>
     </View>
   );

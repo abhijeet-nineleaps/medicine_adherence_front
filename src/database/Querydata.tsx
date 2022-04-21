@@ -1,7 +1,20 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable prettier/prettier */
 /* eslint-disable no-trailing-spaces */
+import SQLite from 'react-native-sqlite-storage';
 
+const db = SQLite.openDatabase(
+  {
+    name: 'MedRemdb',
+    location: 'default',
+  },
+  () => {
+    console.log('opened');
+  },
+  error => {
+    console.log(error);
+  },
+);
 const Fetchdata = {
   getusermeds: async (txn: any) => {
     const reminder_array: any = [];
@@ -16,6 +29,15 @@ const Fetchdata = {
           resolve(reminder_array);
         },
       );
+    });
+  },
+  deleteUserMedicinesandhistory: () => {
+   return new Promise((resolve, reject) => {
+      db.transaction(async function (txn) {
+        txn.executeSql('DROP TABLE IF EXISTS User_medicines', []);
+        txn.executeSql('DROP TABLE IF EXISTS reminder_day', []);
+        resolve('');
+      });
     });
   },
 };

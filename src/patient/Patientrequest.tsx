@@ -16,12 +16,16 @@ const Patientrequest = () => {
   const fetchpatientreq = () => {
     console.log('called');
     fetch(
-      `${API_URL}/api/caretaker/patientRequests(Caretaker)?caretakerId=f9c67686-55f9-495a-b214-eb89d5606678`,
+      `${API_URL}/api/v1/patient/requests?caretakerId=f9c67686-55f9-495a-b214-eb89d5606678`,
     )
       .then(res => res.json())
       .then(resp => {
         console.log(resp);
-        patientsdata(resp);
+        if (resp.status === 'failed') {
+          patientsdata([]);
+          return;
+        }
+        patientsdata(resp.userCaretakerList);
       })
       .catch(err => {});
   };
@@ -38,7 +42,7 @@ const Patientrequest = () => {
     }, []),
   );
   const acceptrequest = (ci_id: String) => {
-    let url: any = new URL(`${API_URL}/api/caretaker/updatestatus`);
+    let url: any = new URL(`${API_URL}/api/v1/accept`);
     url.searchParams.append('cId', ci_id);
 
     fetch(url, {method: 'PUT'})
@@ -49,7 +53,7 @@ const Patientrequest = () => {
       .catch(err => console.log(err));
   };
   const deletereq = (ci_id: String) => {
-    let url: any = new URL(`${API_URL}/api/caretaker/deletePatientRequest`);
+    let url: any = new URL(`${API_URL}/api/v1/delete`);
     url.searchParams.append('cId', ci_id);
 
     fetch(url)

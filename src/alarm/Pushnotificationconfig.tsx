@@ -40,18 +40,13 @@ function Pushnotificationforeground(mssg: any) {
     big_picure_url = mssg.notification.android.imageUrl;
     body = mssg.notification.body;
     generatenotificationforcaretaker(mssg, body, big_picure_url);
-    console.log(big_picure_url, ' Pi', mssg.notification);
+  } else if (mssg.notification.title === 'request') {
+    body = mssg.notification.body;
+    generatenotificationforcaretaker(mssg, body, big_picure_url);
   } else {
     body = mssg.notification.body;
-    generatenotificationforpatient(mssg,body);
+    generatenotificationforpatient(mssg, body);
   }
-}
-
-function Pushnotification(mssg: any) {
-  var num = Math.floor(Math.random() * 90000) + 10000;
-  console.log(mssg);
-  console.log(num);
-  console.log(mssg, mssg.notification, mssg.notification.message);
 }
 
 const generatenotificationforpatient = (mssg: any, body: any) => {
@@ -134,21 +129,4 @@ const generatenotificationforcaretaker = (
   });
 };
 
-// const Remin = () => {
-//   async function requestUserPermission() {
-//     const authStatus = await messaging().requestPermission();
-//     const enabled =
-//       authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
-//       authStatus === messaging.AuthorizationStatus.PROVISIONAL;
-
-//     if (enabled) {
-//       console.log('Authorization status:', authStatus);
-//       const token = await messaging().getToken();
-//       //   token1 = token;
-//       console.log(token);
-//     }
-//   }
-//   requestUserPermission();
-// };
-
-export {Pushnotification, PlaySound, Pushnotificationforeground};
+export {PlaySound, Pushnotificationforeground};

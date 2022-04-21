@@ -50,7 +50,7 @@ const Login: React.FC<{navigation}> = (Props) => {
       const token = await messaging().getToken();
       console.log(token);
       loadingstate(true);
-      let url: any = new URL(`${API_URL}/api/user/saveuser`);
+      let url: any = new URL(`${API_URL}/api/v1/user`);
       url.searchParams.append('fcmToken', token);
       url.searchParams.append('picPath', userinfo.user.photo);
 
@@ -67,7 +67,7 @@ const Login: React.FC<{navigation}> = (Props) => {
         .then(resp => resp.json())
         .then(async res => {
           console.log(res);
-          if (res.status === 'success') {
+        if (res.status === 'Success') {
             console.info(res.userentity[0].userId);
             await AsyncStorage.setItem('user_id', res.userentity[0].userId);
             await AsyncStorage.setItem('user_name', res.userentity[0].userName);

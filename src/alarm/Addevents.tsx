@@ -27,7 +27,7 @@ const Addevent = () => {
     });
   }, []);
 
-  const renderitem = ({item}) => {
+  const renderitem = ({item}: any) => {
     return (
       <>
         <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>

@@ -14,6 +14,7 @@ import {useFocusEffect} from '@react-navigation/native';
 import {Alert, View} from 'react-native';
 import {Signout} from '../caretaker/AllIcons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import Fetchdata from '../database/Querydata';
 
 const CustomHeader = props => {
   React.useEffect(() => {
@@ -80,7 +81,10 @@ const CustomHeader = props => {
                 width: 200,
                 marginVertical: 10,
               }}
-              onPress={() => props.navigation.navigate('Login')}
+              onPress={async () => {
+               // await GoogleSignin.signOut();
+               props.navigation.navigate('Login');
+              }}
             />
           ) : (
             <Button
@@ -112,7 +116,7 @@ const CustomHeader = props => {
                       await AsyncStorage.setItem('gender', '-');
                       await AsyncStorage.setItem('maritalstatus', '-');
                       await AsyncStorage.setItem('bloodgroup', '-');
-
+                      await Fetchdata.deleteUserMedicinesandhistory();
                       await AsyncStorage.setItem('user_id', ''),
                         await AsyncStorage.setItem('user_name', ''),
                         loggedinstate(false);

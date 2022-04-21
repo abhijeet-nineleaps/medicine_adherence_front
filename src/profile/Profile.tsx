@@ -80,7 +80,7 @@ const Profile = () => {
 
     const user_id = await AsyncStorage.getItem('user_id');
 
-    await fetch(`${API_URL}/api/userdetails/updateuserdetails/${user_id}`, {
+    await fetch(`${API_URL}/api/v1/user-details?userId=${user_id}`, {
       method: 'PUT',
       body: JSON.stringify({
         bio: sbio,
@@ -118,15 +118,19 @@ const Profile = () => {
     async function getuser() {
       try {
         if (!(await GoogleSignin.isSignedIn())) {
-          Alert.alert("Sign in first to Edit Profile","Click ok to proceed",[
+          Alert.alert('Sign in first to Edit Profile', 'Click ok to proceed', [
             {
-              text:'Ok',
-              onPress:()=>{navigation.navigate('Login')},
+              text: 'Ok',
+              onPress: () => {
+                navigation.navigate('Login');
+              },
             },
             {
-              text:"Cancel",
-              onPress:()=>{navigation.navigate('Home')},
-            }
+              text: 'Cancel',
+              onPress: () => {
+                navigation.navigate('Home');
+              },
+            },
           ]);
           return;
         }

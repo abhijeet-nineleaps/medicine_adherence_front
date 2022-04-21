@@ -53,6 +53,8 @@ messaging().onMessage(async mssg => {
 messaging().onNotificationOpenedApp((mss: any) => {
   if (mss.notification.title === 'caretaker') {
     Pushnotificationforeground(mss);
+  } else if (mss.notification.title === 'request') {
+    Pushnotificationforeground(mss);
   } else {
     PlaySound();
     Pushnotificationforeground(mss);
@@ -71,6 +73,8 @@ messaging().setBackgroundMessageHandler(async (remoteMessage: any) => {
   if (remoteMessage.notification.title === 'caretaker') {
     Pushnotificationforeground(remoteMessage);
     // if patient send noification
+  } else if (remoteMessage.notification.title === 'request') {
+    Pushnotificationforeground(remoteMessage);
   } else {
     PlaySound();
     Pushnotificationforeground(remoteMessage);

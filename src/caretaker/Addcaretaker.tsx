@@ -10,13 +10,13 @@ import {
 } from 'react-native';
 import React from 'react';
 import {Avatar, Button, ListItem, SpeedDial} from 'react-native-elements';
-import {API_URL} from '@env';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faAngleRight} from '@fortawesome/free-solid-svg-icons';
 import {Card} from 'react-native-paper';
 import {IconProp} from '@fortawesome/fontawesome-svg-core';
 import {useFocusEffect} from '@react-navigation/native';
+import NetworkCalls from '../connectivity/Network';
 
 interface Props {
   navigation: any;
@@ -24,18 +24,18 @@ interface Props {
 
 const Addcaretaker: React.FC<{navigation}> = Props => {
   const {navigation} = Props;
-  const [caretakers, caretakerstate] = React.useState([]);
+  const [caretakers, caretakerstate] = React.useState<any[]>([]);
   const [refresh, refeereshstate] = React.useState(false);
   const [open, setOpen] = React.useState(false);
 
   const fetchcaretakers = async () => {
     const user_id = await AsyncStorage.getItem('user_id');
-    fetch(`${API_URL}/api/caretaker/myCareTakers(Patient)?patientId=${user_id}`)
-      .then(resp => resp.json())
-      .then(res => {
-        console.log(res);
-        caretakerstate(res);
-      });
+    const res: any = await NetworkCalls.fetchCaretakers(user_id);
+    if (res.status === 'failed') {
+      caretakerstate([]);
+      return;
+    }
+    caretakerstate(res.userCaretakerList);
   };
 
   useFocusEffect(

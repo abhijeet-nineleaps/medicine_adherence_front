@@ -27,12 +27,12 @@ const Mypatient: React.FC<Props> = ({navigation}: Props) => {
 
   const fetchpatients = () => {
     fetch(
-      `${API_URL}/api/caretaker/myPatients(Caretaker)?caretakerId=f9c67686-55f9-495a-b214-eb89d5606678`,
+      `${API_URL}/api/v1/patients?caretakerId=f9c67686-55f9-495a-b214-eb89d5606678`,
     )
       .then(resp => resp.json())
       .then(res => {
         console.log(res);
-        datastate(res);
+        datastate(res.userCaretakerList);
       })
       .catch(err => console.log(err));
   };
@@ -107,16 +107,15 @@ const Mypatient: React.FC<Props> = ({navigation}: Props) => {
 
   return (
     <View style={{backgroundColor: 'white', height: '100%'}}>
-     
       {data.length === 0 && (
         <View style={{}}>
           <Image
             source={require('../../assests/nopatients.png')}
             style={{width: 400}}
             resizeMode="contain"></Image>
-        </View> 
+        </View>
       )}
-       <FlatList
+      <FlatList
         data={data}
         renderItem={renderitem}
         refreshControl={
