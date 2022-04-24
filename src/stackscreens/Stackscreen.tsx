@@ -37,10 +37,10 @@ const Stackscreen: React.FC = () => {
         component={DrawerNavigator}></Stack.Screen>
       <Stack.Screen
         name="Add Medicine"
-        options={{headerShown: true}}
         options={{
-          headerTintColor: 'black',
-          headerTitleStyle: {color: 'black', fontSize: 20},
+          headerTintColor: 'white',
+          headerTitleStyle: {color: 'white', fontSize: 20},
+          headerStyle: {backgroundColor: '#3743ab'},
         }}
         component={UserMed}></Stack.Screen>
       <Stack.Screen name="Login" component={Login}></Stack.Screen>
@@ -106,7 +106,10 @@ const Stackscreen: React.FC = () => {
         name="Adherence History"
         component={MyComponent}></Stack.Screen>
       <Stack.Screen
-        options={{headerTintColor: 'white',headerStyle:{backgroundColor:'#3743ab'}}}
+        options={{
+          headerTintColor: 'white',
+          headerStyle: {backgroundColor: '#3743ab'},
+        }}
         name="Patient report"
         component={PatientReport}></Stack.Screen>
     </Stack.Navigator>

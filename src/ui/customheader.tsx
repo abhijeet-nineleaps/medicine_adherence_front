@@ -53,7 +53,7 @@ const CustomHeader = props => {
   return (
     <>
       <DrawerContentScrollView
-        style={{height: '100%', backgroundColor: '#e3f2fd'}}>
+        style={{height: '100%', backgroundColor: 'white'}}>
         <TouchableOpacity
           style={{marginBottom: 8}}
           onPress={() => props.navigation.getParent().navigate('Profile')}>

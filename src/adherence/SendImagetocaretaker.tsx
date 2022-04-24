@@ -15,7 +15,6 @@ import * as Progress from 'react-native-progress';
 import Toast from 'react-native-toast-message';
 import Share from 'react-native-share';
 import SQLite from 'react-native-sqlite-storage';
-
 import {LogBox} from 'react-native';
 import Fetchdata from '../database/Querydata';
 import {Title} from 'react-native-paper';
@@ -27,7 +26,7 @@ interface Props {
 
 const db = SQLite.openDatabase(
   {
-    name: 'MedRemdb',
+    name: 'MedStickdb',
     location: 'default',
   },
   () => {
@@ -75,48 +74,53 @@ const SendImageToCaretaker: React.FC<Props> = ({route, navigation}: Props) => {
   };
 
   const RenderMeds = ({item}) => {
-
-    const [clicked , clickedstate] = useState(false);
-    const [borderColo , borderColorstate] = useState('white');
-    const [tcolor , tcolorstate] = useState('black')
+    const [clicked, clickedstate] = useState(false);
+    const [borderColo, borderColorstate] = useState('white');
+    const [tcolor, tcolorstate] = useState('black');
 
     return (
-
-      <View style={{padding:10,margin:10 ,
-                    borderColor:'black',borderWidth:0.1
-                    ,height:40,alignItems:'center',justifyContent:'center',
-                    backgroundColor:borderColo,
-                    borderRadius:20}}>
-        <TouchableOpacity onPress={()=>{
-          medName = item.medicine_name;
-          clickedstate(!clicked);
-          if (clicked){
-            borderColorstate('white');
-
-          } else {
-            borderColorstate('#4dd0e1');
-            tcolorstate('white')
-          }
+      <View
+        style={{
+          padding: 10,
+          margin: 10,
+          borderColor: 'black',
+          borderWidth: 0.1,
+          height: 40,
+          alignItems: 'center',
+          justifyContent: 'center',
+          backgroundColor: borderColo,
+          borderRadius: 20,
         }}>
-        <Text style={{fontWeight: '500', fontSize: 15,color:tcolor}}>
-          {item.medicine_name}
-        </Text>
+        <TouchableOpacity
+          onPress={() => {
+            medName = item.medicine_name;
+            clickedstate(!clicked);
+            if (clicked) {
+              borderColorstate('white');
+            } else {
+              borderColorstate('#4dd0e1');
+              tcolorstate('white');
+            }
+          }}>
+          <Text style={{fontWeight: '500', fontSize: 15, color: tcolor}}>
+            {item.medicine_name}
+          </Text>
         </TouchableOpacity>
       </View>
     );
-
-  }
+  };
 
   const fetchcaretakers = async () => {
     const user_id = await AsyncStorage.getItem('user_id');
 
     return new Promise((resl, rej) => {
-      fetch(
-        `${API_URL}/api/v1/caretakers?patientId=${user_id}`,
-      )
+      fetch(`${API_URL}/api/v1/caretakers?patientId=${user_id}`)
         .then(resp => resp.json())
         .then(res => {
           console.log(res);
+          if(res.status === 'failed'){
+            resl([])
+          }
           resl(res.userCaretakerList);
         })
         .catch(err => {
@@ -242,16 +246,14 @@ const SendImageToCaretaker: React.FC<Props> = ({route, navigation}: Props) => {
       </View>
       <Image
         source={{uri: image_uri}}
-        style={{height: '60%', width: '100%',borderRadius:20}}></Image>
+        style={{height: '60%', width: '100%', borderRadius: 20}}></Image>
       <ScrollView>
-        <View style={{marginTop:10}}>
-          <Text style={{marginLeft:8}}>Select Medicine</Text>
-          <ScrollView horizontal={true} 
-           showsHorizontalScrollIndicator={true}>
-          {medsArray.map(medItem => {
-
-            return <RenderMeds item={medItem}></RenderMeds>;
-          })}
+        <View style={{marginTop: 10}}>
+          <Text style={{marginLeft: 8}}>Select Medicine</Text>
+          <ScrollView horizontal={true} showsHorizontalScrollIndicator={true}>
+            {medsArray && medsArray.map(medItem => {
+              return <RenderMeds item={medItem}></RenderMeds>;
+            })}
           </ScrollView>
         </View>
         <View style={{padding: 50}}>

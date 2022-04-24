@@ -25,7 +25,7 @@ import {useFocusEffect} from '@react-navigation/native';
 
 const db = SQLite.openDatabase(
   {
-    name: 'MedRemdb',
+    name: 'MedStickdb',
     location: 'default',
   },
   () => {
@@ -94,6 +94,7 @@ const Addmedicine = ({navigation}: Props) => {
   const fetch_meds = async () => {
     console.log('called');
     const meds_arr: any = await checkformeds();
+    console.log(meds_arr);
     characterstate(meds_arr);
 
     loadstate(false);
@@ -118,13 +119,13 @@ const Addmedicine = ({navigation}: Props) => {
 
   const renderitem: React.FC = ({item, index}: any) => {
     return (
-      <Animatable.View animation="zoomInUp" duration={500} delay={index * 180}>
+      <Animatable.View animation="zoomInUp" duration={400} delay={index * 180}>
         <Card
           style={{
             borderRadius: 30,
             margin: 3,
             borderColor: 'lightgrey',
-            elevation: 1,
+            elevation: 3,
             shadowColor: '#3743ab',
           }}>
           <View style={{marginBottom: 7}}>
@@ -192,6 +193,7 @@ const Addmedicine = ({navigation}: Props) => {
           data={characters}
           renderItem={renderitem}
           initialNumToRender={10}
+          numColumns={1}
           refreshControl={
             <RefreshControl
               refreshing={refresh}

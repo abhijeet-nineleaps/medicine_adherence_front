@@ -111,7 +111,7 @@ const MyComponent: React.FC = () => {
     React.useCallback(() => {
       db = SQLite.openDatabase(
         {
-          name: 'MedRemdb',
+          name: 'MedStickdb',
           location: 'default',
         },
         () => {

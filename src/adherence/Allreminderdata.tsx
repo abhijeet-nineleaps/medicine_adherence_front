@@ -4,7 +4,7 @@ import SQLite from 'react-native-sqlite-storage';
 
 const db = SQLite.openDatabase(
   {
-    name: 'MedRemdb',
+    name: 'MedStickdb',
     location: 'default',
   },
   () => {

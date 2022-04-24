@@ -16,6 +16,7 @@ import {faAngleRight} from '@fortawesome/free-solid-svg-icons';
 import {Card} from 'react-native-paper';
 import {IconProp} from '@fortawesome/fontawesome-svg-core';
 import {useFocusEffect} from '@react-navigation/native';
+import UserAvatar from 'react-native-user-avatar';
 
 interface Props {
   navigation: any;
@@ -32,6 +33,10 @@ const Mypatient: React.FC<Props> = ({navigation}: Props) => {
       .then(resp => resp.json())
       .then(res => {
         console.log(res);
+        if (res.status === 'failed') {
+          datastate([]);
+          return;
+        }
         datastate(res.userCaretakerList);
       })
       .catch(err => console.log(err));
@@ -74,12 +79,8 @@ const Mypatient: React.FC<Props> = ({navigation}: Props) => {
             }}
             hasTVPreferredFocus={undefined}
             tvParallaxProperties={undefined}>
-            <Avatar
-              size={64}
-              rounded
-              source={{
-                uri: 'https://lh3.googleusercontent.com/a-/AOh14GgrRBm3gFrvPSRlLYSiaY5KO-HpPKl1IhK3Z3rePg=s96-c',
-              }}></Avatar>
+           <UserAvatar size={60} name={item.patientName}></UserAvatar>
+
             <ListItem.Content>
               <ListItem.Title
                 style={{fontSize: 16, marginLeft: 3, fontWeight: 'bold'}}>

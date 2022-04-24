@@ -13,7 +13,7 @@ function Caretaker_nurse() {
   return (
     <FontAwesomeIcon
       style={{marginBottom: 6}}
-      color="white"
+      color="#3743ab"
       icon={faUserNurse}></FontAwesomeIcon>
   );
 }
@@ -32,7 +32,7 @@ function Userfriend() {
   return (
     <FontAwesomeIcon
       style={{marginBottom: 6}}
-      color="white"
+      color="#3743ab"
       icon={faUserFriends}></FontAwesomeIcon>
   );
 }

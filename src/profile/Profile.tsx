@@ -50,7 +50,7 @@ const loginValidationSchema = yup.object().shape({
   BloodGroup: yup.string().required(),
 });
 
-const Profile = () => {
+const Profile = ({navigation}) => {
   const [name, namestate] = React.useState({
     user: {name: 'Not logged in!', photo: '', email: ''},
   });

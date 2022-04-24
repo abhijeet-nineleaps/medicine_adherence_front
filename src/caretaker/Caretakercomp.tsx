@@ -54,21 +54,21 @@ export default function Caretakercomp({navigation}) {
         value={index}
         onChange={e => setIndex(e)}
         indicatorStyle={{
-          backgroundColor: 'white',
+          backgroundColor: '#3743ab',
           height: 3,
         }}
         style={{backgroundColor: '#3743ab'}}
         variant="primary">
         <Tab.Item
           title="Caretakers"
-          containerStyle={{backgroundColor: '#3743ab'}}
-          titleStyle={{fontSize: 12}}
+          containerStyle={{backgroundColor: 'white'}}
+          titleStyle={{fontSize: 12,color: '#3743ab'}}
           icon={Caretaker_nurse()}
         />
         <Tab.Item
           title="Caretaker request"
-          titleStyle={{fontSize: 12}}
-          containerStyle={{backgroundColor: '#3743ab'}}
+          titleStyle={{fontSize: 12, color: '#3743ab'}}
+          containerStyle={{backgroundColor: 'white'}}
           icon={Userfriend()}
         />
       </Tab>

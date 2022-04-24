@@ -17,7 +17,7 @@ import {Card} from 'react-native-paper';
 import {IconProp} from '@fortawesome/fontawesome-svg-core';
 import {useFocusEffect} from '@react-navigation/native';
 import NetworkCalls from '../connectivity/Network';
-
+import UserAvatar from 'react-native-user-avatar';
 interface Props {
   navigation: any;
 }
@@ -73,12 +73,7 @@ const Addcaretaker: React.FC<{navigation}> = Props => {
             }}
             hasTVPreferredFocus={undefined}
             tvParallaxProperties={undefined}>
-            <Avatar
-              size={64}
-              rounded
-              source={{
-                uri: 'https://lh3.googleusercontent.com/a-/AOh14Gg1r55ukyjleOVcBDEuTUt283ClmJE4ZSeFOSmD=s96-c',
-              }}></Avatar>
+            <UserAvatar size={60} name={item.caretakerUsername}></UserAvatar>
             <ListItem.Content>
               <ListItem.Title
                 style={{fontSize: 16, marginLeft: 3, fontWeight: 'bold'}}>

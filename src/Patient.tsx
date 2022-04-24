@@ -20,7 +20,7 @@ const Patientcomp = ({navigation}) => {
     return (
       <FontAwesomeIcon
         style={{marginBottom: 6}}
-        color="white"
+        color="#3743ab"
         icon={faHospitalUser as IconProp}></FontAwesomeIcon>
     );
   };
@@ -59,7 +59,7 @@ const Patientcomp = ({navigation}) => {
     return (
       <FontAwesomeIcon
         style={{marginBottom: 6}}
-        color="white"
+        color="#3743ab"
         icon={faUserFriends as IconProp}></FontAwesomeIcon>
     );
   };
@@ -70,21 +70,21 @@ const Patientcomp = ({navigation}) => {
         value={index}
         onChange={e => setIndex(e)}
         indicatorStyle={{
-          backgroundColor: 'white',
+          backgroundColor: '#3743ab',
           height: 3,
         }}
         style={{backgroundColor: '#3743ab'}}
         variant="primary">
         <Tab.Item
           title="My Patients"
-          containerStyle={{backgroundColor: '#3743ab'}}
-          titleStyle={{fontSize: 12}}
+          containerStyle={{backgroundColor: 'white'}}
+          titleStyle={{fontSize: 12,color:'#3743ab'}}
           icon={Iconcomp1}
         />
         <Tab.Item
           title="Patient Request"
-          titleStyle={{fontSize: 12}}
-          containerStyle={{backgroundColor: '#3743ab'}}
+          titleStyle={{fontSize: 12,color:'#3743ab'}}
+          containerStyle={{backgroundColor: 'white'}}
           icon={Iconcomp2}
         />
       </Tab>

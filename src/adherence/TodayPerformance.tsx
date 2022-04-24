@@ -12,7 +12,7 @@ var cc = 0;
 const TodayPerformance = ({route}) => {
   const db = SQLite.openDatabase(
     {
-      name: 'MedRemdb',
+      name: 'MedStickdb',
       location: 'default',
     },
     () => {

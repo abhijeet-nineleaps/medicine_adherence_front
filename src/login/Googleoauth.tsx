@@ -30,7 +30,9 @@ const Login: React.FC<{navigation}> = (Props) => {
 
   async function checkconnection() {
     let conn: any = await Checkconnectivity();
+    console.log(await messaging().getToken())
     connectedstate(conn);
+
   }
   React.useEffect(() => {
     checkconnection();
@@ -71,7 +73,8 @@ const Login: React.FC<{navigation}> = (Props) => {
             console.info(res.userentity[0].userId);
             await AsyncStorage.setItem('user_id', res.userentity[0].userId);
             await AsyncStorage.setItem('user_name', res.userentity[0].userName);
-
+            await AsyncStorage.setItem('jwt', res.jwt);
+            
             console.info(
               await AsyncStorage.getItem('user_id'),
               await AsyncStorage.getItem('user_name'),
@@ -85,7 +88,7 @@ const Login: React.FC<{navigation}> = (Props) => {
             setTimeout(() => {
               navigation.pop(1);
             }, 3000);
-          } else if (res.status === 'Already present') {
+          } else {
             await GoogleSignin.signOut();
             loadingstate(false);
             Toast.show({

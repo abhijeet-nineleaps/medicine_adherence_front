@@ -26,7 +26,7 @@ const DrawerNavigator = ({navigation}: any) => {
     <Drawer.Navigator
       initialRouteName="Home"
       screenOptions={{headerTitleStyle: {color: 'black'}}}
-      drawerContent={props => <CustomHeader {...props}></CustomHeader>}>
+      drawerContent={props => <CustomHeader {...props} />}>
       <Drawer.Screen
         name="Home"
         options={{
@@ -37,7 +37,8 @@ const DrawerNavigator = ({navigation}: any) => {
                 <FontAwesomeIcon
                   size={30}
                   icon={faCamera as IconProp}
-                  color="#3743ab"></FontAwesomeIcon>
+                  color="#3743ab"
+                />
               </TouchableOpacity>
             );
           },
@@ -45,10 +46,12 @@ const DrawerNavigator = ({navigation}: any) => {
             <FontAwesomeIcon
               color="black"
               size={22}
-              icon={faHome as IconProp}></FontAwesomeIcon>
+              icon={faHome as IconProp}
+            />
           ),
         }}
-        component={HomeScreen}></Drawer.Screen>
+        component={HomeScreen}
+      />
       <Drawer.Screen
         name="Medicines"
         component={CareTaker}
@@ -56,9 +59,7 @@ const DrawerNavigator = ({navigation}: any) => {
           title: 'Medicines',
           headerShown: true,
           drawerIcon: () => (
-            <FontAwesomeIcon
-              size={22}
-              icon={faMedkit as IconProp}></FontAwesomeIcon>
+            <FontAwesomeIcon size={22} icon={faMedkit as IconProp} />
           ),
         }}
       />
@@ -68,18 +69,14 @@ const DrawerNavigator = ({navigation}: any) => {
         options={{
           title: 'My Patient',
           drawerIcon: () => (
-            <FontAwesomeIcon
-              size={22}
-              icon={faPerson as IconProp}></FontAwesomeIcon>
+            <FontAwesomeIcon size={22} icon={faPerson as IconProp} />
           ),
         }}
       />
       <Drawer.Screen
         options={{
           drawerIcon: () => (
-            <FontAwesomeIcon
-              size={22}
-              icon={faUserNurse as IconProp}></FontAwesomeIcon>
+            <FontAwesomeIcon size={22} icon={faUserNurse as IconProp} />
           ),
         }}
         name="My Caretaker"
@@ -92,21 +89,19 @@ const DrawerNavigator = ({navigation}: any) => {
         component={Settings}
         options={{
           drawerIcon: () => (
-            <FontAwesomeIcon
-              size={22}
-              icon={faGear as IconProp}></FontAwesomeIcon>
+            <FontAwesomeIcon size={22} icon={faGear as IconProp} />
           ),
-        }}></Drawer.Screen>
+        }}
+      />
       <Drawer.Screen
         name="Send Image"
         component={CameraScreen}
         options={{
           drawerIcon: () => (
-            <FontAwesomeIcon
-              size={22}
-              icon={faCamera as IconProp}></FontAwesomeIcon>
+            <FontAwesomeIcon size={22} icon={faCamera as IconProp} />
           ),
-        }}></Drawer.Screen>
+        }}
+      />
     </Drawer.Navigator>
   );
 };

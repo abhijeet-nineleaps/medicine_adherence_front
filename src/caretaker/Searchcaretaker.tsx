@@ -9,6 +9,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import Toast from 'react-native-toast-message';
 import {Formik} from 'formik';
 import * as yup from 'yup';
+import UserAvatar from 'react-native-user-avatar';
 
 const Searchcaretaker = ({navigation}) => {
   const [data, datastate] = React.useState([]);
@@ -84,9 +85,7 @@ const Searchcaretaker = ({navigation}) => {
         hasTVPreferredFocus={undefined}
         tvParallaxProperties={undefined}>
         <ListItem.Content>
-          <Avatar
-            rounded
-            source={{uri: 'https://i.stack.imgur.com/l60Hf.png'}}></Avatar>
+        <UserAvatar size={40} name={item.userName}></UserAvatar>
           <ListItem.Title>{item.userName}</ListItem.Title>
           <ListItem.Subtitle>{item.email}</ListItem.Subtitle>
         </ListItem.Content>

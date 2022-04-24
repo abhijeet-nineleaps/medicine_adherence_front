@@ -82,3 +82,7 @@ messaging().setBackgroundMessageHandler(async (remoteMessage: any) => {
 });
 
 AppRegistry.registerComponent(appName, () => App);
+AppRegistry.registerHeadlessTask(
+  'com.dieam.reactnativepushnotification.modules.RNPushNotificationListenerService',
+  () => {},
+);

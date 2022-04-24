@@ -5,7 +5,6 @@ import {useEffect} from 'react';
 import {View, TouchableOpacity, Text} from 'react-native';
 import {Divider} from 'react-native-elements';
 import {FlatList} from 'react-native-gesture-handler';
-import SQLite from 'react-native-sqlite-2';
 import {faTrashCan} from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {IconProp} from '@fortawesome/fontawesome-svg-core';
@@ -13,19 +12,19 @@ import {IconProp} from '@fortawesome/fontawesome-svg-core';
 const Addevent = () => {
   const [reminders, reminderstate] = React.useState<any[]>([]);
 
-  useEffect(() => {
-    const db = SQLite.openDatabase('test.db', '1.0', '', 1);
-    db.transaction(function (txn: any) {
-      let reminder_array: any[] = [];
-      txn.executeSql('SELECT * FROM `reminders`', [], function (tx, res) {
-        for (let i = 0; i < res.rows.length; ++i) {
-          console.log('item:', res.rows.item(i));
-          reminder_array.push(res.rows.item(i));
-        }
-        reminderstate(reminder_array);
-      });
-    });
-  }, []);
+  // useEffect(() => {
+  //   const db = SQLite.openDatabase('test.db', '1.0', '', 1);
+  //   db.transaction(function (txn: any) {
+  //     let reminder_array: any[] = [];
+  //     txn.executeSql('SELECT * FROM `reminders`', [], function (tx, res) {
+  //       for (let i = 0; i < res.rows.length; ++i) {
+  //         console.log('item:', res.rows.item(i));
+  //         reminder_array.push(res.rows.item(i));
+  //       }
+  //       reminderstate(reminder_array);
+  //     });
+  //   });
+  // }, []);
 
   const renderitem = ({item}: any) => {
     return (

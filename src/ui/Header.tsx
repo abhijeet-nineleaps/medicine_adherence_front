@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
 import {useFocusEffect} from '@react-navigation/native';
 import React from 'react';
@@ -34,25 +35,27 @@ const ProfileHeader: React.FC = () => {
   return (
     <View
       style={{
-        flexDirection: 'row',
-        justifyContent: 'space-between',
+        flexDirection: 'column',
+        justifyContent: 'center',
         alignItems: 'center',
         padding: 20,
-        backgroundColor: '#e3f2fd',
+        backgroundColor: 'white',
         marginBottom: 20,
       }}>
-      <View>
-        <Text style={{color: 'black', fontWeight: 'bold'}}>{name}</Text>
-        <Text style={{fontWeight: 'bold', color: '#2196f3'}}>
-          {'View and edit profile'}
-        </Text>
-      </View>
       <Image
         source={{
           uri: umg,
         }}
-        style={{width: 80, height: 80, borderRadius: 70}}
+        style={{width: 100, height: 100, borderRadius: 70, marginBottom: 9}}
       />
+      <View style={{alignItems: 'center'}}>
+        <Text style={{color: 'black', fontWeight: 'bold', fontSize: 15}}>
+          {name}
+        </Text>
+        <Text style={{fontWeight: 'bold', color: '#2196f3'}}>
+          {'View and edit profile'}
+        </Text>
+      </View>
     </View>
   );
 };

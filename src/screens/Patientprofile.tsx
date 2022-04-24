@@ -196,8 +196,8 @@ const ViewProfile = ({route, navigation}) => {
                       <FontAwesomeIcon
                         icon={faCaretDown as IconProp}></FontAwesomeIcon>
                     )}>
-                    {userdetails.medicinesList.map((mlistitem,index) => {
-                      console.log(mlistitem.medicineId)
+                    {userdetails.medicinesList.map((mlistitem, index) => {
+                      console.log(mlistitem.medicineId);
                       return (
                         <List.Item
                           description={`${mlistitem.days}\n${mlistitem.time}`}
@@ -239,7 +239,7 @@ const ViewProfile = ({route, navigation}) => {
                                   <TouchableOpacity
                                     style={{
                                       margin: 12,
-                                      backgroundColor: '#3743ab',
+                                      backgroundColor: 'white',
                                       borderRadius: 40,
                                       width: 45,
                                       height: 45,
@@ -257,7 +257,7 @@ const ViewProfile = ({route, navigation}) => {
                                     <FontAwesomeIcon
                                       icon={faBell as IconProp}
                                       size={25}
-                                      color="white"></FontAwesomeIcon>
+                                      color="#00bcd4"></FontAwesomeIcon>
                                   </TouchableOpacity>
                                 </View>
                               </>
@@ -267,10 +267,16 @@ const ViewProfile = ({route, navigation}) => {
                             let id = mlistitem.medicineId;
                             navigation.navigate('Patient report', {
                               medId: id,
-                              adherenceRate:Math.round(
+                              adherenceRate: Math.round(
                                 (mlistitem.currentCount /
                                   mlistitem.totalMedReminders) *
-                                  100)
+                                  100,
+                              ),
+                              medName: mlistitem.medicineName,
+                              medDays: mlistitem.days,
+                              mTimes: mlistitem.time,
+                              mstartDate: mlistitem.startDate,
+                              mendDate: mlistitem.endDate,
                             });
                           }}
                           title={mlistitem.medicineName}></List.Item>

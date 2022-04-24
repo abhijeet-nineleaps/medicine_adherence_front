@@ -36,7 +36,7 @@ var counter = 0;
 const Reminder = ({route, navigation}) => {
   const db = SQLite.openDatabase(
     {
-      name: 'MedRemdb',
+      name: 'MedStickdb',
       location: 'default',
     },
     () => {},
