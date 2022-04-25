@@ -53,7 +53,7 @@ const TodayPerformance = ({route}) => {
         'UPDATE reminder_day SET timings = ? WHERE date = ? AND med_id = ?',
         [new_timing, td_da, user_id],
         function (err, result) {
-          console.log(result.rows.item(0));
+          console.log(result.rows.item(0),'updated');
           console.log(err);
         },
       );
@@ -76,7 +76,6 @@ const TodayPerformance = ({route}) => {
         'CREATE TABLE IF NOT EXISTS User_medicines(user_id INTEGER PRIMARY KEY NOT NULL, medicine_name TEXT, medicine_des TEXT , title TEXT, time TEXT , days TEXT , start_date TEXT , end_date TEXT , status INTEGER , sync INTEGER)',
         [],
       );
-
       txn.executeSql(
         'SELECT * FROM `User_medicines` where user_id = ?',
         [user_id],

@@ -55,7 +55,7 @@ const generatenotificationforpatient = (mssg: any, body: any) => {
   PushNotification.createChannel(
     {
       channelId: num.toString(), // (required)
-      channelName: 'Med channel', // (required)
+      channelName: 'Patient Channel', // (required)
       channelDescription: 'A channel to categorise your notifications', // (optional) default: undefined.
       playSound: false, // (optional) default: true
       soundName: 'default', // (optional) See `soundName` parameter of `localNotification` function
@@ -77,7 +77,7 @@ const generatenotificationforpatient = (mssg: any, body: any) => {
     allowWhileIdle: true, // (optional) set notification to work while on doze, default: false
     vibrate: true,
     playSound: true,
-
+    group: 'Patient Channel',
     soundName: 'android.resource://com.project/raw/my_sound.mp3',
 
     smallIcon: 'android.resource://com.project/raw/icon.png',
@@ -97,7 +97,7 @@ const generatenotificationforcaretaker = (
   PushNotification.createChannel(
     {
       channelId: num.toString(), // (required)
-      channelName: 'Med channel', // (required)
+      channelName: 'Caretaker Channel', // (required)
       channelDescription: 'A channel to categorise your notifications', // (optional) default: undefined.
       playSound: false, // (optional) default: true
       soundName: 'default', // (optional) See `soundName` parameter of `localNotification` function
@@ -123,7 +123,7 @@ const generatenotificationforcaretaker = (
     bigLargeIcon: big_picure_url, // (optional) default: undefined
     bigLargeIconUrl: big_picure_url,
     soundName: 'android.resource://com.project/raw/my_sound.mp3',
-
+    group: 'Caretaker',
     smallIcon: 'ic_launcher',
     // (optional) Increment of configured repeatType. Check 'Repeating Notifications' section for more info.
   });

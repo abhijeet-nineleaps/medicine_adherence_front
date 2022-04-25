@@ -2,6 +2,7 @@ import {API_URL} from '@env';
 
 const NetworkCalls = {
   synchistory: async (medId: Number, medHistory: any) => {
+    console.log(medHistory);
     let response = await fetch(
       `${API_URL}/api/v1/medicine-history/sync?medId=${medId}`,
       {

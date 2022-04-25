@@ -53,14 +53,19 @@ const UserMed = ({route, navigation}) => {
         [value, Name, Description, '', '', '', '', '', 0, 0, 0, 0],
       );
 
-      txn.executeSql('SELECT * FROM `User_medicines`', [], function (tx, res) {
-        console.log(res);
-        for (let i = 0; i < res.rows.length; ++i) {
-          console.log('item:', res.rows.item(i));
-        }
-      },(tx,err)=>{
-        console.log(err);
-      });
+      txn.executeSql(
+        'SELECT * FROM `User_medicines`',
+        [],
+        function (tx, res) {
+          console.log(res);
+          for (let i = 0; i < res.rows.length; ++i) {
+            console.log('item:', res.rows.item(i));
+          }
+        },
+        (tx, err) => {
+          console.log(err);
+        },
+      );
     });
     Toast.show({
       type: 'info',
