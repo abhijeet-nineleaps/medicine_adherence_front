@@ -23,6 +23,7 @@ import {API_URL} from '@env';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
 import * as Animatable from 'react-native-animatable';
+import globalDb from '../database/Globaldb';
 
 const Medicineadherence = ({navigation}) => {
   const [reminderdata, reminderdatastate] = React.useState([]);
@@ -112,22 +113,12 @@ const Medicineadherence = ({navigation}) => {
     );
   };
 
-  const db = SQLite.openDatabase(
-    {
-      name: 'MedStickdb',
-      location: 'default',
-    },
-    () => {
-      console.log('opened');
-    },
-    error => {
-      console.log(error);
-    },
-  );
+  
 
   async function fetchallreminders() {
     const reminder_array = [];
     return new Promise((resolve, rej) => {
+      const db = globalDb();
       db.transaction(async function (txn) {
         await txn.executeSql(
           'CREATE TABLE IF NOT EXISTS User_medicines(user_id INTEGER PRIMARY KEY NOT NULL, medicine_name TEXT, medicine_des TEXT , title TEXT, time TEXT , days TEXT , start_date TEXT , end_date TEXT , status INTEGER , sync INTEGER)',

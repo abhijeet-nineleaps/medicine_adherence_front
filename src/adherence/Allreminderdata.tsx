@@ -1,19 +1,9 @@
 /* eslint-disable radix */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import SQLite from 'react-native-sqlite-storage';
+import globalDb from '../database/Globaldb';
 
-const db = SQLite.openDatabase(
-  {
-    name: 'MedStickdb',
-    location: 'default',
-  },
-  () => {
-    console.log('opened');
-  },
-  (error: any) => {
-    console.log(error);
-  },
-);
+const db = globalDb();
 const Allreminderdata = async (med_name: any) => {
   let reminder_obj: any;
   let map = new Map<String, Object>();

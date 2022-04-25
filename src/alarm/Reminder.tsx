@@ -30,20 +30,12 @@ import MultiSlider from '@ptomasroos/react-native-multi-slider';
 import SQLite from 'react-native-sqlite-storage';
 import DateTimePicker from 'react-native-modal-datetime-picker';
 import {IconProp} from '@fortawesome/fontawesome-svg-core';
+import globalDb from '../database/Globaldb';
 
 var counter = 0;
 
 const Reminder = ({route, navigation}) => {
-  const db = SQLite.openDatabase(
-    {
-      name: 'MedStickdb',
-      location: 'default',
-    },
-    () => {},
-    error => {
-      console.log(error);
-    },
-  );
+  const db = globalDb
 
   useEffect(() => {
     db.transaction(txn => {

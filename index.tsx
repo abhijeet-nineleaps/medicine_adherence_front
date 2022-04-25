@@ -2,12 +2,14 @@ import {AppRegistry} from 'react-native';
 import App from './App';
 import messaging from '@react-native-firebase/messaging';
 import PushNotification from 'react-native-push-notification';
+import SQLite from 'react-native-sqlite-storage';
 
 import {name as appName} from './app.json';
 import {
   PlaySound,
   Pushnotificationforeground,
 } from './src/alarm/Pushnotificationconfig';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 PushNotification.configure({
   onNotification: function (notification: any) {
@@ -44,6 +46,9 @@ PushNotification.configure({
   requestPermissions: true,
 });
 
+async function checkfordb() {
+  
+}
 messaging().onMessage(async mssg => {
   Pushnotificationforeground(mssg);
 

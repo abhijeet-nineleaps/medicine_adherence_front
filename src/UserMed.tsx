@@ -11,35 +11,34 @@ import SQLite from 'react-native-sqlite-storage';
 import {Formik} from 'formik';
 import BottomSheet from 'reanimated-bottom-sheet';
 import * as Animatable from 'react-native-animatable';
-// SQLite.deleteDatabase(
-//   {name: 'MedStickdb', location: 'default'},
-//   () => {
-//     console.log('second db deleted');
-//   },
-//   error => {
-//     console.log('ERROR: ' + error);
-//   },
-// );
-const db = SQLite.openDatabase(
-  {
-    name: 'MedStickdb',
-    location: 'default',
-  },
-  () => {
-    console.log('opened');
-  },
-  (error: any) => {
-    console.log(error);
-  },
-);
+import globalDb from './database/Globaldb';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
+async function createdb() {
+  let first = await AsyncStorage.getItem('first');
+  if (first === null) {
+    SQLite.deleteDatabase(
+      {name: 'MedStickdb', location: 'default'},
+      () => {
+        console.log('second db deleted');
+      },
+      error => {
+        console.log('ERROR: ' + error);
+      },
+    );
+    await AsyncStorage.setItem('first', '1');
+  }
+  const db = globalDb();
+  return db;
+}
 const UserMed = ({route, navigation}) => {
   const {id} = route.params;
   console.log(id);
   const height = Dimensions.get('window').height;
   const sheetRef = React.useRef(null);
-
   const savemedicinetodb = async ({Name, Description}) => {
+    const db = await createdb();
+
     await db.transaction(txn => {
       console.log(txn);
       txn.executeSql(

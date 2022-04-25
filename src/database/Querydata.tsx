@@ -2,19 +2,9 @@
 /* eslint-disable prettier/prettier */
 /* eslint-disable no-trailing-spaces */
 import SQLite from 'react-native-sqlite-storage';
+import globalDb from './Globaldb';
 
-const db = SQLite.openDatabase(
-  {
-    name: 'MedStickdb',
-    location: 'default',
-  },
-  () => {
-    console.log('opened');
-  },
-  error => {
-    console.log(error);
-  },
-);
+const db = globalDb();
 const Fetchdata = {
   getusermeds: async (txn: any) => {
     const reminder_array: any = [];

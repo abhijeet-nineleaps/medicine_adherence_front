@@ -22,19 +22,9 @@ import {faClock, faTrash} from '@fortawesome/free-solid-svg-icons';
 
 import SQLite from 'react-native-sqlite-storage';
 import {useFocusEffect} from '@react-navigation/native';
+import globalDb from './database/Globaldb';
 
-const db = SQLite.openDatabase(
-  {
-    name: 'MedStickdb',
-    location: 'default',
-  },
-  () => {
-    console.log('opened');
-  },
-  error => {
-    console.log(error);
-  },
-);
+const db = globalDb();
 
 interface Props {
   navigation: any;

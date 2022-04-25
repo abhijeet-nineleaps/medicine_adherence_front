@@ -7,21 +7,11 @@ import BouncyCheckbox from 'react-native-bouncy-checkbox';
 import SQLite from 'react-native-sqlite-storage';
 var weeks = ['Sun', 'Mon', 'Tue', 'Wed', 'Thur', 'Fri', 'Sat'];
 import Toast from 'react-native-toast-message';
+import globalDb from '../database/Globaldb';
 var cc = 0;
 
 const TodayPerformance = ({route}) => {
-  const db = SQLite.openDatabase(
-    {
-      name: 'MedStickdb',
-      location: 'default',
-    },
-    () => {
-      console.log('opened');
-    },
-    error => {
-      console.log(error);
-    },
-  );
+  const db = globalDb();
 
   const {user_id} = route.params;
   const [Timings, setTime] = useState([]);
@@ -57,7 +47,13 @@ const TodayPerformance = ({route}) => {
           console.log(err);
         },
       );
-
+      txxn.executeSql(
+        'SELECT * FROM reminder_day where date = ? AND med_id = ?',
+        [td_da, user_id],
+        function (tx, respp) {
+          // setTime(respp.rows.item(0).timings.split('-'));
+        },
+      );
       await txxn.executeSql(
         'UPDATE User_medicines SET current_count = ? WHERE user_id = ?',
         [cc, user_id],

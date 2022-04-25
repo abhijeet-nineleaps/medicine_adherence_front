@@ -25,6 +25,7 @@ import LottieView from 'lottie-react-native';
 import NetworkCalls from '../connectivity/Network';
 import Downloadpdf from './Downloadpdf';
 import MedicinehistoryList from './components/MedicineHistoryList';
+import globalDb from '../database/Globaldb';
 
 let globalmedId;
 
@@ -109,18 +110,7 @@ const MyComponent: React.FC = () => {
 
   useFocusEffect(
     React.useCallback(() => {
-      db = SQLite.openDatabase(
-        {
-          name: 'MedStickdb',
-          location: 'default',
-        },
-        () => {
-          console.log('opened');
-        },
-        (error: any) => {
-          console.log(error);
-        },
-      );
+      db = globalDb();
       let isActive = true;
       fetchreminders(db);
       return () => {

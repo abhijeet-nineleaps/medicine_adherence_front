@@ -18,24 +18,14 @@ import SQLite from 'react-native-sqlite-storage';
 import {LogBox} from 'react-native';
 import Fetchdata from '../database/Querydata';
 import {Title} from 'react-native-paper';
+import globalDb from '../database/Globaldb';
 LogBox.ignoreLogs(['Require cycle:']);
 interface Props {
   route: any;
   navigation: any;
 }
 
-const db = SQLite.openDatabase(
-  {
-    name: 'MedStickdb',
-    location: 'default',
-  },
-  () => {
-    console.log('opened');
-  },
-  (error: any) => {
-    console.log(error);
-  },
-);
+const db = globalDb();
 let medName = '';
 const SendImageToCaretaker: React.FC<Props> = ({route, navigation}: Props) => {
   const {image_uri} = route.params;
