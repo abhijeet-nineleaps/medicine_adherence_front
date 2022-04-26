@@ -140,10 +140,13 @@ const SendImageToCaretaker: React.FC<Props> = ({route, navigation}: Props) => {
     }, []),
   );
 
-  function SendImage() {
+ async function SendImage() {
     setModalVisible(true);
+    if (medName === '') return;
     const formdata = new FormData();
     var dt = new Date().getTime();
+    let patientName = await AsyncStorage.getItem('user_name');
+
     var file_name = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(
       /[xy]/g,
       function (c) {
@@ -159,6 +162,7 @@ const SendImageToCaretaker: React.FC<Props> = ({route, navigation}: Props) => {
     });
     formdata.append('name', file_name);
     formdata.append('id', send_to);
+    formdata.append('medName', medName + ' taken by ' + patientName);
     console.log(formdata);
     const url = `${API_URL}`;
     fetch(url + '/api/v1/image', {

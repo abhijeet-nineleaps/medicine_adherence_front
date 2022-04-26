@@ -74,10 +74,9 @@ const Login: React.FC<{navigation}> = (Props) => {
             await AsyncStorage.setItem('user_id', res.userentity[0].userId);
             await AsyncStorage.setItem('user_name', res.userentity[0].userName);
             await AsyncStorage.setItem('jwt', res.jwt);
-            
             console.info(
               await AsyncStorage.getItem('user_id'),
-              await AsyncStorage.getItem('user_name'),
+                await AsyncStorage.getItem('user_name'),
             );
             Toast.show({
               type: 'success',

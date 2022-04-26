@@ -35,7 +35,7 @@ import globalDb from '../database/Globaldb';
 var counter = 0;
 
 const Reminder = ({route, navigation}) => {
-  const db = globalDb
+  const db = globalDb();
 
   useEffect(() => {
     db.transaction(txn => {

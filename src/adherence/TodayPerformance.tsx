@@ -47,13 +47,7 @@ const TodayPerformance = ({route}) => {
           console.log(err);
         },
       );
-      txxn.executeSql(
-        'SELECT * FROM reminder_day where date = ? AND med_id = ?',
-        [td_da, user_id],
-        function (tx, respp) {
-          // setTime(respp.rows.item(0).timings.split('-'));
-        },
-      );
+     
       await txxn.executeSql(
         'UPDATE User_medicines SET current_count = ? WHERE user_id = ?',
         [cc, user_id],

@@ -10,7 +10,7 @@ import {
   RefreshControl,
   Alert,
 } from 'react-native';
-import React, {useState} from 'react';
+import React, {useReducer, useState} from 'react';
 import {Avatar, ListItem} from 'react-native-elements';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
 import {Card} from 'react-native-paper';
@@ -29,11 +29,17 @@ const db = globalDb();
 interface Props {
   navigation: any;
 }
+let Reducerfun = (state, action) => {
+  return {data: action.payload};
+};
 
+let initialVal = {data: []};
 const Addmedicine = ({navigation}: Props) => {
   const [refresh, refeereshstate] = React.useState(false);
 
-  const [characters, characterstate] = useState<any[]>([]);
+  // const [medicines, characterstate] = useState<any[]>([]);
+  const [medicines, characterstate] = useReducer(Reducerfun, initialVal);
+  console.log(medicines, 'meds');
   const [load, loadstate] = useState(false);
   const [logged, loggedstate] = useState(false);
 
@@ -85,7 +91,9 @@ const Addmedicine = ({navigation}: Props) => {
     console.log('called');
     const meds_arr: any = await checkformeds();
     console.log(meds_arr);
-    characterstate(meds_arr);
+    meds_arr.length === 0
+      ? characterstate({type: 'empty', payload: []})
+      : characterstate({type: 'data', payload: meds_arr});
 
     loadstate(false);
   };
@@ -102,7 +110,9 @@ const Addmedicine = ({navigation}: Props) => {
         }
 
         console.log(med_del);
-        characterstate(med_del);
+        med_del.length === 0
+          ? characterstate({type: 'empty', payload: []})
+          : characterstate({type: 'data', payload: med_del});
       });
     });
   };
@@ -171,7 +181,7 @@ const Addmedicine = ({navigation}: Props) => {
 
   return (
     <View style={{flex: 1, backgroundColor: 'white', height: '100%'}}>
-      {characters.length === 0 ? (
+      {medicines.data.length === 0 ? (
         <View style={{alignItems: 'center', justifyContent: 'center'}}>
           <Image
             source={require('../assests/nomeds.png')}
@@ -180,7 +190,7 @@ const Addmedicine = ({navigation}: Props) => {
         </View>
       ) : (
         <FlatList
-          data={characters}
+          data={medicines.data}
           renderItem={renderitem}
           initialNumToRender={10}
           numColumns={1}

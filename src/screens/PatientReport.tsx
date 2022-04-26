@@ -176,6 +176,7 @@ export default function PatientReport({route}) {
   };
 
   function modalVisibilityfun() {
+    showDetailState(false);
     setModalVisible(false);
   }
 
