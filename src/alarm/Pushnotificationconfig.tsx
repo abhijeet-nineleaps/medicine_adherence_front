@@ -51,7 +51,6 @@ function Pushnotificationforeground(mssg: any) {
 
 const generatenotificationforpatient = (mssg: any, body: any) => {
   var num = Math.floor(Math.random() * 90000) + 10000;
-
   PushNotification.createChannel(
     {
       channelId: num.toString(), // (required)

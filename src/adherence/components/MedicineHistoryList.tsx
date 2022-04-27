@@ -1,9 +1,14 @@
+/* eslint-disable react/self-closing-comp */
 /* eslint-disable react-native/no-inline-styles */
 import {Card} from 'react-native-paper';
 import * as Animatable from 'react-native-animatable';
-import {StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import React from 'react';
-const MedicinehistoryList = ({item}: any) => {
+import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
+import {faImage} from '@fortawesome/free-solid-svg-icons';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+const MedicinehistoryList = props => {
+  const {item, showimgfun} = props;
   return (
     <>
       <Animatable.View animation="zoomInUp" duration={200}>
@@ -15,9 +20,22 @@ const MedicinehistoryList = ({item}: any) => {
           }}>
           <Card key={item.medicine_name + '2'} style={styles.dateday}>
             <View
-              key={item.medicine_name + '3'}
-              style={{flexDirection: 'row', justifyContent: 'space-around'}}>
-              <Text key={item.medicine_name + '7'}>Date - {item.date}</Text>
+              style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+              <View
+                key={item.medicine_name + '3'}
+                style={{flexDirection: 'row', justifyContent: 'space-around'}}>
+                <Text key={item.medicine_name + '7'}>Date - {item.date}</Text>
+              </View>
+              <View style={{}}>
+                <TouchableOpacity
+                  style={{backgroundColor: 'red'}}
+                  onPress={async () => {
+                    let imgar = await AsyncStorage.getItem(item.date);
+                    showimgfun(JSON.parse(imgar));
+                  }}>
+                  <FontAwesomeIcon size={20} icon={faImage}></FontAwesomeIcon>
+                </TouchableOpacity>
+              </View>
             </View>
           </Card>
         </View>
@@ -78,9 +96,8 @@ const styles = StyleSheet.create({
   dateday: {
     borderRadius: 6,
     elevation: 2,
-    padding: 10,
-    paddingLeft: 20,
     marginTop: 8,
+    padding: 8,
   },
 });
 
