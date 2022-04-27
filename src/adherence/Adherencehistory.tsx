@@ -10,7 +10,8 @@ import {
   StyleSheet,
   FlatList,
   PermissionsAndroid,
-  ToastAndroid
+  ToastAndroid,
+  Image
 } from 'react-native';
 import ProgressCircle from 'react-native-progress-circle';
 import {Picker} from '@react-native-picker/picker';
@@ -26,8 +27,11 @@ import NetworkCalls from '../connectivity/Network';
 import Downloadpdf from './Downloadpdf';
 import MedicinehistoryList from './components/MedicineHistoryList';
 import globalDb from '../database/Globaldb';
+import Carousel from 'react-native-snap-carousel';
+import { Title } from 'react-native-paper';
 
 let globalmedId;
+let imagearray = [];
 
 LogBox.ignoreLogs(['Require cycle:']);
 LogBox.ignoreAllLogs();
@@ -47,8 +51,8 @@ const MyComponent: React.FC = () => {
   const [sync, syncstate] = React.useState(false);
   const [disableDownload, downloadState] = React.useState(true);
   const [modalVisible, setModalVisible] = React.useState(false);
-
-
+  const [showDetail, showDetailState] = React.useState(false);
+  const [imagearray , setimagearray] = React.useState([]);
   const fetchreminders = async (db: any) => {
     let reminder_array: any = [];
 
@@ -118,22 +122,41 @@ const MyComponent: React.FC = () => {
       };
     }, []),
   );
-
+  const showDetailfun = sDate => {
+    console.log(sDate);
+    setimagearray(sDate);
+    showDetailState(true);
+    setModalVisible(true);
+  };
   return (
     <View style={{height: '100%', backgroundColor: 'white'}}>
         <Modal
+        onRequestClose={()=>setModalVisible(false)}
         animationType='fade'
         transparent={true}
         visible={modalVisible}
         style={{alignItems: 'center',backgroundColor:'red'}}>
           <View style={{height:'100%',alignItems:'center',justifyContent:'center',backgroundColor: 'rgba(52, 52, 52, 0.8)'}}>
-          <LottieView
-                style={{width: 70, height: 70}}
-                speed={0.8}
-                source={require('../../assests/animate/generatepdf.json')}
-                autoPlay
-                loop
-              />
+          {showDetail ? (
+            <View style={{height:'80%',backgroundColor:'white',width:'90%',alignItems:'center',justifyContent:'center'}}>
+
+            <Carousel layout={'stack'} data={imagearray} renderItem={({item})=>{
+              console.log(item,'image')
+              return (<View style={{alignItems:'center',justifyContent:'center',backgroundColor:'white'}}>
+              <Image source={{uri:`${item}`}} resizeMode='cover' style={{width:'60%',height:'100%'}}></Image>
+              </View>);
+            }} sliderWidth= {660}
+            itemWidth={660}></Carousel>
+            </View>
+          ) : (
+            <LottieView
+              style={{width: 70, height: 70}}
+              speed={0.8}
+              source={require('../../assests/animate/generatepdf.json')}
+              autoPlay
+              loop
+            />
+          )}
           </View>
       </Modal>
       {sync ? (
@@ -233,7 +256,11 @@ const MyComponent: React.FC = () => {
       {
         <FlatList
           data={reminder_map_fetched_data}
-          renderItem={MedicinehistoryList}></FlatList>
+          renderItem={({item})=>{
+            //console.log(item,'iiitt');
+            
+        return  <MedicinehistoryList item={item} showimgfun = {showDetailfun}></MedicinehistoryList>
+          }}></FlatList>
       }
       <Button
         disabled={disableDownload}

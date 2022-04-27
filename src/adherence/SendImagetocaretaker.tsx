@@ -108,8 +108,8 @@ const SendImageToCaretaker: React.FC<Props> = ({route, navigation}: Props) => {
         .then(resp => resp.json())
         .then(res => {
           console.log(res);
-          if(res.status === 'failed'){
-            resl([])
+          if (res.status === 'failed') {
+            resl([]);
           }
           resl(res.userCaretakerList);
         })
@@ -140,11 +140,32 @@ const SendImageToCaretaker: React.FC<Props> = ({route, navigation}: Props) => {
     }, []),
   );
 
- async function SendImage() {
+  async function SendImage() {
     setModalVisible(true);
     if (medName === '') return;
+    let todayDate = new Date();
+    let setDate =
+      todayDate.getDate() +
+      '-' +
+      (todayDate.getMonth() + 1) + '-' +
+      todayDate.getFullYear();
+    let imagesData = await AsyncStorage.getItem(setDate
+      );
+    if (imagesData !== null) {
+      let parsedData = JSON.parse(imagesData);
+      parsedData.push(image_uri);
+      console.log(parsedData);
+      await AsyncStorage.setItem(setDate, JSON.stringify(parsedData));
+    } else {
+      let parsedData = [];
+      parsedData.push(image_uri);
+      console.log(parsedData);
+
+      await AsyncStorage.setItem(setDate, JSON.stringify(parsedData));
+    }
     const formdata = new FormData();
     var dt = new Date().getTime();
+
     let patientName = await AsyncStorage.getItem('user_name');
 
     var file_name = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(
@@ -245,9 +266,10 @@ const SendImageToCaretaker: React.FC<Props> = ({route, navigation}: Props) => {
         <View style={{marginTop: 10}}>
           <Text style={{marginLeft: 8}}>Select Medicine</Text>
           <ScrollView horizontal={true} showsHorizontalScrollIndicator={true}>
-            {medsArray && medsArray.map(medItem => {
-              return <RenderMeds item={medItem}></RenderMeds>;
-            })}
+            {medsArray &&
+              medsArray.map(medItem => {
+                return <RenderMeds item={medItem}></RenderMeds>;
+              })}
           </ScrollView>
         </View>
         <View style={{padding: 50}}>

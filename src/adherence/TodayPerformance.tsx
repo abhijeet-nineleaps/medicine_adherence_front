@@ -1,5 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-/* eslint-disable react/self-closing-comp */
 /* eslint-disable react-native/no-inline-styles */
 import {Text, View, FlatList, Image} from 'react-native';
 import React, {useState} from 'react';
@@ -7,11 +5,21 @@ import BouncyCheckbox from 'react-native-bouncy-checkbox';
 import SQLite from 'react-native-sqlite-storage';
 var weeks = ['Sun', 'Mon', 'Tue', 'Wed', 'Thur', 'Fri', 'Sat'];
 import Toast from 'react-native-toast-message';
-import globalDb from '../database/Globaldb';
 var cc = 0;
 
 const TodayPerformance = ({route}) => {
-  const db = globalDb();
+  const db = SQLite.openDatabase(
+    {
+      name: 'MedStickdb',
+      location: 'default',
+    },
+    () => {
+      console.log('opened');
+    },
+    error => {
+      console.log(error);
+    },
+  );
 
   const {user_id} = route.params;
   const [Timings, setTime] = useState([]);
@@ -25,9 +33,17 @@ const TodayPerformance = ({route}) => {
     }
     console.log(Timings);
     let new_timing = '';
-    Timings.forEach(eitem => {
-      new_timing += eitem;
-    });
+    // Timings.forEach(eitem => {
+    //   new_timing += eitem;
+    // });
+    let len = Timings.length;
+    for (let i = 0; i < len; i++) {
+      if (i === len - 1) {
+        new_timing += Timings[i];
+      } else {
+        new_timing += Timings[i] + '-';
+      }
+    }
     console.log(new_timing);
     let tody_date = new Date();
     let td_da =
@@ -42,12 +58,8 @@ const TodayPerformance = ({route}) => {
       txxn.executeSql(
         'UPDATE reminder_day SET timings = ? WHERE date = ? AND med_id = ?',
         [new_timing, td_da, user_id],
-        function (err, result) {
-          console.log(result.rows.item(0),'updated');
-          console.log(err);
-        },
       );
-     
+
       await txxn.executeSql(
         'UPDATE User_medicines SET current_count = ? WHERE user_id = ?',
         [cc, user_id],
@@ -186,7 +198,7 @@ const TodayPerformance = ({route}) => {
     <View style={{backgroundColor: 'white', height: '100%'}}>
       <Toast visibilityTime={1000}></Toast>
 
-      <View style={{flexDirection: 'column'}}></View>
+      <View style={{flexDirection: 'column'}} />
       <View style={{padding: 15, backgroundColor: 'lightgrey'}}>
         <Text style={{fontWeight: 'bold'}}>Timings</Text>
       </View>
@@ -194,7 +206,8 @@ const TodayPerformance = ({route}) => {
         <View style={{justifyContent: 'center', alignItems: 'center'}}>
           <Image
             source={require('../../assests/noremtoday.png')}
-            style={{height: 300, width: 300}}></Image>
+            style={{height: 300, width: 300}}
+          />
         </View>
       ) : (
         <View>
