@@ -11,7 +11,7 @@ import {
   FlatList,
   PermissionsAndroid,
   ToastAndroid,
-  Image
+  Image,
 } from 'react-native';
 import ProgressCircle from 'react-native-progress-circle';
 import {Picker} from '@react-native-picker/picker';
@@ -19,7 +19,7 @@ import {Button, Divider} from 'react-native-elements';
 import {useFocusEffect} from '@react-navigation/native';
 import SQLite from 'react-native-sqlite-storage';
 import Allreminderdata from './Allreminderdata';
-import {LogBox,Modal} from 'react-native';
+import {LogBox, Modal} from 'react-native';
 import Fetchdata from '../database/Querydata';
 import * as Progress from 'react-native-progress';
 import LottieView from 'lottie-react-native';
@@ -27,8 +27,8 @@ import NetworkCalls from '../connectivity/Network';
 import Downloadpdf from './Downloadpdf';
 import MedicinehistoryList from './components/MedicineHistoryList';
 import globalDb from '../database/Globaldb';
-import Carousel from 'react-native-snap-carousel';
-import { Title } from 'react-native-paper';
+import Carousel, {Pagination} from 'react-native-snap-carousel';
+import {Title} from 'react-native-paper';
 
 let globalmedId;
 let imagearray = [];
@@ -42,7 +42,6 @@ interface singledate {
 }
 
 const MyComponent: React.FC = () => {
-
   const [pickerValue, setPickerValue] = React.useState<String>('');
   const [allreminders, reminders_state] = React.useState<[]>([]);
   const [reminder_map_fetched_data, reminder_map_fetched_data_state] =
@@ -52,7 +51,8 @@ const MyComponent: React.FC = () => {
   const [disableDownload, downloadState] = React.useState(true);
   const [modalVisible, setModalVisible] = React.useState(false);
   const [showDetail, showDetailState] = React.useState(false);
-  const [imagearray , setimagearray] = React.useState([]);
+  const [imagearray, setimagearray] = React.useState([]);
+  const [index, setindex] = React.useState(0);
   const fetchreminders = async (db: any) => {
     let reminder_array: any = [];
 
@@ -124,30 +124,67 @@ const MyComponent: React.FC = () => {
   );
   const showDetailfun = sDate => {
     console.log(sDate);
+    if (sDate.length === 0) return;
     setimagearray(sDate);
     showDetailState(true);
     setModalVisible(true);
   };
   return (
     <View style={{height: '100%', backgroundColor: 'white'}}>
-        <Modal
-        onRequestClose={()=>setModalVisible(false)}
-        animationType='fade'
+      <Modal
+        onRequestClose={() => setModalVisible(false)}
+        animationType="fade"
         transparent={true}
         visible={modalVisible}
-        style={{alignItems: 'center',backgroundColor:'red'}}>
-          <View style={{height:'100%',alignItems:'center',justifyContent:'center',backgroundColor: 'rgba(52, 52, 52, 0.8)'}}>
+        style={{alignItems: 'center', backgroundColor: 'red'}}>
+        <View
+          style={{
+            height: '100%',
+            alignItems: 'center',
+            justifyContent: 'center',
+            backgroundColor: 'rgba(52, 52, 52, 0.8)',
+          }}>
           {showDetail ? (
-            <View style={{height:'80%',backgroundColor:'white',width:'90%',alignItems:'center',justifyContent:'center'}}>
-
-            <Carousel layout={'stack'} data={imagearray} renderItem={({item})=>{
-              console.log(item,'image')
-              return (<View style={{alignItems:'center',justifyContent:'center',backgroundColor:'white'}}>
-              <Image source={{uri:`${item}`}} resizeMode='cover' style={{width:'60%',height:'100%'}}></Image>
-              </View>);
-            }} sliderWidth= {660}
-            itemWidth={660}></Carousel>
-            </View>
+            <>
+              <Carousel
+                onSnapToItem={inde => setindex(inde)}
+                layout={'stack'}
+                data={imagearray}
+                renderItem={({item}) => {
+                  console.log(item, 'image');
+                  return (
+                    <Image
+                      source={{uri: `${item}`}}
+                      resizeMode="contain"
+                      style={{
+                        width: '100%',
+                        height: '80%',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                      }}></Image>
+                  );
+                }}
+                sliderWidth={660}
+                itemWidth={600}></Carousel>
+              <Pagination
+                dotsLength={imagearray.length}
+                activeDotIndex={index}
+                containerStyle={{backgroundColor: 'rgba(0, 0, 0, 0.75)'}}
+                dotStyle={{
+                  width: 10,
+                  height: 10,
+                  borderRadius: 5,
+                  marginHorizontal: 8,
+                  backgroundColor: 'rgba(255, 255, 255, 0.92)',
+                }}
+                inactiveDotStyle={{
+                  backgroundColor: 'red',
+                  // Define styles for inactive dots here
+                }}
+                inactiveDotOpacity={0.4}
+                inactiveDotScale={0.6}
+              />
+            </>
           ) : (
             <LottieView
               style={{width: 70, height: 70}}
@@ -157,7 +194,7 @@ const MyComponent: React.FC = () => {
               loop
             />
           )}
-          </View>
+        </View>
       </Modal>
       {sync ? (
         <View
@@ -256,10 +293,14 @@ const MyComponent: React.FC = () => {
       {
         <FlatList
           data={reminder_map_fetched_data}
-          renderItem={({item})=>{
+          renderItem={({item}) => {
             //console.log(item,'iiitt');
-            
-        return  <MedicinehistoryList item={item} showimgfun = {showDetailfun}></MedicinehistoryList>
+            return (
+              <MedicinehistoryList
+                item={item}
+                medName={pickerValue}
+                showimgfun={showDetailfun}></MedicinehistoryList>
+            );
           }}></FlatList>
       }
       <Button
@@ -267,20 +308,20 @@ const MyComponent: React.FC = () => {
         title="Download PDF"
         buttonStyle={{backgroundColor: '#3743ab'}}
         onPress={async () => {
+          showDetailState(false);
           await PermissionsAndroid.request(
             PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
           );
           await PermissionsAndroid.request(
             PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE,
           );
-          setModalVisible(true)
+          setModalVisible(true);
           const downloadResp = await Downloadpdf(globalmedId);
           setModalVisible(false);
-          if (downloadResp !== 'err'){
-            ToastAndroid.show('Downloaded successfully',ToastAndroid.LONG);
+          if (downloadResp !== 'err') {
+            ToastAndroid.show('Downloaded successfully', ToastAndroid.LONG);
           } else {
-            ToastAndroid.show('Error while downloading',ToastAndroid.LONG);
-
+            ToastAndroid.show('Error while downloading', ToastAndroid.LONG);
           }
         }}></Button>
     </View>

@@ -8,7 +8,7 @@ import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faImage} from '@fortawesome/free-solid-svg-icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 const MedicinehistoryList = props => {
-  const {item, showimgfun} = props;
+  const {item, showimgfun, medName} = props;
   return (
     <>
       <Animatable.View animation="zoomInUp" duration={200}>
@@ -28,9 +28,11 @@ const MedicinehistoryList = props => {
               </View>
               <View style={{}}>
                 <TouchableOpacity
-                  style={{backgroundColor: 'red'}}
+
                   onPress={async () => {
-                    let imgar = await AsyncStorage.getItem(item.date);
+                    let imgar = await AsyncStorage.getItem(
+                      item.date + ' ' + medName,
+                    );
                     showimgfun(JSON.parse(imgar));
                   }}>
                   <FontAwesomeIcon size={20} icon={faImage}></FontAwesomeIcon>

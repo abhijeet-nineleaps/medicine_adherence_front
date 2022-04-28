@@ -51,17 +51,6 @@ function Pushnotificationforeground(mssg: any) {
 
 const generatenotificationforpatient = (mssg: any, body: any) => {
   var num = Math.floor(Math.random() * 90000) + 10000;
-  PushNotification.createChannel(
-    {
-      channelId: num.toString(), // (required)
-      channelName: 'Patient Channel', // (required)
-      channelDescription: 'A channel to categorise your notifications', // (optional) default: undefined.
-      playSound: false, // (optional) default: true
-      soundName: 'default', // (optional) See `soundName` parameter of `localNotification` function
-      vibrate: true, // (optional) default: true. Creates the default vibration pattern if true.
-    },
-    created => console.log(`createChannel returned '${created}'`), // (optional) callback returns whether the channel was created, false means it already existed.
-  );
   PushNotification.localNotificationSchedule({
     //... You can use all the options from localNotifications
     title: mssg.notification.title,

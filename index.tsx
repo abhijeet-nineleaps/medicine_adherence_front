@@ -46,9 +46,6 @@ PushNotification.configure({
   requestPermissions: true,
 });
 
-async function checkfordb() {
-  
-}
 messaging().onMessage(async mssg => {
   Pushnotificationforeground(mssg);
 

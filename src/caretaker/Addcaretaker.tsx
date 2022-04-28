@@ -8,7 +8,7 @@ import {
   TouchableOpacity,
   Image,
 } from 'react-native';
-import React from 'react';
+import React, {useEffect} from 'react';
 import {Avatar, Button, ListItem, SpeedDial} from 'react-native-elements';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
@@ -18,38 +18,32 @@ import {IconProp} from '@fortawesome/fontawesome-svg-core';
 import {useFocusEffect} from '@react-navigation/native';
 import NetworkCalls from '../connectivity/Network';
 import UserAvatar from 'react-native-user-avatar';
+import {useDispatch, useSelector} from 'react-redux';
+import {fetchCaretakers} from '../redux/actions/CaretakerTakerActions';
+
 interface Props {
   navigation: any;
 }
 
 const Addcaretaker: React.FC<{navigation}> = Props => {
   const {navigation} = Props;
-  const [caretakers, caretakerstate] = React.useState<any[]>([]);
+  const caretakers = useSelector(
+    state => state.CareTakerReducer.userCaretakerList,
+  );
+  const load = useSelector(state => state.CareTakerReducer.load);
+  console.log(load, 'load');
   const [refresh, refeereshstate] = React.useState(false);
   const [open, setOpen] = React.useState(false);
-
+  const dispatch = useDispatch();
   const fetchcaretakers = async () => {
-    const user_id = await AsyncStorage.getItem('user_id');
-    const res: any = await NetworkCalls.fetchCaretakers(user_id);
-    if (res.status === 'failed') {
-      caretakerstate([]);
-      return;
-    }
-    caretakerstate(res.userCaretakerList);
+    let user_id = await AsyncStorage.getItem('user_id');
+    dispatch(fetchCaretakers(user_id));
   };
 
-  useFocusEffect(
-    React.useCallback(() => {
-      let isActive = true;
-
-      fetchcaretakers();
-
-      return () => {
-        isActive = false;
-      };
-    }, []),
-  );
-
+  useEffect(() => {
+    // const res: any = await NetworkCalls.fetchCaretakers(user_id);
+    fetchcaretakers();
+  }, []);
   const renderitem = ({item}) => {
     console.log(item.patientId, 'b');
 
@@ -102,7 +96,7 @@ const Addcaretaker: React.FC<{navigation}> = Props => {
   return (
     <React.Fragment>
       <View style={{flex: 1, backgroundColor: 'white', height: '100%'}}>
-        {caretakers.length === 0 && (
+        {load && (
           <View style={{alignItems: 'center'}}>
             <Image
               source={require('../../assests/nocaretakers.jpg')}

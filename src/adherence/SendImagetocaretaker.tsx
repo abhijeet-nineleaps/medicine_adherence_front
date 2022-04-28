@@ -149,19 +149,19 @@ const SendImageToCaretaker: React.FC<Props> = ({route, navigation}: Props) => {
       '-' +
       (todayDate.getMonth() + 1) + '-' +
       todayDate.getFullYear();
-    let imagesData = await AsyncStorage.getItem(setDate
+    let imagesData = await AsyncStorage.getItem(setDate + ' ' + medName
       );
     if (imagesData !== null) {
       let parsedData = JSON.parse(imagesData);
       parsedData.push(image_uri);
       console.log(parsedData);
-      await AsyncStorage.setItem(setDate, JSON.stringify(parsedData));
+      await AsyncStorage.setItem(setDate + ' ' + medName, JSON.stringify(parsedData));
     } else {
       let parsedData = [];
       parsedData.push(image_uri);
       console.log(parsedData);
 
-      await AsyncStorage.setItem(setDate, JSON.stringify(parsedData));
+      await AsyncStorage.setItem(setDate + ' ' + medName, JSON.stringify(parsedData));
     }
     const formdata = new FormData();
     var dt = new Date().getTime();
