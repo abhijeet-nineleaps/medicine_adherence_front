@@ -99,7 +99,7 @@ const styles = StyleSheet.create({
     borderRadius: 6,
     elevation: 2,
     marginTop: 8,
-    padding: 8,
+    padding: 14,
   },
 });
 

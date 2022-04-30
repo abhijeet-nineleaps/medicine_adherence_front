@@ -116,7 +116,7 @@ const CustomHeader = props => {
                       await AsyncStorage.setItem('gender', '-');
                       await AsyncStorage.setItem('maritalstatus', '-');
                       await AsyncStorage.setItem('bloodgroup', '-');
-                      await Fetchdata.deleteUserMedicinesandhistory();
+                      // await Fetchdata.deleteUserMedicinesandhistory();
                       await AsyncStorage.setItem('user_id', ''),
                         await AsyncStorage.setItem('user_name', ''),
                         loggedinstate(false);

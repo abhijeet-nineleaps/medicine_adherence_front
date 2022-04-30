@@ -17,7 +17,6 @@ import ProgressCircle from 'react-native-progress-circle';
 import {Picker} from '@react-native-picker/picker';
 import {Button, Divider} from 'react-native-elements';
 import {useFocusEffect} from '@react-navigation/native';
-import SQLite from 'react-native-sqlite-storage';
 import Allreminderdata from './Allreminderdata';
 import {LogBox, Modal} from 'react-native';
 import Fetchdata from '../database/Querydata';
@@ -153,15 +152,19 @@ const MyComponent: React.FC = () => {
                 renderItem={({item}) => {
                   console.log(item, 'image');
                   return (
+                    <View style={{padding:40}}>
                     <Image
                       source={{uri: `${item}`}}
-                      resizeMode="contain"
+                      resizeMode='contain'
                       style={{
+                        borderRadius:30,
+                        padding:50,
                         width: '100%',
                         height: '80%',
                         alignItems: 'center',
                         justifyContent: 'center',
                       }}></Image>
+                      </View>
                   );
                 }}
                 sliderWidth={660}
@@ -169,7 +172,7 @@ const MyComponent: React.FC = () => {
               <Pagination
                 dotsLength={imagearray.length}
                 activeDotIndex={index}
-                containerStyle={{backgroundColor: 'rgba(0, 0, 0, 0.75)'}}
+                containerStyle={{backgroundColor: 'rgba(0, 0, 0, 0.75)',position:'relative'}}
                 dotStyle={{
                   width: 10,
                   height: 10,

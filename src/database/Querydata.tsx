@@ -21,15 +21,15 @@ const Fetchdata = {
       );
     });
   },
-  deleteUserMedicinesandhistory: () => {
-   return new Promise((resolve, reject) => {
-      db.transaction(async function (txn) {
-        txn.executeSql('DROP TABLE IF EXISTS User_medicines', []);
-        txn.executeSql('DROP TABLE IF EXISTS reminder_day', []);
-        resolve('');
-      });
-    });
-  },
+  // deleteUserMedicinesandhistory: () => {
+  //  return new Promise((resolve, reject) => {
+  //     db.transaction(async function (txn) {
+  //       txn.executeSql('DROP TABLE IF EXISTS User_medicines', []);
+  //       txn.executeSql('DROP TABLE IF EXISTS reminder_day', []);
+  //       resolve('');
+  //     });
+  //   });
+  // },
 };
 
 export default Fetchdata;

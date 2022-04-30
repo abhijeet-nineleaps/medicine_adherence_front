@@ -17,14 +17,14 @@ import {
 import ProgressCircle from 'react-native-progress-circle';
 import {Divider} from 'react-native-elements';
 import {useFocusEffect} from '@react-navigation/native';
-import SQLite from 'react-native-sqlite-storage';
 import * as Progress from 'react-native-progress';
 import {API_URL} from '@env';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
 import * as Animatable from 'react-native-animatable';
 import globalDb from '../database/Globaldb';
-
+import AdherencePercentage from '../adherence/AdherencePercentage';
+let today = new Date();
 const Medicineadherence = ({navigation}) => {
   const [reminderdata, reminderdatastate] = React.useState([]);
   const [refresh, refeereshstate] = React.useState(false);
@@ -34,6 +34,14 @@ const Medicineadherence = ({navigation}) => {
   const Reminder = ({item, index}) => {
     let currdate = new Date();
     let click = currdate >= new Date(item.end_date);
+    const [percentage, setpercentage] = React.useState(0);
+    console.log('executed');
+    AdherencePercentage(
+      item.start_date,
+      item.days,
+      item.time,
+      item.current_count,item.medicine_name
+    ).then(per => setpercentage(per));
     return (
       <>
         {item.status === 1 ? (
@@ -60,51 +68,59 @@ const Medicineadherence = ({navigation}) => {
                     color: 'black',
                     fontWeight: '600',
                     marginBottom: 7,
+                    fontSize: 16,
                   }}>
                   {item.medicine_name}
                 </Text>
-                <Text style={{marginBottom: 3}}>{item.medicine_des}</Text>
+                <Text
+                  style={{marginBottom: 5, color: 'grey', fontWeight: '600'}}>
+                  {item.medicine_des}
+                </Text>
                 <View style={{flexDirection: 'row', width: '50%'}}>
-                  <Text>Days - </Text>
-                  {item.days.split(':').map((mday: any) => {
-                    return <Text key={mday}>{mday + ','}</Text>;
-                  })}
-                </View>
-                <View style={{flexDirection: 'row', width: '60%'}}>
-                  <Text>Timings - </Text>
-                  <Text>
-                    {item.time.split('-').map((mtime: any) => {
-                      return <Text key={mtime}>{mtime + ','}</Text>;
+                  <Text style={{color: 'black', fontWeight: '400'}}>
+                    Days -{' '}
+                  </Text>
+                  <Text style={{color: 'grey'}}>
+                    {item.days.split(':').map((mday: any) => {
+                      return <Text key={mday}>{mday + ', '}</Text>;
                     })}
                   </Text>
                 </View>
-                <View style={{marginTop: 15}}>
-                  <Text>
-                    {'End Date : ' + new Date(item.end_date).toDateString()}
+                <View
+                  style={{flexDirection: 'row', width: '60%', marginTop: 5}}>
+                  <Text style={{color: 'black', fontWeight: '400'}}>
+                    Timings -{' '}
                   </Text>
+                  <Text style={{color: 'grey'}}>
+                    {item.time.split('-').map((mtime: any) => {
+                      return <Text key={mtime}>{mtime + ', '}</Text>;
+                    })}
+                  </Text>
+                </View>
+                <View style={{marginTop: 7, flexDirection: 'row'}}>
+                  <Text style={{color: 'black', fontWeight: '400'}}>
+                    {'End Date - '}
+                  </Text>
+                  <Text>{new Date(item.end_date).toDateString()}</Text>
                 </View>
               </View>
               <View style={{padding: 30}}>
                 <TouchableOpacity onPress={() => {}}>
                   <ProgressCircle
-                    percent={
-                      (item.current_count / item.total_med_reminders) * 100
-                    }
+                    percent={percentage}
                     radius={26}
                     borderWidth={3}
                     color="#00bcd4"
                     shadowColor="#999"
                     bgColor="#ffff">
                     <Text style={{fontSize: 15, color: '#00bcd4'}}>
-                      {Math.round(
-                        (item.current_count / item.total_med_reminders) * 100,
-                      ) + '%'}
+                      {percentage + '%'}
                     </Text>
                   </ProgressCircle>
                 </TouchableOpacity>
               </View>
             </TouchableOpacity>
-            <Divider style={{}} />
+            <Divider width={1} />
           </View>
         ) : (
           <></>
@@ -112,8 +128,6 @@ const Medicineadherence = ({navigation}) => {
       </>
     );
   };
-
-  
 
   async function fetchallreminders() {
     const reminder_array = [];
@@ -136,8 +150,9 @@ const Medicineadherence = ({navigation}) => {
               let rowItem = res.rows.item(i);
               tcurrenttaken += rowItem.current_count;
               ttotaltaken += rowItem.total_med_reminders;
-              res.rows.item(i).status === 1 ? reminder_array.push(rowItem) : null;
-
+              res.rows.item(i).status === 1
+                ? reminder_array.push(rowItem)
+                : null;
             }
 
             if (tcurrenttaken === 0 && ttotaltaken === 0) {
@@ -185,34 +200,30 @@ const Medicineadherence = ({navigation}) => {
       let url: any = new URL(`${API_URL}/api/v1/medicines/sync`);
       url.searchParams.append('userId', user_id);
       let jwt = await AsyncStorage.getItem('jwt');
-      console.log(jwt+'jw')
+      console.log(jwt + 'jw');
       try {
         await fetch(url, {
           method: 'POST',
           body: JSON.stringify(filtered_array),
           headers: {
             'Content-type': 'application/json',
-             Authorization: `Bearer ${jwt}`
+            Authorization: `Bearer ${jwt}`,
           },
         })
           .then(response => {
             if (response.status === 200) {
-
-              ToastAndroid.show('Medicine Synced',ToastAndroid.LONG);
-
+              ToastAndroid.show('Medicine Synced', ToastAndroid.LONG);
             } else if (response.status === 500 || response.status === 400) {
               ToastAndroid.show('Unable to sync', ToastAndroid.LONG);
-            } else if(response.status === 403 || response.status === 401){
-              ToastAndroid.show('Unable to sync',ToastAndroid.LONG);
-
+            } else if (response.status === 403 || response.status === 401) {
+              ToastAndroid.show('Unable to sync', ToastAndroid.LONG);
             }
           })
           .catch(() => {
             ToastAndroid.show('Unable to sync', ToastAndroid.LONG);
           });
       } catch (err) {
-        ToastAndroid.show('Unable to sync',ToastAndroid.LONG);
-
+        ToastAndroid.show('Unable to sync', ToastAndroid.LONG);
       }
       syncstate(false);
     }
@@ -318,7 +329,12 @@ const Medicineadherence = ({navigation}) => {
 
       <FlatList
         data={reminderdata}
-        renderItem={Reminder}
+        renderItem={({item,index}) =>{
+           if(item.status === 1){
+             console.log(item,'this is item');
+           return (<Reminder item={item} index={index}></Reminder>)
+           }
+         }}
         refreshControl={
           <RefreshControl
             refreshing={refresh}
