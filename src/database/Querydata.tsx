@@ -1,14 +1,11 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable prettier/prettier */
 /* eslint-disable no-trailing-spaces */
-import SQLite from 'react-native-sqlite-storage';
-import globalDb from './Globaldb';
 
-const db = globalDb();
 const Fetchdata = {
   getusermeds: async (txn: any) => {
     const reminder_array: any = [];
-    return new Promise((resolve, reject) => {
+    return new Promise(resolve => {
       txn.executeSql(
         'SELECT * FROM `User_medicines`',
         [],
@@ -21,15 +18,7 @@ const Fetchdata = {
       );
     });
   },
-  // deleteUserMedicinesandhistory: () => {
-  //  return new Promise((resolve, reject) => {
-  //     db.transaction(async function (txn) {
-  //       txn.executeSql('DROP TABLE IF EXISTS User_medicines', []);
-  //       txn.executeSql('DROP TABLE IF EXISTS reminder_day', []);
-  //       resolve('');
-  //     });
-  //   });
-  // },
+ 
 };
 
 export default Fetchdata;

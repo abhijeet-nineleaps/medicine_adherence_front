@@ -19,8 +19,6 @@ import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {IconProp} from '@fortawesome/fontawesome-svg-core';
 import * as Animatable from 'react-native-animatable';
 import {faClock, faTrash} from '@fortawesome/free-solid-svg-icons';
-
-import SQLite from 'react-native-sqlite-storage';
 import {useFocusEffect} from '@react-navigation/native';
 import globalDb from './database/Globaldb';
 
@@ -29,41 +27,25 @@ const db = globalDb();
 interface Props {
   navigation: any;
 }
-let Reducerfun = (state, action) => {
-  return {data: action.payload};
+let Reducerfun = (state: any, action: any) => {
+  return {...state, data: action.payload};
 };
 
 let initialVal = {data: []};
 const Addmedicine = ({navigation}: Props) => {
-  const [refresh, refeereshstate] = React.useState(false);
-
-  // const [medicines, characterstate] = useState<any[]>([]);
   const [medicines, characterstate] = useReducer(Reducerfun, initialVal);
-  console.log(medicines, 'meds');
-  const [load, loadstate] = useState(false);
-  const [logged, loggedstate] = useState(false);
-
   useFocusEffect(
     React.useCallback(() => {
-      let isActive = true;
-      async function checkforlog() {
-        if (await GoogleSignin.isSignedIn()) {
-          loggedstate(true);
-        } else {
-          loggedstate(false);
-        }
-      }
-      checkforlog();
       fetch_meds();
 
       return () => {
-        isActive = false;
+        true;
       };
     }, []),
   );
 
   const checkformeds = async () => {
-    return new Promise(function (resolve, reject) {
+    return new Promise(function (resolve) {
       var meds_array: any[] = [];
 
       db.transaction(async function (txn) {
@@ -75,7 +57,7 @@ const Addmedicine = ({navigation}: Props) => {
         txn.executeSql(
           'SELECT * FROM `User_medicines`',
           [],
-          function (tx, res) {
+          function (tx: any, res: any) {
             for (let i = 0; i < res.rows.length; ++i) {
               meds_array.push(res.rows.item(i));
             }
@@ -88,14 +70,10 @@ const Addmedicine = ({navigation}: Props) => {
   };
 
   const fetch_meds = async () => {
-    console.log('called');
     const meds_arr: any = await checkformeds();
-    console.log(meds_arr);
     meds_arr.length === 0
       ? characterstate({type: 'empty', payload: []})
       : characterstate({type: 'data', payload: meds_arr});
-
-    loadstate(false);
   };
 
   const deleteitem = async (id: number) => {
@@ -104,16 +82,20 @@ const Addmedicine = ({navigation}: Props) => {
     let med_del: any[] = [];
     db.transaction(function (txn: any) {
       txn.executeSql('DELETE FROM `User_medicines`  where user_id = ' + id);
-      txn.executeSql('SELECT * FROM `User_medicines`', [], function (tx, res) {
-        for (let i = 0; i < res.rows.length; ++i) {
-          med_del.push(res.rows.item(i));
-        }
+      txn.executeSql(
+        'SELECT * FROM `User_medicines`',
+        [],
+        function (tx: any, res: any) {
+          for (let i = 0; i < res.rows.length; ++i) {
+            med_del.push(res.rows.item(i));
+          }
 
-        console.log(med_del);
-        med_del.length === 0
-          ? characterstate({type: 'empty', payload: []})
-          : characterstate({type: 'data', payload: med_del});
-      });
+          console.log(med_del);
+          med_del.length === 0
+            ? characterstate({type: 'empty', payload: []})
+            : characterstate({type: 'data', payload: med_del});
+        },
+      );
     });
   };
 
@@ -193,12 +175,7 @@ const Addmedicine = ({navigation}: Props) => {
           data={medicines.data}
           renderItem={renderitem}
           initialNumToRender={10}
-          numColumns={1}
-          refreshControl={
-            <RefreshControl
-              refreshing={refresh}
-              onRefresh={fetch_meds}></RefreshControl>
-          }></FlatList>
+          numColumns={1}></FlatList>
       )}
 
       <View

@@ -23,8 +23,6 @@ const ProfileHeader: React.FC = () => {
           return;
         }
         const user = await GoogleSignin.getCurrentUser();
-
-        // console.log(user);
         imgstate(user.user.photo);
         namestate(user.user.name);
       } catch (err) {}

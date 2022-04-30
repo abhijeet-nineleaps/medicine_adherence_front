@@ -8,34 +8,21 @@ import Toast from 'react-native-toast-message';
 var cc = 0;
 
 const TodayPerformance = ({route}) => {
-  const db = SQLite.openDatabase(
-    {
-      name: 'MedStickdb',
-      location: 'default',
-    },
-    () => {
-      console.log('opened');
-    },
-    error => {
-      console.log(error);
-    },
-  );
+  const db = SQLite.openDatabase({
+    name: 'MedStickdb',
+    location: 'default',
+  });
 
   const {user_id} = route.params;
   const [Timings, setTime] = useState([]);
 
   const updatetimes = async (time: any) => {
-    console.log(time, ' ', Timings.indexOf(time));
     const index = Timings.indexOf(time);
 
     if (index > -1) {
       Timings.splice(index, 1);
     }
-    console.log(Timings);
     let new_timing = '';
-    // Timings.forEach(eitem => {
-    //   new_timing += eitem;
-    // });
     let len = Timings.length;
     for (let i = 0; i < len; i++) {
       if (i === len - 1) {
@@ -44,7 +31,6 @@ const TodayPerformance = ({route}) => {
         new_timing += Timings[i] + '-';
       }
     }
-    console.log(new_timing);
     let tody_date = new Date();
     let td_da =
       tody_date.getDate() +
@@ -53,7 +39,6 @@ const TodayPerformance = ({route}) => {
       '-' +
       tody_date.getFullYear();
     cc += 1;
-    console.log(cc);
     await db.transaction(async function (txxn) {
       txxn.executeSql(
         'UPDATE reminder_day SET timings = ? WHERE date = ? AND med_id = ?',
@@ -82,10 +67,6 @@ const TodayPerformance = ({route}) => {
         'SELECT * FROM `User_medicines` where user_id = ?',
         [user_id],
         function (tx: any, res: any) {
-          // meds_array.push(res.rows.item(i));
-          console.log(res.rows.item(0).time);
-          console.log(res.rows.item(0).total_med_reminders);
-          console.log(res.rows.item(0).current_count);
           cc = res.rows.item(0).current_count;
           let arr = res.rows.item(0).days.split(':');
           let set = new Set(arr);
@@ -97,8 +78,6 @@ const TodayPerformance = ({route}) => {
             (tody_date.getMonth() + 1) +
             '-' +
             tody_date.getFullYear();
-          console.log(set.has(weeks[tody_date.getDay()]));
-
           if (set.has(weeks[tody_date.getDay()]) && tody_date <= today) {
             txn.executeSql(
               'CREATE TABLE IF NOT EXISTS reminder_day(rem_id INTEGER PRIMARY KEY NOT NULL , date TEXT , timings TEXT, med_id INTEGER)',
@@ -107,14 +86,8 @@ const TodayPerformance = ({route}) => {
             txn.executeSql(
               'SELECT * FROM reminder_day where date = ? AND med_id = ?',
               [td_da, user_id],
-              function (tx, resp) {
-                for (let k = 0; k < resp.rows.length; k++) {
-                  console.log(resp.rows.item(k), ' item');
-                }
-                console.log(resp.rows.length, ' item arr');
-
+              function (txx, resp) {
                 if (resp.rows.length === 0) {
-                  console.log('NO id present but created ', resp.rows.item(0));
                   let remId = Math.floor(10000000 + Math.random() * 90000000);
 
                   txn.executeSql(
@@ -127,30 +100,24 @@ const TodayPerformance = ({route}) => {
                   txn.executeSql(
                     'SELECT * FROM reminder_day where date = ? AND med_id = ?',
                     [td_da, user_id],
-                    function (tx, respp) {
-                      console.log(respp.rows.item(0));
+                    function (txpp, respp) {
                       setTime(respp.rows.item(0).timings.split('-'));
                     },
                   );
                 } else {
-                  console.log('id present', resp.rows.item(0));
                   txn.executeSql(
                     'SELECT * FROM reminder_day where date = ? AND med_id = ?',
                     [td_da, user_id],
-                    function (tx, respp) {
+                    function (txo, respp) {
                       setTime(respp.rows.item(0).timings.split('-'));
                     },
                   );
-                  console.log(Timings);
                 }
               },
             );
           } else {
             setTime(['']);
           }
-
-          console.log(Timings);
-          // setTime(Timings)
         },
       );
     });

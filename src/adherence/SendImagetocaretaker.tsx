@@ -1,7 +1,5 @@
 /* eslint-disable prettier/prettier */
-/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable no-bitwise */
-/* eslint-disable handle-callback-err */
 /* eslint-disable react/self-closing-comp */
 /* eslint-disable react-native/no-inline-styles */
 import {Image, Modal, ScrollView, TouchableOpacity, View} from 'react-native';
@@ -14,10 +12,8 @@ import {Button, Text} from 'react-native-elements';
 import * as Progress from 'react-native-progress';
 import Toast from 'react-native-toast-message';
 import Share from 'react-native-share';
-import SQLite from 'react-native-sqlite-storage';
 import {LogBox} from 'react-native';
 import Fetchdata from '../database/Querydata';
-import {Title} from 'react-native-paper';
 import globalDb from '../database/Globaldb';
 LogBox.ignoreLogs(['Require cycle:']);
 interface Props {
@@ -103,17 +99,16 @@ const SendImageToCaretaker: React.FC<Props> = ({route, navigation}: Props) => {
   const fetchcaretakers = async () => {
     const user_id = await AsyncStorage.getItem('user_id');
 
-    return new Promise((resl, rej) => {
+    return new Promise(resl => {
       fetch(`${API_URL}/api/v1/caretakers?patientId=${user_id}`)
         .then(resp => resp.json())
         .then(res => {
-          console.log(res);
           if (res.status === 'failed') {
             resl([]);
           }
           resl(res.userCaretakerList);
         })
-        .catch(err => {
+        .catch(() => {
           setModalVisible(false);
         });
     });
@@ -121,13 +116,12 @@ const SendImageToCaretaker: React.FC<Props> = ({route, navigation}: Props) => {
 
   const fetchMedicines = async () => {
     db.transaction(async txn => {
-      let medsArray: any = await Fetchdata.getusermeds(txn);
-      medsArrayState(medsArray);
+      let medsArr: any = await Fetchdata.getusermeds(txn);
+      medsArrayState(medsArr);
     });
   };
   useFocusEffect(
     React.useCallback(() => {
-      let isActive = true;
       async function name() {
         await fetchMedicines();
         let value: any = await fetchcaretakers();
@@ -135,33 +129,37 @@ const SendImageToCaretaker: React.FC<Props> = ({route, navigation}: Props) => {
       }
       name();
       return () => {
-        isActive = false;
+        true;
       };
     }, []),
   );
 
   async function SendImage() {
     setModalVisible(true);
-    if (medName === '') return;
+    if (medName === '') {return;}
     let todayDate = new Date();
     let setDate =
       todayDate.getDate() +
       '-' +
-      (todayDate.getMonth() + 1) + '-' +
+      (todayDate.getMonth() + 1) +
+      '-' +
       todayDate.getFullYear();
-    let imagesData = await AsyncStorage.getItem(setDate + ' ' + medName
-      );
+    let imagesData = await AsyncStorage.getItem(setDate + ' ' + medName);
     if (imagesData !== null) {
       let parsedData = JSON.parse(imagesData);
       parsedData.push(image_uri);
-      console.log(parsedData);
-      await AsyncStorage.setItem(setDate + ' ' + medName, JSON.stringify(parsedData));
+      await AsyncStorage.setItem(
+        setDate + ' ' + medName,
+        JSON.stringify(parsedData),
+      );
     } else {
       let parsedData = [];
       parsedData.push(image_uri);
-      console.log(parsedData);
 
-      await AsyncStorage.setItem(setDate + ' ' + medName, JSON.stringify(parsedData));
+      await AsyncStorage.setItem(
+        setDate + ' ' + medName,
+        JSON.stringify(parsedData),
+      );
     }
     const formdata = new FormData();
     var dt = new Date().getTime();
@@ -184,7 +182,6 @@ const SendImageToCaretaker: React.FC<Props> = ({route, navigation}: Props) => {
     formdata.append('name', file_name);
     formdata.append('id', send_to);
     formdata.append('medName', medName + ' taken by ' + patientName);
-    console.log(formdata);
     const url = `${API_URL}`;
     fetch(url + '/api/v1/image', {
       method: 'post',
@@ -193,16 +190,14 @@ const SendImageToCaretaker: React.FC<Props> = ({route, navigation}: Props) => {
       },
       body: formdata,
     })
-      .then(response => {
+      .then(() => {
         setModalVisible(false);
-        console.log('image uploaded');
 
         setTimeout(() => {
           navigation.pop(1);
         }, 1000);
       })
-      .catch(err => {
-        console.log(err);
+      .catch(() => {
         setModalVisible(false);
       });
   }
@@ -256,7 +251,6 @@ const SendImageToCaretaker: React.FC<Props> = ({route, navigation}: Props) => {
               urls: [image_uri],
             };
             await Share.open(shareOptions);
-            // navigation.pop(1);
           }}></Button>
       </View>
       <Image

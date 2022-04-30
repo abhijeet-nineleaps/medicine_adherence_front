@@ -9,14 +9,12 @@ import {
   Image,
 } from 'react-native';
 import React, {useEffect} from 'react';
-import {Avatar, Button, ListItem, SpeedDial} from 'react-native-elements';
+import {Button, ListItem, SpeedDial} from 'react-native-elements';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faAngleRight} from '@fortawesome/free-solid-svg-icons';
 import {Card} from 'react-native-paper';
 import {IconProp} from '@fortawesome/fontawesome-svg-core';
-import {useFocusEffect} from '@react-navigation/native';
-import NetworkCalls from '../connectivity/Network';
 import UserAvatar from 'react-native-user-avatar';
 import {useDispatch, useSelector} from 'react-redux';
 import {fetchCaretakers} from '../redux/actions/CaretakerTakerActions';
@@ -38,10 +36,10 @@ const Addcaretaker: React.FC<{navigation}> = Props => {
   const fetchcaretakers = async () => {
     let user_id = await AsyncStorage.getItem('user_id');
     dispatch(fetchCaretakers(user_id));
+    refeereshstate(false);
   };
 
   useEffect(() => {
-    // const res: any = await NetworkCalls.fetchCaretakers(user_id);
     fetchcaretakers();
   }, []);
   const renderitem = ({item}) => {

@@ -6,8 +6,6 @@ let initialState = {
 };
 
 const CareTakerReducer = (state = initialState, {type, payload}) => {
-  console.log(payload, type);
-  console.log({...state});
   switch (type) {
     case Types.GET_CARETAKERS:
       return {
@@ -23,7 +21,6 @@ const CareTakerReducer = (state = initialState, {type, payload}) => {
       return {
         load: true,
         userCaretakerList: payload.userCaretakerList,
-
       };
     default:
       return state;

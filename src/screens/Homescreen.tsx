@@ -2,7 +2,7 @@
 /* eslint-disable react/self-closing-comp */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable react-native/no-inline-styles */
-import React, { useEffect, useRef } from 'react';
+import React, {useEffect, useRef} from 'react';
 import LottieView from 'lottie-react-native';
 
 import {Animated, StatusBar, View} from 'react-native';
@@ -17,22 +17,22 @@ import Profile from '../profile/Profile';
 
 const Tab = createBottomTabNavigator();
 
-const HomeScreen = ({navigation}) => {
+const HomeScreen = () => {
   const progress = useRef(new Animated.Value(0)).current;
 
-  useEffect(()=>{
+  useEffect(() => {
     Animated.timing(progress, {
       toValue: 1,
       duration: 3000,
       useNativeDriver: true,
     }).start();
-  },[]);
+  }, []);
   return (
     <View style={{backgroundColor: 'white', height: '100%'}}>
       <StatusBar backgroundColor="#3743ab" />
 
       <Tab.Navigator
-        screenOptions={({route}) => ({
+        screenOptions={() => ({
           tabBarStyle: {height: 60},
           tabBarInactiveTintColor: '#555',
           tabBarInactiveBackgroundColor: 'white',
@@ -61,7 +61,6 @@ const HomeScreen = ({navigation}) => {
                 speed={0.8}
                 source={require('../../assests/animate/heart.json')}
                 progress={progress}
-
               />
             ),
           }}
@@ -83,17 +82,11 @@ const HomeScreen = ({navigation}) => {
                 style={{width: 40, height: 40}}
                 source={require('../../assests/animate/med2.json')}
                 progress={progress}
-
               />
             ),
           }}
           component={Addmedicine}
         />
-        {/* <Tab.Screen name="Events" component={Doctercomp} options={{headerRight:()=>(<Button style={{width:120}} iconRight={()=><FontAwesomeIcon color="white" size={10} icon={faArrowRight}></FontAwesomeIcon>} buttonStyle={{backgroundColor:'#3743ab'}}
-      onPress={()=>navigation.navigate('Events')} title="Add event"></Button>),tabBarIcon:()=>(<LottieView style={{width:40,height:40}}
-     source={require('../../assests/animate/calen.json')} autoPlay loop>
-   </LottieView>)}}></Tab.Screen> */}
-
         <Tab.Screen
           name="Profile"
           key={2}

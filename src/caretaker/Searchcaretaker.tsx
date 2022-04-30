@@ -1,9 +1,8 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable react/self-closing-comp */
 /* eslint-disable react-native/no-inline-styles */
 import React from 'react';
 import {FlatList, View, Image, Text} from 'react-native';
-import {Avatar, Button, ListItem, SearchBar} from 'react-native-elements';
+import {Button, ListItem, SearchBar} from 'react-native-elements';
 import {API_URL} from '@env';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Toast from 'react-native-toast-message';
@@ -13,7 +12,6 @@ import UserAvatar from 'react-native-user-avatar';
 
 const Searchcaretaker = ({navigation}) => {
   const [data, datastate] = React.useState([]);
-  const [load, loadstate] = React.useState(false);
   const [searchload, searchloadstate] = React.useState(false);
 
   const sendmailtouser = (email: any) => {
@@ -21,13 +19,11 @@ const Searchcaretaker = ({navigation}) => {
     fetch(`${API_URL}/api/v1/email?email=${email}&sender=Nikunj bisht`)
       .then(res => res.json())
       .then(resp => {
-        console.log(resp);
         searchloadstate(false);
 
         datastate([resp]);
       })
-      .catch(err => {
-        console.log(err);
+      .catch(() => {
         searchloadstate(false);
         Toast.show({
           type: 'success',
@@ -44,8 +40,6 @@ const Searchcaretaker = ({navigation}) => {
   ) => {
     const pnt_id = await AsyncStorage.getItem('user_id');
     const pt_name = await AsyncStorage.getItem('user_name');
-    console.log(caret_id, pnt_id, pt_name);
-
     fetch(`${API_URL}/api/v1/request`, {
       method: 'POST',
       body: JSON.stringify({
@@ -60,8 +54,7 @@ const Searchcaretaker = ({navigation}) => {
         'Content-type': 'application/json',
       },
     })
-      .then(res => {
-        console.log(res.json());
+      .then(() => {
         navigation.pop(1);
       })
       .catch(err => console.log(err));
@@ -85,12 +78,11 @@ const Searchcaretaker = ({navigation}) => {
         hasTVPreferredFocus={undefined}
         tvParallaxProperties={undefined}>
         <ListItem.Content>
-        <UserAvatar size={40} name={item.userName}></UserAvatar>
+          <UserAvatar size={40} name={item.userName}></UserAvatar>
           <ListItem.Title>{item.userName}</ListItem.Title>
           <ListItem.Subtitle>{item.email}</ListItem.Subtitle>
         </ListItem.Content>
         <Button
-          loading={load}
           title="Send request"
           buttonStyle={{backgroundColor: '#3743ab'}}
           onPress={() => {
@@ -108,10 +100,9 @@ const Searchcaretaker = ({navigation}) => {
         validationSchema={loginValidationSchema}
         initialValues={{email: ''}}
         onSubmit={values => sendmailtouser(values.email)}>
-        {({handleChange, handleSubmit, values, errors, touched, isValid}) => (
+        {({handleChange, handleSubmit, values, errors, touched}) => (
           <>
             <SearchBar
-              style={{}}
               placeholder="Search Caretaker.."
               value={values.email}
               onChangeText={handleChange('email')}></SearchBar>

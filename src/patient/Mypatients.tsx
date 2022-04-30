@@ -10,7 +10,7 @@ import {
   TouchableOpacity,
   Image,
 } from 'react-native';
-import {Avatar, ListItem} from 'react-native-elements';
+import {ListItem} from 'react-native-elements';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faAngleRight} from '@fortawesome/free-solid-svg-icons';
 import {Card} from 'react-native-paper';
@@ -32,9 +32,9 @@ const Mypatient: React.FC<Props> = ({navigation}: Props) => {
     )
       .then(resp => resp.json())
       .then(res => {
-        console.log(res);
         if (res.status === 'failed') {
           datastate([]);
+          refeereshstate(false);
           return;
         }
         datastate(res.userCaretakerList);
@@ -44,12 +44,10 @@ const Mypatient: React.FC<Props> = ({navigation}: Props) => {
 
   useFocusEffect(
     React.useCallback(() => {
-      let isActive = true;
-
       fetchpatients();
 
       return () => {
-        isActive = false;
+        true;
       };
     }, []),
   );

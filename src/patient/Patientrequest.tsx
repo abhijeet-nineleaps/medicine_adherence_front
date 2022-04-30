@@ -14,7 +14,6 @@ const Patientrequest = () => {
   const [refresh, refreshstate] = React.useState(false);
 
   const fetchpatientreq = () => {
-    console.log('called');
     fetch(
       `${API_URL}/api/v1/patient/requests?caretakerId=f9c67686-55f9-495a-b214-eb89d5606678`,
     )
@@ -23,21 +22,22 @@ const Patientrequest = () => {
         console.log(resp);
         if (resp.status === 'failed') {
           patientsdata([]);
+          refreshstate(false);
           return;
         }
         patientsdata(resp.userCaretakerList);
       })
-      .catch(err => {});
+      .catch(() => {
+        refreshstate(false);
+      });
   };
 
   useFocusEffect(
     React.useCallback(() => {
-      let isActive = true;
-
       fetchpatientreq();
 
       return () => {
-        isActive = false;
+        true;
       };
     }, []),
   );

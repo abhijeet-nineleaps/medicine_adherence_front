@@ -27,20 +27,19 @@ import AdherencePercentage from '../adherence/AdherencePercentage';
 let today = new Date();
 const Medicineadherence = ({navigation}) => {
   const [reminderdata, reminderdatastate] = React.useState([]);
-  const [refresh, refeereshstate] = React.useState(false);
   const [sync, syncstate] = React.useState(false);
   const [totalpercent, totalpercentstate] = React.useState(0);
 
-  const Reminder = ({item, index}) => {
+  const Reminder = ({item}) => {
     let currdate = new Date();
     let click = currdate >= new Date(item.end_date);
     const [percentage, setpercentage] = React.useState(0);
-    console.log('executed');
     AdherencePercentage(
       item.start_date,
       item.days,
       item.time,
-      item.current_count,item.medicine_name
+      item.current_count,
+      item.medicine_name,
     ).then(per => setpercentage(per));
     return (
       <>
@@ -131,7 +130,7 @@ const Medicineadherence = ({navigation}) => {
 
   async function fetchallreminders() {
     const reminder_array = [];
-    return new Promise((resolve, rej) => {
+    return new Promise(resolve => {
       const db = globalDb();
       db.transaction(async function (txn) {
         await txn.executeSql(
@@ -174,8 +173,7 @@ const Medicineadherence = ({navigation}) => {
   async function fetchallremindersandsync() {
     if (await GoogleSignin.isSignedIn()) {
       let remdata: any = await fetchallreminders();
-      console.log('send');
-      console.log(remdata);
+
       syncstate(true);
       const filtered_array = remdata
         .filter(reminder_item => reminder_item.status === 1)
@@ -200,7 +198,6 @@ const Medicineadherence = ({navigation}) => {
       let url: any = new URL(`${API_URL}/api/v1/medicines/sync`);
       url.searchParams.append('userId', user_id);
       let jwt = await AsyncStorage.getItem('jwt');
-      console.log(jwt + 'jw');
       try {
         await fetch(url, {
           method: 'POST',
@@ -231,15 +228,13 @@ const Medicineadherence = ({navigation}) => {
 
   useFocusEffect(
     React.useCallback(() => {
-      let isActive = true;
 
-      fetchallreminders().then(d => {
-        console.log('ssyyncc' + reminderdata);
+      fetchallreminders().then(() => {
         fetchallremindersandsync();
       });
 
       return () => {
-        isActive = false;
+        true;
       };
     }, []),
   );
@@ -329,17 +324,12 @@ const Medicineadherence = ({navigation}) => {
 
       <FlatList
         data={reminderdata}
-        renderItem={({item,index}) =>{
-           if(item.status === 1){
-             console.log(item,'this is item');
-           return (<Reminder item={item} index={index}></Reminder>)
-           }
-         }}
-        refreshControl={
-          <RefreshControl
-            refreshing={refresh}
-            onRefresh={fetchallremindersandsync}></RefreshControl>
-        }></FlatList>
+        renderItem={({item, index}) => {
+          if (item.status === 1) {
+            console.log(item, 'this is item');
+            return <Reminder item={item} index={index}></Reminder>;
+          }
+        }}></FlatList>
       {reminderdata.length === 0 && (
         <View style={{alignItems: 'center'}}>
           <Image
@@ -348,7 +338,6 @@ const Medicineadherence = ({navigation}) => {
             resizeMode="contain"></Image>
         </View>
       )}
-      {/* <Divider width={1} style={{marginTop: 15}} /> */}
       <View
         style={{right: 10, left: 10, position: 'absolute', bottom: 10}}></View>
     </View>

@@ -23,7 +23,6 @@ const loginValidationSchema = yup.object().shape({
 
 const Loginscreen = props => {
   const [loading, loadingstate] = React.useState(false);
-  const [text, setText] = React.useState('');
 
   async function loginuser(email) {
     try {

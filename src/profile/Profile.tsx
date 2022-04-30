@@ -26,7 +26,6 @@ import * as yup from 'yup';
 import styles from './ProfileStyles';
 import SavedDetails from './SavedDetails';
 import {IconProp} from '@fortawesome/fontawesome-svg-core';
-import {Icon} from 'react-native-vector-icons/Icon';
 
 const loginValidationSchema = yup.object().shape({
   Bio: yup.string().required('Bio is Required'),
@@ -101,7 +100,7 @@ const Profile = ({navigation}) => {
           editstate(false);
         }
       })
-      .then(res => {
+      .then(() => {
         Toast.show({
           type: 'success',
           text1: 'Details saved',

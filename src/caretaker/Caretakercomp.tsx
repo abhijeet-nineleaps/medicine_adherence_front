@@ -13,9 +13,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function Caretakercomp({navigation}) {
   const [index, setIndex] = React.useState(0);
-
-  const [login, loginstate] = React.useState(false);
-
   useFocusEffect(() => {
     async function checkforlog() {
       const islogged = await GoogleSignin.isSignedIn();
@@ -41,8 +38,6 @@ export default function Caretakercomp({navigation}) {
           ],
         );
       }
-      console.log(islogged);
-      loginstate(islogged);
     }
 
     checkforlog();
@@ -62,7 +57,7 @@ export default function Caretakercomp({navigation}) {
         <Tab.Item
           title="Caretakers"
           containerStyle={{backgroundColor: 'white'}}
-          titleStyle={{fontSize: 12,color: '#3743ab'}}
+          titleStyle={{fontSize: 12, color: '#3743ab'}}
           icon={Caretaker_nurse()}
         />
         <Tab.Item

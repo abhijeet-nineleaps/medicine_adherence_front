@@ -48,11 +48,6 @@ const styles = StyleSheet.create({
     padding: 30,
     justifyContent: 'space-between',
   },
-  name: {
-    fontSize: 28,
-    color: '#696969',
-    fontWeight: '600',
-  },
   info: {
     fontSize: 16,
     color: '#00BFFF',

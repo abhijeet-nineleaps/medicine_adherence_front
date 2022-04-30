@@ -22,7 +22,6 @@ import * as Progress from 'react-native-progress';
 import {IconProp} from '@fortawesome/fontawesome-svg-core';
 import ProgressCircle from 'react-native-progress-circle';
 import {LogBox} from 'react-native';
-import {Button} from 'react-native-elements';
 LogBox.ignoreLogs(['Require cycle:']);
 
 const ViewProfile = ({route, navigation}) => {
@@ -40,13 +39,10 @@ const ViewProfile = ({route, navigation}) => {
 
   React.useEffect(() => {
     async function getuserdetails() {
-      // const user_id = await AsyncStorage.getItem('user_id');
 
       await fetch(`${API_URL}/api/v1/user?userId=${user_id}`)
         .then(resp => resp.json())
         .then(res => {
-          console.log(res);
-          console.log(res.userEntityList[0].userDetails);
           userdetailsstate(res);
           progress_status(false);
         });
@@ -184,7 +180,7 @@ const ViewProfile = ({route, navigation}) => {
                       fontSize: 15,
                       fontWeight: '500',
                     }}
-                    left={props => (
+                    left={() => (
                       <FontAwesomeIcon
                         size={16}
                         icon={faKitMedical as IconProp}
@@ -192,11 +188,11 @@ const ViewProfile = ({route, navigation}) => {
                         style={{marginLeft: 8}}
                       />
                     )}
-                    right={props => (
+                    right={() => (
                       <FontAwesomeIcon
                         icon={faCaretDown as IconProp}></FontAwesomeIcon>
                     )}>
-                    {userdetails.medicinesList.map((mlistitem, index) => {
+                    {userdetails.medicinesList.map(mlistitem => {
                       console.log(mlistitem.medicineId);
                       return (
                         <List.Item

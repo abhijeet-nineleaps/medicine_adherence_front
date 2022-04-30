@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable react/jsx-no-duplicate-props */
 /* eslint-disable react/self-closing-comp */
 import {createStackNavigator} from '@react-navigation/stack';
@@ -77,20 +76,20 @@ const Stackscreen: React.FC = () => {
       <Stack.Screen
         name="Camera"
         component={CameraScreen}
-        options={({navigation}) => ({
+        options={() => ({
           title: 'Send Image',
         })}></Stack.Screen>
       <Stack.Screen name="Loginscreen" component={Loginscreen}></Stack.Screen>
       <Stack.Screen
         name="Sentocaretaker"
         component={SendImageToCaretaker}
-        options={({navigation}) => ({
+        options={() => ({
           title: 'Send Image',
         })}></Stack.Screen>
       <Stack.Screen
         name="About"
         component={About}
-        options={({navigation}) => ({
+        options={() => ({
           title: 'About',
         })}></Stack.Screen>
       <Stack.Screen

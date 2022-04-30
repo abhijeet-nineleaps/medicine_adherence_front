@@ -51,20 +51,6 @@ const UserMed = ({route, navigation}) => {
         'INSERT INTO User_medicines (user_id,medicine_name,medicine_des,title,time,days,start_date,end_date,status,sync,total_med_reminders,current_count) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)',
         [value, Name, Description, '', '', '', '', '', 0, 0, 0, 0],
       );
-
-      txn.executeSql(
-        'SELECT * FROM `User_medicines`',
-        [],
-        function (tx, res) {
-          console.log(res);
-          for (let i = 0; i < res.rows.length; ++i) {
-            console.log('item:', res.rows.item(i));
-          }
-        },
-        (tx, err) => {
-          console.log(err);
-        },
-      );
     });
     Toast.show({
       type: 'info',

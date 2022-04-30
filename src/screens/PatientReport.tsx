@@ -42,8 +42,8 @@ const Reminders = ({item, index}) => {
   const nottaken = item.nottaken.split(',');
   const taken = item.taken.split(',');
   let tl: number, nt: number;
-  nottaken[0] === '' ? (nt = 0) : (nt = nottaken.length);
-  taken[0] === '' ? (tl = 0) : (tl = taken.length);
+  nt = nottaken[0] === '' ? 0 : nottaken.length;
+  tl = taken[0] === '' ? 0 : taken.length;
   return (
     <Animatable.View animation="slideInLeft" duration={500} delay={index * 180}>
       <>
@@ -135,7 +135,6 @@ export default function PatientReport({route}) {
 
   async function fetchHistory() {
     const response: any = await NetworkCalls.getmedicineHistory(medId);
-    console.log(response);
     response.status === 'OK'
       ? setHistoryData(response.userMedicinesList)
       : setHistoryData([]);
@@ -159,12 +158,10 @@ export default function PatientReport({route}) {
       }
       msd.setDate(msd.getDate() + 1);
     }
-    console.log(alldates);
     setallDates(alldates);
   }
 
   const showDetailfun = sDate => {
-    console.log(sDate);
     detailData = historyData.find(el => el.date === sDate);
     console.log(detailData);
     if (detailData === undefined) {
@@ -186,8 +183,7 @@ export default function PatientReport({route}) {
         showalldates();
       });
       return () => {
-        let isActive = true;
-        isActive = false;
+        true;
       };
     }, []),
   );

@@ -27,11 +27,8 @@ import Downloadpdf from './Downloadpdf';
 import MedicinehistoryList from './components/MedicineHistoryList';
 import globalDb from '../database/Globaldb';
 import Carousel, {Pagination} from 'react-native-snap-carousel';
-import {Title} from 'react-native-paper';
 
 let globalmedId;
-let imagearray = [];
-
 LogBox.ignoreLogs(['Require cycle:']);
 LogBox.ignoreAllLogs();
 var db: any;
@@ -52,10 +49,10 @@ const MyComponent: React.FC = () => {
   const [showDetail, showDetailState] = React.useState(false);
   const [imagearray, setimagearray] = React.useState([]);
   const [index, setindex] = React.useState(0);
-  const fetchreminders = async (db: any) => {
+  const fetchreminders = async (dbs: any) => {
     let reminder_array: any = [];
 
-    await db.transaction(async function (txn: any) {
+    await dbs.transaction(async function (txn: any) {
       txn.executeSql(
         'CREATE TABLE IF NOT EXISTS User_medicines(user_id INTEGER PRIMARY KEY NOT NULL, medicine_name TEXT, medicine_des TEXT , title TEXT, time TEXT , days TEXT , start_date TEXT , end_date TEXT , status INTEGER , sync INTEGER)',
         [],
@@ -66,7 +63,6 @@ const MyComponent: React.FC = () => {
   };
 
   const remindersofparticular_medicine = async (med_name: any) => {
-    console.log(med_name);
     const histoy_obj: any = await Allreminderdata(med_name);
     const output_map: any = histoy_obj.mapper;
     const {meds_id} = histoy_obj;
@@ -79,7 +75,6 @@ const MyComponent: React.FC = () => {
       arr.key.remId = value.remId;
       f_array.push(arr);
     }
-    console.log(JSON.stringify(f_array));
     reminder_map_fetched_data_state(f_array);
     let syncData = [];
     f_array.map(mdata => {
@@ -90,7 +85,6 @@ const MyComponent: React.FC = () => {
       mobj.remId = mdata.key.remId;
       syncData.push(mobj);
     });
-    console.log(syncData);
     downloadState(true);
     syncstate(true);
     await NetworkCalls.synchistory(meds_id, syncData);
@@ -114,16 +108,14 @@ const MyComponent: React.FC = () => {
   useFocusEffect(
     React.useCallback(() => {
       db = globalDb();
-      let isActive = true;
       fetchreminders(db);
       return () => {
-        isActive = false;
+        true;
       };
     }, []),
   );
   const showDetailfun = sDate => {
-    console.log(sDate);
-    if (sDate.length === 0) return;
+    if (sDate.length === 0) {return;}
     setimagearray(sDate);
     showDetailState(true);
     setModalVisible(true);
@@ -152,19 +144,19 @@ const MyComponent: React.FC = () => {
                 renderItem={({item}) => {
                   console.log(item, 'image');
                   return (
-                    <View style={{padding:40}}>
-                    <Image
-                      source={{uri: `${item}`}}
-                      resizeMode='contain'
-                      style={{
-                        borderRadius:30,
-                        padding:50,
-                        width: '100%',
-                        height: '80%',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                      }}></Image>
-                      </View>
+                    <View style={{padding: 40}}>
+                      <Image
+                        source={{uri: `${item}`}}
+                        resizeMode="contain"
+                        style={{
+                          borderRadius: 30,
+                          padding: 50,
+                          width: '100%',
+                          height: '80%',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                        }}></Image>
+                    </View>
                   );
                 }}
                 sliderWidth={660}
@@ -172,7 +164,10 @@ const MyComponent: React.FC = () => {
               <Pagination
                 dotsLength={imagearray.length}
                 activeDotIndex={index}
-                containerStyle={{backgroundColor: 'rgba(0, 0, 0, 0.75)',position:'relative'}}
+                containerStyle={{
+                  backgroundColor: 'rgba(0, 0, 0, 0.75)',
+                  position: 'relative',
+                }}
                 dotStyle={{
                   width: 10,
                   height: 10,
@@ -297,7 +292,6 @@ const MyComponent: React.FC = () => {
         <FlatList
           data={reminder_map_fetched_data}
           renderItem={({item}) => {
-            //console.log(item,'iiitt');
             return (
               <MedicinehistoryList
                 item={item}

@@ -7,9 +7,7 @@ import React from 'react';
 import {
   GoogleSignin,
   GoogleSigninButton,
-  statusCodes,
 } from '@react-native-google-signin/google-signin';
-import TypeWriter from 'react-native-typewriter';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as Progress from 'react-native-progress';
 import {API_URL} from '@env';
@@ -17,22 +15,20 @@ import Toast from 'react-native-toast-message';
 import messaging from '@react-native-firebase/messaging';
 import Checkconnectivity from '../connectivity/Checkconnectivity';
 import LottieView from 'lottie-react-native';
-import { Text } from 'react-native-elements';
+import {Text} from 'react-native-elements';
 
 interface Props {
   navigation: any;
 }
 
-const Login: React.FC<{navigation}> = (Props) => {
+const Login: React.FC<{navigation}> = Props => {
   const {navigation} = Props;
   const [loading, loadingstate] = React.useState(false);
   const [connected, connectedstate] = React.useState(false);
 
   async function checkconnection() {
     let conn: any = await Checkconnectivity();
-    console.log(await messaging().getToken())
     connectedstate(conn);
-
   }
   React.useEffect(() => {
     checkconnection();
@@ -50,7 +46,6 @@ const Login: React.FC<{navigation}> = (Props) => {
       await GoogleSignin.hasPlayServices();
       const userinfo = await GoogleSignin.signIn();
       const token = await messaging().getToken();
-      console.log(token);
       loadingstate(true);
       let url: any = new URL(`${API_URL}/api/v1/user`);
       url.searchParams.append('fcmToken', token);
@@ -68,16 +63,10 @@ const Login: React.FC<{navigation}> = (Props) => {
       })
         .then(resp => resp.json())
         .then(async res => {
-          console.log(res);
-        if (res.status === 'Success') {
-            console.info(res.userentity[0].userId);
+          if (res.status === 'Success') {
             await AsyncStorage.setItem('user_id', res.userentity[0].userId);
             await AsyncStorage.setItem('user_name', res.userentity[0].userName);
             await AsyncStorage.setItem('jwt', res.jwt);
-            console.info(
-              await AsyncStorage.getItem('user_id'),
-                await AsyncStorage.getItem('user_name'),
-            );
             Toast.show({
               type: 'success',
               text1: 'Account created successfully',
@@ -96,38 +85,25 @@ const Login: React.FC<{navigation}> = (Props) => {
             });
           }
         })
-        .catch(async(err) => {
-          console.log(err);
+        .catch(async () => {
           Toast.show({
             type: 'info',
             text1: 'Failed',
           });
-            if (await GoogleSignin.isSignedIn()) {
-              await GoogleSignin.signOut();
-            }
+          if (await GoogleSignin.isSignedIn()) {
+            await GoogleSignin.signOut();
+          }
         });
     } catch (err: any) {
-        if (await GoogleSignin.isSignedIn()) {
-          await GoogleSignin.signOut();
-        }
-      console.log(err);
+      if (await GoogleSignin.isSignedIn()) {
+        await GoogleSignin.signOut();
+      }
       Toast.show({
         type: 'info',
         text1: 'Failed',
       });
     }
   }
-
-  // async function onGooglelogout() {
-  //   try {
-  //     const logout = await GoogleSignin.signOut();
-  //     console.log(logout);
-
-  //     navigation.navigate('Drawer');
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // }
 
   return (
     <View
@@ -139,7 +115,7 @@ const Login: React.FC<{navigation}> = (Props) => {
         backgroundColor: 'white',
       }}>
       <Toast visibilityTime={3000}></Toast>
-      <Text style={{fontSize:25,fontWeight:'500'}}>Create an account</Text>
+      <Text style={{fontSize: 25, fontWeight: '500'}}>Create an account</Text>
       <LottieView
         style={{width: 130, height: 130}}
         source={require('../../assests/animate/google.json')}
@@ -148,13 +124,13 @@ const Login: React.FC<{navigation}> = (Props) => {
       />
 
       <GoogleSigninButton
-        style={{width: 292, height: 58, margin: 20,borderRadius:40}}
+        style={{width: 292, height: 58, margin: 20, borderRadius: 40}}
         size={GoogleSigninButton.Size.Wide}
         color={GoogleSigninButton.Color.Dark}
         onPress={() =>
           onGoogleButtonPress()
             .then(() => console.log('Google'))
-            .catch(err => console.log('error'))
+            .catch(err => console.log(err))
         }
       />
 

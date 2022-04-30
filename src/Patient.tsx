@@ -13,8 +13,6 @@ import {Alert} from 'react-native';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
 
 const Patientcomp = ({navigation}) => {
-  const [login, loginstate] = React.useState(false);
-
   const [index, setIndex] = React.useState(0);
   const Iconcomp1 = () => {
     return (
@@ -48,8 +46,6 @@ const Patientcomp = ({navigation}) => {
           ],
         );
       }
-      console.log(islogged);
-      loginstate(islogged);
     }
 
     checkforlog();
@@ -78,12 +74,12 @@ const Patientcomp = ({navigation}) => {
         <Tab.Item
           title="My Patients"
           containerStyle={{backgroundColor: 'white'}}
-          titleStyle={{fontSize: 12,color:'#3743ab'}}
+          titleStyle={{fontSize: 12, color: '#3743ab'}}
           icon={Iconcomp1}
         />
         <Tab.Item
           title="Patient Request"
-          titleStyle={{fontSize: 12,color:'#3743ab'}}
+          titleStyle={{fontSize: 12, color: '#3743ab'}}
           containerStyle={{backgroundColor: 'white'}}
           icon={Iconcomp2}
         />
