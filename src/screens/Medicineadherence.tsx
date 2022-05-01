@@ -228,13 +228,13 @@ const Medicineadherence = ({navigation}) => {
 
   useFocusEffect(
     React.useCallback(() => {
-
+      let active = true;
       fetchallreminders().then(() => {
         fetchallremindersandsync();
       });
 
       return () => {
-        true;
+       active = false;
       };
     }, []),
   );
