@@ -2,17 +2,12 @@ import PushNotification from 'react-native-push-notification';
 var Sound = require('react-native-sound');
 
 function PlaySound() {
+  
   Sound.setCategory('Alarm');
   var whoosh = new Sound('sound.mp3', Sound.MAIN_BUNDLE, (error: any) => {
     if (error) {
       return;
     }
-    console.log(
-      'duration in seconds: ' +
-        whoosh.getDuration() +
-        'number of channels: ' +
-        whoosh.getNumberOfChannels(),
-    );
     whoosh.setNumberOfLoops(0);
     whoosh.play((success: any) => {
       if (success) {

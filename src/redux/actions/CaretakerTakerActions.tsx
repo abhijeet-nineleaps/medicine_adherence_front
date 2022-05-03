@@ -7,7 +7,7 @@ export function fetchCaretakers(user_id: String) {
   };
 }
 export function fetchCaretakerssuccess(data) {
-  console.log(data, 'ac');
+  console.log(data, 'success');
   return {
     type: Types.Success_CareTAKER_REQUEST,
     payload: data,

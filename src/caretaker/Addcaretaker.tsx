@@ -28,7 +28,7 @@ const Addcaretaker: React.FC<{navigation}> = Props => {
   const caretakers = useSelector(
     state => state.CareTakerReducer.userCaretakerList,
   );
-  const load = useSelector(state => state.CareTakerReducer.load);
+  const {load} = useSelector(state => state.CareTakerReducer);
   console.log(load, 'load');
   const [refresh, refeereshstate] = React.useState(false);
   const [open, setOpen] = React.useState(false);

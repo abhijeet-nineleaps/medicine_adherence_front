@@ -7,11 +7,6 @@ let initialState = {
 
 const CareTakerReducer = (state = initialState, {type, payload}) => {
   switch (type) {
-    case Types.GET_CARETAKERS:
-      return {
-        load: false,
-        userCaretakerList: payload.userCaretakerList,
-      };
     case Types.Success_CareTAKER_REQUEST:
       return {
         load: false,
@@ -19,8 +14,8 @@ const CareTakerReducer = (state = initialState, {type, payload}) => {
       };
     case Types.Failed_CareTAKER_REQUEST:
       return {
-        load: true,
-        userCaretakerList: payload.userCaretakerList,
+        ...state,
+        userCaretakerList: [],
       };
     default:
       return state;

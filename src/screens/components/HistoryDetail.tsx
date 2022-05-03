@@ -27,8 +27,6 @@ const HistoryDetail: React.FC<Props> = ({data, modalVisibility}) => {
     return mtitle;
   }
   useEffect(() => {
-    //{time: '09:00', title: <Text style={{color: 'green'}}>Taken</Text>},
-
     const sArray = [];
     let nottaken = data.nottaken.split(','),
       taken = data.taken.split(',');
@@ -94,8 +92,6 @@ const HistoryDetail: React.FC<Props> = ({data, modalVisibility}) => {
           textAlign: 'center',
           color: 'white',
           backgroundColor: '#4dd0e1',
-          //   borderWidth: 2,
-          //   borderColor: '#3743ab',
           padding: 5,
           marginBottom: 80,
           borderRadius: 20,

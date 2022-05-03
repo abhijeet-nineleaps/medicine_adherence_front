@@ -39,10 +39,6 @@ const Login: React.FC<{navigation}> = Props => {
   });
   async function onGoogleButtonPress() {
     try {
-      if (!connected) {
-        Alert.alert('Not connected To Internet');
-        return;
-      }
       await GoogleSignin.hasPlayServices();
       const userinfo = await GoogleSignin.signIn();
       const token = await messaging().getToken();
