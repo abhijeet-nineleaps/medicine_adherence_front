@@ -273,6 +273,7 @@ const ViewProfile = ({route, navigation}) => {
                               mTimes: mlistitem.time,
                               mstartDate: mlistitem.startDate,
                               mendDate: mlistitem.endDate,
+                              mcc: mlistitem.currentCount
                             });
                           }}
                           title={mlistitem.medicineName}></List.Item>

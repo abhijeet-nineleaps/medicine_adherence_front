@@ -10,7 +10,6 @@ import {faUserFriends, faHospitalUser} from '@fortawesome/free-solid-svg-icons';
 import {IconProp} from '@fortawesome/fontawesome-svg-core';
 import {useFocusEffect} from '@react-navigation/native';
 import {Alert} from 'react-native';
-import {GoogleSignin} from '@react-native-google-signin/google-signin';
 
 const Patientcomp = ({navigation}) => {
   const [index, setIndex] = React.useState(0);
@@ -22,34 +21,6 @@ const Patientcomp = ({navigation}) => {
         icon={faHospitalUser as IconProp}></FontAwesomeIcon>
     );
   };
-
-  useFocusEffect(() => {
-    async function checkforlog() {
-      const islogged = await GoogleSignin.isSignedIn();
-      if (!islogged) {
-        Alert.alert(
-          'Sign in first to use this feature',
-          'Click ok to proceed',
-          [
-            {
-              text: 'Ok',
-              onPress: () => {
-                navigation.navigate('Login');
-              },
-            },
-            {
-              text: 'Cancel',
-              onPress: () => {
-                navigation.navigate('Home');
-              },
-            },
-          ],
-        );
-      }
-    }
-
-    checkforlog();
-  });
 
   const Iconcomp2 = () => {
     return (

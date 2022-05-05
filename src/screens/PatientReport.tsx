@@ -20,6 +20,7 @@ import * as Animatable from 'react-native-animatable';
 import Downloadpdf from '../adherence/Downloadpdf';
 import LottieView from 'lottie-react-native';
 import HistoryDetail from './components/HistoryDetail';
+import AdherencePercentage from '../adherence/AdherencePercentage';
 let detailData = {};
 
 var weeks: string[] = ['Sun', 'Mon', 'Tue', 'Wed', 'Thur', 'Fri', 'Sat'];
@@ -39,6 +40,7 @@ const months = [
 ];
 
 const Reminders = ({item, index}) => {
+  console.log(item, 'ite');
   const nottaken = item.nottaken.split(',');
   const taken = item.taken.split(',');
   let tl: number, nt: number;
@@ -126,18 +128,29 @@ const Reminders = ({item, index}) => {
 };
 
 export default function PatientReport({route}) {
-  const {medId, adherenceRate, medName, medDays, mstartDate, mendDate} =
-    route.params;
+  const {
+    medId,
+    adherenceRate,
+    medName,
+    mTimes,
+    medDays,
+    mstartDate,
+    mendDate,
+    mcc,
+  } = route.params;
   const [historyData, setHistoryData] = useState([]);
   const [modalVisible, setModalVisible] = React.useState(false);
   const [allDates, setallDates] = useState([]);
   const [showDetail, showDetailState] = useState(false);
-
+  const [adherence, setadherence] = useState(0);
   async function fetchHistory() {
     const response: any = await NetworkCalls.getmedicineHistory(medId);
     response.status === 'OK'
       ? setHistoryData(response.userMedicinesList)
       : setHistoryData([]);
+    AdherencePercentage(mstartDate, medDays, mTimes, mcc, '').then(per =>
+      setadherence(per),
+    );
   }
   function showalldates() {
     let alldates = [];
@@ -223,14 +236,14 @@ export default function PatientReport({route}) {
         <View style={{backgroundColor: '#3743ab'}}>
           <View style={{alignItems: 'center', marginTop: 28}}>
             <ProgressCircle
-              percent={adherenceRate}
+              percent={adherence}
               radius={60}
               borderWidth={13}
               color="#4dd0e1"
               shadowColor="#e3f2fd"
               bgColor="#fff">
               <Text style={{fontSize: 18, color: '#4dd0e1'}}>
-                {adherenceRate + '%'}
+                {adherence + '%'}
               </Text>
             </ProgressCircle>
             <View
@@ -317,7 +330,21 @@ export default function PatientReport({route}) {
           }}>
           Medicine History
         </Text>
-        <FlatList data={historyData} renderItem={Reminders} />
+        <FlatList
+          data={historyData}
+          renderItem={({item, index}) => {
+            return (
+              <Reminders
+                item={item}
+                index={index}
+                sd={mstartDate}
+                days={medDays}
+                times={mTimes}
+                mcc={mcc}
+              />
+            );
+          }}
+        />
         <Button
           title={'Download PDF'}
           titleStyle={{fontSize: 18}}
