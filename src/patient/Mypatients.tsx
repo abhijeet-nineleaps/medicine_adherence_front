@@ -9,6 +9,7 @@ import {
   View,
   TouchableOpacity,
   Image,
+  Alert,
 } from 'react-native';
 import {ListItem} from 'react-native-elements';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
@@ -17,6 +18,7 @@ import {Card} from 'react-native-paper';
 import {IconProp} from '@fortawesome/fontawesome-svg-core';
 import {useFocusEffect} from '@react-navigation/native';
 import UserAvatar from 'react-native-user-avatar';
+import {GoogleSignin} from '@react-native-google-signin/google-signin';
 
 interface Props {
   navigation: any;
@@ -25,7 +27,6 @@ interface Props {
 const Mypatient: React.FC<Props> = ({navigation}: Props) => {
   const [data, datastate] = React.useState([]);
   const [refresh, refeereshstate] = React.useState(false);
-
   const fetchpatients = () => {
     fetch(
       `${API_URL}/api/v1/patients?caretakerId=f9c67686-55f9-495a-b214-eb89d5606678`,
@@ -41,10 +42,36 @@ const Mypatient: React.FC<Props> = ({navigation}: Props) => {
       })
       .catch(err => console.log(err));
   };
-
   useFocusEffect(
     React.useCallback(() => {
-      fetchpatients();
+      async function checkforlog() {
+        const islogged = await GoogleSignin.isSignedIn();
+        if (!islogged) {
+          Alert.alert(
+            'Sign in first to use this feature',
+            'Click ok to proceed',
+            [
+              {
+                text: 'Ok',
+                onPress: () => {
+                  navigation.navigate('Login');
+                },
+              },
+              {
+                text: 'Cancel',
+                onPress: () => {
+                  navigation.navigate('Home');
+                },
+              },
+            ],
+          );
+        }else{
+          fetchpatients();
+
+        }
+      }
+  
+      checkforlog();
 
       return () => {
         true;

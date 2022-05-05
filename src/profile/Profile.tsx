@@ -26,6 +26,7 @@ import * as yup from 'yup';
 import styles from './ProfileStyles';
 import SavedDetails from './SavedDetails';
 import {IconProp} from '@fortawesome/fontawesome-svg-core';
+import {useFocusEffect} from '@react-navigation/native';
 
 const loginValidationSchema = yup.object().shape({
   Bio: yup.string().required('Bio is Required'),
@@ -112,35 +113,44 @@ const Profile = ({navigation}) => {
       text1: 'Please fill details properly',
     });
   }
+  useFocusEffect(
+    React.useCallback(() => {
+      async function getuser() {
+        try {
+          if (!(await GoogleSignin.isSignedIn())) {
+            Alert.alert(
+              'Sign in first to Edit Profile',
+              'Click ok to proceed',
+              [
+                {
+                  text: 'Ok',
+                  onPress: () => {
+                    navigation.navigate('Login');
+                  },
+                },
+                {
+                  text: 'Cancel',
+                  onPress: () => {
+                    navigation.navigate('Home');
+                  },
+                },
+              ],
+            );
+            return;
+          }
+          const user = await GoogleSignin.getCurrentUser();
 
-  useEffect(() => {
-    async function getuser() {
-      try {
-        if (!(await GoogleSignin.isSignedIn())) {
-          Alert.alert('Sign in first to Edit Profile', 'Click ok to proceed', [
-            {
-              text: 'Ok',
-              onPress: () => {
-                navigation.navigate('Login');
-              },
-            },
-            {
-              text: 'Cancel',
-              onPress: () => {
-                navigation.navigate('Home');
-              },
-            },
-          ]);
-          return;
-        }
-        const user = await GoogleSignin.getCurrentUser();
-
-        namestate(user);
-        imgstate(user.user.photo);
-      } catch (err) {}
-    }
-    getuser();
-  }, []);
+          namestate(user);
+          imgstate(user.user.photo);
+        } catch (err) {}
+      }
+      getuser();
+      let isAcive = false;
+      return () => {
+        isAcive = false;
+      };
+    }, []),
+  );
 
   return (
     <View style={{height: '100%', backgroundColor: 'white'}}>
