@@ -20,8 +20,8 @@ import {List} from 'react-native-paper';
 import {API_URL} from '@env';
 import * as Progress from 'react-native-progress';
 import {IconProp} from '@fortawesome/fontawesome-svg-core';
-import ProgressCircle from 'react-native-progress-circle';
 import {LogBox} from 'react-native';
+import {Button} from 'react-native-elements';
 LogBox.ignoreLogs(['Require cycle:']);
 
 const ViewProfile = ({route, navigation}) => {
@@ -39,7 +39,6 @@ const ViewProfile = ({route, navigation}) => {
 
   React.useEffect(() => {
     async function getuserdetails() {
-
       await fetch(`${API_URL}/api/v1/user?userId=${user_id}`)
         .then(resp => resp.json())
         .then(res => {
@@ -212,26 +211,13 @@ const ViewProfile = ({route, navigation}) => {
                                     flexDirection: 'row',
                                     alignItems: 'center',
                                   }}>
-                                  <ProgressCircle
-                                    percent={
-                                      (mlistitem.currentCount /
-                                        mlistitem.totalMedReminders) *
-                                      100
-                                    }
-                                    radius={23}
-                                    borderWidth={3}
-                                    color="#00bcd4"
-                                    shadowColor="#999"
-                                    bgColor="#ffff">
-                                    <Text
-                                      style={{fontSize: 15, color: '#00bcd4'}}>
-                                      {Math.round(
-                                        (mlistitem.currentCount /
-                                          mlistitem.totalMedReminders) *
-                                          100,
-                                      ) + '%'}
-                                    </Text>
-                                  </ProgressCircle>
+                                  <Button
+                                    title="Images"
+                                    onPress={() =>
+                                      navigation.navigate('Images', {
+                                        medId: mlistitem.medicineId,
+                                      })
+                                    }></Button>
                                   <TouchableOpacity
                                     style={{
                                       margin: 12,
@@ -273,7 +259,7 @@ const ViewProfile = ({route, navigation}) => {
                               mTimes: mlistitem.time,
                               mstartDate: mlistitem.startDate,
                               mendDate: mlistitem.endDate,
-                              mcc: mlistitem.currentCount
+                              mcc: mlistitem.currentCount,
                             });
                           }}
                           title={mlistitem.medicineName}></List.Item>

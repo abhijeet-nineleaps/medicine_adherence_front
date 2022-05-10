@@ -15,6 +15,7 @@ import Login from '../login/Googleoauth';
 import Loginscreen from '../login/Loginscreen';
 import Profile from '../profile/Profile';
 import About from '../screens/Aboutapp';
+import MedicineImages from '../screens/MedicineImages';
 import OnboardingScreen from '../screens/Onboarding';
 import ViewProfile from '../screens/Patientprofile';
 import PatientReport from '../screens/PatientReport';
@@ -111,6 +112,13 @@ const Stackscreen: React.FC = () => {
         }}
         name="Patient report"
         component={PatientReport}></Stack.Screen>
+      <Stack.Screen
+        options={{
+          headerTintColor: 'white',
+          headerStyle: {backgroundColor: '#3743ab'},
+        }}
+        name="Images"
+        component={MedicineImages}></Stack.Screen>
     </Stack.Navigator>
   );
 };
