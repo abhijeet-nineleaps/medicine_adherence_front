@@ -23,6 +23,7 @@ interface Props {
 
 const db = globalDb();
 let medName = '';
+let medId:Number = 0;
 const SendImageToCaretaker: React.FC<Props> = ({route, navigation}: Props) => {
   const {image_uri} = route.params;
   const [mycaretakers, mycaretakerstate] = useState([]);
@@ -80,6 +81,7 @@ const SendImageToCaretaker: React.FC<Props> = ({route, navigation}: Props) => {
         <TouchableOpacity
           onPress={() => {
             medName = item.medicine_name;
+            medId = item.user_id;
             clickedstate(!clicked);
             if (clicked) {
               borderColorstate('white');
@@ -182,6 +184,7 @@ const SendImageToCaretaker: React.FC<Props> = ({route, navigation}: Props) => {
     formdata.append('name', file_name);
     formdata.append('id', send_to);
     formdata.append('medName', medName + ' taken by ' + patientName);
+    formdata.append('medId',medId);
     const url = `${API_URL}`;
     fetch(url + '/api/v1/image', {
       method: 'post',
