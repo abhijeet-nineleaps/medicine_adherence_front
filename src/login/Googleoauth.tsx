@@ -1,6 +1,5 @@
 /* eslint-disable prettier/prettier */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable react/self-closing-comp */
 /* eslint-disable react-native/no-inline-styles */
 import {Alert, View} from 'react-native';
 import React from 'react';
@@ -110,7 +109,7 @@ const Login: React.FC<{navigation}> = Props => {
         width: '100%',
         backgroundColor: 'white',
       }}>
-      <Toast visibilityTime={3000}></Toast>
+      <Toast visibilityTime={3000} />
       <Text style={{fontSize: 25, fontWeight: '500'}}>Create an account</Text>
       <LottieView
         style={{width: 130, height: 130}}
