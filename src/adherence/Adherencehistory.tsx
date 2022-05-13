@@ -7,7 +7,6 @@ import React from 'react';
 import {
   Text,
   View,
-  StyleSheet,
   FlatList,
   PermissionsAndroid,
   ToastAndroid,
@@ -27,6 +26,7 @@ import Downloadpdf from './Downloadpdf';
 import MedicinehistoryList from './components/MedicineHistoryList';
 import globalDb from '../database/Globaldb';
 import Carousel, {Pagination} from 'react-native-snap-carousel';
+import styles from './adherenceStyles/AdherenceHistoryStyles';
 
 let globalmedId;
 LogBox.ignoreLogs(['Require cycle:']);
@@ -121,20 +121,15 @@ const MyComponent: React.FC = () => {
     setModalVisible(true);
   };
   return (
-    <View style={{height: '100%', backgroundColor: 'white'}}>
+    <View style={styles.container}>
       <Modal
         onRequestClose={() => setModalVisible(false)}
         animationType="fade"
         transparent={true}
         visible={modalVisible}
-        style={{alignItems: 'center', backgroundColor: 'red'}}>
+        style={styles.modal}>
         <View
-          style={{
-            height: '100%',
-            alignItems: 'center',
-            justifyContent: 'center',
-            backgroundColor: 'rgba(52, 52, 52, 0.8)',
-          }}>
+          style={styles.carousalView}>
           {showDetail ? (
             <>
               <Carousel
@@ -144,18 +139,11 @@ const MyComponent: React.FC = () => {
                 renderItem={({item}) => {
                   console.log(item, 'image');
                   return (
-                    <View style={{padding: 40}}>
+                    <View style={styles.carousalImageView}>
                       <Image
                         source={{uri: `${item}`}}
                         resizeMode="contain"
-                        style={{
-                          borderRadius: 30,
-                          padding: 50,
-                          width: '100%',
-                          height: '80%',
-                          alignItems: 'center',
-                          justifyContent: 'center',
-                        }}></Image>
+                        style={styles.carousalImage}></Image>
                     </View>
                   );
                 }}
@@ -164,21 +152,9 @@ const MyComponent: React.FC = () => {
               <Pagination
                 dotsLength={imagearray.length}
                 activeDotIndex={index}
-                containerStyle={{
-                  backgroundColor: 'rgba(0, 0, 0, 0.75)',
-                  position: 'relative',
-                }}
-                dotStyle={{
-                  width: 10,
-                  height: 10,
-                  borderRadius: 5,
-                  marginHorizontal: 8,
-                  backgroundColor: 'rgba(255, 255, 255, 0.92)',
-                }}
-                inactiveDotStyle={{
-                  backgroundColor: 'red',
-                  // Define styles for inactive dots here
-                }}
+                containerStyle={styles.paginationContainer}
+                dotStyle={styles.paginationDot}
+                inactiveDotStyle={styles.paginationInactiveDot}
                 inactiveDotOpacity={0.4}
                 inactiveDotScale={0.6}
               />
@@ -196,14 +172,8 @@ const MyComponent: React.FC = () => {
       </Modal>
       {sync ? (
         <View
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            padding: 15,
-            backgroundColor: 'grey',
-            alignItems: 'center',
-          }}>
-          <Text style={{fontWeight: '800', color: 'white'}}>Syncing Data</Text>
+          style={styles.syncView}>
+          <Text style={styles.syncText}>Syncing Data</Text>
           <Progress.CircleSnail
             spinDuration={400}
             size={30}
@@ -213,18 +183,12 @@ const MyComponent: React.FC = () => {
       ) : (
         <></>
       )}
-      <View style={{flexDirection: 'row'}}>
+      <View style={styles.conatiner1}>
         <View
-          style={{width: '100%', borderColor: 'lightgrey', borderEndWidth: 1}}>
+          style={styles.medNameView}>
           <Picker
             mode="dropdown"
-            style={{
-              backgroundColor: 'white',
-              borderColor: 'lightgrey',
-              borderWidth: 3,
-              color: 'black',
-              elevation: 3,
-            }}
+            style={styles.medNamePicker}
             selectedValue={pickerValue}
             onValueChange={itemValue => {
               setPickerValue(itemValue);
@@ -246,17 +210,13 @@ const MyComponent: React.FC = () => {
         </View>
       </View>
       <View
-        style={{
-          flexDirection: 'row',
-          justifyContent: 'space-between',
-          padding: 7,
-        }}>
-        <View style={{left: 10}}>
-          <Text style={{color: 'black', fontSize: 18, marginTop: 30}}>
+        style={styles.container2}>
+        <View style={styles.container2Left}>
+          <Text style={styles.container2LeftText}>
             Overall Performance{' '}
           </Text>
         </View>
-        <View style={{alignItems: 'center', paddingRight: 20, margin: 10}}>
+        <View style={styles.container2Right}>
           <ProgressCircle
             percent={
               med_detail &&
@@ -269,7 +229,7 @@ const MyComponent: React.FC = () => {
             borderWidth={3}
             color="#4dd0e1"
             bgColor="#fff">
-            <Text style={{fontSize: 18, color: '#4dd0e1'}}>
+            <Text style={styles.container2RightText}>
               {med_detail &&
                 Math.round(
                   (med_detail.current_count / med_detail.total_med_reminders) *
@@ -281,12 +241,8 @@ const MyComponent: React.FC = () => {
       </View>
       <Divider />
       <View
-        style={{
-          padding: 15,
-          backgroundColor: 'lightgrey',
-          marginBottom: 5,
-        }}>
-        <Text style={{fontWeight: '600'}}> Detailed Report</Text>
+        style={styles.conatiner3}>
+        <Text style={styles.conatiner3Text}> Detailed Report</Text>
       </View>
       {
         <FlatList
@@ -303,7 +259,7 @@ const MyComponent: React.FC = () => {
       <Button
         disabled={disableDownload}
         title="Download PDF"
-        buttonStyle={{backgroundColor: '#3743ab'}}
+        buttonStyle={styles.button}
         onPress={async () => {
           showDetailState(false);
           await PermissionsAndroid.request(
@@ -325,27 +281,6 @@ const MyComponent: React.FC = () => {
   );
 };
 
-const styles = StyleSheet.create({
-  timeright: {
-    flexDirection: 'column',
-    width: '46%',
-    padding: 10,
-    paddingLeft: 15,
-    marginRight: 10,
-  },
-  timeleft: {
-    flexDirection: 'column',
-    width: '46%',
-    padding: 10,
-    paddingLeft: 25,
-  },
-  dateday: {
-    borderRadius: 6,
-    elevation: 2,
-    padding: 10,
-    paddingLeft: 20,
-    marginTop: 8,
-  },
-});
+
 
 export default MyComponent;

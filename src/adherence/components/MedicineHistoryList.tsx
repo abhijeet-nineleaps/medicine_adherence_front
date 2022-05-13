@@ -2,10 +2,11 @@
 /* eslint-disable react-native/no-inline-styles */
 import {Card} from 'react-native-paper';
 import * as Animatable from 'react-native-animatable';
-import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {Text, TouchableOpacity, View} from 'react-native';
 import React from 'react';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faImage} from '@fortawesome/free-solid-svg-icons';
+import styles from '../adherenceStyles/MedicineHistoryListStyles';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 const MedicinehistoryList = props => {
   const {item, showimgfun, medName} = props;
@@ -14,19 +15,16 @@ const MedicinehistoryList = props => {
       <Animatable.View animation="zoomInUp" duration={200}>
         <View
           key={item.medicine_name + '1'}
-          style={{
-            padding: 4,
-            marginBottom: 15,
-          }}>
-          <Card key={item.medicine_name + '2'} style={styles.dateday}>
+          style={styles.conatiner}>
+          <Card key={item.medicine_name + '2'} style={styles.dateDay}>
             <View
-              style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+              style={styles.card}>
               <View
                 key={item.medicine_name + '3'}
-                style={{flexDirection: 'row', justifyContent: 'space-around'}}>
+                style={styles.cardText}>
                 <Text key={item.medicine_name + '7'}>Date - {item.date}</Text>
               </View>
-              <View style={{}}>
+              <View>
                 <TouchableOpacity
 
                   onPress={async () => {
@@ -45,14 +43,9 @@ const MedicinehistoryList = props => {
           return (
             <View
               key={item.medicine_name + '4'}
-              style={{
-                flexDirection: 'row',
-                justifyContent: 'space-around',
-                marginBottom: 12,
-                marginLeft: 7,
-              }}>
+              style={styles.notTaken}>
               <Text key={item.medicine_name + '5'}>{nti}</Text>
-              <Text key={item.medicine_name + '6'} style={{color: 'red'}}>
+              <Text key={item.medicine_name + '6'} style={styles.notTakenText}>
                 {' '}
                 Not Taken
               </Text>
@@ -63,13 +56,9 @@ const MedicinehistoryList = props => {
           return (
             <View
               key={item.medicine_name + '12'}
-              style={{
-                flexDirection: 'row',
-                justifyContent: 'space-around',
-                marginBottom: 12,
-              }}>
+              style={styles.taken}>
               <Text key={item.medicine_name + '22'}>{tti}</Text>
-              <Text key={item.medicine_name + '23'} style={{color: 'green'}}>
+              <Text key={item.medicine_name + '23'} style={styles.takenText}>
                 {' '}
                 Taken
               </Text>
@@ -80,27 +69,5 @@ const MedicinehistoryList = props => {
     </>
   );
 };
-
-const styles = StyleSheet.create({
-  timeright: {
-    flexDirection: 'column',
-    width: '46%',
-    padding: 10,
-    paddingLeft: 15,
-    marginRight: 10,
-  },
-  timeleft: {
-    flexDirection: 'column',
-    width: '46%',
-    padding: 10,
-    paddingLeft: 25,
-  },
-  dateday: {
-    borderRadius: 6,
-    elevation: 2,
-    marginTop: 8,
-    padding: 14,
-  },
-});
 
 export default MedicinehistoryList;
