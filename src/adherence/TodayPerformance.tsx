@@ -5,6 +5,9 @@ import BouncyCheckbox from 'react-native-bouncy-checkbox';
 import SQLite from 'react-native-sqlite-storage';
 var weeks = ['Sun', 'Mon', 'Tue', 'Wed', 'Thur', 'Fri', 'Sat'];
 import Toast from 'react-native-toast-message';
+import styles from './adherenceStyles/TodayPerformanceStyles';
+
+
 var cc = 0;
 
 const TodayPerformance = ({route}) => {
@@ -130,7 +133,7 @@ const TodayPerformance = ({route}) => {
 
     return (
       time.length !== 0 && (
-        <View style={{padding: 15, paddingLeft: 30, marginTop: 14}}>
+        <View style={styles.cbContainer}>
           <BouncyCheckbox
             size={22}
             fillColor="#3743ab"
@@ -138,12 +141,8 @@ const TodayPerformance = ({route}) => {
             text={time}
             disabled={taken}
             isChecked={med1}
-            iconStyle={{borderColor: '#3743ab', borderWidth: 1.3}}
-            textStyle={{
-              fontFamily: 'JosefinSans-Regular',
-              fontSize: 17,
-              color: 'black',
-            }}
+            iconStyle={styles.cbIcon}
+            textStyle={styles.cbText}
             disableBuiltInState
             onPress={() => {
               setMed1(!med1);
@@ -152,9 +151,9 @@ const TodayPerformance = ({route}) => {
             }}
           />
           {taken ? (
-            <Text style={{color: 'green', marginLeft: 40}}>Taken</Text>
+            <Text style={styles.cbText1}>Taken</Text>
           ) : (
-            <Text style={{color: 'red', marginLeft: 40}}>Not Taken</Text>
+            <Text style={styles.cbText2}>Not Taken</Text>
           )}
         </View>
       )
@@ -162,18 +161,16 @@ const TodayPerformance = ({route}) => {
   };
 
   return (
-    <View style={{backgroundColor: 'white', height: '100%'}}>
+    <View style={styles.container}>
       <Toast visibilityTime={1000}></Toast>
-
-      <View style={{flexDirection: 'column'}} />
-      <View style={{padding: 15, backgroundColor: 'lightgrey'}}>
-        <Text style={{fontWeight: 'bold'}}>Timings</Text>
+      <View style={styles.container1}>
+        <Text style={styles.container1Text}>Timings</Text>
       </View>
       {Timings.length !== 0 && Timings[0].length === 0 ? (
-        <View style={{justifyContent: 'center', alignItems: 'center'}}>
+        <View style={styles.container2}>
           <Image
             source={require('../../assests/noremtoday.png')}
-            style={{height: 300, width: 300}}
+            style={styles.container2Image}
           />
         </View>
       ) : (
