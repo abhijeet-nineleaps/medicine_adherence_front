@@ -12,7 +12,7 @@ import {
   faWeight,
 } from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
-import styles from './ProfileStyles';
+import styles from './ProfileStyles/ProfileStyles';
 import {IconProp} from '@fortawesome/fontawesome-svg-core';
 import {useFocusEffect} from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -52,9 +52,7 @@ const SavedDetails = () => {
     <View style={styles.sd}>
       <View style={styles.sdContainer}>
         <View
-          style={{
-            justifyContent: 'center',
-          }}>
+          style={styles.sdSubContainer}>
           <FontAwesomeIcon
             size={18}
             icon={faUser as IconProp}
@@ -66,9 +64,7 @@ const SavedDetails = () => {
       </View>
       <View style={styles.sdContainer}>
         <View
-          style={{
-            justifyContent: 'center',
-          }}>
+          style={styles.sdSubContainer}>
           <FontAwesomeIcon
             size={18}
             icon={faContactBook as IconProp}
@@ -80,9 +76,7 @@ const SavedDetails = () => {
       </View>
       <View style={styles.sdContainer}>
         <View
-          style={{
-            justifyContent: 'center',
-          }}>
+          style={styles.sdSubContainer}>
           <FontAwesomeIcon
             size={18}
             icon={faSortNumericUp as IconProp}
@@ -94,9 +88,7 @@ const SavedDetails = () => {
       </View>
       <View style={styles.sdContainer}>
         <View
-          style={{
-            justifyContent: 'center',
-          }}>
+          style={styles.sdSubContainer}>
           <FontAwesomeIcon
             size={18}
             icon={faWeight as IconProp}
@@ -108,9 +100,7 @@ const SavedDetails = () => {
       </View>
       <View style={styles.sdContainer}>
         <View
-          style={{
-            justifyContent: 'center',
-          }}>
+          style={styles.sdSubContainer}>
           <FontAwesomeIcon
             size={18}
             icon={faMarsAndVenus as IconProp}
@@ -122,9 +112,7 @@ const SavedDetails = () => {
       </View>
       <View style={styles.sdContainer}>
         <View
-          style={{
-            justifyContent: 'center',
-          }}>
+          style={styles.sdSubContainer}>
           <FontAwesomeIcon
             size={18}
             icon={faRing as IconProp}
@@ -136,9 +124,7 @@ const SavedDetails = () => {
       </View>
       <View style={styles.sdContainer}>
         <View
-          style={{
-            justifyContent: 'center',
-          }}>
+          style={styles.sdSubContainer}>
           <FontAwesomeIcon
             size={18}
             icon={faDroplet as IconProp}
