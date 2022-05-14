@@ -23,7 +23,7 @@ import {API_URL} from '@env';
 import {Button} from 'react-native-elements';
 import {Formik} from 'formik';
 import * as yup from 'yup';
-import styles from './ProfileStyles';
+import styles from './ProfileStyles/ProfileStyles';
 import SavedDetails from './SavedDetails';
 import {IconProp} from '@fortawesome/fontawesome-svg-core';
 import {useFocusEffect} from '@react-navigation/native';
@@ -153,23 +153,18 @@ const Profile = ({navigation}) => {
   );
 
   return (
-    <View style={{height: '100%', backgroundColor: 'white'}}>
+    <View style={styles.container}>
       <ScrollView>
         <Toast visibilityTime={1500}></Toast>
         <View
-          style={{
-            backgroundColor: 'white',
-            height: '100%',
-            flexDirection: 'column',
-            width: '100%',
-          }}>
+          style={styles.container1}>
           <View style={styles.top}>
             <Image source={{uri: img}} style={styles.avatar}></Image>
-            <View style={{alignItems: 'center', marginBottom: 8}}>
-              <Text style={{color: 'white', fontWeight: 'bold', fontSize: 20}}>
+            <View style={styles.topItem}>
+              <Text style={styles.topItemText1}>
                 {name.user.name}
               </Text>
-              <Text style={{color: 'white', fontWeight: 'bold'}}>
+              <Text style={styles.topItemText2}>
                 {name.user.email}
               </Text>
             </View>
@@ -177,19 +172,15 @@ const Profile = ({navigation}) => {
           <View>
             <Button
               title="Edit profile"
-              buttonStyle={{
-                backgroundColor: '#3743ab',
-                width: '48%',
-                borderRadius: 30,
-              }}
-              containerStyle={{alignItems: 'center'}}
+              buttonStyle={styles.editButton}
+              containerStyle={styles.editButtonConatiner}
               onPress={() => editstate(true)}></Button>
           </View>
           <View>
             <View>
               {editenabled ? (
                 <>
-                  <View style={{}}>
+                  <View>
                     <Formik
                       validationSchema={loginValidationSchema}
                       initialValues={{
@@ -212,7 +203,7 @@ const Profile = ({navigation}) => {
                         touched,
                         setFieldValue,
                       }) => (
-                        <View style={{backgroundColor: 'white', width: '99%'}}>
+                        <View style={styles.inputContainer}>
                           <TextInput
                             label=" Bio"
                             mode="flat"
@@ -305,19 +296,9 @@ const Profile = ({navigation}) => {
                             </Text>
                           )}
                           <View
-                            style={{
-                              flex: 1,
-                              flexDirection: 'row',
-                              marginLeft: 7,
-                              borderBottomWidth: 1,
-                              borderColor: 'lightgrey',
-                              marginBottom: 8,
-                            }}>
+                            style={styles.pickerContainer}>
                             <View
-                              style={{
-                                justifyContent: 'center',
-                                paddingLeft: 15,
-                              }}>
+                              style={styles.pickerIcon}>
                               <FontAwesomeIcon
                                 size={18}
                                 icon={faMarsAndVenus as IconProp}
@@ -333,31 +314,21 @@ const Profile = ({navigation}) => {
                                 <Picker.Item
                                   label="Gender"
                                   value="Gender"
-                                  style={{color: 'grey'}}
+                                  style={styles.pickerItem}
                                 />
                                 <Picker.Item label="Male" value="Male" />
                                 <Picker.Item label="Female" value="Female" />
                                 <Picker.Item label="Other" value="Other" />
                               </Picker>
                             </View>
-                            <Text style={{color: 'red', alignSelf: 'center'}}>
+                            <Text style={styles.pickerText}>
                               {touched.Gender && errors.Gender}
                             </Text>
                           </View>
                           <View
-                            style={{
-                              flex: 1,
-                              flexDirection: 'row',
-                              marginLeft: 7,
-                              borderBottomWidth: 1,
-                              borderColor: 'lightgrey',
-                              marginBottom: 8,
-                            }}>
+                            style={styles.pickerContainer}>
                             <View
-                              style={{
-                                justifyContent: 'center',
-                                paddingLeft: 15,
-                              }}>
+                              style={styles.pickerIcon}>
                               <FontAwesomeIcon
                                 size={18}
                                 icon={faRing as IconProp}
@@ -373,9 +344,7 @@ const Profile = ({navigation}) => {
                                 <Picker.Item
                                   label="Marital Status"
                                   value="Marital Status"
-                                  style={{
-                                    color: 'grey',
-                                  }}
+                                  style={styles.pickerItem}
                                 />
 
                                 <Picker.Item label="Married" value="Married" />
@@ -385,36 +354,23 @@ const Profile = ({navigation}) => {
                                 />
                               </Picker>
                             </View>
-                            <Text style={{color: 'red', alignSelf: 'center'}}>
+                            <Text style={styles.pickerText}>
                               {touched.MaritalStatus && errors.MaritalStatus}
                             </Text>
                           </View>
                           <View
-                            style={{
-                              flex: 1,
-                              flexDirection: 'row',
-                              marginLeft: 7,
-                              borderBottomWidth: 1,
-                              borderColor: 'lightgrey',
-                              marginBottom: 8,
-                            }}>
+                            style={styles.pickerContainer}>
                             <View
-                              style={{
-                                justifyContent: 'center',
-                                paddingLeft: 15,
-                              }}>
+                              style={styles.pickerIcon}>
                               <FontAwesomeIcon
                                 size={18}
                                 icon={faDroplet as IconProp}
                                 color="#3743ab"></FontAwesomeIcon>
                             </View>
-                            <View style={styles.bgpicker}>
+                            <View style={styles.bgPickerView}>
                               <Picker
                                 mode="dropdown"
-                                style={{
-                                  backgroundColor: 'white',
-                                  width: '100%',
-                                }}
+                                style={styles.bgPicker}
                                 selectedValue={values.BloodGroup}
                                 onValueChange={itemchange =>
                                   setFieldValue('BloodGroup', itemchange)
@@ -422,7 +378,7 @@ const Profile = ({navigation}) => {
                                 <Picker.Item
                                   label="BloodGroup"
                                   value="BloodGroup"
-                                  style={{color: 'grey'}}
+                                  style={styles.pickerItem}
                                 />
 
                                 <Picker.Item label="A+" value="A+" />
@@ -435,22 +391,17 @@ const Profile = ({navigation}) => {
                                 <Picker.Item label="AB-" value="AB-" />
                               </Picker>
                             </View>
-                            <Text style={{color: 'red', alignSelf: 'center'}}>
+                            <Text style={styles.pickerText}>
                               {touched.BloodGroup && errors.BloodGroup}
                             </Text>
                           </View>
-                          <View style={{paddingBottom: 20}}>
+                          <View style={styles.saveButtonView}>
                             <Button
                               loading={load}
                               onPress={handleSubmit}
                               title="SAVE"
-                              buttonStyle={{
-                                backgroundColor: '#3743ab',
-                                width: 300,
-                                marginTop: 8,
-                                borderRadius: 30,
-                              }}
-                              containerStyle={{alignItems: 'center'}}
+                              buttonStyle={styles.saveButton}
+                              containerStyle={styles.saveButtonContainer}
                               disabled={!isValid}
                             />
                           </View>

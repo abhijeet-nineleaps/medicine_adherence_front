@@ -1,6 +1,13 @@
 import {StyleSheet} from 'react-native';
 
 const styles = StyleSheet.create({
+  container: {height: '100%', backgroundColor: 'white'},
+  container1: {
+    backgroundColor: 'white',
+    height: '100%',
+    flexDirection: 'column',
+    width: '100%',
+  },
   top: {
     backgroundColor: '#3743ab',
     marginBottom: 12,
@@ -19,45 +26,22 @@ const styles = StyleSheet.create({
     marginTop: 30,
     marginBottom: 10,
   },
-  loginContainer: {
-    // alignItems: 'center',
-    backgroundColor: 'white',
+  topItem: {alignItems: 'center', marginBottom: 8},
+  topItemText1: {color: 'white', fontWeight: 'bold', fontSize: 20},
+  topItemText2: {color: 'white', fontWeight: 'bold'},
+  editButton:{
+    backgroundColor: '#3743ab',
+    width: '48%',
+    borderRadius: 30,
   },
+  editButtonConatiner:{alignItems: 'center'},
+  inputContainer:{backgroundColor: 'white', width: '99%'},
   textInput: {
     height: 50,
     width: '98%',
     margin: 8,
     backgroundColor: 'white',
-    // borderColor: 'gray',
-    // borderWidth: StyleSheet.hairlineWidth,
     borderRadius: 10,
-  },
-  name: {
-    fontSize: 22,
-    color: '#FFFFFF',
-    fontWeight: '600',
-  },
-  body: {
-    marginTop: 40,
-    height: '100%',
-    justifyContent: 'space-between',
-  },
-  bodyContent: {
-    flex: 1,
-    alignItems: 'center',
-    padding: 30,
-    justifyContent: 'space-between',
-  },
-  info: {
-    fontSize: 16,
-    color: '#00BFFF',
-    marginTop: 10,
-  },
-  description: {
-    fontSize: 16,
-    color: '#696969',
-    marginTop: 10,
-    textAlign: 'center',
   },
   buttonContainer: {
     marginTop: 10,
@@ -74,12 +58,6 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
   },
-  container: {
-    flex: 1,
-    padding: 24,
-    height: '100%',
-    backgroundColor: 'white',
-  },
   pickercontainer: {
     flex: 1,
     backgroundColor: '#fff',
@@ -92,15 +70,48 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-start',
     marginLeft: 20,
   },
+  pickerContainer:{
+    flex: 1,
+    flexDirection: 'row',
+    marginLeft: 7,
+    borderBottomWidth: 1,
+    borderColor: 'lightgrey',
+    marginBottom: 8,
+  },
   picker: {
     flex: 1,
     backgroundColor: 'white',
   },
-  bgpicker: {
+  
+  pickerIcon:{
+    justifyContent: 'center',
+    paddingLeft: 15,
+  },
+  bgPickerView: {
     flex: 1,
     width: '97%',
     backgroundColor: 'white',
     justifyContent: 'center',
+  },
+  bgPicker:{
+    backgroundColor: 'white',
+    width: '100%',
+  },
+  pickerItem:{color: 'grey'},
+  pickerText:{color: 'red', alignSelf: 'center'},
+  saveButtonView:{paddingBottom: 20},
+  saveButton:{
+    backgroundColor: '#3743ab',
+    width: 300,
+    marginTop: 8,
+    borderRadius: 30,
+  },
+  saveButtonContainer:{alignItems:'center'},
+  sd: {
+    backgroundColor: 'white',
+    marginTop: 10,
+    marginLeft: 8,
+    width: '95%',
   },
   sdContainer: {
     flex: 1,
@@ -111,11 +122,8 @@ const styles = StyleSheet.create({
     marginBottom: 12,
     padding: 15,
   },
-  sd: {
-    backgroundColor: 'white',
-    marginTop: 10,
-    marginLeft: 8,
-    width: '95%',
+  sdSubContainer:{
+    justifyContent: 'center',
   },
   sdText: {
     paddingLeft: 18,

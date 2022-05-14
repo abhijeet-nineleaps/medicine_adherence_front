@@ -31,6 +31,8 @@ import SQLite from 'react-native-sqlite-storage';
 import DateTimePicker from 'react-native-modal-datetime-picker';
 import {IconProp} from '@fortawesome/fontawesome-svg-core';
 import globalDb from '../database/Globaldb';
+import styles from './alarmStyles/ReminderStyles';
+
 
 var counter = 0;
 
@@ -322,9 +324,9 @@ const Reminder = ({route, navigation}) => {
   };
 
   return (
-    <ScrollView style={{height: '100%', backgroundColor: 'white'}}>
-      <View style={{height: '100%', backgroundColor: 'white'}}>
-        <View style={{height: '100%', padding: 7, marginBottom: 15}}>
+    <ScrollView style={styles.scrollView}>
+      <View style={styles.top}>
+        <View style={styles.container1}>
           <TouchableOpacity
             onPress={() => {
               console.log('p');
@@ -332,32 +334,27 @@ const Reminder = ({route, navigation}) => {
 
               pickerstate(true);
             }}
-            style={{height: 100, flexDirection: 'row', marginTop: 10}}>
-            <View style={{flexDirection: 'column', width: '100%'}}>
-              <Text style={{fontSize: 15, marginLeft: 8, fontWeight: '700'}}>
+            style={styles.containerTouch}>
+            <View style={styles.dateContainer}>
+              <Text style={styles.dateText}>
                 Start Date
               </Text>
               <Text
-                style={{
-                  fontSize: 15,
-                  marginLeft: 8,
-                  color: 'black',
-                  marginBottom: 15,
-                }}>
+                style={styles.dateText1}>
                 {start_date.toISOString().split('T')[0]}
               </Text>
-              <Text style={{fontSize: 15, marginLeft: 8, fontWeight: '700'}}>
+              <Text style={styles.dateText}>
                 End Date
               </Text>
 
-              <Text style={{fontSize: 15, marginLeft: 8, color: 'black'}}>
+              <Text style={styles.dateText1}>
                 {end_date.toISOString().split('T')[0]}
               </Text>
             </View>
 
             <FontAwesomeIcon
               icon={faCaretDown as IconProp}
-              style={{right: 0, position: 'absolute'}}
+              style={styles.downIcon}
               color=""></FontAwesomeIcon>
           </TouchableOpacity>
           <Divider></Divider>
@@ -375,13 +372,7 @@ const Reminder = ({route, navigation}) => {
             onCancel={hideDatePickerfortime}
           />
           <Text
-            style={{
-              fontSize: 15,
-              marginLeft: 8,
-              marginTop: 10,
-              fontWeight: '700',
-              marginBottom: 2,
-            }}>
+            style={styles.title}>
             Add Title
           </Text>
           <TextInput
@@ -390,7 +381,7 @@ const Reminder = ({route, navigation}) => {
             activeUnderlineColor="#3743ab"
             placeholder="Title for reminder"
             label="Title"
-            style={{margin: 8, marginBottom: 20, marginTop: 16}}
+            style={styles.titleText}
             mode="outlined"
             value={title}
             onChangeText={titlechange}></TextInput>
@@ -403,34 +394,25 @@ const Reminder = ({route, navigation}) => {
               onPress={() => {
                 time_picker_mode_state(true);
               }}
-              style={{height: 60, flexDirection: 'row', marginTop: 10}}>
-              <View style={{flexDirection: 'column', width: '100%'}}>
+              style={styles.timeTouch}>
+              <View style={styles.timeContainer}>
                 <Text
-                  style={{
-                    fontSize: 15,
-                    marginLeft: 8,
-                    fontWeight: '700',
-                    marginBottom: 5,
-                  }}>
+                  style={styles.selectTime}>
                   Select Time
                 </Text>
               </View>
 
               <FontAwesomeIcon
                 icon={faCaretDown as IconProp}
-                style={{right: 0, position: 'absolute'}}
+                style={styles.downIcon}
                 color=""></FontAwesomeIcon>
             </TouchableOpacity>
             {timearray.map((item, index) => {
               return (
                 <View
                   key={index}
-                  style={{
-                    flexDirection: 'row',
-                    justifyContent: 'space-between',
-                    margin: 12,
-                  }}>
-                  <Text key={item} style={{fontWeight: '800'}}>
+                  style={styles.timeTextConatiner}>
+                  <Text key={item} style={styles.timeText}>
                     {item}
                   </Text>
                   <TouchableOpacity
@@ -450,12 +432,12 @@ const Reminder = ({route, navigation}) => {
             })}
           </View>
           <Divider></Divider>
-          <View style={{padding: 10}}>
+          <View style={styles.days}>
             <TouchableOpacity>
-              <Text style={{fontSize: 15, fontWeight: '700'}}>Select Days</Text>
+              <Text style={styles.selectDays}>Select Days</Text>
             </TouchableOpacity>
             <CheckBox
-              style={{padding: 10}}
+              style={styles.days}
               onClick={() => {
                 setCheck1(!check1);
                 setCheck2(false);
@@ -465,7 +447,7 @@ const Reminder = ({route, navigation}) => {
               leftText={'Everyday'}
             />
             <CheckBox
-              style={{padding: 10}}
+              style={styles.days}
               onClick={() => {
                 setCheck2(!check2);
                 setCheck1(false);
@@ -498,15 +480,11 @@ const Reminder = ({route, navigation}) => {
           </View>
           <Divider></Divider>
           <View
-            style={{
-              marginLeft: 10,
-              marginRight: 10,
-              marginTop: 18,
-            }}>
-            <Text style={{fontWeight: '700'}}>
+            style={styles.durationContainer}>
+            <Text style={styles.durationText}>
               {'Duration : ' + multiSliderValue + ' days'}
             </Text>
-            <View style={{alignItems: 'center'}}>
+            <View style={styles.multiSlider}>
               <MultiSlider
                 values={[multiSliderValue[0]]}
                 sliderLength={320}
@@ -525,12 +503,8 @@ const Reminder = ({route, navigation}) => {
             loading={load}
             title="Save reminder"
             onPress={savereminder}
-            buttonStyle={{backgroundColor: '#3743ab', width: '50%'}}
-            containerStyle={{
-              alignItems: 'center',
-              width: '100%',
-              marginTop: 35,
-            }}></Button>
+            buttonStyle={styles.buttonStyle}
+            containerStyle={styles.buttonContainer}></Button>
         </View>
       </View>
     </ScrollView>
