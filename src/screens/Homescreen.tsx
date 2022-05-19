@@ -1,6 +1,4 @@
-/* eslint-disable prettier/prettier */
 /* eslint-disable react/self-closing-comp */
-/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable react-native/no-inline-styles */
 import React, {useEffect, useRef} from 'react';
 import LottieView from 'lottie-react-native';
@@ -11,8 +9,8 @@ import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {IconProp} from '@fortawesome/fontawesome-svg-core';
 
-import Medicineadherence from './Medicineadherence';
-import Addmedicine from '../Addmedicine';
+import Medicineadherence from '../adherence/components/Medicineadherence';
+import Addmedicine from './Addmedicine';
 import Profile from '../profile/Profile';
 
 const Tab = createBottomTabNavigator();
