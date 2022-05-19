@@ -28,7 +28,7 @@ const HistoryDetail: React.FC<Props> = ({data, modalVisibility}) => {
   }
   useEffect(() => {
     const sArray = [];
-    let nottaken = data.nottaken.split(','),
+    let nottaken = data.notTaken.split(','),
       taken = data.taken.split(',');
     nottaken[0] !== '' &&
       nottaken.map(ele => {

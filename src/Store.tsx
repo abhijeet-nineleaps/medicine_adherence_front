@@ -5,7 +5,7 @@ import rootsaga from './redux/sagas/Rootsaga';
 
 const sagamiddleware = createSagaMiddleware();
 
-const store = createStore(RootReducer,{}, applyMiddleware(sagamiddleware));
+const store = createStore(RootReducer, {}, applyMiddleware(sagamiddleware));
 
 sagamiddleware.run(rootsaga);
 

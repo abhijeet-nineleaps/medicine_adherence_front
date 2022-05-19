@@ -4,23 +4,23 @@ import {createStackNavigator} from '@react-navigation/stack';
 
 import React from 'react';
 
-import MyComponent from '../adherence/Adherencehistory';
-import CameraScreen from '../adherence/ClickSendimage';
-import SendImageToCaretaker from '../adherence/SendImagetocaretaker';
-import TodayPerformance from '../adherence/TodayPerformance';
-import Addevent from '../alarm/Addevents';
-import Reminder from '../alarm/Reminder';
-import Searchcaretaker from '../caretaker/Searchcaretaker';
-import Login from '../login/Googleoauth';
-import Loginscreen from '../login/Loginscreen';
+import MyComponent from '../adherence/components/Adherencehistory';
+import CameraScreen from '../adherence/components/ClickSendimage';
+import SendImageToCaretaker from '../adherence/components/SendImagetocaretaker';
+import TodayPerformance from '../adherence/components/TodayPerformance';
+import Addevent from '../alarm/components/Addevents';
+import Reminder from '../alarm/components/Reminder';
+import Searchcaretaker from '../caretaker/components/Searchcaretaker';
+import Login from '../login/components/Googleoauth';
+import Loginscreen from '../login/components/Loginscreen';
 import Profile from '../profile/Profile';
 import About from '../screens/Aboutapp';
-import MedicineImages from '../screens/MedicineImages';
+import MedicineImages from '../patient/components/MedicineImages';
 import OnboardingScreen from '../screens/Onboarding';
-import ViewProfile from '../screens/Patientprofile';
-import PatientReport from '../screens/PatientReport';
-import DrawerNavigator from '../ui/DrawerNavigator';
-import UserMed from '../UserMed';
+import ViewProfile from '../patient/components/Patientprofile';
+import PatientReport from '../patient/components/PatientReport';
+import DrawerNavigator from '../components/DrawerNavigator';
+import UserMed from '../screens/UserMed';
 
 const Stack = createStackNavigator();
 

@@ -6,17 +6,17 @@ import {name as appName} from './app.json';
 import {
   PlaySound,
   Pushnotificationforeground,
-} from './src/alarm/Pushnotificationconfig';
+} from './src/alarm/common/Pushnotificationconfig';
 // PushNotification.getChannels(function (channel_ids) {
 //   console.log(channel_ids); // ['channel_id_1']
 // });
-PushNotification.getChannels(function (channel_ids) {
-  console.log(channel_ids); // ['channel_id_1']
-  for(let k = 1 ; k<channel_ids.length;k++){
-    console.log(channel_ids[k],'k');
-  //  PushNotification.deleteChannel(channel_ids[k]);
-  }
-});
+// PushNotification.getChannels(function (channel_ids) {
+//   console.log(channel_ids); // ['channel_id_1']
+//   for(let k = 1 ; k<channel_ids.length;k++){
+//     console.log(channel_ids[k],'k');
+//   //  PushNotification.deleteChannel(channel_ids[k]);
+//   }
+// });
 PushNotification.configure({
   onAction: function (notification: any) {
     if (notification.action === 'Open app to mark') {

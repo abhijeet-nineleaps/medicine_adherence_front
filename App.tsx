@@ -28,7 +28,7 @@ const App: React.FC = () => {
           }
           routeNameRef.current = currentRouteName;
         }}>
-        <Stackscreen></Stackscreen>
+        <Stackscreen />
       </NavigationContainer>
     </Provider>
   );
