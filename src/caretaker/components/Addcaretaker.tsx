@@ -17,6 +17,8 @@ import {IconProp} from '@fortawesome/fontawesome-svg-core';
 import UserAvatar from 'react-native-user-avatar';
 import {useDispatch, useSelector} from 'react-redux';
 import {fetchCaretakers} from '../../redux/actions/CaretakerTakerActions';
+import styles from "../CaretakerStyles/caretakerComStyles";
+
 
 interface Props {
   navigation: any;
@@ -47,27 +49,16 @@ const Addcaretaker: React.FC<{navigation}> = Props => {
     return (
       <Card
         onPress={() => {}}
-        style={{
-          borderRadius: 20,
-          margin: 6,
-          borderColor: 'lightgrey',
-          elevation: 3,
-          shadowColor: '#3743ab',
-        }}>
-        <View style={{flexDirection: 'row', padding: 0}}>
+        style={styles.cardContainer}>
+        <View style={styles.top}>
           <ListItem
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-              padding: 5,
-            }}
+            style={styles.listContainer}
             hasTVPreferredFocus={undefined}
             tvParallaxProperties={undefined}>
             <UserAvatar size={60} name={item.caretakerUsername}></UserAvatar>
             <ListItem.Content>
               <ListItem.Title
-                style={{fontSize: 16, marginLeft: 3, fontWeight: 'bold'}}>
+                style={styles.listTitle}>
                 {item.caretakerUsername}
               </ListItem.Title>
               <ListItem.Subtitle>
@@ -75,8 +66,8 @@ const Addcaretaker: React.FC<{navigation}> = Props => {
               </ListItem.Subtitle>
             </ListItem.Content>
 
-            <TouchableOpacity onPress={() => {}} style={{paddingVertical: 15}}>
-              <View style={{alignItems: 'center'}}>
+            <TouchableOpacity onPress={() => {}} style={styles.iconTouch}>
+              <View style={styles.icon}>
                 <FontAwesomeIcon
                   icon={faAngleRight as IconProp}
                   color={'black'}
@@ -92,12 +83,12 @@ const Addcaretaker: React.FC<{navigation}> = Props => {
 
   return (
     <React.Fragment>
-      <View style={{flex: 1, backgroundColor: 'white', height: '100%'}}>
+      <View style={styles.container}>
         {load && (
-          <View style={{alignItems: 'center'}}>
+          <View style={styles.imgContainer}>
             <Image
               source={require('../../../assests/nocaretakers.jpg')}
-              style={{width: 400}}
+              style={styles.img}
               resizeMode="contain"></Image>
           </View>
         )}
@@ -109,32 +100,32 @@ const Addcaretaker: React.FC<{navigation}> = Props => {
               refreshing={refresh}
               onRefresh={fetchcaretakers}></RefreshControl>
           }></FlatList>
-        <View style={{bottom: 0, alignItems: 'center'}}>
+        <View style={styles.sdContainer}>
           <SpeedDial
             isOpen={open}
-            style={{backgroundColor: 'white'}}
+            style={styles.sd}
             overlayColor="white"
-            buttonStyle={{backgroundColor: '#3743ab'}}
-            icon={{name: 'add', color: 'white'}}
-            openIcon={{name: 'close', color: 'white'}}
+            buttonStyle={styles.sdButton}
+            icon={styles.sdIcon}
+            openIcon={styles.sdIconOpen}
             onOpen={() => setOpen(!open)}
             onClose={() => setOpen(!open)}>
             <SpeedDial.Action
-              icon={{name: 'add', color: 'white'}}
+              icon={styles.sdIcon}
               title="Add Caretaker"
-              style={{height: 50}}
-              buttonStyle={{backgroundColor: '#3743ab'}}
+              style={styles.sdHeight}
+              buttonStyle={styles.sdButton}
               onPress={() => navigation.navigate('Search Caretaker')}
             />
             <SpeedDial.Action
-              icon={{name: 'delete', color: 'white'}}
+              icon={styles.sdDeleteIcon}
               title="Delete"
-              buttonStyle={{backgroundColor: '#3743ab'}}
-              style={{height: 50}}
+              buttonStyle={styles.sdButton}
+              style={styles.sdHeight}
               onPress={() => console.log('Delete Something')}
             />
           </SpeedDial>
-          <Button buttonStyle={{backgroundColor: 'white'}} title="A"></Button>
+          <Button buttonStyle={styles.button} title="A"></Button>
         </View>
       </View>
     </React.Fragment>

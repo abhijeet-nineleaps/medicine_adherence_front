@@ -13,6 +13,9 @@ import BottomSheet from 'reanimated-bottom-sheet';
 import * as Animatable from 'react-native-animatable';
 import globalDb from '../repositories/database/Globaldb';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import styles from "./screenStyles/userMedStyles";
+
+
 
 async function createdb() {
   let first = await AsyncStorage.getItem('first');
@@ -34,7 +37,6 @@ async function createdb() {
 const UserMed = ({route, navigation}) => {
   const {id} = route.params;
   console.log(id);
-  const height = Dimensions.get('window').height;
   const sheetRef = React.useRef(null);
   const savemedicinetodb = async ({Name, Description}) => {
     const db = await createdb();
@@ -71,20 +73,9 @@ const UserMed = ({route, navigation}) => {
     return (
       <Animatable.View animation="slideInUp" duration={1000} delay={80}>
         <View
-          style={{
-            padding: 25,
-            height: height / 1.2,
-            backgroundColor: 'white',
-            display: 'flex',
-            flexDirection: 'column',
-          }}>
+          style={styles.container1}>
           <Text
-            style={{
-              marginTop: 20,
-              fontSize: 20,
-              fontWeight: '700',
-              marginBottom: 40,
-            }}>
+            style={styles.addMedText}>
             Add New Medicine
           </Text>
           <Formik
@@ -102,37 +93,26 @@ const UserMed = ({route, navigation}) => {
                   placeholder="Medicine name"
                   mode="outlined"
                   label="Medicine name"></TextInput>
-                <Text style={{color: 'red'}}>
+                <Text style={styles.error}>
                   {formikprops.touched.Name && formikprops.errors.Name}
                 </Text>
                 <TextInput
-                  style={{marginTop: 10}}
+                  style={styles.description}
                   onChangeText={formikprops.handleChange('Description')}
                   value={formikprops.values.Description}
                   placeholder="Description"
                   mode="outlined"
                   label="Medicine description"></TextInput>
-                <Text style={{color: 'red'}}>
+                <Text style={styles.error}>
                   {formikprops.touched.Description &&
                     formikprops.errors.Description}
                 </Text>
 
                 <Button
                   title="Add medicine"
-                  buttonStyle={{
-                    backgroundColor: '#3743ab',
-                    width: '80%',
-                    height: '30%',
-                    borderRadius: 10,
-                  }}
-                  containerStyle={{
-                    width: '100%',
-                    position: 'relative',
-                    marginTop: 0,
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                  }}
-                  titleStyle={{color: 'white', marginHorizontal: 20}}
+                  buttonStyle={styles.button}
+                  containerStyle={styles.buttonContainer}
+                  titleStyle={styles.buttonTitle}
                   onPress={formikprops.handleSubmit}
                 />
               </>
@@ -144,11 +124,11 @@ const UserMed = ({route, navigation}) => {
   };
 
   return (
-    <View style={{backgroundColor: '#3743ab', height: '100%', width: '100%'}}>
+    <View style={styles.container}>
       <Toast></Toast>
-      <View style={{alignItems: 'center', justifyContent: 'center'}}>
+      <View style={styles.lottieView}>
         <LottieView
-          style={{width: 300, height: 300}}
+          style={styles.lottie}
           source={require('../assests/animate/med_des.json')}
           autoPlay
           loop

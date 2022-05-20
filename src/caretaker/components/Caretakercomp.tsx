@@ -10,6 +10,8 @@ import {Alert} from 'react-native';
 import {Tab, TabView} from 'react-native-elements';
 import {Caretaker_nurse, Userfriend} from '../common/AllIcons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import styles from '../CaretakerStyles/caretakerComStyles';
+
 
 export default function Caretakercomp({navigation}) {
   const [index, setIndex] = React.useState(0);
@@ -48,31 +50,28 @@ export default function Caretakercomp({navigation}) {
       <Tab
         value={index}
         onChange={e => setIndex(e)}
-        indicatorStyle={{
-          backgroundColor: '#3743ab',
-          height: 3,
-        }}
-        style={{backgroundColor: '#3743ab'}}
+        indicatorStyle={styles.tabIndicator}
+        style={styles.tab}
         variant="primary">
         <Tab.Item
           title="Caretakers"
-          containerStyle={{backgroundColor: 'white'}}
-          titleStyle={{fontSize: 12, color: '#3743ab'}}
+          containerStyle={styles.tabItemContainer}
+          titleStyle={styles.tabItemTitle}
           icon={Caretaker_nurse()}
         />
         <Tab.Item
           title="Caretaker request"
-          titleStyle={{fontSize: 12, color: '#3743ab'}}
-          containerStyle={{backgroundColor: 'white'}}
+          titleStyle={styles.tabItemTitle}
+          containerStyle={styles.tabItemContainer}
           icon={Userfriend()}
         />
       </Tab>
 
       <TabView value={index} onChange={setIndex} animationType="spring">
-        <TabView.Item style={{backgroundColor: 'white', width: '100%'}}>
+        <TabView.Item style={styles.tabItem}>
           <Addcaretaker navigation={navigation}></Addcaretaker>
         </TabView.Item>
-        <TabView.Item style={{backgroundColor: 'white', width: '100%'}}>
+        <TabView.Item style={styles.tabItem}>
           <CaretakerReq></CaretakerReq>
         </TabView.Item>
       </TabView>

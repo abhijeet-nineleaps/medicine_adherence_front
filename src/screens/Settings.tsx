@@ -1,6 +1,8 @@
 import { Linking, Share, View} from 'react-native';
 import React from 'react';
 import SettingsList from 'react-native-settings-list';
+import styles from "./screenStyles/settingStyles";
+
 
 interface Props {
   navigation: any;
@@ -8,33 +10,33 @@ interface Props {
 
 const Settings: React.FC<Props> = ({navigation}: Props) => {
   return (
-    <View style={{height: '100%', backgroundColor: 'white'}}>
+    <View style={styles.container}>
       <SettingsList borderColor="white" backgroundColor="white">
         <SettingsList.Header
           headerText="Settings"
-          headerStyle={{color: 'gray', fontSize: 16}}
+          headerStyle={styles.setting}
         />
         <SettingsList.Item
           hasNavArrow={true}
           title="Notification settings"
-          titleStyle={{color: 'black', fontSize: 18}}
+          titleStyle={styles.settingItems}
           onPress={() => Linking.openSettings()}
         />
 
         <SettingsList.Header
           headerText="General"
-          headerStyle={{color: 'gray', fontSize: 16}}
+          headerStyle={styles.general}
         />
         <SettingsList.Item
           hasNavArrow={false}
           title="About Medstick"
-          titleStyle={{color: 'black', fontSize: 18}}
+          titleStyle={styles.settingItems}
           onPress={() => navigation.navigate('About')}
         />
         <SettingsList.Item
           hasNavArrow={false}
           title="Share with friends and family"
-          titleStyle={{color: 'black', fontSize: 18}}
+          titleStyle={styles.settingItems}
           onPress={async () => {
             try {
               await Share.share({

@@ -10,13 +10,14 @@ import {faUserFriends, faHospitalUser} from '@fortawesome/free-solid-svg-icons';
 import {IconProp} from '@fortawesome/fontawesome-svg-core';
 import {useFocusEffect} from '@react-navigation/native';
 import {Alert} from 'react-native';
+import styles from './patientStyles/PatientStyles';
 
 const Patientcomp = ({navigation}) => {
   const [index, setIndex] = React.useState(0);
   const Iconcomp1 = () => {
     return (
       <FontAwesomeIcon
-        style={{marginBottom: 6}}
+        style={styles.icon}
         color="#3743ab"
         icon={faHospitalUser as IconProp}></FontAwesomeIcon>
     );
@@ -25,7 +26,7 @@ const Patientcomp = ({navigation}) => {
   const Iconcomp2 = () => {
     return (
       <FontAwesomeIcon
-        style={{marginBottom: 6}}
+        style={styles.icon}
         color="#3743ab"
         icon={faUserFriends as IconProp}></FontAwesomeIcon>
     );
@@ -36,31 +37,28 @@ const Patientcomp = ({navigation}) => {
       <Tab
         value={index}
         onChange={e => setIndex(e)}
-        indicatorStyle={{
-          backgroundColor: '#3743ab',
-          height: 3,
-        }}
-        style={{backgroundColor: '#3743ab'}}
+        indicatorStyle={styles.tabIndicator}
+        style={styles.tab}
         variant="primary">
         <Tab.Item
           title="My Patients"
-          containerStyle={{backgroundColor: 'white'}}
-          titleStyle={{fontSize: 12, color: '#3743ab'}}
+          containerStyle={styles.tabItem}
+          titleStyle={styles.tabTitle}
           icon={Iconcomp1}
         />
         <Tab.Item
           title="Patient Request"
-          titleStyle={{fontSize: 12, color: '#3743ab'}}
-          containerStyle={{backgroundColor: 'white'}}
+          titleStyle={styles.tabTitle}
+          containerStyle={styles.tabItem}
           icon={Iconcomp2}
         />
       </Tab>
 
       <TabView value={index} onChange={setIndex} animationType="spring">
-        <TabView.Item style={{backgroundColor: 'white', width: '100%'}}>
+        <TabView.Item style={styles.tabItems}>
           <Mypatient navigation={navigation}></Mypatient>
         </TabView.Item>
-        <TabView.Item style={{backgroundColor: 'white', width: '100%'}}>
+        <TabView.Item style={styles.tabItems}>
           <Patientrequest></Patientrequest>
         </TabView.Item>
       </TabView>
