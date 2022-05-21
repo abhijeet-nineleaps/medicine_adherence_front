@@ -9,6 +9,8 @@ import Toast from 'react-native-toast-message';
 import {Formik} from 'formik';
 import * as yup from 'yup';
 import UserAvatar from 'react-native-user-avatar';
+import styles from '../CaretakerStyles/searchCaretakerStyles';
+
 
 const Searchcaretaker = ({navigation}) => {
   const [data, datastate] = React.useState([]);
@@ -70,11 +72,7 @@ const Searchcaretaker = ({navigation}) => {
   const renderitem = ({item}) => {
     return (
       <ListItem
-        style={{
-          flexDirection: 'row',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-        }}
+        style={styles.listItemContainer}
         hasTVPreferredFocus={undefined}
         tvParallaxProperties={undefined}>
         <ListItem.Content>
@@ -84,7 +82,7 @@ const Searchcaretaker = ({navigation}) => {
         </ListItem.Content>
         <Button
           title="Send request"
-          buttonStyle={{backgroundColor: '#3743ab'}}
+          buttonStyle={styles.listButton}
           onPress={() => {
             sendreqtocaretaker(item.userId, item.userName);
           }}></Button>
@@ -93,7 +91,7 @@ const Searchcaretaker = ({navigation}) => {
   };
 
   return (
-    <View style={{padding: 10, backgroundColor: 'white', height: '100%'}}>
+    <View style={styles.container}>
       <Toast></Toast>
 
       <Formik
@@ -106,22 +104,22 @@ const Searchcaretaker = ({navigation}) => {
               placeholder="Search Caretaker.."
               value={values.email}
               onChangeText={handleChange('email')}></SearchBar>
-            <Text style={{color: 'red'}}>{touched.email && errors.email}</Text>
+            <Text style={styles.text}>{touched.email && errors.email}</Text>
 
             <Button
               loading={searchload}
-              buttonStyle={{backgroundColor: '#3743ab'}}
+              buttonStyle={styles.button}
               title="Search"
               onPress={() => handleSubmit()}
-              containerStyle={{marginTop: 10}}></Button>
+              containerStyle={styles.buttonContainer}></Button>
           </>
         )}
       </Formik>
       {data.length === 0 && (
-        <View style={{alignItems: 'center', justifyContent: 'center'}}>
+        <View style={styles.imgContainer}>
           <Image
             source={require('../../../assests/searchcaretaker.png')}
-            style={{width: 300, height: 300, marginTop: 70}}
+            style={styles.img}
             resizeMode="stretch"></Image>
         </View>
       )}

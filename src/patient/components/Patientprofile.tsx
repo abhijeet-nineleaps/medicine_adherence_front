@@ -3,7 +3,6 @@
 /* eslint-disable react-native/no-inline-styles */
 import * as React from 'react';
 import {
-  StyleSheet,
   Text,
   View,
   Image,
@@ -22,6 +21,9 @@ import * as Progress from 'react-native-progress';
 import {IconProp} from '@fortawesome/fontawesome-svg-core';
 import {LogBox} from 'react-native';
 import {Button} from 'react-native-elements';
+import styles from "../patientStyles/PatientProfileStyles";
+
+
 LogBox.ignoreLogs(['Require cycle:']);
 
 const ViewProfile = ({route, navigation}) => {
@@ -50,29 +52,24 @@ const ViewProfile = ({route, navigation}) => {
   }, []);
 
   return (
-    <View style={{height: '100%', backgroundColor: 'white'}}>
+    <View style={styles.container}>
       {progress ? (
         <View
-          style={{
-            height: '100%',
-            backgroundColor: 'white',
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}>
+          style={styles.conatiner1}>
           <Progress.Circle size={80} indeterminate={true} />
           <Text>Fetching User Details</Text>
         </View>
       ) : (
-        <View style={styles.container}>
+        <View style={styles.container2}>
           <ScrollView>
             <View style={styles.top}>
-              <View style={{flexDirection: 'column'}}>
-                <Text style={{paddingLeft: 5, paddingTop: 9}}>Name</Text>
-                <Text style={{color: 'black', padding: 5, fontSize: 17}}>
+              <View style={styles.nameView}>
+                <Text style={styles.name}>Name</Text>
+                <Text style={styles.nameText}>
                   {userdetails.userEntityList[0].userName}
                 </Text>
               </View>
-              <View style={{justifyContent: 'flex-end'}}>
+              <View style={styles.iconView}>
                 <Image
                   style={styles.icon}
                   source={{
@@ -82,10 +79,7 @@ const ViewProfile = ({route, navigation}) => {
               </View>
             </View>
             <View
-              style={{
-                borderBottomColor: 'grey',
-                borderBottomWidth: 0.2,
-              }}
+              style={styles.itemView}
             />
             <View style={styles.items}>
               <Text style={styles.itemleft}>Bio</Text>
@@ -95,10 +89,7 @@ const ViewProfile = ({route, navigation}) => {
               </Text>
             </View>
             <View
-              style={{
-                borderBottomColor: 'grey',
-                borderBottomWidth: 0.3,
-              }}
+              style={styles.itemView}
             />
             <View style={styles.items}>
               <Text style={styles.itemleft}>Contact Number</Text>
@@ -108,10 +99,7 @@ const ViewProfile = ({route, navigation}) => {
               </Text>
             </View>
             <View
-              style={{
-                borderBottomColor: 'grey',
-                borderBottomWidth: 0.2,
-              }}
+              style={styles.itemView}
             />
             <View style={styles.items}>
               <Text style={styles.itemleft}>Email Id</Text>
@@ -120,10 +108,7 @@ const ViewProfile = ({route, navigation}) => {
               </Text>
             </View>
             <View
-              style={{
-                borderBottomColor: 'grey',
-                borderBottomWidth: 0.3,
-              }}
+              style={styles.itemView}
             />
             <View style={styles.items}>
               <Text style={styles.itemleft}>Gender</Text>
@@ -133,10 +118,7 @@ const ViewProfile = ({route, navigation}) => {
               </Text>
             </View>
             <View
-              style={{
-                borderBottomColor: 'grey',
-                borderBottomWidth: 0.3,
-              }}
+              style={styles.itemView}
             />
             <View style={styles.items}>
               <Text style={styles.itemleft}>Blood Group</Text>
@@ -146,10 +128,7 @@ const ViewProfile = ({route, navigation}) => {
               </Text>
             </View>
             <View
-              style={{
-                borderBottomColor: 'grey',
-                borderBottomWidth: 0.3,
-              }}
+              style={styles.itemView}
             />
             <View style={styles.items}>
               <Text style={styles.itemleft}>Marital Status</Text>
@@ -158,10 +137,7 @@ const ViewProfile = ({route, navigation}) => {
               </Text>
             </View>
             <View
-              style={{
-                borderBottomColor: 'grey',
-                borderBottomWidth: 0.3,
-              }}
+              style={styles.itemView}
             />
             <View style={styles.items}>
               <Text style={styles.itemleft}>Age(in yrs)</Text>
@@ -169,22 +145,17 @@ const ViewProfile = ({route, navigation}) => {
                 {userdetails.userEntityList[0].userDetails.age}
               </Text>
             </View>
-            <View style={{}}>
-              <View>
-                <List.Section style={{backgroundColor: 'white'}}>
+            <View>
+                <List.Section style={styles.list}>
                   <List.Accordion
                     title="Medicines"
-                    titleStyle={{
-                      //   marginLeft: 20,
-                      fontSize: 15,
-                      fontWeight: '500',
-                    }}
+                    titleStyle={styles.medTitle}
                     left={() => (
                       <FontAwesomeIcon
                         size={16}
                         icon={faKitMedical as IconProp}
                         color="black"
-                        style={{marginLeft: 8}}
+                        style={styles.medIcon}
                       />
                     )}
                     right={() => (
@@ -196,21 +167,13 @@ const ViewProfile = ({route, navigation}) => {
                       return (
                         <List.Item
                           description={`${mlistitem.days}\n${mlistitem.time}`}
-                          style={{
-                            padding: 17,
-                            alignItems: 'center',
-                            height: 110,
-                            justifyContent: 'center',
-                          }}
-                          titleStyle={styles.listitem}
+                          style={styles.listItem}
+                          titleStyle={styles.listTitle}
                           right={() => {
                             return (
                               <>
                                 <View
-                                  style={{
-                                    flexDirection: 'row',
-                                    alignItems: 'center',
-                                  }}>
+                                  style={styles.medContainerRight}>
                                   <Button
                                     title="Images"
                                     onPress={() =>
@@ -219,15 +182,7 @@ const ViewProfile = ({route, navigation}) => {
                                       })
                                     }></Button>
                                   <TouchableOpacity
-                                    style={{
-                                      margin: 12,
-                                      backgroundColor: 'white',
-                                      borderRadius: 40,
-                                      width: 45,
-                                      height: 45,
-                                      alignItems: 'center',
-                                      justifyContent: 'center',
-                                    }}
+                                    style={styles.touch}
                                     onPress={() => {
                                       console.log(mlistitem.medicineName);
                                       sendnotificationtouser(
@@ -268,48 +223,11 @@ const ViewProfile = ({route, navigation}) => {
                   </List.Accordion>
                 </List.Section>
               </View>
-            </View>
           </ScrollView>
         </View>
       )}
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flexDirection: 'column',
-    backgroundColor: 'white',
-    height: '100%',
-  },
-  icon: {
-    height: 90,
-    width: 90,
-    borderRadius: 45,
-    borderColor: 'white',
-    borderWidth: 2,
-  },
-  top: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    padding: 10,
-    height: 110,
-  },
-  items: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    padding: 15,
-    marginBottom: 12,
-  },
-  itemleft: {},
-  itemright: {
-    color: 'black',
-    width: 200,
-  },
-  listitem: {
-    fontSize: 14,
-    marginTop: -13,
-  },
-});
 
 export default ViewProfile;

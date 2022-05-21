@@ -10,6 +10,9 @@ import {
 import messaging from '@react-native-firebase/messaging';
 import {Signupuser} from '../../repositories/signup/Signup';
 import * as Progress from 'react-native-progress';
+import styles from "../loginStyles/loginStyles";
+
+
 
 const Loginscreen = ({navigation}) => {
   const [loading, loadingstate] = React.useState(false);
@@ -58,19 +61,13 @@ const Loginscreen = ({navigation}) => {
 
   return (
     <View
-      style={{
-        alignItems: 'center',
-        height: '100%',
-        justifyContent: 'center',
-        width: '100%',
-        backgroundColor: 'white',
-      }}>
+      style={styles.container}>
       <Toast visibilityTime={3000} />
-      <Text style={{fontSize: 30, margin: 30, fontWeight: 'bold'}}>
+      <Text style={styles.loginText}>
         {'LOGIN'}
       </Text>
       <GoogleSigninButton
-        style={{width: 292, height: 58, margin: 20, borderRadius: 40}}
+        style={styles.signInButton}
         size={GoogleSigninButton.Size.Wide}
         color={GoogleSigninButton.Color.Dark}
         onPress={() =>

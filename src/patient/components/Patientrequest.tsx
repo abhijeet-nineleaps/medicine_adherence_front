@@ -8,6 +8,8 @@ import {Avatar} from 'react-native-elements';
 import {API_URL} from '@env';
 import {ListItem, Button} from 'react-native-elements';
 import {useFocusEffect} from '@react-navigation/native';
+import styles from '../patientStyles/PatientRequestStyles';
+
 
 const Patientrequest = () => {
   const [patients, patientsdata] = React.useState([]);
@@ -64,12 +66,12 @@ const Patientrequest = () => {
       .catch(err => console.log(err));
   };
   return (
-    <View style={{flex: 1, backgroundColor: 'white'}}>
+    <View style={styles.container}>
       {patients.length === 0 && (
-        <View style={{alignItems: 'center', justifyContent: 'center'}}>
+        <View style={styles.imgView}>
           <Image
             source={require('../../assests/nopatientreq.png')}
-            style={{width: 400}}
+            style={styles.img}
             resizeMode="contain"></Image>
         </View>
       )}
@@ -81,9 +83,9 @@ const Patientrequest = () => {
         }
         data={patients}
         renderItem={({item}) => (
-          <Card style={{elevation: 2, margin: 6, borderRadius: 25}}>
-            <View style={{flexDirection: 'row'}}>
-              <View style={{marginTop: 10, marginLeft: 6}}>
+          <Card style={styles.card}>
+            <View style={styles.cardInner}>
+              <View style={styles.avatar}>
                 <Avatar
                   size={100}
                   rounded
@@ -91,60 +93,37 @@ const Patientrequest = () => {
                     uri: 'https://lh3.googleusercontent.com/a-/AOh14GgrRBm3gFrvPSRlLYSiaY5KO-HpPKl1IhK3Z3rePg=s96-c',
                   }}></Avatar>
               </View>
-              <View style={{flexDirection: 'column'}}>
+              <View style={styles.container1}>
                 <ListItem
-                  style={{
-                    flexDirection: 'row',
-                    justifyContent: 'space-between',
-                    alignItems: 'center',
-                  }}
+                  style={styles.list}
                   hasTVPreferredFocus={undefined}
                   tvParallaxProperties={undefined}>
                   <ListItem.Content>
                     <ListItem.Title
-                      style={{
-                        fontSize: 18,
-                        marginLeft: 15,
-                        fontWeight: '900',
-                        textTransform: 'uppercase',
-                      }}>
+                      style={styles.listTitle}>
                       {item.patientName}
                     </ListItem.Title>
                     <ListItem.Subtitle
-                      style={{
-                        fontSize: 15,
-                        fontWeight: '500',
-                        color: 'black',
-                        marginLeft: 13,
-                      }}>
+                      style={styles.listSubTitle}>
                       {' Sent on : ' + item.createdAt}
                     </ListItem.Subtitle>
                   </ListItem.Content>
                 </ListItem>
-                <View style={{flexDirection: 'row', marginLeft: 25}}>
+                <View style={styles.buttonView}>
                   <Button
                     onPress={() => {
                       acceptrequest(item.cid);
                     }}
                     title="Confirm"
-                    buttonStyle={{
-                      width: 100,
-                      borderRadius: 25,
-                      marginBottom: 10,
-                      backgroundColor: '#4267B2',
-                    }}
+                    buttonStyle={styles.confirmButton}
                     color="#4267B2"></Button>
-                  <View style={{margin: 5}} />
+                  <View style={styles.space} />
                   <Button
                     onPress={() => {
                       deletereq(item.cid);
                     }}
                     title="Delete"
-                    buttonStyle={{
-                      width: 100,
-                      borderRadius: 25,
-                      backgroundColor: '#d32f2f',
-                    }}
+                    buttonStyle={styles.deleteButton}
                     color="#e53935"></Button>
                 </View>
               </View>

@@ -18,6 +18,8 @@ import {IconProp} from '@fortawesome/fontawesome-svg-core';
 import {useFocusEffect} from '@react-navigation/native';
 import UserAvatar from 'react-native-user-avatar';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
+import styles from "../patientStyles/MyPatientStyles";
+
 
 interface Props {
   navigation: any;
@@ -85,28 +87,17 @@ const Mypatient: React.FC<Props> = ({navigation}: Props) => {
             user_id: item.patientId,
           });
         }}
-        style={{
-          borderRadius: 30,
-          margin: 6,
-          borderColor: 'lightgrey',
-          elevation: 5,
-          shadowColor: '#3743ab',
-        }}>
-        <View style={{flexDirection: 'row', padding: 0}}>
+        style={styles.card}>
+        <View style={styles.top}>
           <ListItem
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-              padding: 5,
-            }}
+            style={styles.list}
             hasTVPreferredFocus={undefined}
             tvParallaxProperties={undefined}>
             <UserAvatar size={60} name={item.patientName}></UserAvatar>
 
             <ListItem.Content>
               <ListItem.Title
-                style={{fontSize: 16, marginLeft: 3, fontWeight: 'bold'}}>
+                style={styles.patientName}>
                 {item.patientName}
               </ListItem.Title>
               <ListItem.Subtitle>
@@ -114,8 +105,8 @@ const Mypatient: React.FC<Props> = ({navigation}: Props) => {
               </ListItem.Subtitle>
             </ListItem.Content>
 
-            <TouchableOpacity onPress={() => {}} style={{paddingVertical: 15}}>
-              <View style={{alignItems: 'center'}}>
+            <TouchableOpacity onPress={() => {}} style={styles.touch}>
+              <View style={styles.icon}>
                 <FontAwesomeIcon
                   icon={faAngleRight as IconProp}
                   color={'black'}
@@ -130,12 +121,12 @@ const Mypatient: React.FC<Props> = ({navigation}: Props) => {
   };
 
   return (
-    <View style={{backgroundColor: 'white', height: '100%'}}>
+    <View style={styles.container}>
       {data.length === 0 && (
-        <View style={{}}>
+        <View>
           <Image
             source={require('../../assests/nopatients.png')}
-            style={{width: 400}}
+            style={styles.img}
             resizeMode="contain"></Image>
         </View>
       )}

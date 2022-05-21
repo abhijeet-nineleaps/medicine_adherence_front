@@ -4,6 +4,8 @@ import {useFocusEffect} from '@react-navigation/native';
 import React from 'react';
 import {View, Text, Image} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import styles from './componentStyles/componentStyles';
+
 
 const ProfileHeader: React.FC = () => {
   const [umg, imgstate] = React.useState('https://i.stack.imgur.com/l60Hf.png');
@@ -32,31 +34,19 @@ const ProfileHeader: React.FC = () => {
 
   return (
     <View
-      style={{
-        flexDirection: 'column',
-        justifyContent: 'center',
-        alignItems: 'center',
-        padding: 20,
-        backgroundColor: '#3743ab',
-        marginBottom: 20,
-      }}>
+      style={styles.container}>
       <Image
         source={{
           uri: umg,
         }}
-        style={{width: 100, height: 100, borderRadius: 70, marginBottom: 9}}
+        style={styles.img}
       />
-      <View style={{alignItems: 'center'}}>
+      <View style={styles.nameConatiner}>
         <Text
-          style={{
-            color: 'white',
-            fontWeight: 'bold',
-            fontSize: 15,
-            marginBottom: 8,
-          }}>
+          style={styles.nameText}>
           {name}
         </Text>
-        <Text style={{fontWeight: 'bold', color: 'white'}}>
+        <Text style={styles.text}>
           {'View and edit profile'}
         </Text>
       </View>

@@ -14,6 +14,9 @@ import {useFocusEffect} from '@react-navigation/native';
 import {Alert, View} from 'react-native';
 import {Signout} from '../caretaker/common/AllIcons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import styles from './componentStyles/componentStyles';
+
+
 
 const CustomHeader = props => {
   React.useEffect(() => {
@@ -52,15 +55,15 @@ const CustomHeader = props => {
   return (
     <>
       <DrawerContentScrollView
-        style={{height: '100%', backgroundColor: '#3743ab'}}>
+        style={styles.drawer}>
         <TouchableOpacity
-          style={{marginBottom: 8}}
+          style={styles.touch}
           onPress={() => props.navigation.getParent().navigate('Profile')}>
           {<ProfileHeader></ProfileHeader>}
         </TouchableOpacity>
         <DrawerItemList {...props}></DrawerItemList>
 
-        <View style={{marginTop: 60, alignItems: 'center'}}>
+        <View style={styles.top}>
           {!loggedin ? (
             <>
               <Button
@@ -68,18 +71,9 @@ const CustomHeader = props => {
                 title="Sign up"
                 loading={false}
                 loadingProps={{size: 'small', color: 'white'}}
-                buttonStyle={{
-                  backgroundColor: '#3743ab',
-                  borderRadius: 5,
-                  justifyContent: 'space-around',
-                }}
-                titleStyle={{fontWeight: 'bold', fontSize: 23}}
-                containerStyle={{
-                  marginHorizontal: 50,
-                  height: 50,
-                  width: 200,
-                  marginVertical: 10,
-                }}
+                buttonStyle={styles.button}
+                titleStyle={styles.buttonTitle}
+                containerStyle={styles.buttonContainer}
                 onPress={async () => {
                   props.navigation.navigate('Login');
                 }}
@@ -89,18 +83,9 @@ const CustomHeader = props => {
                 title="Login"
                 loading={false}
                 loadingProps={{size: 'small', color: 'white'}}
-                buttonStyle={{
-                  backgroundColor: '#3743ab',
-                  borderRadius: 5,
-                  justifyContent: 'space-around',
-                }}
-                titleStyle={{fontWeight: 'bold', fontSize: 23}}
-                containerStyle={{
-                  marginHorizontal: 50,
-                  height: 50,
-                  width: 200,
-                  marginVertical: 10,
-                }}
+                buttonStyle={styles.button}
+                titleStyle={styles.buttonTitle}
+                containerStyle={styles.buttonContainer}
                 onPress={async () => {
                   props.navigation.navigate('Loginscreen');
                 }}
@@ -111,18 +96,9 @@ const CustomHeader = props => {
               title="Logout"
               iconPosition="right"
               icon={Signout()}
-              buttonStyle={{
-                borderRadius: 5,
-                justifyContent: 'space-around',
-                backgroundColor: '#3743ab',
-              }}
-              titleStyle={{fontWeight: '500', fontSize: 16}}
-              containerStyle={{
-                marginHorizontal: 50,
-                height: 50,
-                width: 200,
-                marginVertical: 10,
-              }}
+              buttonStyle={styles.button}
+              titleStyle={styles.buttonLogOutTitle}
+              containerStyle={styles.buttonContainer}
               onPress={async () => {
                 Alert.alert('Do you want to Logout?', '', [
                   {

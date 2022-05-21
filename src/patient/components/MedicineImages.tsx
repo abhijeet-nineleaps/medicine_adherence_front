@@ -4,7 +4,6 @@ import React, {useState} from 'react';
 import {
   Text,
   Dimensions,
-  StyleSheet,
   View,
   Image,
   FlatList,
@@ -12,6 +11,8 @@ import {
 } from 'react-native';
 import Carousel, {Pagination} from 'react-native-snap-carousel';
 import {API_URL} from '@env';
+import styles from '../patientStyles/MedicineImagesStyles';
+
 
 const SLIDER_WIDTH = Dimensions.get('window').width;
 const ITEM_WIDTH = Math.round(SLIDER_WIDTH * 0.84);
@@ -19,7 +20,7 @@ const ITEM_WIDTH = Math.round(SLIDER_WIDTH * 0.84);
 const CarouselCardItem = ({item}) => {
   const [load, setload] = useState(true);
   return (
-    <View style={styles.container}>
+    <View style={styles.container1}>
       <Image
         source={{
           uri: `${API_URL}/upload/static/images/${item.imageUrl}`,
@@ -31,7 +32,7 @@ const CarouselCardItem = ({item}) => {
       <Text style={styles.header}>{item.time}</Text>
       {load && <ActivityIndicator />}
 
-      <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+      <View style={styles.bodyView}>
         <Text style={styles.body}>{item.caretakerName}</Text>
         <Text style={styles.body}>{item.date}</Text>
       </View>
@@ -46,17 +47,12 @@ const SingleImageComponent = ({item}) => {
   return (
     <>
       <View
-        style={{
-          padding: 3,
-          alignItems: 'center',
-          justifyContent: 'center',
-          backgroundColor: 'white',
-        }}>
-        <Text style={{fontSize: 18, fontWeight: '700', color: 'grey'}}>
+        style={styles.container}>
+        <Text style={styles.date}>
           {item[0].date}
         </Text>
       </View>
-      <View style={{height: 340, backgroundColor: 'white'}}>
+      <View style={styles.carousel}>
         <Carousel
           layoutCardOffset={9}
           data={item}
@@ -72,20 +68,9 @@ const SingleImageComponent = ({item}) => {
         <Pagination
           dotsLength={item.length}
           activeDotIndex={index}
-          containerStyle={{
-            position: 'relative',
-          }}
-          dotStyle={{
-            width: 10,
-            height: 10,
-            borderRadius: 5,
-            marginHorizontal: 8,
-            backgroundColor: 'red',
-          }}
-          inactiveDotStyle={{
-            backgroundColor: 'black',
-            // Define styles for inactive dots here
-          }}
+          containerStyle={styles.pageContainer}
+          dotStyle={styles.pageDot}
+          inactiveDotStyle={styles.inactiveDot}
           inactiveDotOpacity={0.4}
           inactiveDotScale={0.6}
         />
@@ -133,37 +118,5 @@ const MedicineImages = ({route}) => {
     />
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    height: '20%',
-    backgroundColor: 'white',
-    borderRadius: 20,
-    width: ITEM_WIDTH,
-    shadowColor: '#000',
-    shadowOpacity: 0.29,
-    shadowRadius: 4.65,
-    elevation: 2,
-  },
-  image: {
-    width: ITEM_WIDTH,
-    height: 200,
-    borderRadius: 10,
-  },
-  header: {
-    color: '#222',
-    fontSize: 12,
-    fontWeight: 'bold',
-    paddingLeft: 20,
-    paddingTop: 20,
-  },
-  body: {
-    color: '#222',
-    fontSize: 18,
-    paddingLeft: 10,
-    paddingLeft: 20,
-    paddingRight: 20,
-  },
-});
 
 export default MedicineImages;

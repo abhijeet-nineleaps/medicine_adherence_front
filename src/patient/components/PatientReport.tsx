@@ -3,7 +3,6 @@ import React, {useState} from 'react';
 import {
   Text,
   View,
-  StyleSheet,
   FlatList,
   PermissionsAndroid,
   Modal,
@@ -21,6 +20,9 @@ import Downloadpdf from '../../adherence/common/Downloadpdf';
 import LottieView from 'lottie-react-native';
 import HistoryDetail from '../../screens/components/HistoryDetail';
 import AdherencePercentage from '../../adherence/common/AdherencePercentage';
+import styles from "../patientStyles/PatientReportStyles";
+
+
 let detailData = {};
 
 var weeks: string[] = ['Sun', 'Mon', 'Tue', 'Wed', 'Thur', 'Fri', 'Sat'];
@@ -52,21 +54,16 @@ const Reminders = ({item, index}) => {
         <Card key={'2'} style={styles.dateday}>
           <View
             key={'3'}
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              marginBottom: 8,
-              alignItems: 'center',
-            }}>
-            <View style={{alignItems: 'center', marginLeft: 12}}>
+            style={styles.cardView}>
+            <View style={styles.dateView}>
               <Text
                 key={'7'}
-                style={{fontSize: 16, fontWeight: '600', marginLeft: 19}}>
+                style={styles.date}>
                 Date - {item.date}
               </Text>
             </View>
             {
-              <View style={{alignItems: 'center', marginRight: 60}}>
+              <View style={styles.progressView}>
                 <ProgressCircle
                   percent={Math.round((tl / (tl + nt)) * 100)}
                   radius={20}
@@ -74,27 +71,22 @@ const Reminders = ({item, index}) => {
                   color="#4dd0e1"
                   shadowColor="#e3f2fd"
                   bgColor="#fff">
-                  <Text style={{fontSize: 10, color: '#4dd0e1'}}>
+                  <Text style={styles.progressText}>
                     {Math.round((tl / (tl + nt)) * 100) + '%'}
                   </Text>
                 </ProgressCircle>
               </View>
             }
           </View>
-          <Divider style={{marginBottom: 8}} />
+          <Divider style={styles.divider} />
           {nottaken.map(nti => {
             return (
               nti !== '' && (
                 <View
                   key={'4'}
-                  style={{
-                    flexDirection: 'row',
-                    justifyContent: 'space-around',
-                    marginBottom: 12,
-                    marginLeft: 7,
-                  }}>
+                  style={styles.notTakenView}>
                   <Text key={'5'}>{nti}</Text>
-                  <Text key={'6'} style={{color: 'red'}}>
+                  <Text key={'6'} style={styles.notTakenText}>
                     {' '}
                     Not Taken
                   </Text>
@@ -107,13 +99,9 @@ const Reminders = ({item, index}) => {
               tti !== '' && (
                 <View
                   key={'12' + tti}
-                  style={{
-                    flexDirection: 'row',
-                    justifyContent: 'space-around',
-                    marginBottom: 12,
-                  }}>
+                  style={styles.notTakenView}>
                   <Text key={'22'}>{tti}</Text>
-                  <Text key={'23'} style={{color: '#66bb6a'}}>
+                  <Text key={'23'} style={styles.takenText}>
                     {' '}
                     Taken
                   </Text>
@@ -203,19 +191,14 @@ export default function PatientReport({route}) {
   useFocusEffect(() => {});
 
   return (
-    <View style={{height: '100%', backgroundColor: '#3743ab'}}>
+    <View style={styles.container}>
       <Modal
         animationType="fade"
         transparent={true}
         visible={modalVisible}
-        style={{alignItems: 'center', backgroundColor: 'red'}}>
+        style={styles.modal}>
         <View
-          style={{
-            height: '100%',
-            alignItems: 'center',
-            justifyContent: 'center',
-            backgroundColor: 'rgba(52, 52, 52, 0.8)',
-          }}>
+          style={styles.detailView}>
           {showDetail ? (
             <HistoryDetail
               data={detailData}
@@ -223,7 +206,7 @@ export default function PatientReport({route}) {
             />
           ) : (
             <LottieView
-              style={{width: 70, height: 70}}
+              style={styles.lottie}
               speed={0.8}
               source={require('../../assests/animate/generatepdf.json')}
               autoPlay
@@ -232,9 +215,9 @@ export default function PatientReport({route}) {
           )}
         </View>
       </Modal>
-      <View style={{}}>
-        <View style={{backgroundColor: '#3743ab'}}>
-          <View style={{alignItems: 'center', marginTop: 28}}>
+      <>
+        <View style={styles.top}>
+          <View style={styles.container1}>
             <ProgressCircle
               percent={adherence}
               radius={60}
@@ -242,41 +225,30 @@ export default function PatientReport({route}) {
               color="#4dd0e1"
               shadowColor="#e3f2fd"
               bgColor="#fff">
-              <Text style={{fontSize: 18, color: '#4dd0e1'}}>
+              <Text style={styles.progress}>
                 {adherence + '%'}
               </Text>
             </ProgressCircle>
             <View
-              style={{
-                alignItems: 'center',
-                marginBottom: 12,
-                marginTop: 15,
-                padding: 5,
-                borderRadius: 20,
-              }}>
-              <Text style={{fontSize: 25, fontWeight: '500', color: 'white'}}>
+              style={styles.medView}>
+              <Text style={styles.medText}>
                 {medName}
               </Text>
             </View>
           </View>
         </View>
-      </View>
+      </>
       <View
-        style={{
-          backgroundColor: 'white',
-          flex: 1,
-          borderTopRightRadius: 30,
-          borderTopLeftRadius: 30,
-        }}>
-        <View style={{height: 130, alignItems: 'center', marginTop: 18}}>
-          <Text style={{fontWeight: '500', marginBottom: 8}}>
+        style={styles.subContainer}>
+        <View style={styles.datesView}>
+          <Text style={styles.scheduleDateText}>
             Scheduled Dates for {medName}
           </Text>
           <ScrollView horizontal={true}>
             {allDates.map(mcurrenntDate => {
               return (
-                <View style={{alignItems: 'center'}}>
-                  <Text style={{color: 'black', fontSize: 18}}>
+                <View style={styles.dayView}>
+                  <Text style={styles.dayText}>
                     {mcurrenntDate.day}
                   </Text>
                   <TouchableOpacity
@@ -302,15 +274,10 @@ export default function PatientReport({route}) {
                         backgroundColor: mcurrenntDate.color,
                       }}>
                       <Text
-                        style={{
-                          backgroundColor: 'white',
-                          padding: 8,
-                          borderRadius: 30,
-                          color: 'black',
-                        }}>
+                        style={styles.dateText}>
                         {mcurrenntDate.date}
                       </Text>
-                      <Text style={{color: 'white'}}>
+                      <Text style={styles.monthText}>
                         {months[mcurrenntDate.month]}
                       </Text>
                     </View>
@@ -321,13 +288,7 @@ export default function PatientReport({route}) {
           </ScrollView>
         </View>
         <Text
-          style={{
-            marginLeft: 10,
-            marginTop: 8,
-            fontWeight: '600',
-            textAlign: 'center',
-            fontSize: 18,
-          }}>
+          style={styles.medicineHisText}>
           Medicine History
         </Text>
         <FlatList
@@ -347,7 +308,7 @@ export default function PatientReport({route}) {
         />
         <Button
           title={'Download PDF'}
-          titleStyle={{fontSize: 18}}
+          titleStyle={styles.buttonTitle}
           onPress={async () => {
             await PermissionsAndroid.request(
               PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
@@ -364,7 +325,7 @@ export default function PatientReport({route}) {
               ToastAndroid.show('Error while downloading', ToastAndroid.LONG);
             }
           }}
-          buttonStyle={{backgroundColor: '#3743ab', height: 40}}>
+          buttonStyle={styles.button}>
           Download PDF
         </Button>
       </View>
@@ -372,37 +333,4 @@ export default function PatientReport({route}) {
   );
 }
 
-const styles = StyleSheet.create({
-  timeright: {
-    flexDirection: 'column',
-    width: '46%',
-    padding: 10,
-    paddingLeft: 15,
-    marginRight: 10,
-  },
-  timeleft: {
-    flexDirection: 'column',
-    width: '46%',
-    padding: 10,
-    paddingLeft: 25,
-  },
-  dateday: {
-    borderRadius: 11,
-    elevation: 6,
-    padding: 10,
-    paddingLeft: 20,
-    borderTopWidth: 5,
-    borderColor: '#3743ab',
-    width: '95%',
-    alignSelf: 'center',
-    margin: 20,
-  },
-  description: {
-    borderRadius: 25,
-    elevation: 2,
-    padding: 10,
-    height: 250,
-    margin: 12,
-    backgroundColor: 'white',
-  },
-});
+

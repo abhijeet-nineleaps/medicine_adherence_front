@@ -12,6 +12,8 @@ import * as Animatable from 'react-native-animatable';
 import {faClock, faTrash} from '@fortawesome/free-solid-svg-icons';
 import {useFocusEffect} from '@react-navigation/native';
 import globalDb from '../repositories/database/Globaldb';
+import styles from './screenStyles/addMedicineStyles';
+
 
 const db = globalDb();
 
@@ -94,24 +96,18 @@ const Addmedicine = ({navigation}: Props) => {
     return (
       <Animatable.View animation="zoomInUp" duration={400} delay={index * 180}>
         <Card
-          style={{
-            borderRadius: 30,
-            margin: 3,
-            borderColor: 'lightgrey',
-            elevation: 3,
-            shadowColor: '#3743ab',
-          }}>
-          <View style={{marginBottom: 7}}>
-            <ListItem style={{backgroundColor: 'white', height: 80}}>
+          style={styles.card}>
+          <View style={styles.listView}>
+            <ListItem style={styles.list}>
               <ListItem.Content>
-                <View style={{flexDirection: 'row'}}>
+                <View style={styles.avatarView}>
                   <Avatar
                     rounded
                     size={50}
                     source={require('../assests/meddis.png')}
                   />
-                  <View style={{flexDirection: 'column', margin: 3}}>
-                    <ListItem.Title style={{fontWeight: '600'}}>
+                  <View style={styles.medNameView}>
+                    <ListItem.Title style={styles.medName}>
                       {item.medicine_name}
                     </ListItem.Title>
                     <ListItem.Subtitle>{item.medicine_des}</ListItem.Subtitle>
@@ -120,7 +116,7 @@ const Addmedicine = ({navigation}: Props) => {
               </ListItem.Content>
 
               <TouchableOpacity
-                style={{marginRight: 10}}
+                style={styles.rem}
                 onPress={() =>
                   navigation.navigate('Add Reminder', {id: item.user_id})
                 }>
@@ -156,12 +152,12 @@ const Addmedicine = ({navigation}: Props) => {
   };
 
   return (
-    <View style={{flex: 1, backgroundColor: 'white', height: '100%'}}>
+    <View style={styles.container}>
       {medicines.data.length === 0 ? (
-        <View style={{alignItems: 'center', justifyContent: 'center'}}>
+        <View style={styles.imgView}>
           <Image
             source={require('../assests/nomeds.png')}
-            style={{width: 300}}
+            style={styles.img}
             resizeMode="contain"
           />
         </View>
@@ -175,18 +171,9 @@ const Addmedicine = ({navigation}: Props) => {
       )}
 
       <View
-        style={{
-          width: '100%',
-          position: 'absolute',
-          alignItems: 'center',
-          bottom: 10,
-        }}>
+        style={styles.bottom}>
         <TouchableOpacity
-          style={{
-            width: '100%',
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}
+          style={styles.addButtonTouch}
           onPress={() =>
             navigation.getParent().navigate('Add Medicine', {
               id: '1234',
@@ -197,14 +184,7 @@ const Addmedicine = ({navigation}: Props) => {
             autoPlay
             loop
             speed={2}
-            style={{
-              bottom: 3,
-              width: 80,
-              height: 80,
-              alignItems: 'center',
-              justifyContent: 'center',
-              elevation: 8,
-            }}
+            style={styles.addLottie}
           />
         </TouchableOpacity>
       </View>

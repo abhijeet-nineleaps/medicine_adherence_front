@@ -12,6 +12,8 @@ import {IconProp} from '@fortawesome/fontawesome-svg-core';
 import Medicineadherence from '../adherence/components/Medicineadherence';
 import Addmedicine from './Addmedicine';
 import Profile from '../profile/Profile';
+import styles from './screenStyles/homeScreenStyles';
+
 
 const Tab = createBottomTabNavigator();
 
@@ -26,7 +28,7 @@ const HomeScreen = () => {
     }).start();
   }, []);
   return (
-    <View style={{backgroundColor: 'white', height: '100%'}}>
+    <View style={styles.container}>
       <StatusBar backgroundColor="#3743ab" />
 
       <Tab.Navigator
@@ -55,7 +57,7 @@ const HomeScreen = () => {
             headerShown: false,
             tabBarIcon: () => (
               <LottieView
-                style={{width: 60, height: 60}}
+                style={styles.report}
                 speed={0.8}
                 source={require('../../assests/animate/heart.json')}
                 progress={progress}
@@ -77,7 +79,7 @@ const HomeScreen = () => {
             ),
             tabBarIcon: () => (
               <LottieView
-                style={{width: 40, height: 40}}
+                style={styles.medicine}
                 source={require('../../assests/animate/med2.json')}
                 progress={progress}
               />
@@ -92,7 +94,7 @@ const HomeScreen = () => {
             headerShown: false,
             tabBarIcon: () => (
               <LottieView
-                style={{width: 50, height: 50}}
+                style={styles.profile}
                 source={require('../../assests/animate/profile.json')}
                 progress={progress}
               />

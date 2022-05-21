@@ -14,6 +14,8 @@ import Checkconnectivity from '../../connectivity/Checkconnectivity';
 import LottieView from 'lottie-react-native';
 import {Text} from 'react-native-elements';
 import {Signupuser} from '../../repositories/signup/Signup';
+import styles from "../loginStyles/googleAuthStyles";
+
 
 interface Props {
   navigation: any;
@@ -78,24 +80,18 @@ const Login: React.FC<{navigation}> = Props => {
 
   return (
     <View
-      style={{
-        alignItems: 'center',
-        height: '100%',
-        justifyContent: 'center',
-        width: '100%',
-        backgroundColor: 'white',
-      }}>
+      style={styles.container}>
       <Toast visibilityTime={3000} />
-      <Text style={{fontSize: 25, fontWeight: '500'}}>Create an account</Text>
+      <Text style={styles.createText}>Create an account</Text>
       <LottieView
-        style={{width: 130, height: 130}}
+        style={styles.lottie}
         source={require('../../../assests/animate/google.json')}
         autoPlay
         loop
       />
 
       <GoogleSigninButton
-        style={{width: 292, height: 58, margin: 20, borderRadius: 40}}
+        style={styles.googleSignIn}
         size={GoogleSigninButton.Size.Wide}
         color={GoogleSigninButton.Color.Dark}
         onPress={() =>
