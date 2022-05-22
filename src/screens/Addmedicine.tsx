@@ -14,7 +14,6 @@ import {useFocusEffect} from '@react-navigation/native';
 import globalDb from '../repositories/database/Globaldb';
 import styles from './screenStyles/addMedicineStyles';
 
-
 const db = globalDb();
 
 interface Props {
@@ -95,8 +94,7 @@ const Addmedicine = ({navigation}: Props) => {
   const renderitem: React.FC = ({item, index}: any) => {
     return (
       <Animatable.View animation="zoomInUp" duration={400} delay={index * 180}>
-        <Card
-          style={styles.card}>
+        <Card style={styles.card}>
           <View style={styles.listView}>
             <ListItem style={styles.list}>
               <ListItem.Content>
@@ -104,7 +102,7 @@ const Addmedicine = ({navigation}: Props) => {
                   <Avatar
                     rounded
                     size={50}
-                    source={require('../assests/meddis.png')}
+                    source={require('../../assests/meddis.png')}
                   />
                   <View style={styles.medNameView}>
                     <ListItem.Title style={styles.medName}>
@@ -156,7 +154,7 @@ const Addmedicine = ({navigation}: Props) => {
       {medicines.data.length === 0 ? (
         <View style={styles.imgView}>
           <Image
-            source={require('../assests/nomeds.png')}
+            source={require('../../assests/nomeds.png')}
             style={styles.img}
             resizeMode="contain"
           />
@@ -170,8 +168,7 @@ const Addmedicine = ({navigation}: Props) => {
         />
       )}
 
-      <View
-        style={styles.bottom}>
+      <View style={styles.bottom}>
         <TouchableOpacity
           style={styles.addButtonTouch}
           onPress={() =>
@@ -180,7 +177,7 @@ const Addmedicine = ({navigation}: Props) => {
             })
           }>
           <LottieView
-            source={require('../assests/animate/addicon.json')}
+            source={require('../../assests/animate/addicon.json')}
             autoPlay
             loop
             speed={2}

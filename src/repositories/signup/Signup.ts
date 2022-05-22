@@ -4,7 +4,6 @@ interface Iparams {
   userinfo: any;
   token: string;
 }
-
 export const Signupuser = {
   signup: async (params: Iparams) => {
     const {userinfo, token} = params;

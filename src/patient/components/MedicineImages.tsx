@@ -1,4 +1,3 @@
-/* eslint-disable react-native/no-inline-styles */
 import {useFocusEffect} from '@react-navigation/native';
 import React, {useState} from 'react';
 import {
@@ -12,7 +11,6 @@ import {
 import Carousel, {Pagination} from 'react-native-snap-carousel';
 import {API_URL} from '@env';
 import styles from '../patientStyles/MedicineImagesStyles';
-
 
 const SLIDER_WIDTH = Dimensions.get('window').width;
 const ITEM_WIDTH = Math.round(SLIDER_WIDTH * 0.84);
@@ -46,20 +44,15 @@ const SingleImageComponent = ({item}) => {
 
   return (
     <>
-      <View
-        style={styles.container}>
-        <Text style={styles.date}>
-          {item[0].date}
-        </Text>
+      <View style={styles.container}>
+        <Text style={styles.date}>{item[0].date}</Text>
       </View>
       <View style={styles.carousel}>
         <Carousel
           layoutCardOffset={9}
           data={item}
           onSnapToItem={inde => setindex(inde)}
-          renderItem={({item}) => (
-            <CarouselCardItem item={item}></CarouselCardItem>
-          )}
+          renderItem={({item}) => <CarouselCardItem item={item} />}
           sliderWidth={SLIDER_WIDTH}
           itemWidth={ITEM_WIDTH}
           inactiveSlideShift={0}

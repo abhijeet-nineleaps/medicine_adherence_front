@@ -125,7 +125,7 @@ const Mypatient: React.FC<Props> = ({navigation}: Props) => {
       {data.length === 0 && (
         <View>
           <Image
-            source={require('../../assests/nopatients.png')}
+            source={require('../../../assests/nopatients.png')}
             style={styles.img}
             resizeMode="contain"></Image>
         </View>

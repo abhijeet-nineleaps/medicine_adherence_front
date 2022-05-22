@@ -70,7 +70,7 @@ const Patientrequest = () => {
       {patients.length === 0 && (
         <View style={styles.imgView}>
           <Image
-            source={require('../../assests/nopatientreq.png')}
+            source={require('../../../assests/nopatientreq.png')}
             style={styles.img}
             resizeMode="contain"></Image>
         </View>

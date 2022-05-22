@@ -20,8 +20,7 @@ import Downloadpdf from '../../adherence/common/Downloadpdf';
 import LottieView from 'lottie-react-native';
 import HistoryDetail from '../../screens/components/HistoryDetail';
 import AdherencePercentage from '../../adherence/common/AdherencePercentage';
-import styles from "../patientStyles/PatientReportStyles";
-
+import styles from '../patientStyles/PatientReportStyles';
 
 let detailData = {};
 
@@ -52,13 +51,9 @@ const Reminders = ({item, index}) => {
     <Animatable.View animation="slideInLeft" duration={500} delay={index * 180}>
       <>
         <Card key={'2'} style={styles.dateday}>
-          <View
-            key={'3'}
-            style={styles.cardView}>
+          <View key={'3'} style={styles.cardView}>
             <View style={styles.dateView}>
-              <Text
-                key={'7'}
-                style={styles.date}>
+              <Text key={'7'} style={styles.date}>
                 Date - {item.date}
               </Text>
             </View>
@@ -82,9 +77,7 @@ const Reminders = ({item, index}) => {
           {nottaken.map(nti => {
             return (
               nti !== '' && (
-                <View
-                  key={'4'}
-                  style={styles.notTakenView}>
+                <View key={'4'} style={styles.notTakenView}>
                   <Text key={'5'}>{nti}</Text>
                   <Text key={'6'} style={styles.notTakenText}>
                     {' '}
@@ -97,9 +90,7 @@ const Reminders = ({item, index}) => {
           {taken.map(tti => {
             return (
               tti !== '' && (
-                <View
-                  key={'12' + tti}
-                  style={styles.notTakenView}>
+                <View key={'12' + tti} style={styles.notTakenView}>
                   <Text key={'22'}>{tti}</Text>
                   <Text key={'23'} style={styles.takenText}>
                     {' '}
@@ -197,8 +188,7 @@ export default function PatientReport({route}) {
         transparent={true}
         visible={modalVisible}
         style={styles.modal}>
-        <View
-          style={styles.detailView}>
+        <View style={styles.detailView}>
           {showDetail ? (
             <HistoryDetail
               data={detailData}
@@ -208,7 +198,7 @@ export default function PatientReport({route}) {
             <LottieView
               style={styles.lottie}
               speed={0.8}
-              source={require('../../assests/animate/generatepdf.json')}
+              source={require('../../../assests/animate/generatepdf.json')}
               autoPlay
               loop
             />
@@ -225,21 +215,15 @@ export default function PatientReport({route}) {
               color="#4dd0e1"
               shadowColor="#e3f2fd"
               bgColor="#fff">
-              <Text style={styles.progress}>
-                {adherence + '%'}
-              </Text>
+              <Text style={styles.progress}>{adherence + '%'}</Text>
             </ProgressCircle>
-            <View
-              style={styles.medView}>
-              <Text style={styles.medText}>
-                {medName}
-              </Text>
+            <View style={styles.medView}>
+              <Text style={styles.medText}>{medName}</Text>
             </View>
           </View>
         </View>
       </>
-      <View
-        style={styles.subContainer}>
+      <View style={styles.subContainer}>
         <View style={styles.datesView}>
           <Text style={styles.scheduleDateText}>
             Scheduled Dates for {medName}
@@ -248,9 +232,7 @@ export default function PatientReport({route}) {
             {allDates.map(mcurrenntDate => {
               return (
                 <View style={styles.dayView}>
-                  <Text style={styles.dayText}>
-                    {mcurrenntDate.day}
-                  </Text>
+                  <Text style={styles.dayText}>{mcurrenntDate.day}</Text>
                   <TouchableOpacity
                     onPress={() =>
                       showDetailfun(
@@ -273,10 +255,7 @@ export default function PatientReport({route}) {
                         justifyContent: 'center',
                         backgroundColor: mcurrenntDate.color,
                       }}>
-                      <Text
-                        style={styles.dateText}>
-                        {mcurrenntDate.date}
-                      </Text>
+                      <Text style={styles.dateText}>{mcurrenntDate.date}</Text>
                       <Text style={styles.monthText}>
                         {months[mcurrenntDate.month]}
                       </Text>
@@ -287,23 +266,11 @@ export default function PatientReport({route}) {
             })}
           </ScrollView>
         </View>
-        <Text
-          style={styles.medicineHisText}>
-          Medicine History
-        </Text>
+        <Text style={styles.medicineHisText}>Medicine History</Text>
         <FlatList
           data={historyData}
           renderItem={({item, index}) => {
-            return (
-              <Reminders
-                item={item}
-                index={index}
-                sd={mstartDate}
-                days={medDays}
-                times={mTimes}
-                mcc={mcc}
-              />
-            );
+            return <Reminders item={item} index={index} />;
           }}
         />
         <Button
@@ -332,5 +299,3 @@ export default function PatientReport({route}) {
     </View>
   );
 }
-
-

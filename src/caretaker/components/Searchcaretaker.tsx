@@ -10,14 +10,22 @@ import {Formik} from 'formik';
 import * as yup from 'yup';
 import UserAvatar from 'react-native-user-avatar';
 import styles from '../CaretakerStyles/searchCaretakerStyles';
-
+import {GoogleSignin} from '@react-native-google-signin/google-signin';
+import {showToast} from '../../components/atoms/Toast';
 
 const Searchcaretaker = ({navigation}) => {
   const [data, datastate] = React.useState([]);
   const [searchload, searchloadstate] = React.useState(false);
 
-  const sendmailtouser = (email: any) => {
+  const sendmailtouser = async (email: any) => {
     searchloadstate(true);
+    let udet = await GoogleSignin.getCurrentUser();
+    if (udet.user.email === email) {
+      showToast('You cant be self caretaker');
+      searchloadstate(false);
+
+      return;
+    }
     fetch(`${API_URL}/api/v1/email?email=${email}&sender=Nikunj bisht`)
       .then(res => res.json())
       .then(resp => {
