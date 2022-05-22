@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable react-native/no-inline-styles */
 /* eslint-disable react/self-closing-comp */
 import React from 'react';
 import Mypatient from './components/Mypatients';
@@ -8,8 +6,6 @@ import {Tab, TabView} from 'react-native-elements';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faUserFriends, faHospitalUser} from '@fortawesome/free-solid-svg-icons';
 import {IconProp} from '@fortawesome/fontawesome-svg-core';
-import {useFocusEffect} from '@react-navigation/native';
-import {Alert} from 'react-native';
 import styles from './patientStyles/PatientStyles';
 
 const Patientcomp = ({navigation}) => {

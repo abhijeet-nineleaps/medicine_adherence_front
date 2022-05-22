@@ -16,6 +16,7 @@ import {LogBox} from 'react-native';
 import Fetchdata from '../../repositories/database/Querydata';
 import globalDb from '../../repositories/database/Globaldb';
 import styles from '../adherenceStyles/SenImageToCareTakerStyles';
+import {showToast} from '../../components/atoms/Toast';
 
 LogBox.ignoreLogs(['Require cycle:']);
 interface Props {
@@ -25,7 +26,7 @@ interface Props {
 
 const db = globalDb();
 let medName = '';
-let medId:Number = 0;
+let medId: Number = 0;
 const SendImageToCaretaker: React.FC<Props> = ({route, navigation}: Props) => {
   const {image_uri} = route.params;
   const [mycaretakers, mycaretakerstate] = useState([]);
@@ -51,9 +52,7 @@ const SendImageToCaretaker: React.FC<Props> = ({route, navigation}: Props) => {
             !med1 ? send_to_state(item.caretakerId) : send_to_state('');
           }}
         />
-        <Text style={styles.cnText}>
-          {item.caretakerUsername}
-        </Text>
+        <Text style={styles.cnText}>{item.caretakerUsername}</Text>
       </View>
     );
   };
@@ -136,7 +135,11 @@ const SendImageToCaretaker: React.FC<Props> = ({route, navigation}: Props) => {
 
   async function SendImage() {
     setModalVisible(true);
-    if (medName === '') {return;}
+    if (medName === '') {
+      setModalVisible(false);
+      showToast('Select medicine');
+      return;
+    }
     let todayDate = new Date();
     let setDate =
       todayDate.getDate() +
@@ -182,7 +185,7 @@ const SendImageToCaretaker: React.FC<Props> = ({route, navigation}: Props) => {
     formdata.append('name', file_name);
     formdata.append('id', send_to);
     formdata.append('medName', medName + ' taken by ' + patientName);
-    formdata.append('medId',medId);
+    formdata.append('medId', medId);
     const url = `${API_URL}`;
     fetch(url + '/api/v1/image', {
       method: 'post',
@@ -211,10 +214,8 @@ const SendImageToCaretaker: React.FC<Props> = ({route, navigation}: Props) => {
         transparent={true}
         visible={modalVisible}
         style={styles.modal}>
-        <View
-          style={styles.modalOuterView}>
-          <View
-            style={styles.modalInnerView}>
+        <View style={styles.modalOuterView}>
+          <View style={styles.modalInnerView}>
             <Text>Please wait Uploading Image!</Text>
             <Progress.CircleSnail
               spinDuration={500}
@@ -224,8 +225,7 @@ const SendImageToCaretaker: React.FC<Props> = ({route, navigation}: Props) => {
           </View>
         </View>
       </Modal>
-      <View
-        style={styles.container1}>
+      <View style={styles.container1}>
         <Text style={styles.container1Text}>Image</Text>
         <Button
           title="Share"
@@ -240,9 +240,7 @@ const SendImageToCaretaker: React.FC<Props> = ({route, navigation}: Props) => {
             await Share.open(shareOptions);
           }}></Button>
       </View>
-      <Image
-        source={{uri: image_uri}}
-        style={styles.image}></Image>
+      <Image source={{uri: image_uri}} style={styles.image}></Image>
       <ScrollView>
         <View style={styles.mnView}>
           <Text style={styles.mnText}>Select Medicine</Text>
