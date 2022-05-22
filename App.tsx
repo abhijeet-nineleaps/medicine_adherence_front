@@ -2,9 +2,9 @@ import React from 'react';
 import analytics from '@react-native-firebase/analytics';
 
 import {NavigationContainer} from '@react-navigation/native';
-import Stackscreen from './src/stackscreens/Stackscreen';
+import Stackscreen from './src/stackscreens/stackScreen';
 import {Provider} from 'react-redux';
-import store from './src/Store';
+import store from './src/store';
 
 const App: React.FC = () => {
   const routeNameRef: any = React.useRef();
