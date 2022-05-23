@@ -30,7 +30,7 @@ const Mypatient: React.FC<Props> = ({navigation}: Props) => {
   const [refresh, refeereshstate] = React.useState(false);
   const fetchpatients = () => {
     fetch(
-      `${API_URL}/api/v1/patients?caretakerId=f9c67686-55f9-495a-b214-eb89d5606678`,
+      `${API_URL}/api/v1/patients?caretakerId=d0aba7ce-1e7f-458e-8090-8cc62c00c3c5`,
     )
       .then(resp => resp.json())
       .then(res => {
