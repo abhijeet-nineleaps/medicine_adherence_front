@@ -43,7 +43,7 @@ const Stackscreen: React.FC = () => {
           headerStyle: {backgroundColor: '#3743ab'},
         }}
         component={UserMed}></Stack.Screen>
-      <Stack.Screen name="Login" component={Login}></Stack.Screen>
+      <Stack.Screen name="Sign-up" component={Login}></Stack.Screen>
       <Stack.Screen
         name="Profile"
         options={{
@@ -80,7 +80,7 @@ const Stackscreen: React.FC = () => {
         options={() => ({
           title: 'Send Image',
         })}></Stack.Screen>
-      <Stack.Screen name="Loginscreen" component={Loginscreen}></Stack.Screen>
+      <Stack.Screen name="Login" component={Loginscreen}></Stack.Screen>
       <Stack.Screen
         name="Sentocaretaker"
         component={SendImageToCaretaker}

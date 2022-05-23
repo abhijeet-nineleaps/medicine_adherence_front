@@ -84,15 +84,7 @@ const Addcaretaker: React.FC<{navigation}> = Props => {
   return (
     <React.Fragment>
       <View style={styles.container}>
-        {load && (
-          <View style={styles.imgContainer}>
-            <Image
-              source={require('../../../assests/nocaretakers.jpg')}
-              style={styles.img}
-              resizeMode="contain"></Image>
-          </View>
-        )}
-        <FlatList
+      <FlatList
           data={caretakers}
           renderItem={renderitem}
           refreshControl={
@@ -100,6 +92,14 @@ const Addcaretaker: React.FC<{navigation}> = Props => {
               refreshing={refresh}
               onRefresh={fetchcaretakers}></RefreshControl>
           }></FlatList>
+        {load && (
+          <View style={styles.imgView}>
+            <Image
+              source={require('../../../assests/nocaretakers.jpg')}
+              style={styles.img}
+              resizeMode="contain"></Image>
+          </View>
+        )}
         <View style={styles.sdContainer}>
           <SpeedDial
             isOpen={open}

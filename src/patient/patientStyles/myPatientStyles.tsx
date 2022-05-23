@@ -24,7 +24,8 @@ const styles= StyleSheet.create({
     
     //main
     container:{backgroundColor: 'white', height: '100%'},
-    img:{width: 400},
+    img:{width: 250},
+    imgView:{position:'absolute',alignSelf:'center',top:90},
 
 });
 export default styles;

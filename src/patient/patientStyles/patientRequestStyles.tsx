@@ -3,8 +3,8 @@ import { StyleSheet } from "react-native";
 const styles= StyleSheet.create({
 
     container:{flex: 1, backgroundColor: 'white'},
-    imgView:{alignItems: 'center', justifyContent: 'center'},
-    img:{width:400},
+    imgView:{position:'absolute',alignSelf:'center',top:90},
+    img:{width:250},
     card:{elevation: 2, margin: 6, borderRadius: 25},
     cardInner:{flexDirection: 'row'},
     avatar:{marginTop: 10, marginLeft: 6},
