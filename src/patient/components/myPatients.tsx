@@ -1,7 +1,7 @@
 /* eslint-disable react/self-closing-comp */
 /* eslint-disable react-native/no-inline-styles */
 import React from 'react';
-import {API_URL} from '@env';
+import { API_URL } from '../../repositories/var';
 import {
   FlatList,
   RefreshControl,
@@ -30,7 +30,7 @@ const Mypatient: React.FC<Props> = ({navigation}: Props) => {
   const [refresh, refeereshstate] = React.useState(false);
   const fetchpatients = () => {
     fetch(
-      `${API_URL}/api/v1/patients?caretakerId=d0aba7ce-1e7f-458e-8090-8cc62c00c3c`,
+      `${API_URL}/api/v1/patients?caretakerId=d0aba7ce-1e7f-458e-8090-8cc62c00c3c5`,
     )
       .then(resp => resp.json())
       .then(res => {

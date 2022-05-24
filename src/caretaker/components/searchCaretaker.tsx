@@ -3,7 +3,7 @@
 import React from 'react';
 import {FlatList, View, Image, Text} from 'react-native';
 import {Button, ListItem, SearchBar} from 'react-native-elements';
-import {API_URL} from '@env';
+import { API_URL } from '../../repositories/var';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Toast from 'react-native-toast-message';
 import {Formik} from 'formik';

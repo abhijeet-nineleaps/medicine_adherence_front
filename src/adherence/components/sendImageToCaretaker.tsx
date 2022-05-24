@@ -3,7 +3,7 @@
 /* eslint-disable react/self-closing-comp */
 /* eslint-disable react-native/no-inline-styles */
 import {Image, Modal, ScrollView, TouchableOpacity, View} from 'react-native';
-import {API_URL} from '@env';
+import { API_URL } from '../../repositories/var';
 import React, {useState} from 'react';
 import BouncyCheckbox from 'react-native-bouncy-checkbox';
 import AsyncStorage from '@react-native-async-storage/async-storage';

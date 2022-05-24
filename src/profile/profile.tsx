@@ -19,7 +19,7 @@ import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {Picker} from '@react-native-picker/picker';
 import {TextInput} from 'react-native-paper';
 import Toast from 'react-native-toast-message';
-import {API_URL} from '@env';
+import { API_URL } from '../repositories/var';
 import {Button} from 'react-native-elements';
 import {Formik} from 'formik';
 import * as yup from 'yup';
