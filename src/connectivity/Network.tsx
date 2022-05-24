@@ -1,4 +1,4 @@
-import {API_URL} from '@env';
+import { API_URL } from "../repositories/var";
 
 const NetworkCalls = {
   synchistory: async (medId: Number, medHistory: any) => {

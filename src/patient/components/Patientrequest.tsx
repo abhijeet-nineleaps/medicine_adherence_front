@@ -5,7 +5,7 @@ import React from 'react';
 import {View, FlatList, Image, RefreshControl} from 'react-native';
 import {Card} from 'react-native-paper';
 import {Avatar} from 'react-native-elements';
-import {API_URL} from '@env';
+import { API_URL } from '../../repositories/var';
 import {ListItem, Button} from 'react-native-elements';
 import {useFocusEffect} from '@react-navigation/native';
 import styles from '../patientStyles/PatientRequestStyles';

@@ -10,7 +10,7 @@ import {
   faKitMedical,
 } from '@fortawesome/free-solid-svg-icons';
 import {List} from 'react-native-paper';
-import {API_URL} from '@env';
+import { API_URL } from '../../repositories/var';
 import * as Progress from 'react-native-progress';
 import {IconProp} from '@fortawesome/fontawesome-svg-core';
 import {LogBox} from 'react-native';
