@@ -6,7 +6,7 @@ import {name as appName} from './app.json';
 import {
   PlaySound,
   Pushnotificationforeground,
-} from './src/alarm/common/Pushnotificationconfig';
+} from './src/alarm/common/pushNotificationConfig';
 // PushNotification.getChannels(function (channel_ids) {
 //   console.log(channel_ids); // ['channel_id_1']
 // });

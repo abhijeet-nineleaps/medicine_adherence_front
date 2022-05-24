@@ -4,8 +4,8 @@ const styles = StyleSheet.create({
 
   //Add a caretaker screen
     container:{flex: 1, backgroundColor: 'white', height: '100%'},
-    imgContainer:{alignItems: 'center'},
-    img:{width: 400},
+    img:{width: 250},
+    imgView:{position:'absolute',alignSelf:'center',top:90},
     sdContainer:{bottom: 0, alignItems: 'center'},
     sd:{backgroundColor: 'white'},
     sdIcon:{name: 'add', color: 'white'},
