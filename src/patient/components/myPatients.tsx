@@ -1,7 +1,7 @@
 /* eslint-disable react/self-closing-comp */
 /* eslint-disable react-native/no-inline-styles */
 import React from 'react';
-import { API_URL } from '../../repositories/var';
+import {API_URL} from '../../repositories/var';
 import {
   FlatList,
   RefreshControl,
@@ -18,8 +18,7 @@ import {IconProp} from '@fortawesome/fontawesome-svg-core';
 import {useFocusEffect} from '@react-navigation/native';
 import UserAvatar from 'react-native-user-avatar';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
-import styles from "../patientStyles/myPatientStyles";
-
+import styles from '../patientStyles/myPatientStyles';
 
 interface Props {
   navigation: any;
@@ -30,7 +29,7 @@ const Mypatient: React.FC<Props> = ({navigation}: Props) => {
   const [refresh, refeereshstate] = React.useState(false);
   const fetchpatients = () => {
     fetch(
-      `${API_URL}/api/v1/patients?caretakerId=d0aba7ce-1e7f-458e-8090-8cc62c00c3c5`,
+      `${API_URL}/api/v1/patients?caretakerId=f9c67686-55f9-495a-b214-eb89d5606678`,
     )
       .then(resp => resp.json())
       .then(res => {
@@ -96,8 +95,7 @@ const Mypatient: React.FC<Props> = ({navigation}: Props) => {
             <UserAvatar size={60} name={item.patientName}></UserAvatar>
 
             <ListItem.Content>
-              <ListItem.Title
-                style={styles.patientName}>
+              <ListItem.Title style={styles.patientName}>
                 {item.patientName}
               </ListItem.Title>
               <ListItem.Subtitle>
@@ -122,7 +120,7 @@ const Mypatient: React.FC<Props> = ({navigation}: Props) => {
 
   return (
     <View style={styles.container}>
-            <FlatList
+      <FlatList
         data={data}
         renderItem={renderitem}
         refreshControl={

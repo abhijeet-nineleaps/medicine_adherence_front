@@ -119,6 +119,7 @@ const Stackscreen: React.FC = () => {
         }}
         name="Images"
         component={MedicineImages}></Stack.Screen>
+        
     </Stack.Navigator>
   );
 };
