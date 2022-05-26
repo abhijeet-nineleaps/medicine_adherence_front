@@ -19,7 +19,7 @@ import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {Picker} from '@react-native-picker/picker';
 import {TextInput} from 'react-native-paper';
 import Toast from 'react-native-toast-message';
-import { API_URL } from '../repositories/var';
+import {API_URL} from '../repositories/var';
 import {Button} from 'react-native-elements';
 import {Formik} from 'formik';
 import * as yup from 'yup';
@@ -156,17 +156,12 @@ const Profile = ({navigation}) => {
     <View style={styles.container}>
       <ScrollView>
         <Toast visibilityTime={1500}></Toast>
-        <View
-          style={styles.container1}>
+        <View style={styles.container1}>
           <View style={styles.top}>
             <Image source={{uri: img}} style={styles.avatar}></Image>
             <View style={styles.topItem}>
-              <Text style={styles.topItemText1}>
-                {name.user.name}
-              </Text>
-              <Text style={styles.topItemText2}>
-                {name.user.email}
-              </Text>
+              <Text style={styles.topItemText1}>{name.user.name}</Text>
+              <Text style={styles.topItemText2}>{name.user.email}</Text>
             </View>
           </View>
           <View>
@@ -295,10 +290,8 @@ const Profile = ({navigation}) => {
                               {errors.Weight}
                             </Text>
                           )}
-                          <View
-                            style={styles.pickerContainer}>
-                            <View
-                              style={styles.pickerIcon}>
+                          <View style={styles.pickerContainer}>
+                            <View style={styles.pickerIcon}>
                               <FontAwesomeIcon
                                 size={18}
                                 icon={faMarsAndVenus as IconProp}
@@ -325,10 +318,8 @@ const Profile = ({navigation}) => {
                               {touched.Gender && errors.Gender}
                             </Text>
                           </View>
-                          <View
-                            style={styles.pickerContainer}>
-                            <View
-                              style={styles.pickerIcon}>
+                          <View style={styles.pickerContainer}>
+                            <View style={styles.pickerIcon}>
                               <FontAwesomeIcon
                                 size={18}
                                 icon={faRing as IconProp}
@@ -358,10 +349,8 @@ const Profile = ({navigation}) => {
                               {touched.MaritalStatus && errors.MaritalStatus}
                             </Text>
                           </View>
-                          <View
-                            style={styles.pickerContainer}>
-                            <View
-                              style={styles.pickerIcon}>
+                          <View style={styles.pickerContainer}>
+                            <View style={styles.pickerIcon}>
                               <FontAwesomeIcon
                                 size={18}
                                 icon={faDroplet as IconProp}

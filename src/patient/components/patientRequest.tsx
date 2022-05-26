@@ -1,15 +1,12 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable react/self-closing-comp */
-/* eslint-disable react-native/no-inline-styles */
 import React from 'react';
 import {View, FlatList, Image, RefreshControl} from 'react-native';
 import {Card} from 'react-native-paper';
 import {Avatar} from 'react-native-elements';
-import { API_URL } from '../../repositories/var';
+import {API_URL} from '../../repositories/var';
 import {ListItem, Button} from 'react-native-elements';
 import {useFocusEffect} from '@react-navigation/native';
 import styles from '../patientStyles/patientRequestStyles';
-
 
 const Patientrequest = () => {
   const [patients, patientsdata] = React.useState([]);
@@ -17,7 +14,7 @@ const Patientrequest = () => {
 
   const fetchpatientreq = () => {
     fetch(
-      `${API_URL}/api/v1/patient/requests?caretakerId=d0aba7ce-1e7f-458e-8090-8cc62c00c3c5`,
+      `${API_URL}/api/v1/patient/requests?caretakerId=f9c67686-55f9-495a-b214-eb89d5606678`,
     )
       .then(res => res.json())
       .then(resp => {
@@ -67,7 +64,7 @@ const Patientrequest = () => {
   };
   return (
     <View style={styles.container}>
-            <FlatList
+      <FlatList
         refreshControl={
           <RefreshControl
             refreshing={refresh}
@@ -91,12 +88,10 @@ const Patientrequest = () => {
                   hasTVPreferredFocus={undefined}
                   tvParallaxProperties={undefined}>
                   <ListItem.Content>
-                    <ListItem.Title
-                      style={styles.listTitle}>
+                    <ListItem.Title style={styles.listTitle}>
                       {item.patientName}
                     </ListItem.Title>
-                    <ListItem.Subtitle
-                      style={styles.listSubTitle}>
+                    <ListItem.Subtitle style={styles.listSubTitle}>
                       {' Sent on : ' + item.createdAt}
                     </ListItem.Subtitle>
                   </ListItem.Content>

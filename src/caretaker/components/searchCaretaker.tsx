@@ -1,9 +1,9 @@
 /* eslint-disable react/self-closing-comp */
 /* eslint-disable react-native/no-inline-styles */
-import React from 'react';
+import React, {useState} from 'react';
 import {FlatList, View, Image, Text} from 'react-native';
 import {Button, ListItem, SearchBar} from 'react-native-elements';
-import { API_URL } from '../../repositories/var';
+import {API_URL} from '../../repositories/var';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Toast from 'react-native-toast-message';
 import {Formik} from 'formik';
@@ -64,8 +64,16 @@ const Searchcaretaker = ({navigation}) => {
         'Content-type': 'application/json',
       },
     })
-      .then(() => {
-        navigation.pop(1);
+      .then((res: any) => {
+        return res.json();
+      })
+      .then(resp => {
+        if (resp.status === 'Success') {
+          navigation.pop(1);
+        } else {
+          console.log(resp);
+          showToast(resp.message);
+        }
       })
       .catch(err => console.log(err));
   };
@@ -77,7 +85,9 @@ const Searchcaretaker = ({navigation}) => {
       .required('Email Address is Required'),
   });
 
-  const renderitem = ({item}) => {
+  const Renderitem = ({item}) => {
+    const [sendloader, setloadstate] = useState(false);
+
     return (
       <ListItem
         style={styles.listItemContainer}
@@ -89,10 +99,13 @@ const Searchcaretaker = ({navigation}) => {
           <ListItem.Subtitle>{item.email}</ListItem.Subtitle>
         </ListItem.Content>
         <Button
+          loading={sendloader}
           title="Send request"
           buttonStyle={styles.listButton}
-          onPress={() => {
-            sendreqtocaretaker(item.userId, item.userName);
+          onPress={async () => {
+            setloadstate(true);
+            await sendreqtocaretaker(item.userId, item.userName);
+            setloadstate(false);
           }}></Button>
       </ListItem>
     );
@@ -131,7 +144,11 @@ const Searchcaretaker = ({navigation}) => {
             resizeMode="stretch"></Image>
         </View>
       )}
-      <FlatList data={data} renderItem={renderitem}></FlatList>
+      <FlatList
+        data={data}
+        renderItem={({item}) => (
+          <Renderitem item={item}></Renderitem>
+        )}></FlatList>
     </View>
   );
 };
