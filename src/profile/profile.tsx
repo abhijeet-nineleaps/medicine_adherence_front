@@ -85,7 +85,7 @@ const Profile = ({navigation}) => {
       body: JSON.stringify({
         bio: sbio,
         age: sage,
-        usercontact: scontact,
+        userContact: scontact,
         gender: sgender,
         martialStatus: maritalstatus,
         bloodGroup: sblood,

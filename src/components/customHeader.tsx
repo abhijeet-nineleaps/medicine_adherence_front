@@ -87,7 +87,7 @@ const CustomHeader = props => {
                 titleStyle={styles.buttonTitle}
                 containerStyle={styles.buttonContainer}
                 onPress={async () => {
-                  props.navigation.navigate('Loginscreen');
+                  props.navigation.navigate('Login');
                 }}
               />
             </>

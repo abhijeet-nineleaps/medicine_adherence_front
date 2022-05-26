@@ -135,6 +135,7 @@ const TodayPerformance = ({route}) => {
           <Image
             source={require('../../../assests/noremtoday.png')}
             style={styles.container2Image}
+            resizeMode="contain"
           />
         </View>
       ) : (

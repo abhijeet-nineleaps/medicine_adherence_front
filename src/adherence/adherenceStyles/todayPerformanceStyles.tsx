@@ -6,7 +6,7 @@ const styles= StyleSheet.create({
     container1:{padding: 15, backgroundColor: 'lightgrey'},
     container1Text:{fontWeight: 'bold'},
     container2:{justifyContent: 'center', alignItems: 'center'},
-    container2Image:{height: 300, width: 300},
+    container2Image:{width: 250},
 
     //cb --- CheckBox
     cbContainer:{padding: 15, paddingLeft: 30, marginTop: 14},

@@ -2,25 +2,52 @@ import {StyleSheet} from 'react-native';
 
 const styles = StyleSheet.create({
   container: {height: '100%', backgroundColor: 'white'},
-  modal: {alignItems: 'center', backgroundColor: 'red'},
+  modal: {backgroundColor: 'white'},
   carousalView: {
     height: '100%',
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: 'rgba(52, 52, 52, 0.8)',
   },
-  carousalImageView: {padding: 40},
-  carousalImage: {
+  carousalImageView: {
+    padding: 30,
+    flexDirection: 'column',
+    // backgroundColor: 'lightgrey',
+    height: '60%',
+    top: '25%',
     borderRadius: 30,
-    padding: 50,
+    width: '45%',
+    justifyContent: 'space-evenly',
+    left: '27%',
+  },
+  medNameView1: {
+    backgroundColor: 'lightgrey',
+    height: 50,
+    borderBottomLeftRadius: 20,
+    borderBottomRightRadius: 20,
+    justifyContent: 'center',
+  },
+  medName: {
+    fontSize: 20,
+    alignSelf: 'center',
+    color: 'black',
+    fontWeight: '700',
+  },
+
+  carousalImage: {
+    borderTopLeftRadius: 15,
+    borderTopRightRadius: 15,
+    padding: 10,
     width: '100%',
-    height: '80%',
+    height: '90%',
     alignItems: 'center',
     justifyContent: 'center',
   },
   paginationContainer: {
     backgroundColor: 'rgba(0, 0, 0, 0.75)',
     position: 'relative',
+    borderRadius: 20,
+    bottom: '28%',
   },
   paginationDot: {
     width: 10,

@@ -143,6 +143,9 @@ const MyComponent: React.FC = () => {
                         source={{uri: `${item}`}}
                         resizeMode="contain"
                         style={styles.carousalImage}></Image>
+                      <View style={styles.medNameView1}>
+                        <Text style={styles.medName}>{pickerValue}</Text>
+                      </View>
                     </View>
                   );
                 }}

@@ -16,7 +16,7 @@ const styles = StyleSheet.create({
     rem:{marginRight: 10},
     container:{flex: 1, backgroundColor: 'white', height: '100%'},
     imgView:{alignItems: 'center', justifyContent: 'center'},
-    img:{width: 300},
+    img:{width: 250},
     bottom:{
         width: '100%',
         position: 'absolute',
