@@ -25,7 +25,7 @@ import globalDb from '../../repositories/database/globalDb';
 import Carousel, {Pagination} from 'react-native-snap-carousel';
 import styles from '../adherenceStyles/adherenceHistoryStyles';
 import Adherence from '../../repositories/adherence/adherence';
-import { showToast } from '../../components/atoms/toast';
+import {showToast} from '../../components/atoms/toast';
 
 let globalmedId;
 LogBox.ignoreLogs(['Require cycle:']);
@@ -115,7 +115,7 @@ const MyComponent: React.FC = () => {
   );
   const showDetailfun = sDate => {
     if (sDate === null) {
-      showToast("No Images");
+      showToast('No Images');
       return;
     }
     setimagearray(sDate);
@@ -145,7 +145,9 @@ const MyComponent: React.FC = () => {
                         source={{uri: `${item}`}}
                         resizeMode="contain"
                         style={styles.carousalImage}></Image>
-                        <Text style={{justifyContent:'center',alignItems:'center'}}>{pickerValue}</Text>
+                      <View style={styles.medNameView1}>
+                        <Text style={styles.medName}>{pickerValue}</Text>
+                      </View>
                     </View>
                   );
                 }}

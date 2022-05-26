@@ -4,9 +4,8 @@ const styles = StyleSheet.create({
   container: {backgroundColor: 'white', height: '100%'},
   container1: {padding: 15, backgroundColor: 'lightgrey'},
   container1Text: {fontWeight: 'bold'},
-  container2: {alignSelf: 'center', height: '100%', top: 140},
-  container2Image: {height: 270, width: 250},
-
+  container2: {justifyContent: 'center', alignItems: 'center'},
+  container2Image: {width: 250},
   //cb --- CheckBox
   cbContainer: {padding: 15, paddingLeft: 30, marginTop: 14},
   cbIcon: {borderColor: '#3743ab', borderWidth: 1.3},
