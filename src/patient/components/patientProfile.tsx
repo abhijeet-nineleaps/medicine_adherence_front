@@ -83,7 +83,7 @@ const ViewProfile = ({route, navigation}) => {
               <Text style={styles.itemleft}>Contact Number</Text>
 
               <Text style={styles.itemright}>
-                {userdetails.userEntityList[0].userDetails.usercontact}
+                {userdetails.userEntityList[0].userDetails.userContact}
               </Text>
             </View>
             <View style={styles.itemView} />

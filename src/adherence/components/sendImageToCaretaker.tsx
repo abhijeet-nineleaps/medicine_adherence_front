@@ -3,7 +3,7 @@
 /* eslint-disable react/self-closing-comp */
 /* eslint-disable react-native/no-inline-styles */
 import {Image, Modal, ScrollView, TouchableOpacity, View} from 'react-native';
-import { API_URL } from '../../repositories/var';
+import {API_URL} from '../../repositories/var';
 import React, {useState} from 'react';
 import BouncyCheckbox from 'react-native-bouncy-checkbox';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -147,6 +147,7 @@ const SendImageToCaretaker: React.FC<Props> = ({route, navigation}: Props) => {
       (todayDate.getMonth() + 1) +
       '-' +
       todayDate.getFullYear();
+
     let imagesData = await AsyncStorage.getItem(setDate + ' ' + medName);
     if (imagesData !== null) {
       let parsedData = JSON.parse(imagesData);
@@ -196,7 +197,7 @@ const SendImageToCaretaker: React.FC<Props> = ({route, navigation}: Props) => {
     })
       .then(() => {
         setModalVisible(false);
-
+        showToast("Image sent");
         setTimeout(() => {
           navigation.pop(1);
         }, 1000);
