@@ -1,11 +1,11 @@
-import {API_URLS} from '../../constants/apiurl';
+import {API_URLS} from '../../constants/apiUrl';
 
 interface Iparams {
   meds_id: any;
   syncData: any;
 }
 
-const Adherence = {
+const adherence = {
   syncmedicineHistory: async (params: Iparams) => {
     const {meds_id, syncData} = params;
     let response = await fetch(`${API_URLS.SYNC_HISTORY}?medId=${meds_id}`, {
@@ -19,4 +19,4 @@ const Adherence = {
   },
 };
 
-export default Adherence;
+export default adherence;

@@ -1,4 +1,4 @@
-import {API_URLS} from '../../constants/apiurl';
+import {API_URLS} from '../../constants/apiUrl';
 
 interface Iparams {
   userinfo: any;

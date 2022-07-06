@@ -4,7 +4,7 @@ import {useFocusEffect} from '@react-navigation/native';
 import React from 'react';
 import {View, Text, Image} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import styles from './componentStyles/componentStyles';
+import styles from './componentStyles/ComponentStyles';
 
 
 const ProfileHeader: React.FC = () => {
