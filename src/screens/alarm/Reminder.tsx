@@ -22,7 +22,7 @@ import EntypoIcon from 'react-native-vector-icons/Entypo'
 import {TextInput} from 'react-native-paper';
 import CheckBox from 'react-native-check-box';
 import MultiSlider from '@ptomasroos/react-native-multi-slider';
-import DateTimePicker from 'react-native-modal-datetime-picker';
+import DateTimePicker from 'react-native-modal-datetime-picker';   //NOSONAR false positive
 import globalDb from '../../repositories/database/globalDb';
 import styles from './alarmStyles/ReminderStyles';
 
@@ -104,7 +104,7 @@ const Reminder = ({route, navigation}) => {
     console.log('now', now);
     let sample_date = new Date(start_date);
     var weeks: string[] = ['Sun', 'Mon', 'Tue', 'Wed', 'Thur', 'Fri', 'Sat'];
-    var set = new Set<String>(selecteddaysItems);
+    var set = new Set<string>(selecteddaysItems);
     if (check1) {
       timeings.forEach((timee: any) => {
         counter += 1;

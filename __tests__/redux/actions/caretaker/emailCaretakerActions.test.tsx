@@ -1,7 +1,7 @@
 import { emailCaretakerActions } from "../../../../src/redux/actions/caretaker/emailCaretakerActions";
 import Types from "../../../../src/redux/actions/allTypes";
 
-describe("test CaretakerActions",()=>{
+describe("test emailCaretakerActions",()=>{
     const data = "1"
     const err = "SomeError"
     const any= "email"

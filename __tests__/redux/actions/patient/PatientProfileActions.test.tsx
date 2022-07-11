@@ -1,6 +1,6 @@
 import { PatientProfileActions } from "../../../../src/redux/actions/patient/PatientProfileActions";
 import Types from "../../../../src/redux/actions/allTypes";
-describe("test CaretakerActions",()=>{
+describe("test PatientProfileActions",()=>{
     const data = "1"
     const err = "SomeError"
     const string= "user_id"

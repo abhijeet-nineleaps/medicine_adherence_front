@@ -1,6 +1,6 @@
 import {call, put, takeEvery} from 'redux-saga/effects';
 import Types from '../../actions/allTypes';
-import { notifyPatients, notifyPatientsError, notifyPatientsSuccess } from '../../actions/patient/notifyPatientActions';
+import {notifyPatientsError, notifyPatientsSuccess } from '../../actions/patient/notifyPatientActions';
 import notifypatient from '../../apis/notifypatient';
 
 

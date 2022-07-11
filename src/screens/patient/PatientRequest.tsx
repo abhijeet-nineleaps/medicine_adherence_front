@@ -40,7 +40,7 @@ const Patientrequest = () => {
       };
     }, []),
   );
-  const acceptrequest = (ci_id: String) => {
+  const acceptrequest = (ci_id: string) => {
     let url: any = new URL(`${API_URL}/api/v1/accept`);
     url.searchParams.append('cId', ci_id);
 
@@ -51,7 +51,7 @@ const Patientrequest = () => {
       })
       .catch(err => console.log(err));
   };
-  const deletereq = (ci_id: String) => {
+  const deletereq = (ci_id: string) => {
     let url: any = new URL(`${API_URL}/api/v1/delete`);
     url.searchParams.append('cId', ci_id);
 

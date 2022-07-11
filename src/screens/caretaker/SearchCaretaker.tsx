@@ -1,6 +1,6 @@
 /* eslint-disable react/self-closing-comp */
 /* eslint-disable react-native/no-inline-styles */
-import React, {useState, useMemo, useEffect} from 'react';
+import React, {useState} from 'react';
 import {FlatList, View, Image, Text,} from 'react-native';
 import {Button, ListItem, SearchBar} from 'react-native-elements';
 import {API_URL} from '../../repositories/var';
@@ -48,8 +48,8 @@ const Searchcaretaker = ({navigation}) => {
   };
 
   const sendreqtocaretaker = async (
-    caret_id: String,
-    caret_username: String,
+    caret_id: string,
+    caret_username: string,
   ) => {
     const pnt_id = await AsyncStorage.getItem('user_id');
     const pt_name = await AsyncStorage.getItem('user_name');

@@ -28,7 +28,7 @@ interface Props {
 
 const db = globalDb();
 let medName = '';
-let medId: Number = 0;
+let medId: number = 0;
 const SendImageToCaretaker= ({route, navigation}) => {
   const {image_uri} = route.params;
   const [mycaretakers, mycaretakerstate] = useState([]);

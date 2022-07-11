@@ -1,6 +1,6 @@
 import { sendImageActions } from "../../../../src/redux/actions/caretaker/sendImageActions";
 import Types from "../../../../src/redux/actions/allTypes";
-describe("test CaretakerActions",()=>{
+describe("test sendImageActions",()=>{
     const data = "1"
     const err = "SomeError"
     const number= 1

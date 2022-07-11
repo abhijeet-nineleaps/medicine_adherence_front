@@ -15,7 +15,7 @@ import Loginscreen from '../login/LoginScreen';
 import Profile from '../profile/Profile';
 import About from '../AboutApp';
 import MedicineImages from '../patient/MedicineImages';
-import OnboardingScreen from '../Onboarding';
+import OnboardingScreen from '../OnboardingScreen';
 import ViewProfile from '../patient/PatientProfile';
 import PatientReport from '../patient/PatientReport';
 import DrawerNavigator from '../../navigation/drawerNavigator';

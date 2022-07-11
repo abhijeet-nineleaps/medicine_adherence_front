@@ -4,7 +4,6 @@
 import Addcaretaker from './AddCaretaker';
 import React from 'react';
 import CaretakerReq from './CaretakerReq';
-import {GoogleSignin} from '@react-native-google-signin/google-signin';
 import {useFocusEffect} from '@react-navigation/native';
 import {Alert} from 'react-native';
 import {Tab, TabView} from 'react-native-elements';
