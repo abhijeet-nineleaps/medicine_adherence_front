@@ -17,7 +17,6 @@ export default function Caretakercomp({navigation}) {
   const [index, setIndex] = React.useState(0);
   useFocusEffect(() => {
     async function checkforlog() {
-      const islogged = await GoogleSignin.isSignedIn();
       const checkforlogin = await AsyncStorage.getItem('user_id');
 
       if (checkforlogin === null) {

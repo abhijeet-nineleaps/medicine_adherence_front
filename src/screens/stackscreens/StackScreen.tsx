@@ -4,11 +4,10 @@ import {createStackNavigator} from '@react-navigation/stack';
 
 import React from 'react';
 
-import MyComponent from '../adherence/AdherenceHistory';
+import AdherenceHistory from '../adherence/AdherenceHistory';
 import CameraScreen from '../adherence/ClickSendImage';
 import SendImageToCaretaker from '../adherence/SendImageToCaretaker';
 import TodayPerformance from '../adherence/TodayPerformance';
-//import Addevent from '../alarm/components/AddEvents';
 import Reminder from '../alarm/Reminder';
 import Searchcaretaker from '../caretaker/SearchCaretaker';
 import Login from '../login/GoogleOauth';
@@ -104,7 +103,7 @@ const Stackscreen: React.FC = () => {
       <Stack.Screen
         options={{headerTintColor: 'black'}}
         name="Adherence History"
-        component={MyComponent}></Stack.Screen>
+        component={AdherenceHistory}></Stack.Screen>
       <Stack.Screen
         options={{
           headerTintColor: 'white',

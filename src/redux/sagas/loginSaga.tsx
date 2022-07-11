@@ -5,7 +5,7 @@ let initialState = {
     loginList:[],
 }
 ​
-const loginReducer = (state = initialState,{type,payload}) => {
+const loginReducer = (state = initialState,{type,payload}) => {   //NOSONAR false positive
     switch (type) {
         case Types.SUCCESS_USER_LOGIN:
             return {

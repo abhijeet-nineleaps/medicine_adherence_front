@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable react-native/no-inline-styles */
-import {Alert, View} from 'react-native';
+import {View} from 'react-native';
 import React from 'react';
 import {
   GoogleSignin,
@@ -24,7 +24,7 @@ interface Props {
 const Login: React.FC<{navigation}> = Props => {
   const {navigation} = Props;
   const [loading, loadingstate] = React.useState(false);
-  const [connected, connectedstate] = React.useState(false);
+  const [_connected, connectedstate] = React.useState(false);
 
   async function checkconnection() {
     let conn: any = await checkConnectivity();

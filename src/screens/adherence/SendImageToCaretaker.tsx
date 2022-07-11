@@ -2,7 +2,7 @@
 /* eslint-disable no-bitwise */
 /* eslint-disable react/self-closing-comp */
 /* eslint-disable react-native/no-inline-styles */
-import {Image, Modal, ScrollView, TouchableOpacity, View} from 'react-native';
+import {Image, Modal, ScrollView, TouchableOpacity, View, LogBox} from 'react-native';
 import {API_URL} from '../../repositories/var';
 import React, {useState, useEffect} from 'react';
 import BouncyCheckbox from 'react-native-bouncy-checkbox';
@@ -12,14 +12,13 @@ import {Button, Text} from 'react-native-elements';
 import * as Progress from 'react-native-progress';
 import Toast from 'react-native-toast-message';
 import Share from 'react-native-share';
-import {LogBox} from 'react-native';
-import Fetchdata from '../../repositories/database/queryData';
+import queryData from '../../repositories/database/queryData';
 import globalDb from '../../repositories/database/globalDb';
 import styles from './adherenceStyles/SendImageToCareTakerStyles';
 
 
-import {useDispatch, useSelector} from 'react-redux';
-import {fetchCaretakers} from '../../redux/actions/CaretakerActions';
+import {useDispatch} from 'react-redux';
+import {fetchCaretakers} from '../../redux/actions/caretaker/CaretakerActions';
 
 LogBox.ignoreLogs(['Require cycle:']);
 interface Props {
@@ -98,8 +97,7 @@ const SendImageToCaretaker= ({route, navigation}) => {
     );
   };
 
-  const [refresh, refeereshstate] = React.useState(false);
-  const [open, setOpen] = React.useState(false);
+  const [_refresh, refeereshstate] = React.useState(false);
   const dispatch = useDispatch();
   const fetchcaretakers = async () => {
     let user_id = await AsyncStorage.getItem('user_id');
@@ -113,27 +111,9 @@ const SendImageToCaretaker= ({route, navigation}) => {
   const renderitem = ({item}) => {
     console.log(item.patientId, 'b');
 
-  // const fetchcaretakers = async () => {
-  //   const user_id = await AsyncStorage.getItem('user_id');
-
-  //   return new Promise(resl => {
-  //     fetch(`${API_URL}/api/v1/caretakers?patientId=${user_id}`)
-  //       .then(resp => resp.json())
-  //       .then(res => {
-  //         if (res.status === 'failed') {
-  //           resl([]);
-  //         }
-  //         resl(res.userCaretakerList);
-  //       })
-  //       .catch(() => {
-  //         setModalVisible(false);
-  //       });
-  //   });
-  // };
-
   const fetchMedicines = async () => {
     db.transaction(async txn => {
-      let medsArr: any = await Fetchdata.getusermeds(txn);
+      let medsArr: any = await queryData.getusermeds(txn);
       medsArrayState(medsArr);
     });
   };
@@ -146,7 +126,7 @@ const SendImageToCaretaker= ({route, navigation}) => {
       }
       name();
       return () => {
-        true;
+        /*do nothing*/
       };
     }, []),
   );
@@ -159,7 +139,6 @@ const SendImageToCaretaker= ({route, navigation}) => {
         type: 'info',
         text1: 'Select medicine',
       });
-      // showToast('Select medicine');
       return;
     }
     let todayDate = new Date();
@@ -223,7 +202,6 @@ const SendImageToCaretaker= ({route, navigation}) => {
           type: 'success',
           text1: 'Image sent'
         });
-        // showToast("Image sent");
         setTimeout(() => {
           navigation.pop(1);
         }, 1000);

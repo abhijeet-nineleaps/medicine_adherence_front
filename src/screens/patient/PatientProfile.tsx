@@ -2,26 +2,25 @@
 /* eslint-disable react/self-closing-comp */
 /* eslint-disable react-native/no-inline-styles */
 import * as React from 'react';
-import {Text, View, Image, ScrollView, TouchableOpacity} from 'react-native';
+import {Text, View, Image, ScrollView, TouchableOpacity, LogBox} from 'react-native';
 import {List} from 'react-native-paper';
 import { API_URL } from '../../repositories/var';
 import * as Progress from 'react-native-progress';
-import {LogBox} from 'react-native';
+
 import {Button} from 'react-native-elements';
 import styles from './patientStyles/PatientProfileStyles';
 
 import  Icon from 'react-native-vector-icons/FontAwesome'
 
 import {useDispatch, useSelector} from 'react-redux';
-import { fetchPatients } from '../../redux/actions/PatientActions';
+import {fetchPatients } from '../../redux/actions/patient/PatientActions';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 LogBox.ignoreLogs(['Require cycle:']);
 
 const ViewProfile = ({route, navigation}) => {
-  const {user_id} = route.params;
-  const [userdetails, userdetailsstate] = React.useState<any>();
-  const [progress, progress_status] = React.useState(true);
+  const [userdetails, _userdetailsstate] = React.useState<any>();
+  const [progress, _progress_status] = React.useState(true);
   const sendnotificationtouser = async (fcm_token: any, medname: any) => {
     let url: any = new URL(`${API_URL}/api/v1/notifyuser`);
     url.searchParams.append('fcmToken', fcm_token);
@@ -35,8 +34,7 @@ const ViewProfile = ({route, navigation}) => {
   );
   const {load} = useSelector(state => state.PatientProfileReducer);
   console.log(load, 'load');
-  const [data, datastate] = React.useState([]);
-  const [refresh, refeereshstate] = React.useState(false);
+  const [_refresh, refeereshstate] = React.useState(false);
 
   const dispatch = useDispatch();
   const fetchpatients = async () => {
@@ -44,19 +42,6 @@ const ViewProfile = ({route, navigation}) => {
     dispatch(fetchPatients(user_id));
     refeereshstate(false);
   };
-
-  // React.useEffect(() => {
-  //   async function getuserdetails() {
-  //     await fetch(`${API_URL}/api/v1/user?userId=${user_id}`)
-  //       .then(resp => resp.json())
-  //       .then(res => {
-  //         console.log(res,'ress');
-  //         userdetailsstate(res);
-  //         progress_status(false);
-  //       });
-  //   }
-  //   getuserdetails();
-  // }, []);
 
   return (
     <View style={styles.container}>

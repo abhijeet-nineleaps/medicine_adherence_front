@@ -8,6 +8,8 @@ import {
   FlatList,
   PermissionsAndroid,
   Image,
+  LogBox,
+  Modal,
 } from 'react-native';
 
 import Toast from 'react-native-toast-message';
@@ -17,8 +19,7 @@ import {Picker} from '@react-native-picker/picker';
 import {Button, Divider} from 'react-native-elements';
 import {useFocusEffect} from '@react-navigation/native';
 import allreminderdata from '../../components/adherence/allReminderData';
-import {LogBox, Modal} from 'react-native';
-import Fetchdata from '../../repositories/database/queryData';
+import queryData from '../../repositories/database/queryData';
 import * as Progress from 'react-native-progress';
 import LottieView from 'lottie-react-native';
 import downloadPdf from '../../components/adherence/downloadPdf';
@@ -37,8 +38,8 @@ interface singledate {
   taken: [];
 }
 
-const MyComponent: React.FC = () => {
-  const [pickerValue, setPickerValue] = React.useState<String>('');
+const AdherenceHistory: React.FC = () => {
+  const [pickerValue, setPickerValue] = React.useState<string>('');
   const [allreminders, reminders_state] = React.useState<[]>([]);
   const [reminder_map_fetched_data, reminder_map_fetched_data_state] =
     React.useState<[]>([]);
@@ -57,7 +58,7 @@ const MyComponent: React.FC = () => {
         'CREATE TABLE IF NOT EXISTS User_medicines(user_id INTEGER PRIMARY KEY NOT NULL, medicine_name TEXT, medicine_des TEXT , title TEXT, time TEXT , days TEXT , start_date TEXT , end_date TEXT , status INTEGER , sync INTEGER)',
         [],
       );
-      reminder_array = await Fetchdata.getusermeds(txn);
+      reminder_array = await queryData.getusermeds(txn);
       reminders_state(reminder_array);
     });
   };
@@ -98,7 +99,7 @@ const MyComponent: React.FC = () => {
       txn.executeSql(
         'SELECT * FROM `User_medicines` WHERE medicine_name = ?',
         [med_name],
-        function (tx: any, res: any) {
+        function (_tx: any, res: any) {
           med_detail_state(res.rows.item(0));
         },
       );
@@ -110,7 +111,7 @@ const MyComponent: React.FC = () => {
       db = globalDb();
       fetchreminders(db);
       return () => {
-        true;
+       /* do nothing */
       };
     }, []),
   );
@@ -120,7 +121,6 @@ const MyComponent: React.FC = () => {
         type: 'info',
         text1: 'No Images',
       });
-      // showToast('No Images');
       return;
     }
     setimagearray(sDate);
@@ -279,17 +279,15 @@ const MyComponent: React.FC = () => {
               type: 'success',
               text1: 'Downloaded successfully',
             });
-            // ToastAndroid.show('Downloaded successfully', ToastAndroid.LONG);
           } else {
             Toast.show({
               type: 'error',
               text1: 'Error while downloading',
             });
-            // ToastAndroid.show('Error while downloading', ToastAndroid.LONG);
           }
         }}></Button>
     </View>
   );
 };
 
-export default MyComponent;
+export default AdherenceHistory;

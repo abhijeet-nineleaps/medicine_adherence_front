@@ -1,6 +1,6 @@
-import Types from './AllTypes';
+import Types from './allTypes';
 
-export function fetchImages(medId: Number) {
+export function fetchImages(medId: number) {
   return {
     type: Types.GET_IMAGES,
     payload: medId,

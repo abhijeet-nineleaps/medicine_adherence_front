@@ -1,7 +1,7 @@
 import {call, put, takeEvery} from 'redux-saga/effects';
-import Types from '../actions/AllTypes';
+import Types from '../actions/allTypes';
 import { fetchPatientDetailsError, fetchPatientDetailsSuccess } from '../actions/PatientProfileActions';
-import fetchpatientdetail from '../apis/GetPatientDetails';
+import fetchpatientdetail from '../apis/fetchpatientdetail';
 
 function* getPatientDetails({payload}) {
   try {

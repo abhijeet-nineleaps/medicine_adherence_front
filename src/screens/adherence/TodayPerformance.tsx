@@ -67,7 +67,7 @@ const TodayPerformance = ({route}) => {
       txn.executeSql(
         'SELECT * FROM `User_medicines` where user_id = ?',
         [user_id],
-        function (tx: any, res: any) {
+        function (_tx: any, res: any) {
           cc = res.rows.item(0).current_count;
           let arr = res.rows.item(0).days.split(':');
           let set = new Set(arr);
@@ -87,7 +87,7 @@ const TodayPerformance = ({route}) => {
             txn.executeSql(
               'SELECT * FROM reminder_day where date = ? AND med_id = ?',
               [td_da, user_id],
-              function (txx, resp) {
+              function (_txx, resp) {
                 if (resp.rows.length === 0) {
                   let remId = Math.floor(10000000 + Math.random() * 90000000);
 
@@ -101,7 +101,7 @@ const TodayPerformance = ({route}) => {
                   txn.executeSql(
                     'SELECT * FROM reminder_day where date = ? AND med_id = ?',
                     [td_da, user_id],
-                    function (txpp, respp) {
+                    function (_txpp, respp) {
                       setTime(respp.rows.item(0).timings.split('-'));
                     },
                   );
@@ -109,7 +109,7 @@ const TodayPerformance = ({route}) => {
                   txn.executeSql(
                     'SELECT * FROM reminder_day where date = ? AND med_id = ?',
                     [td_da, user_id],
-                    function (txo, respp) {
+                    function (_txo, respp) {
                       setTime(respp.rows.item(0).timings.split('-'));
                     },
                   );

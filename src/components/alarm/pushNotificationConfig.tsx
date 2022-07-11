@@ -17,7 +17,7 @@ function PlaySound() {
 }
 
 function Pushnotificationforeground(mssg: any) {
-  let body: String;
+  let body: string;
   let big_picure_url = '';
   if (mssg.notification.title === 'caretaker') {
     big_picure_url = mssg.notification.android.imageUrl;
@@ -59,7 +59,7 @@ const generatenotificationforpatient = (mssg: any, body: any) => {
 const generatenotificationforcaretaker = (
   mssg: any,
   body: any,
-  big_picure_url: String,
+  big_picure_url: string,
 ) => {
   var num = Math.floor(Math.random() * 90000) + 10000;
 

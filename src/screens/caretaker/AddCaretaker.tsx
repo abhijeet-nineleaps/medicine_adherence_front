@@ -13,7 +13,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Card} from 'react-native-paper';
 import UserAvatar from 'react-native-user-avatar';
 import {useDispatch, useSelector} from 'react-redux';
-import {fetchCaretakers} from '../../redux/actions/CaretakerActions';
+import {fetchCaretakers} from '../../redux/actions/caretaker/CaretakerActions';
 import styles from "./caretakerStyles/CaretakerComStyles";
 
 import Icon from 'react-native-vector-icons/FontAwesome'
@@ -46,7 +46,7 @@ const Addcaretaker: React.FC<{navigation}> = Props => {
 
     return (
       <Card
-        onPress={() => {}}
+        onPress={() => {/* do nothing */}}
         style={styles.cardContainer}>
         <View style={styles.top}>
           <ListItem
@@ -64,7 +64,7 @@ const Addcaretaker: React.FC<{navigation}> = Props => {
               </ListItem.Subtitle>
             </ListItem.Content>
 
-            <TouchableOpacity onPress={() => {}} style={styles.iconTouch}>
+            <TouchableOpacity onPress={() => {/* do nothing */}} style={styles.iconTouch}>
               <View style={styles.icon}>
                 <Icon
                   name='angle-right'

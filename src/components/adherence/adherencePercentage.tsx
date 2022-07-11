@@ -1,4 +1,4 @@
-const AdherencePercentage = (startDate, days, times, currentCount, name) => {
+const AdherencePercentage = (startDate, days, times, currentCount, _name) => {
   return new Promise(res => {
     let tilldatecount = 0;
     let daysarray = days.split(':');

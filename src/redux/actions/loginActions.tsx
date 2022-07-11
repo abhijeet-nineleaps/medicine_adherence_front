@@ -1,23 +1,29 @@
 import Types from "./allTypes";
 ​
-export function sendLoginRequest(data){
+function sendLoginRequest(userinfo, token){
 return{
     type: Types.LOGIN_REQUEST,
-    payload:data,
+    payload: userinfo, token,
 };
 }
 ​
-export function sendLoginSuccess(data){
+function LoginSuccess(data){
  return{
     type: Types.SUCCESS_LOGIN,
     payload: data,
  };
 }
 ​
-export function sendLoginFailure(error) {
+function LoginFailure(error) {
     console.log(error, 'login failed');
     return{
         type: Types.FAILED_LOGIN,
         payload: error,
     };
+}
+
+export const loginActions = {
+    sendLoginRequest,
+    LoginSuccess,
+    LoginFailure,
 }

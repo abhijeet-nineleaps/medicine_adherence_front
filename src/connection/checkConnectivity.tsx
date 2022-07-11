@@ -2,7 +2,7 @@
 import NetInfo from '@react-native-community/netinfo';
 
 const checkConnectivity = async () => {
-  let state_type: Boolean | null = null;
+  let state_type: boolean | null = null;
   return new Promise(res => {
     const unsubscribe = NetInfo.addEventListener(state => {
       state_type = state.isConnected;

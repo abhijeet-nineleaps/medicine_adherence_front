@@ -102,10 +102,9 @@ const MedicineImages = ({route}) => {
   }
   useFocusEffect(
     React.useCallback(() => {
-      let isActive = false;
       fetchImages();
       return () => {
-        isActive = true;
+       /* do nothing */
       };
     }, []),
   );

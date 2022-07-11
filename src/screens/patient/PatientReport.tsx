@@ -6,7 +6,6 @@ import {
   FlatList,
   PermissionsAndroid,
   Modal,
-  ToastAndroid,
   ScrollView,
   TouchableOpacity,
 } from 'react-native';
@@ -17,7 +16,7 @@ import ProgressCircle from 'react-native-progress-circle';
 import {Button, Divider} from 'react-native-elements';
 import {Card} from 'react-native-paper';
 import {useFocusEffect} from '@react-navigation/native';
-import networkCalls from '../../connection/network';
+import networkCalls from '../../connection/networkCalls';
 import * as Animatable from 'react-native-animatable';
 import downloadPdf from '../../components/adherence/downloadPdf';
 import LottieView from 'lottie-react-native';
@@ -112,7 +111,6 @@ const Reminders = ({item, index}) => {
 export default function PatientReport({route}) {
   const {
     medId,
-    adherenceRate,
     medName,
     mTimes,
     medDays,
@@ -164,7 +162,6 @@ export default function PatientReport({route}) {
         type: 'info',
         text1: 'Not available!',
       });
-      // ToastAndroid.show('Not available', ToastAndroid.LONG);
       return;
     }
     showDetailState(true);
@@ -182,11 +179,11 @@ export default function PatientReport({route}) {
         showalldates();
       });
       return () => {
-        true;
+       /* do nothing */
       };
     }, []),
   );
-  useFocusEffect(() => {});
+  useFocusEffect(() => {/* do nothing */});
 
   return (
     <View style={styles.container}>
@@ -298,13 +295,11 @@ export default function PatientReport({route}) {
                 type: 'info',
                 text1: 'Downloaded successfully'
               });
-              // ToastAndroid.show('Downloaded successfully', ToastAndroid.LONG);
             } else {
               Toast.show({
                 type: 'info',
                 text1: 'Error while downloading'
               })
-              // ToastAndroid.show('Error while downloading', ToastAndroid.LONG);
             }
           }}
           buttonStyle={styles.button}>

@@ -11,7 +11,6 @@ import {
   FlatList,
   Alert,
   Image,
-  ToastAndroid,
 } from 'react-native';
 
 import Toast from 'react-native-toast-message'
@@ -55,7 +54,7 @@ const Medicineadherence = ({navigation}) => {
                   Alert.alert('Reminder duration over', '', [
                     {
                       text: 'Ok',
-                      onPress: () => {},
+                      onPress: () => undefined,
                     },
                   ]);
                 } else {
@@ -107,7 +106,7 @@ const Medicineadherence = ({navigation}) => {
                 </View>
               </View>
               <View style={{padding: 30}}>
-                <TouchableOpacity onPress={() => {}}>
+                <TouchableOpacity onPress={() => {/* do nothing */}}>
                   <ProgressCircle
                     percent={percentage}
                     radius={26}
@@ -144,7 +143,7 @@ const Medicineadherence = ({navigation}) => {
         await txn.executeSql(
           'SELECT * FROM `User_medicines`',
           [],
-          function (tx, res) {
+          function (_tx, res) {
             let tcurrenttaken = 0;
             let ttotaltaken = 0;
 
@@ -154,7 +153,7 @@ const Medicineadherence = ({navigation}) => {
               ttotaltaken += rowItem.total_med_reminders;
               res.rows.item(i).status === 1
                 ? reminder_array.push(rowItem)
-                : null;
+                : null;                      //NOSONAR false positive
             }
 
             if (tcurrenttaken === 0 && ttotaltaken === 0) {
@@ -216,19 +215,16 @@ const Medicineadherence = ({navigation}) => {
                 type: 'success',
                 text1: 'Medicine Synced',
               });
-              // ToastAndroid.show('Medicine Synced', ToastAndroid.LONG);
             } else if (response.status === 500 || response.status === 400) {
               Toast.show({
-                type: 'info',
+                type: 'error',
                 text1: 'Unable to sync',
               });
-              // ToastAndroid.show('Unable to sync', ToastAndroid.LONG);
             } else if (response.status === 403 || response.status === 401) {
               Toast.show({
                 type: 'info',
                 text1: 'Unable to sync',
               });
-              // ToastAndroid.show('Unable to sync', ToastAndroid.LONG);
             }
           })
           .catch(() => {
@@ -236,14 +232,12 @@ const Medicineadherence = ({navigation}) => {
               type: 'info',
               text1: 'Unable to sync',
             });
-            // ToastAndroid.show('Unable to sync', ToastAndroid.LONG);
           });
       } catch (err) {
         Toast.show({
           type: 'info',
           text1: 'Unable to sync',
         });
-        // ToastAndroid.show('Unable to sync', ToastAndroid.LONG);
       }
       syncstate(false);
     }
@@ -251,13 +245,12 @@ const Medicineadherence = ({navigation}) => {
 
   useFocusEffect(
     React.useCallback(() => {
-      let active = true;
       fetchallreminders().then(() => {
         fetchallremindersandsync();
       });
 
       return () => {
-        active = false;
+       /* do nothing */
       };
     }, []),
   );

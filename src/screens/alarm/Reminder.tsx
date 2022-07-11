@@ -5,7 +5,7 @@
 /* eslint-disable react/self-closing-comp */
 
 import React, {useEffect} from 'react';
-import {View, Text, Dimensions, ScrollView, Alert} from 'react-native';
+import {View, Text, ScrollView, Alert} from 'react-native';
 import {Button} from 'react-native-elements';
 import {Divider} from 'react-native-elements/dist/divider/Divider';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
@@ -38,7 +38,7 @@ const Reminder = ({route, navigation}) => {
       txn.executeSql(
         'SELECT * FROM `User_medicines` where user_id = ? AND status = ?',
         [id, 1],
-        function (tx, res) {
+        function (_tx, res) {
           console.log('success');
           console.log(res.rows.item(0));
           titlestate(res.rows.item(0).title);
@@ -63,12 +63,12 @@ const Reminder = ({route, navigation}) => {
   console.log(id);
 
   const [picker, pickerstate] = React.useState(false);
-  const [selectedItems, slectedstate] = React.useState([]);
+  const [selectedItems, _slectedstate] = React.useState([]);
   const [selecteddaysItems, slecteddaysstate] = React.useState([]);
   const [load, loadstate] = React.useState(false);
   const [start_date, start_datestate] = React.useState(new Date());
   const [end_date, end_datestate] = React.useState(new Date());
-  const [store_start_date, store_start_datestate] = React.useState<any>(
+  const [store_start_date, _store_start_datestate] = React.useState<any>(
     new Date(),
   );
   const [store_end_date, store_end_datestate] = React.useState(new Date());
@@ -107,7 +107,6 @@ const Reminder = ({route, navigation}) => {
     var set = new Set<String>(selecteddaysItems);
     if (check1) {
       timeings.forEach((timee: any) => {
-        // var num = Math.floor(Math.random() * 90000) + 10000;
         counter += 1;
         let timm_array = timee.split(':');
 
@@ -115,10 +114,9 @@ const Reminder = ({route, navigation}) => {
         now.setMinutes(timm_array[1]);
 
         PushNotification.localNotificationSchedule({
-          //... You can use all the options from localNotifications
           title: titl,
           message: 'Time to eat your medicine',
-          subText: 'Mark as read if you have taken', // (required)
+          subText: 'Mark as read if you have taken', 
           id: num.toString(),
           color: '#3743ab',
           showWhen: true,
@@ -126,8 +124,8 @@ const Reminder = ({route, navigation}) => {
           visibility: 'public',
           usesChronometer: true,
           when: now.getHours() + '' + now.getMinutes(),
-          date: new Date(now.getTime()), // in 60 secs
-          allowWhileIdle: true, // (optional) set notification to work while on doze, default: false
+          date: new Date(now.getTime()),
+          allowWhileIdle: true, 
           vibrate: true,
           playSound: true,
           invokeApp: false,
@@ -135,11 +133,8 @@ const Reminder = ({route, navigation}) => {
           importance: Importance.HIGH,
           repeatType: 'day',
           smallIcon: 'android.resource://com.project/raw/icon.png',
-
           actions: ['Open app to mark', 'Skip'],
-
-          /* Android Only Properties */
-          repeatTime: 3, // (optional) Increment of configured repeatType. Check 'Repeating Notifications' section for more info.
+          repeatTime: 3,
         });
       });
       return;
@@ -150,7 +145,6 @@ const Reminder = ({route, navigation}) => {
       now.setMonth(sample_date.getMonth());
       if (set.has(weeks[now.getDay()])) {
         timeings.forEach((timee: any) => {
-          // var num = Math.floor(Math.random() * 90000) + 10000;
           counter += 1;
           let timm_array = timee.split(':');
 
@@ -162,21 +156,20 @@ const Reminder = ({route, navigation}) => {
 
           PushNotification.createChannel(
             {
-              channelId: num1.toString(), // (required)
-              channelName: titl + 'Med channel', // (required)
-              channelDescription: 'A channel to categorise your notifications', // (optional) default: undefined.
-              playSound: false, // (optional) default: true
-              soundName: 'default', // (optional) See `soundName` parameter of `localNotification` function
-              importance: Importance.HIGH, // (optional) default: Importance.HIGH. Int value of the Android notification importance
-              vibrate: true, // (optional) default: true. Creates the default vibration pattern if true.
+              channelId: num1.toString(), 
+              channelName: titl + 'Med channel', 
+              channelDescription: 'A channel to categorise your notifications', 
+              playSound: false, 
+              soundName: 'default', 
+              importance: Importance.HIGH, 
+              vibrate: true, 
             },
-            created => console.log(`createChannel returned '${created}'`), // (optional) callback returns whether the channel was created, false means it already existed.
+            created => console.log(`createChannel returned '${created}'`),
           );
           PushNotification.localNotificationSchedule({
-            //... You can use all the options from localNotifications
             title: titl,
             message: 'Time to eat your medicine',
-            subText: 'Mark as read if you have taken', // (required)
+            subText: 'Mark as read if you have taken',
             id: num1.toString(),
             color: '#3743ab',
             showWhen: true,
@@ -184,8 +177,8 @@ const Reminder = ({route, navigation}) => {
             visibility: 'public',
             usesChronometer: true,
             when: now.getHours() + '' + now.getMinutes(),
-            date: new Date(now.getTime()), // in 60 secs
-            allowWhileIdle: true, // (optional) set notification to work while on doze, default: false
+            date: new Date(now.getTime()),
+            allowWhileIdle: true, 
             vibrate: true,
             playSound: true,
             invokeApp: false,
@@ -195,9 +188,7 @@ const Reminder = ({route, navigation}) => {
             smallIcon: 'ic_launcher',
             largeIcon: 'ic_launcher',
             actions: ['Open app to mark', 'Skip'],
-
-            /* Android Only Properties */
-            repeatTime: 3, // (optional) Increment of configured repeatType. Check 'Repeating Notifications' section for more info.
+            repeatTime: 3,
           });
         });
       }
@@ -234,7 +225,7 @@ const Reminder = ({route, navigation}) => {
     hideDatePickerfortime();
   };
 
-  const savereminder = () => {
+  const savereminder = () => {   //NOSONAR 
     if (
       multiSliderValue[0] === 0 ||
       title.length === 0 ||
@@ -243,7 +234,7 @@ const Reminder = ({route, navigation}) => {
       Alert.alert('Make sure you have valid reminder', ' ', [
         {
           text: 'OK',
-          onPress: () => {},
+          onPress: () => undefined,
         },
       ]);
       return;
@@ -302,7 +293,7 @@ const Reminder = ({route, navigation}) => {
         ],
       );
 
-      txn.executeSql('SELECT * FROM `User_medicines`', [], function (tx, res) {
+      txn.executeSql('SELECT * FROM `User_medicines`', [], function (_tx, res) {
         for (let i = 0; i < res.rows.length; ++i) {
           console.log('item:', res.rows.item(i));
         }
@@ -378,9 +369,7 @@ const Reminder = ({route, navigation}) => {
             mode="outlined"
             value={title}
             onChangeText={titlechange}></TextInput>
-          {/* <InteractiveTextInput mainColor="black" placeholder="Title"
-                    style={{ borderColor: 'black', position: 'absolute', justifyContent: 'center' }}
-                    onChangeText={titlechange}></InteractiveTextInput> */}
+
           <Divider></Divider>
           <View>
             <TouchableOpacity

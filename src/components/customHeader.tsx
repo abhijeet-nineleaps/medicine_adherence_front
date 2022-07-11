@@ -1,6 +1,6 @@
 /* eslint-disable react/self-closing-comp */
 /* eslint-disable react-native/no-inline-styles */
-import ProfileHeader from './header';
+import ProfileHeader from './ProfileHeader';
 
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
 import React, {useEffect} from 'react';
@@ -14,7 +14,7 @@ import {useFocusEffect} from '@react-navigation/native';
 import {Alert, View} from 'react-native';
 import {Signout} from './caretaker/allIcons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import styles from './componentStyles/ComponentStyles';
+import styles from './componentStyles/styles';
 
 
 
@@ -43,10 +43,9 @@ const CustomHeader = props => {
     } catch (err) {}
   }
   useEffect(() => {
-    const unsubscribe = props.navigation.addListener('focus', () => {
+   return props.navigation.addListener('focus', () => {
       getuser();
     });
-    return unsubscribe;
   }, [props.navigation]);
   useFocusEffect(() => {
     console.log('f');
@@ -119,7 +118,7 @@ const CustomHeader = props => {
                   },
                   {
                     text: 'Cancel',
-                    onPress: () => {},
+                    onPress: () => undefined,
                   },
                 ]);
               }}></Button>

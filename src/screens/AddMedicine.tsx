@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable react-native/no-inline-styles */
 import {FlatList, View, Image, TouchableOpacity, Alert} from 'react-native';
-import React, {useReducer, useState} from 'react';
+import React, {useReducer} from 'react';
 import {Avatar, ListItem} from 'react-native-elements';
 import {Card} from 'react-native-paper';
 import LottieView from 'lottie-react-native';
@@ -29,10 +29,8 @@ const Addmedicine = ({navigation}: Props) => {
   useFocusEffect(
     React.useCallback(() => {
       fetch_meds();
-
       return () => {
-        true;
-      };
+       /* do nothing */};
     }, []),
   );
 
@@ -49,7 +47,7 @@ const Addmedicine = ({navigation}: Props) => {
         txn.executeSql(
           'SELECT * FROM `User_medicines`',
           [],
-          function (tx: any, res: any) {
+          function (_tx: any, res: any) {
             for (let i = 0; i < res.rows.length; ++i) {
               meds_array.push(res.rows.item(i));
             }
@@ -77,7 +75,7 @@ const Addmedicine = ({navigation}: Props) => {
       txn.executeSql(
         'SELECT * FROM `User_medicines`',
         [],
-        function (tx: any, res: any) {
+        function (_tx: any, res: any) {
           for (let i = 0; i < res.rows.length; ++i) {
             med_del.push(res.rows.item(i));
           }

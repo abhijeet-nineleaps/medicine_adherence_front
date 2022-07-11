@@ -10,9 +10,7 @@ import * as yup from 'yup';
 import UserAvatar from 'react-native-user-avatar';
 import styles from './caretakerStyles/SearchCaretakerStyles'
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
-//import {showToast} from '../../components/atoms/toast';
 
-import debounce from 'lodash.debounce';
 import Toast from 'react-native-toast-message';
 
 const Searchcaretaker = ({navigation}) => {
@@ -27,7 +25,6 @@ const Searchcaretaker = ({navigation}) => {
         type: 'info',
         text1: 'You cannot be self caretaker',
       });
-      // showToast('You cant be self caretaker');
       searchloadstate(false);
 
       return;
@@ -82,7 +79,6 @@ const Searchcaretaker = ({navigation}) => {
             type: 'info',
             text1: resp.message,
           })
-         // showToast(resp.message);
         }
       })
       .catch(err => console.log(err));
@@ -94,16 +90,6 @@ const Searchcaretaker = ({navigation}) => {
       .email('Please enter valid email')
       .required('Email Address is Required'),
   });
-
-  // const debouncedResults = useMemo(() => {
-  //   return debounce(handleChange, 300);
-  // }, []);
-  
-  // useEffect(() => {
-  //   return () => {
-  //     debouncedResults.cancel();
-  //   };
-  // });
 
   const Renderitem = ({item}) => {
     const [sendloader, setloadstate] = useState(false);

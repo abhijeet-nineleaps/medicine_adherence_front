@@ -1,11 +1,11 @@
-import Types from '../actions/AllTypes';
+import Types from '../actions/allTypes';
 
 let initialState = {
   load: true,
   patientDetails: [],
 };
 
-const PatientProfileReducer = (state = initialState, {type, payload}) => {
+const PatientProfileReducer = (state = initialState, {type, payload}) => {   //NOSONAR false positive
   switch (type) {
     case Types.SUCCES_PATIENT_DETAILS:
       return {

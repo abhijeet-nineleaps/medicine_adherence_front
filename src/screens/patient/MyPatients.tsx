@@ -1,7 +1,6 @@
 /* eslint-disable react/self-closing-comp */
 /* eslint-disable react-native/no-inline-styles */
-import React, {useEffect} from 'react';
-import {API_URL} from '../../repositories/var';
+import React from 'react';
 import {
   FlatList,
   RefreshControl,
@@ -19,7 +18,7 @@ import styles from './patientStyles/MyPatientStyles';
 import Icon from 'react-native-vector-icons/FontAwesome'
 
 import {useDispatch, useSelector} from 'react-redux';
-import { fetchPatients } from '../../redux/actions/PatientActions';
+import { fetchPatients } from '../../redux/actions/patient/PatientActions';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 interface Props {
@@ -32,7 +31,7 @@ const Mypatient: React.FC<Props> = ({navigation}: Props) => {
   );
   const {load} = useSelector(state => state.PatientReducer);
   console.log(load, 'load');
-  const [data, datastate] = React.useState([]);
+  const [data, _datastate] = React.useState([]);
   const [refresh, refeereshstate] = React.useState(false);
 
   const dispatch = useDispatch();
@@ -41,22 +40,7 @@ const Mypatient: React.FC<Props> = ({navigation}: Props) => {
     dispatch(fetchPatients(user_id));
     refeereshstate(false);
   };
-
-  // const fetchpatients = () => {
-  //   fetch(
-  //     `${API_URL}/api/v1/patients?caretakerId=f9c67686-55f9-495a-b214-eb89d5606678`,
-  //   )
-  //     .then(resp => resp.json())
-  //     .then(res => {
-  //       if (res.status === 'failed') {
-  //         datastate([]);
-  //         refeereshstate(false);
-  //         return;
-  //       }
-  //       datastate(res.userCaretakerList);
-  //     })
-  //     .catch(err => console.log(err));
-  // };
+  
   useFocusEffect(
     React.useCallback(() => {
       async function checkforlog() {
@@ -88,7 +72,7 @@ const Mypatient: React.FC<Props> = ({navigation}: Props) => {
       checkforlog();
 
       return () => {
-        true;
+       /* do nothing */
       };
     }, []),
   );
@@ -118,7 +102,7 @@ const Mypatient: React.FC<Props> = ({navigation}: Props) => {
               </ListItem.Subtitle>
             </ListItem.Content>
 
-            <TouchableOpacity onPress={() => {}} style={styles.touch}>
+            <TouchableOpacity onPress={() => {/* do nothing */}} style={styles.touch}>
               <View style={styles.icon}>
                 <Icon
                   name='angle-right'

@@ -2,19 +2,19 @@
 import React from 'react';
 import {View, FlatList, Image, RefreshControl} from 'react-native';
 import {Card} from 'react-native-paper';
-import {Avatar} from 'react-native-elements';
+import {Avatar, ListItem, Button} from 'react-native-elements';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import {API_URL} from '../../repositories/var';
-import {ListItem, Button} from 'react-native-elements';
 import {useFocusEffect} from '@react-navigation/native';
 import styles from './patientStyles/PatientRequestStyles';
 
 const Patientrequest = () => {
   const [patients, patientsdata] = React.useState([]);
   const [refresh, refreshstate] = React.useState(false);
-
-  const fetchpatientreq = () => {
+  const fetchpatientreq = async () => {
+    const user_id = await AsyncStorage.getItem('user_id');
     fetch(
-      `${API_URL}/api/v1/patient/requests?caretakerId=f9c67686-55f9-495a-b214-eb89d5606678`,
+      `${API_URL}/api/v1/patient/requests?userId=${user_id}`,
     )
       .then(res => res.json())
       .then(resp => {
@@ -36,7 +36,7 @@ const Patientrequest = () => {
       fetchpatientreq();
 
       return () => {
-        true;
+        /* do nothing */
       };
     }, []),
   );
