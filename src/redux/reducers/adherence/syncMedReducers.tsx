@@ -1,25 +1,19 @@
 import Types from '../../actions/allTypes';
-
-let initialState = {
-  load: true,
-  userCaretakerList: [],
+const initialState = {
+  data: null,
+  loading: false,
+  error: null,
 };
-
-const syncMedReducer = (state = initialState, {type, payload}) => {   //NOSONAR false positive
-  switch (type) {
+const syncMedReducers = (state = initialState, action) => {
+  switch (action.type) {
+    case Types.SYNC_MEDS:
+      return {data: null, loading: true, error: null};
     case Types.SUCCESS_SYNC_MEDS:
-      return {
-        load: false,
-        userCaretakerList: payload.userCaretakerList,
-      };
+      return {data: action.data, loading: false, error: null};
     case Types.FAILED_SYNC_MEDS:
-      return {
-        ...state,
-        userCaretakerList: [],
-      };
+      return {data: null, loading: true, error: action.data};
     default:
-      return state;
+      return initialState;
   }
 };
-
-export default syncMedReducer;
+export default syncMedReducers;

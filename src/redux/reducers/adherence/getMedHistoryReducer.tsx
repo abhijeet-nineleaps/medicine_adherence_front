@@ -4,16 +4,16 @@ const initialState = {
   loading: false,
   error: null,
 };
-const CareTakerReducer = (state = initialState, action) => {
+const getMedHistoryReducer = (state = initialState, action) => {
   switch (action.type) {
-    case Types.GET_CARETAKERS:
+    case Types.GET_MED_HISTORY:
       return {data: null, loading: true, error: null};
-    case Types.Success_CareTAKER_REQUEST:
+    case Types.GET_MED_HISTORY_SUCCESS:
       return {data: action.data, loading: false, error: null};
-    case Types.Failed_CareTAKER_REQUEST:
+    case Types.GET_MED_HISTORY_FAILED:
       return {data: null, loading: true, error: action.data};
     default:
       return initialState;
   }
 };
-export default CareTakerReducer;
+export default getMedHistoryReducer;

@@ -1,25 +1,19 @@
 import Types from '../../actions/allTypes';
-
-let initialState = {
-  load: true,
- patientReqList: [],
+const initialState = {
+  data: null,
+  loading: false,
+  error: null,
 };
-
-const patientReqDeleteReducer = (state = initialState, {type, payload}) => {   //NOSONAR false positive
-  switch (type) {
+const patientReqDeleteReducer = (state = initialState, action) => {
+  switch (action.type) {
+    case Types.DELETE_PATIENT_REQUEST:
+      return {data: null, loading: true, error: null};
     case Types.SUCCES_DELETE_PATIENT_REQUEST:
-      return {
-        load: false,
-        patientReqList: payload.patientReqList,
-      };
+      return {data: action.data, loading: false, error: null};
     case Types.FAILED_DELETE_PATIENT_REQUEST:
-      return {
-        ...state,
-        patientReqList: [],
-      };
+      return {data: null, loading: true, error: action.data};
     default:
-      return state;
+      return initialState;
   }
 };
-
 export default patientReqDeleteReducer;

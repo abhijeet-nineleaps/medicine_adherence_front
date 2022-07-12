@@ -1,25 +1,19 @@
 import Types from '../../actions/allTypes';
-
-let initialState = {
-  load: true,
-  patientList: [],
+const initialState = {
+  data: null,
+  loading: false,
+  error: null,
 };
-
-const notifyPatientReducer = (state = initialState, {type, payload}) => {  //NOSONAR false positive
-  switch (type) {
+const notifyPatientReducer = (state = initialState, action) => {
+  switch (action.type) {
+    case Types.NOTIFY_PATIENT:
+      return {data: null, loading: true, error: null};
     case Types.SUCCESS_NOTIFY_PATIENT:
-      return {
-        load: false,
-        patientList: payload.patientList,
-      };
+      return {data: action.data, loading: false, error: null};
     case Types.FAILED_NOTIFY_PATIENT:
-      return {
-        ...state,
-        patientList: [],
-      };
+      return {data: null, loading: true, error: action.data};
     default:
-      return state;
+      return initialState;
   }
 };
-
 export default notifyPatientReducer;

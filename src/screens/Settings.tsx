@@ -1,5 +1,5 @@
-import { Linking, Share, View} from 'react-native';
 import React from 'react';
+import { Linking, Share, View} from 'react-native';
 import SettingsList from 'react-native-settings-list';
 import styles from "./screenStyles/SettingStyles";
 

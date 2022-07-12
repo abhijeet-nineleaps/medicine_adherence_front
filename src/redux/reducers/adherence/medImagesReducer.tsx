@@ -4,16 +4,16 @@ const initialState = {
   loading: false,
   error: null,
 };
-const CareTakerReducer = (state = initialState, action) => {
+const medImagesReducer = (state = initialState, action) => {
   switch (action.type) {
-    case Types.GET_CARETAKERS:
+    case Types.GET_MED_IMAGES:
       return {data: null, loading: true, error: null};
-    case Types.Success_CareTAKER_REQUEST:
+    case Types.SUCCESS_MED_IMAGES:
       return {data: action.data, loading: false, error: null};
-    case Types.Failed_CareTAKER_REQUEST:
+    case Types.FAILED_MED_IMAGES:
       return {data: null, loading: true, error: action.data};
     default:
       return initialState;
   }
 };
-export default CareTakerReducer;
+export default medImagesReducer;

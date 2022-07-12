@@ -13,7 +13,7 @@ describe("test sendImageActions",()=>{
     it("test sendImageSuccess",()=>{
         expect(sendImageActions.sendImageSuccess(data)).toEqual({
             type: Types.SUCCESS_SEND_IMAGES,
-            payload:data,
+            payload: data,
         })
     })
     it("test sendImageError",()=>{

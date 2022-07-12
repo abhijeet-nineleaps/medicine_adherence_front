@@ -1,25 +1,19 @@
 import Types from '../../actions/allTypes';
-
-let initialState = {
-  load: true,
-  userDetails: [],
+const initialState = {
+  data: null,
+  loading: false,
+  error: null,
 };
-
-const ProfileReducer = (state = initialState, {type, payload}) => {   //NOSONAR false positive
-  switch (type) {
+const ProfileReducer = (state = initialState, action) => {
+  switch (action.type) {
+    case Types.SAVE_PROFILE:
+      return {data: null, loading: true, error: null};
     case Types.SUCCESS_PROFILE:
-      return {
-        load: false,
-        userDetails: payload.userDetails,
-      };
+      return {data: action.data, loading: false, error: null};
     case Types.FAILED_PROFILE:
-      return {
-        ...state,
-        userDetails: [],
-      };
+      return {data: null, loading: true, error: action.data};
     default:
-      return state;
+      return initialState;
   }
 };
-
 export default ProfileReducer;

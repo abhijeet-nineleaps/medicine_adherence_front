@@ -1,25 +1,19 @@
 import Types from '../../actions/allTypes';
-
-let initialState = {
-  load: true,
-  datastate: [],
+const initialState = {
+  data: null,
+  loading: false,
+  error: null,
 };
-
-const emailCaretakerReducer = (state = initialState, {type, payload}) => {   //NOSONAR false positive
-  switch (type) {
+const emailCaretakerReducer = (state = initialState, action) => {
+  switch (action.type) {
+    case Types.SEND_EMAIL:
+      return {data: null, loading: true, error: null};
     case Types.SUCCESS_SEND_EMAIL:
-      return {
-        load: false,
-        datastate: payload.datastate,
-      };
+      return {data: action.data, loading: false, error: null};
     case Types.FAILED_SEND_EMAIL:
-      return {
-        ...state,
-       datastate: [],
-      };
+      return {data: null, loading: true, error: action.data};
     default:
-      return state;
+      return initialState;
   }
 };
-
 export default emailCaretakerReducer;
