@@ -1,12 +1,12 @@
-import React from "react";
+import React from 'react';
 import renderer from 'react-test-renderer';
-import CameraScreen from "../../../src/screens/adherence/ClickSendImage";
+import CameraScreen from '../../../src/screens/adherence/ClickSendImage';
 
-describe('About App', () => {
-    it('renders correctly', () =>{
-        const tree = renderer.create(
-            <CameraScreen navigation={undefined}/>    
-        ).toJSON();
-        expect(tree).toMatchSnapshot();
-    });
+describe('Click send image', () => {
+  it('renders correctly', () => {
+    const tree = renderer
+      .create(<CameraScreen navigation={undefined} />)
+      .toJSON();
+    expect(tree).toMatchSnapshot();
+  });
 });

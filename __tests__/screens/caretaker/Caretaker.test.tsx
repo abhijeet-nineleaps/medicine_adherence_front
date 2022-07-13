@@ -1,12 +1,10 @@
-import React from "react";
+import React from 'react';
 import renderer from 'react-test-renderer';
-import CareTaker from "../../../src/screens/caretaker/Caretaker";
+import CareTaker from '../../../src/screens/caretaker/Caretaker';
 
-describe('About App', () => {
-    it('renders correctly', () =>{
-        const tree = renderer.create(
-            <CareTaker navigation={undefined}/>    
-        ).toJSON();
-        expect(tree).toMatchSnapshot();
-    });
+describe('Caretaker', () => {
+  it('renders correctly', () => {
+    const tree = renderer.create(<CareTaker navigation={undefined} />).toJSON();
+    expect(tree).toMatchSnapshot();
+  });
 });

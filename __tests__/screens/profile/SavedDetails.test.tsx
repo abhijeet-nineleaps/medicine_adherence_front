@@ -1,12 +1,10 @@
-import React from "react";
+import React from 'react';
 import renderer from 'react-test-renderer';
-import SavedDetails from "../../../src/screens/profile/SavedDetails";
+import SavedDetails from '../../../src/screens/profile/SavedDetails';
 
-describe('About App', () => {
-    it('renders correctly', () =>{
-        const tree = renderer.create(
-            <SavedDetails/>    
-        ).toJSON();
-        expect(tree).toMatchSnapshot();
-    });
+describe('Saved Details', () => {
+  it('renders correctly', () => {
+    const tree = renderer.create(<SavedDetails />).toJSON();
+    expect(tree).toMatchSnapshot();
+  });
 });

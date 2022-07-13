@@ -1,12 +1,10 @@
-import React from "react";
+import React from 'react';
 import renderer from 'react-test-renderer';
-import Profile from "../../../src/screens/profile/Profile";
+import Profile from '../../../src/screens/profile/Profile';
 
-describe('About App', () => {
-    it('renders correctly', () =>{
-        const tree = renderer.create(
-            <Profile navigation={undefined}/>    
-        ).toJSON();
-        expect(tree).toMatchSnapshot();
-    });
+describe('Profile', () => {
+  it('renders correctly', () => {
+    const tree = renderer.create(<Profile navigation={undefined} />).toJSON();
+    expect(tree).toMatchSnapshot();
+  });
 });
