@@ -1,7 +1,7 @@
 /* eslint-disable react/self-closing-comp */
 /* eslint-disable react-native/no-inline-styles */
 import ProfileHeader from './ProfileHeader';
-
+import {logger} from 'react-native-logs';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
 import React, {useEffect} from 'react';
 import {
@@ -16,8 +16,24 @@ import {Signout} from './caretaker/allIcons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import styles from './componentStyles/styles';
 
+const defaultConfig = {
+  levels: {
+    debug: 0,
+    info: 1,
+    warn: 2,
+    error: 3,
+  },
+  transportOptions: {
+    colors: {
+      debug: 'greenBright',
+      info: 'blueBright',
+      warn: 'yellowBright',
+      error: 'redBright',
+    },
+  },
+};
 
-
+var log = logger.createLogger(defaultConfig);
 const CustomHeader = props => {
   React.useEffect(() => {
     GoogleSignin.configure({
@@ -31,10 +47,10 @@ const CustomHeader = props => {
       const isllooged = await GoogleSignin.isSignedIn();
       const checkforlogin = await AsyncStorage.getItem('user_id');
 
-      console.log(isllooged);
+      log.info(isllooged);
 
       if (checkforlogin !== null) {
-        console.log(isllooged);
+        log.info(isllooged);
         loggedinstate(true);
         return;
       }
@@ -43,18 +59,17 @@ const CustomHeader = props => {
     } catch (err) {}
   }
   useEffect(() => {
-   return props.navigation.addListener('focus', () => {
+    return props.navigation.addListener('focus', () => {
       getuser();
     });
   }, [props.navigation]);
   useFocusEffect(() => {
-    console.log('f');
+    log.info('f');
     getuser();
   });
   return (
     <>
-      <DrawerContentScrollView
-        style={styles.drawer}>
+      <DrawerContentScrollView style={styles.drawer}>
         <TouchableOpacity
           style={styles.touch}
           onPress={() => props.navigation.getParent().navigate('Profile')}>

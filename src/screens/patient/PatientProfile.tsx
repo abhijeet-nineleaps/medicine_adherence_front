@@ -2,19 +2,46 @@
 /* eslint-disable react/self-closing-comp */
 /* eslint-disable react-native/no-inline-styles */
 import * as React from 'react';
-import {Text, View, Image, ScrollView, TouchableOpacity, LogBox} from 'react-native';
+import {
+  Text,
+  View,
+  Image,
+  ScrollView,
+  TouchableOpacity,
+  LogBox,
+} from 'react-native';
 import {List} from 'react-native-paper';
-import { API_URL } from '../../repositories/var';
+import {API_URL} from '../../repositories/var';
 import * as Progress from 'react-native-progress';
+import {logger} from 'react-native-logs';
 
 import {Button} from 'react-native-elements';
 import styles from './patientStyles/PatientProfileStyles';
 
-import  Icon from 'react-native-vector-icons/FontAwesome'
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 import {useDispatch, useSelector} from 'react-redux';
-import {fetchPatients } from '../../redux/actions/patient/PatientActions';
+import {fetchPatients} from '../../redux/actions/patient/PatientActions';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+
+const defaultConfig = {
+  levels: {
+    debug: 0,
+    info: 1,
+    warn: 2,
+    error: 3,
+  },
+  transportOptions: {
+    colors: {
+      debug: 'greenBright',
+      info: 'blueBright',
+      warn: 'yellowBright',
+      error: 'redBright',
+    },
+  },
+};
+
+var log = logger.createLogger(defaultConfig);
 
 LogBox.ignoreLogs(['Require cycle:']);
 
@@ -26,14 +53,14 @@ const ViewProfile = ({route, navigation}) => {
     url.searchParams.append('fcmToken', fcm_token);
     url.searchParams.append('medname', medname);
 
-    await fetch(url).then(resp => console.log(resp));
+    await fetch(url).then(resp => log.info(resp));
   };
 
   const patients = useSelector(
     state => state.PatientProfileReducer.patientList,
   );
   const {load} = useSelector(state => state.PatientProfileReducer);
-  console.log(load, 'load');
+  log.info(load, 'load');
   const [_refresh, refeereshstate] = React.useState(false);
 
   const dispatch = useDispatch();
@@ -130,17 +157,14 @@ const ViewProfile = ({route, navigation}) => {
                   left={() => (
                     <Icon
                       size={16}
-                      name='medkit'
+                      name="medkit"
                       color="black"
                       style={styles.medIcon}
                     />
                   )}
-                  right={() => (
-                    <Icon
-                      name='caret-down'></Icon>
-                  )}>
+                  right={() => <Icon name="caret-down"></Icon>}>
                   {userdetails.medicinesList.map(mlistitem => {
-                    console.log(mlistitem.medicineId);
+                    log.info(mlistitem.medicineId);
                     return (
                       <List.Item
                         description={`${mlistitem.days}\n${mlistitem.time}`}
@@ -160,7 +184,7 @@ const ViewProfile = ({route, navigation}) => {
                                 <TouchableOpacity
                                   style={styles.touch}
                                   onPress={() => {
-                                    console.log(mlistitem.medicineName);
+                                    log.info(mlistitem.medicineName);
                                     sendnotificationtouser(
                                       userdetails.userEntityList[0].userDetails
                                         .fcmToken,
@@ -168,7 +192,7 @@ const ViewProfile = ({route, navigation}) => {
                                     );
                                   }}>
                                   <Icon
-                                    name='bell'
+                                    name="bell"
                                     size={25}
                                     color="#00bcd4"></Icon>
                                 </TouchableOpacity>

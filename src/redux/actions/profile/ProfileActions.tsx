@@ -1,5 +1,21 @@
+import { logger } from "react-native-logs";
 import Types from "../allTypes";
-
+const defaultConfig = {
+  levels: {
+    debug: 0,
+    info: 1,
+    warn: 2,
+    error: 3,
+  },
+  transportOptions: {
+    colors: {
+      info: 'blueBright',
+      warn: 'yellowBright',
+      error: 'redBright',
+    },
+  },
+};
+var log = logger.createLogger(defaultConfig);
 function saveProfile(user_id: string) {
   return {
     type: Types.SAVE_PROFILE,
@@ -7,14 +23,14 @@ function saveProfile(user_id: string) {
   };
 }
 function saveProfileSuccess(data) {
-  console.log(data, 'success');
+  log.info(data, 'success');
   return {
     type: Types.SUCCESS_PROFILE,
     payload: data,
   };
 }
 function saveProfileFailed(error) {
-  console.log(error, 'ac');
+  log.error(error, 'ac');
   return {
     type: Types.FAILED_PROFILE,
     payload: error,

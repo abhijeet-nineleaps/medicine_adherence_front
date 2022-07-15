@@ -9,6 +9,7 @@ import {
   ActivityIndicator,
   LogBox,
 } from 'react-native';
+import {logger} from 'react-native-logs';
 import Carousel, {Pagination} from 'react-native-snap-carousel';
 import {API_URL} from '../../repositories/var';
 import styles from './patientStyles/MedicineImagesStyles';
@@ -16,10 +17,27 @@ import styles from './patientStyles/MedicineImagesStyles';
 LogBox.ignoreAllLogs();
 const SLIDER_WIDTH = Dimensions.get('window').width;
 const ITEM_WIDTH = Math.round(SLIDER_WIDTH * 0.84);
+const defaultConfig = {
+  levels: {
+    debug: 0,
+    info: 1,
+    warn: 2,
+    error: 3,
+  },
+  transportOptions: {
+    colors: {
+      debug: 'greenBright',
+      info: 'blueBright',
+      warn: 'yellowBright',
+      error: 'redBright',
+    },
+  },
+};
 
+var log = logger.createLogger(defaultConfig);
 const CarouselCardItem = ({item}) => {
   const [load, setload] = useState(true);
-  console.log(item);
+  log.info(item);
   return (
     <View style={styles.container1}>
       <Image
@@ -45,7 +63,7 @@ const CarouselCardItem = ({item}) => {
 };
 
 const SingleImageComponent = ({item}) => {
-  console.log('item', item);
+  log.info('item', item);
   const [index, setindex] = React.useState(0);
 
   return (
@@ -104,7 +122,7 @@ const MedicineImages = ({route}) => {
     React.useCallback(() => {
       fetchImages();
       return () => {
-       /* do nothing */
+        /* do nothing */
       };
     }, []),
   );

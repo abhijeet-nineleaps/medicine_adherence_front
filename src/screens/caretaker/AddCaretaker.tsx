@@ -11,24 +11,42 @@ import React, {useEffect} from 'react';
 import {Button, ListItem, SpeedDial} from 'react-native-elements';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Card} from 'react-native-paper';
+import {logger} from 'react-native-logs';
 import UserAvatar from 'react-native-user-avatar';
 import {useDispatch, useSelector} from 'react-redux';
 import {fetchCaretakers} from '../../redux/actions/caretaker/CaretakerActions';
-import styles from "./caretakerStyles/CaretakerComStyles";
+import styles from './caretakerStyles/CaretakerComStyles';
 
-import Icon from 'react-native-vector-icons/FontAwesome'
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 interface Props {
   navigation: any;
 }
+const defaultConfig = {
+  levels: {
+    debug: 0,
+    info: 1,
+    warn: 2,
+    error: 3,
+  },
+  transportOptions: {
+    colors: {
+      debug: 'greenBright',
+      info: 'blueBright',
+      warn: 'yellowBright',
+      error: 'redBright',
+    },
+  },
+};
 
+var log = logger.createLogger(defaultConfig);
 const Addcaretaker: React.FC<{navigation}> = Props => {
   const {navigation} = Props;
   const caretakers = useSelector(
     state => state.CareTakerReducer.userCaretakerList,
   );
   const {load} = useSelector(state => state.CareTakerReducer);
-  console.log(load, 'load');
+  log.info(load, 'load');
   const [refresh, refeereshstate] = React.useState(false);
   const [open, setOpen] = React.useState(false);
   const dispatch = useDispatch();
@@ -42,11 +60,13 @@ const Addcaretaker: React.FC<{navigation}> = Props => {
     fetchcaretakers();
   }, []);
   const renderitem = ({item}) => {
-    console.log(item.patientId, 'b');
+    log.info(item.patientId, 'b');
 
     return (
       <Card
-        onPress={() => {/* do nothing */}}
+        onPress={() => {
+          /* do nothing */
+        }}
         style={styles.cardContainer}>
         <View style={styles.top}>
           <ListItem
@@ -55,8 +75,7 @@ const Addcaretaker: React.FC<{navigation}> = Props => {
             tvParallaxProperties={undefined}>
             <UserAvatar size={60} name={item.caretakerUsername}></UserAvatar>
             <ListItem.Content>
-              <ListItem.Title
-                style={styles.listTitle}>
+              <ListItem.Title style={styles.listTitle}>
                 {item.caretakerUsername}
               </ListItem.Title>
               <ListItem.Subtitle>
@@ -64,13 +83,13 @@ const Addcaretaker: React.FC<{navigation}> = Props => {
               </ListItem.Subtitle>
             </ListItem.Content>
 
-            <TouchableOpacity onPress={() => {/* do nothing */}} style={styles.iconTouch}>
+            <TouchableOpacity
+              onPress={() => {
+                /* do nothing */
+              }}
+              style={styles.iconTouch}>
               <View style={styles.icon}>
-                <Icon
-                  name='angle-right'
-                  color={'black'}
-                  size={17}
-                />
+                <Icon name="angle-right" color={'black'} size={17} />
               </View>
             </TouchableOpacity>
           </ListItem>
@@ -82,7 +101,7 @@ const Addcaretaker: React.FC<{navigation}> = Props => {
   return (
     <React.Fragment>
       <View style={styles.container}>
-      <FlatList
+        <FlatList
           data={caretakers}
           renderItem={renderitem}
           refreshControl={
@@ -120,7 +139,7 @@ const Addcaretaker: React.FC<{navigation}> = Props => {
               title="Delete"
               buttonStyle={styles.sdButton}
               style={styles.sdHeight}
-              onPress={() => console.log('Delete Something')}
+              onPress={() => log.warn('Delete Something')}
             />
           </SpeedDial>
           <Button buttonStyle={styles.button} title="A"></Button>

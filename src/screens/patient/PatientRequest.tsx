@@ -2,23 +2,40 @@
 import React from 'react';
 import {View, FlatList, Image, RefreshControl} from 'react-native';
 import {Card} from 'react-native-paper';
+import {logger} from 'react-native-logs';
 import {Avatar, ListItem, Button} from 'react-native-elements';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {API_URL} from '../../repositories/var';
 import {useFocusEffect} from '@react-navigation/native';
 import styles from './patientStyles/PatientRequestStyles';
 
+const defaultConfig = {
+  levels: {
+    debug: 0,
+    info: 1,
+    warn: 2,
+    error: 3,
+  },
+  transportOptions: {
+    colors: {
+      debug: 'greenBright',
+      info: 'blueBright',
+      warn: 'yellowBright',
+      error: 'redBright',
+    },
+  },
+};
+
+var log = logger.createLogger(defaultConfig);
 const Patientrequest = () => {
   const [patients, patientsdata] = React.useState([]);
   const [refresh, refreshstate] = React.useState(false);
   const fetchpatientreq = async () => {
     const user_id = await AsyncStorage.getItem('user_id');
-    fetch(
-      `${API_URL}/api/v1/patient/requests?userId=${user_id}`,
-    )
+    fetch(`${API_URL}/api/v1/patient/requests?userId=${user_id}`)
       .then(res => res.json())
       .then(resp => {
-        console.log(resp);
+        log.info(resp);
         if (resp.status === 'failed') {
           patientsdata([]);
           refreshstate(false);
@@ -46,10 +63,10 @@ const Patientrequest = () => {
 
     fetch(url, {method: 'PUT'})
       .then(res => {
-        console.log(res);
+        log.info(res);
         fetchpatientreq();
       })
-      .catch(err => console.log(err));
+      .catch(err => log.error(err));
   };
   const deletereq = (ci_id: string) => {
     let url: any = new URL(`${API_URL}/api/v1/delete`);
@@ -57,10 +74,10 @@ const Patientrequest = () => {
 
     fetch(url)
       .then(res => {
-        console.log(res);
+        log.info(res);
         fetchpatientreq();
       })
-      .catch(err => console.log(err));
+      .catch(err => log.error(err));
   };
   return (
     <View style={styles.container}>

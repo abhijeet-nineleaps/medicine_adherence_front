@@ -15,22 +15,37 @@ import {useFocusEffect} from '@react-navigation/native';
 import UserAvatar from 'react-native-user-avatar';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
 import styles from './patientStyles/MyPatientStyles';
-import Icon from 'react-native-vector-icons/FontAwesome'
-
+import Icon from 'react-native-vector-icons/FontAwesome';
+import {logger} from 'react-native-logs';
 import {useDispatch, useSelector} from 'react-redux';
-import { fetchPatients } from '../../redux/actions/patient/PatientActions';
+import {fetchPatients} from '../../redux/actions/patient/PatientActions';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 interface Props {
   navigation: any;
 }
+const defaultConfig = {
+  levels: {
+    debug: 0,
+    info: 1,
+    warn: 2,
+    error: 3,
+  },
+  transportOptions: {
+    colors: {
+      debug: 'greenBright',
+      info: 'blueBright',
+      warn: 'yellowBright',
+      error: 'redBright',
+    },
+  },
+};
 
+var log = logger.createLogger(defaultConfig);
 const Mypatient: React.FC<Props> = ({navigation}: Props) => {
-  const patients = useSelector(
-    state => state.PatientReducer.patientList,
-  );
+  const patients = useSelector(state => state.PatientReducer.patientList);
   const {load} = useSelector(state => state.PatientReducer);
-  console.log(load, 'load');
+  log.info(load, 'load');
   const [data, _datastate] = React.useState([]);
   const [refresh, refeereshstate] = React.useState(false);
 
@@ -40,7 +55,7 @@ const Mypatient: React.FC<Props> = ({navigation}: Props) => {
     dispatch(fetchPatients(user_id));
     refeereshstate(false);
   };
-  
+
   useFocusEffect(
     React.useCallback(() => {
       async function checkforlog() {
@@ -72,7 +87,7 @@ const Mypatient: React.FC<Props> = ({navigation}: Props) => {
       checkforlog();
 
       return () => {
-       /* do nothing */
+        /* do nothing */
       };
     }, []),
   );
@@ -102,13 +117,13 @@ const Mypatient: React.FC<Props> = ({navigation}: Props) => {
               </ListItem.Subtitle>
             </ListItem.Content>
 
-            <TouchableOpacity onPress={() => {/* do nothing */}} style={styles.touch}>
+            <TouchableOpacity
+              onPress={() => {
+                /* do nothing */
+              }}
+              style={styles.touch}>
               <View style={styles.icon}>
-                <Icon
-                  name='angle-right'
-                  color={'black'}
-                  size={25}
-                />
+                <Icon name="angle-right" color={'black'} size={25} />
               </View>
             </TouchableOpacity>
           </ListItem>

@@ -1,18 +1,36 @@
 /* eslint-disable react/self-closing-comp */
 /* eslint-disable react-native/no-inline-styles */
 import React, {useState} from 'react';
-import {FlatList, View, Image, Text,} from 'react-native';
+import {FlatList, View, Image, Text} from 'react-native';
 import {Button, ListItem, SearchBar} from 'react-native-elements';
 import {API_URL} from '../../repositories/var';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {logger} from 'react-native-logs';
 import {Formik} from 'formik';
 import * as yup from 'yup';
 import UserAvatar from 'react-native-user-avatar';
-import styles from './caretakerStyles/SearchCaretakerStyles'
+import styles from './caretakerStyles/SearchCaretakerStyles';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
 
 import Toast from 'react-native-toast-message';
+const defaultConfig = {
+  levels: {
+    debug: 0,
+    info: 1,
+    warn: 2,
+    error: 3,
+  },
+  transportOptions: {
+    colors: {
+      debug: 'greenBright',
+      info: 'blueBright',
+      warn: 'yellowBright',
+      error: 'redBright',
+    },
+  },
+};
 
+var log = logger.createLogger(defaultConfig);
 const Searchcaretaker = ({navigation}) => {
   const [data, datastate] = React.useState([]);
   const [searchload, searchloadstate] = React.useState(false);
@@ -74,14 +92,14 @@ const Searchcaretaker = ({navigation}) => {
         if (resp.status === 'Success') {
           navigation.pop(1);
         } else {
-          console.log(resp);
+          log.info(resp);
           Toast.show({
             type: 'info',
             text1: resp.message,
-          })
+          });
         }
       })
-      .catch(err => console.log(err));
+      .catch(err => log.error(err));
   };
 
   const loginValidationSchema = yup.object().shape({
@@ -119,11 +137,7 @@ const Searchcaretaker = ({navigation}) => {
 
   return (
     <View style={styles.container}>
-     <Toast
-      position='bottom'
-      bottomOffset={20}
-      visibilityTime={2000}
-     />
+      <Toast position="bottom" bottomOffset={20} visibilityTime={2000} />
       <Formik
         validationSchema={loginValidationSchema}
         initialValues={{email: ''}}

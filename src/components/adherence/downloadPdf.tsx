@@ -1,5 +1,25 @@
 import { API_URL } from '../../repositories/var';
 import RNFetchBlob from 'rn-fetch-blob';
+import { logger } from 'react-native-logs';
+
+const defaultConfig = {
+  levels: {
+    debug: 0,
+    info: 1,
+    warn: 2,
+    error: 3,
+  },
+  transportOptions: {
+    colors: {
+      debug: "greenBright",
+      info: "blueBright",
+      warn: "yellowBright",
+      error: "redBright",
+    },
+  },
+};
+
+var log = logger.createLogger(defaultConfig);
 
 const {config} = RNFetchBlob;
 
@@ -26,7 +46,7 @@ const downloadPdf = async (globalmedId: any) => {
     await fetch(generate_pdf_url)
       .then(res => res.json())
       .then(async resp => {
-        console.log(resp.message);
+        log.info(resp.message);
         await config(options)
           .fetch('GET', `${API_URL}/upload/static/pdf/${resp.message}.pdf`)
           .catch(() => {

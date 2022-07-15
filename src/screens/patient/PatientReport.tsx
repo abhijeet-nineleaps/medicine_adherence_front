@@ -9,7 +9,7 @@ import {
   ScrollView,
   TouchableOpacity,
 } from 'react-native';
-
+import { logger } from 'react-native-logs';
 import Toast from 'react-native-toast-message';
 
 import ProgressCircle from 'react-native-progress-circle';
@@ -23,6 +23,25 @@ import LottieView from 'lottie-react-native';
 import HistoryDetail from '../../screens/components/HistoryDetail';
 import AdherencePercentage from '../../components/adherence/adherencePercentage';
 import styles from './patientStyles/PatientReportStyles';
+
+const defaultConfig = {
+  levels: {
+    debug: 0,
+    info: 1,
+    warn: 2,
+    error: 3,
+  },
+  transportOptions: {
+    colors: {
+      debug: 'greenBright',
+      info: 'blueBright',
+      warn: 'yellowBright',
+      error: 'redBright',
+    },
+  },
+};
+
+var log = logger.createLogger(defaultConfig);
 
 let detailData = {};
 
@@ -43,7 +62,7 @@ const months = [
 ];
 
 const Reminders = ({item, index}) => {
-  console.log(item, 'ite');
+  log.info(item, 'ite');
   const nottaken = item.notTaken.split(',');
   const taken = item.taken.split(',');
   let tl: number, nt: number;
@@ -156,7 +175,7 @@ export default function PatientReport({route}) {
 
   const showDetailfun = sDate => {
     detailData = historyData.find(el => el.date === sDate);
-    console.log(detailData);
+    log.info(detailData);
     if (detailData === undefined) {
       Toast.show({
         type: 'info',

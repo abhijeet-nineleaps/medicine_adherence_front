@@ -6,6 +6,7 @@ import {
   GoogleSignin,
   GoogleSigninButton,
 } from '@react-native-google-signin/google-signin';
+import {logger} from 'react-native-logs';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as Progress from 'react-native-progress';
 import Toast from 'react-native-toast-message';
@@ -14,13 +15,29 @@ import checkConnectivity from '../../connection/checkConnectivity';
 import LottieView from 'lottie-react-native';
 import {Text} from 'react-native-elements';
 import {Signupuser} from '../../repositories/signup/signUp';
-import styles from "./loginStyles/GoogleAuthStyles";
-
+import styles from './loginStyles/GoogleAuthStyles';
 
 interface Props {
   navigation: any;
 }
+const defaultConfig = {
+  levels: {
+    debug: 0,
+    info: 1,
+    warn: 2,
+    error: 3,
+  },
+  transportOptions: {
+    colors: {
+      debug: 'greenBright',
+      info: 'blueBright',
+      warn: 'yellowBright',
+      error: 'redBright',
+    },
+  },
+};
 
+var log = logger.createLogger(defaultConfig);
 const Login: React.FC<{navigation}> = Props => {
   const {navigation} = Props;
   const [loading, loadingstate] = React.useState(false);
@@ -42,7 +59,7 @@ const Login: React.FC<{navigation}> = Props => {
       await GoogleSignin.hasPlayServices();
       const userinfo = await GoogleSignin.signIn();
       const token = await messaging().getToken();
-      console.log(userinfo);
+      log.info(userinfo);
       loadingstate(true);
       const response = await Signupuser.signup({userinfo, token});
       const res: any = await response.json();
@@ -80,8 +97,7 @@ const Login: React.FC<{navigation}> = Props => {
   }
 
   return (
-    <View
-      style={styles.container}>
+    <View style={styles.container}>
       <Toast visibilityTime={3000} />
       <Text style={styles.createText}>Create an account</Text>
       <LottieView
@@ -97,8 +113,8 @@ const Login: React.FC<{navigation}> = Props => {
         color={GoogleSigninButton.Color.Dark}
         onPress={() =>
           onGoogleButtonPress()
-            .then(() => console.log('Google'))
-            .catch(err => console.log(err))
+            .then(() => log.info('Google'))
+            .catch(err => log.error(err))
         }
       />
 

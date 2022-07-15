@@ -7,13 +7,30 @@ import {
   GoogleSignin,
   GoogleSigninButton,
 } from '@react-native-google-signin/google-signin';
+import {logger} from 'react-native-logs';
 import messaging from '@react-native-firebase/messaging';
 import {Signupuser} from '../../repositories/signup/signUp';
 import * as Progress from 'react-native-progress';
-import styles from "./loginStyles/LoginStyles";
+import styles from './loginStyles/LoginStyles';
 
+const defaultConfig = {
+  levels: {
+    debug: 0,
+    info: 1,
+    warn: 2,
+    error: 3,
+  },
+  transportOptions: {
+    colors: {
+      debug: 'greenBright',
+      info: 'blueBright',
+      warn: 'yellowBright',
+      error: 'redBright',
+    },
+  },
+};
 
-
+var log = logger.createLogger(defaultConfig);
 const Loginscreen = ({navigation}) => {
   const [loading, loadingstate] = React.useState(false);
 
@@ -25,7 +42,7 @@ const Loginscreen = ({navigation}) => {
       loadingstate(true);
       const response = await Signupuser.loginuser({userinfo, token});
       const res: any = await response.json();
-      console.log(res);
+      log.info(res);
       if (res.status === 'Success') {
         await AsyncStorage.setItem('user_id', res.userEntity[0].userId);
         await AsyncStorage.setItem('user_name', res.userEntity[0].userName);
@@ -48,7 +65,7 @@ const Loginscreen = ({navigation}) => {
         });
       }
     } catch (err: any) {
-      console.log(err);
+      log.error(err);
       if (await GoogleSignin.isSignedIn()) {
         await GoogleSignin.signOut();
       }
@@ -60,20 +77,17 @@ const Loginscreen = ({navigation}) => {
   }
 
   return (
-    <View
-      style={styles.container}>
+    <View style={styles.container}>
       <Toast visibilityTime={3000} />
-      <Text style={styles.loginText}>
-        {'LOGIN'}
-      </Text>
+      <Text style={styles.loginText}>{'LOGIN'}</Text>
       <GoogleSigninButton
         style={styles.signInButton}
         size={GoogleSigninButton.Size.Wide}
         color={GoogleSigninButton.Color.Dark}
         onPress={() =>
           loginuser()
-            .then(() => console.log('Google'))
-            .catch(err => console.log(err))
+            .then(() => log.info('Google'))
+            .catch(err => log.error(err))
         }
       />
       {loading && (

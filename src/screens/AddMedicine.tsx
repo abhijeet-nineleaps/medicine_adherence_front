@@ -10,7 +10,7 @@ import * as Animatable from 'react-native-animatable';
 import {useFocusEffect} from '@react-navigation/native';
 import globalDb from '../repositories/database/globalDb';
 import styles from './screenStyles/AddMedicineStyles';
-
+import {logger} from 'react-native-logs';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import AntIcon from 'react-native-vector-icons/AntDesign';
 
@@ -19,6 +19,22 @@ const db = globalDb();
 interface Props {
   navigation: any;
 }
+const defaultConfig = {
+  levels: {
+    debug: 0,
+    info: 1,
+    warn: 2,
+    error: 3,
+  },
+  transportOptions: {
+    colors: {
+      info: 'blueBright',
+      warn: 'yellowBright',
+      error: 'redBright',
+    },
+  },
+};
+var log = logger.createLogger(defaultConfig);
 let Reducerfun = (state: any, action: any) => {
   return {...state, data: action.payload};
 };
@@ -30,7 +46,8 @@ const Addmedicine = ({navigation}: Props) => {
     React.useCallback(() => {
       fetch_meds();
       return () => {
-       /* do nothing */};
+        /* do nothing */
+      };
     }, []),
   );
 
@@ -67,8 +84,8 @@ const Addmedicine = ({navigation}: Props) => {
   };
 
   const deleteitem = async (id: number) => {
-    console.log(id);
-    console.log('del');
+    log.info(id);
+    log.warn('del');
     let med_del: any[] = [];
     db.transaction(function (txn: any) {
       txn.executeSql('DELETE FROM `User_medicines`  where user_id = ' + id);
@@ -80,7 +97,7 @@ const Addmedicine = ({navigation}: Props) => {
             med_del.push(res.rows.item(i));
           }
 
-          console.log(med_del);
+          log.info(med_del);
           med_del.length === 0
             ? characterstate({type: 'empty', payload: []})
             : characterstate({type: 'data', payload: med_del});
@@ -117,7 +134,7 @@ const Addmedicine = ({navigation}: Props) => {
                   navigation.navigate('Add Reminder', {id: item.user_id})
                 }>
                 <AntIcon
-                  name='clockcircle'
+                  name="clockcircle"
                   color={item.status === 0 ? '#3743ab' : '#4dd0e1'}
                   size={24}
                 />
@@ -134,11 +151,7 @@ const Addmedicine = ({navigation}: Props) => {
                     },
                   ]);
                 }}>
-                <Icon
-                  name='trash'
-                  color="#3743ab"
-                  size={24}
-                />
+                <Icon name="trash" color="#3743ab" size={24} />
               </TouchableOpacity>
             </ListItem>
           </View>

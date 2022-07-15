@@ -1,8 +1,28 @@
-import { API_URL } from "../repositories/var";
+import {API_URL} from '../repositories/var';
+import {logger} from 'react-native-logs';
+
+const defaultConfig = {
+  levels: {
+    debug: 0,
+    info: 1,
+    warn: 2,
+    error: 3,
+  },
+  transportOptions: {
+    colors: {
+      debug: 'greenBright',
+      info: 'blueBright',
+      warn: 'yellowBright',
+      error: 'redBright',
+    },
+  },
+};
+
+var log = logger.createLogger(defaultConfig);
 
 const networkCalls = {
   synchistory: async (medId: number, medHistory: any) => {
-    console.log(medHistory);
+    log.info(medHistory);
     let response = await fetch(
       `${API_URL}/api/v1/medicine-history/sync?medId=${medId}`,
       {
