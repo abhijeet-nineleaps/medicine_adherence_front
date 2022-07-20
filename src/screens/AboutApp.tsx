@@ -12,10 +12,8 @@ const aboutApp = () => {
         />
       </View>
       <View style={styles.textContainer}>
-        <Text style={styles.text}>
-          Medicine Adherence app which allows user to use medicine, reminder,
-          caretaker, patient, report and more features and never skip their
-          medications.
+        <Text testID='aboutText' style={styles.text}>
+          Medicine Adherence app which allows user to use medicine, reminder, caretaker, patient, report and more features and never skip their medications.
         </Text>
       </View>
     </View>

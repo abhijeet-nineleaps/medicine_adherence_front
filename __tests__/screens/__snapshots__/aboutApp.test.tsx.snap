@@ -47,6 +47,7 @@ exports[`About App renders correctly 1`] = `
           "paddingLeft": 4,
         }
       }
+      testID="aboutText"
     >
       Medicine Adherence app which allows user to use medicine, reminder, caretaker, patient, report and more features and never skip their medications.
     </Text>

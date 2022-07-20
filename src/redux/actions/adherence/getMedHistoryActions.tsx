@@ -10,7 +10,7 @@ function getMedHistory(globalmedId) {
 function medHistorySuccess(data) {
   return {
     type: Types.GET_MED_HISTORY_SUCCESS,
-    paylaod: data,
+    payload: data,
   };
 }
 

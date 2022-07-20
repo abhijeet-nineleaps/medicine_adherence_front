@@ -21,6 +21,7 @@ const Settings: React.FC<Props> = ({navigation}: Props) => {
           title="Notification settings"
           titleStyle={styles.settingItems}
           onPress={() => Linking.openSettings()}
+          testId='openSettings'
         />
 
         <SettingsList.Header
@@ -32,6 +33,7 @@ const Settings: React.FC<Props> = ({navigation}: Props) => {
           title="About Medstick"
           titleStyle={styles.settingItems}
           onPress={() => navigation.navigate('aboutApp')}
+          testId='aboutApp'
         />
         <SettingsList.Item
           hasNavArrow={false}

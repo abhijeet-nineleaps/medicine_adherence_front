@@ -9,7 +9,7 @@ function sendImageRequest(medId: number) {
 
 function sendImageSuccess(data) {
   return{
-    typpe: Types.SUCCESS_SEND_IMAGES,
+    type: Types.SUCCESS_SEND_IMAGES,
     payload: data,
   };
 }

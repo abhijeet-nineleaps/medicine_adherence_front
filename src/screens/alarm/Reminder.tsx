@@ -338,11 +338,11 @@ const Reminder = ({route, navigation}) => {
             }}
             style={styles.containerTouch}>
             <View style={styles.dateContainer}>
-              <Text style={styles.dateText}>Start Date</Text>
+              <Text style={styles.dateText} testID='startDateText'>Start Date</Text>
               <Text style={styles.dateText1}>
                 {start_date.toISOString().split('T')[0]}
               </Text>
-              <Text style={styles.dateText}>End Date</Text>
+              <Text style={styles.dateText} testID='endDateText'>End Date</Text>
 
               <Text style={styles.dateText1}>
                 {end_date.toISOString().split('T')[0]}
@@ -369,7 +369,7 @@ const Reminder = ({route, navigation}) => {
             onConfirm={handleConfirmfortime}
             onCancel={hideDatePickerfortime}
           />
-          <Text style={styles.title}>Add Title</Text>
+          <Text style={styles.title} testID='titleText'>Add Title</Text>
           <TextInput
             selectionColor="#3743ab"
             outlineColor="#3743ab"
@@ -389,7 +389,7 @@ const Reminder = ({route, navigation}) => {
               }}
               style={styles.timeTouch}>
               <View style={styles.timeContainer}>
-                <Text style={styles.selectTime}>Select Time</Text>
+                <Text style={styles.selectTime} testID='selectTimeText'>Select Time</Text>
               </View>
 
               <Icon

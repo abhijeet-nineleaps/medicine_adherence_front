@@ -10,7 +10,7 @@ function downloadPdf(globalmedId) {
 function downloadPdfSuccess(data) {
   return {
     type: Types.SUCCESS_PDF_DOWNLOAD,
-    paylaod: data,
+    payload: data,
   };
 }
 

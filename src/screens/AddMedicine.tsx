@@ -186,7 +186,7 @@ const Addmedicine = ({navigation}: Props) => {
             navigation.getParent().navigate('Add Medicine', {
               id: '1234',
             })
-          }>
+          } testID='addMedButton'>
           <LottieView
             source={require('../../assests/animate/addicon.json')}
             autoPlay
