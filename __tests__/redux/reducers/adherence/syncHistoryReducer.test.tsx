@@ -1,35 +1,58 @@
 import syncHistoryReducer from '../../../../src/redux/reducers/adherence/syncHistoryReducer';
-
-describe('test sync history', () => {
-  const result = syncHistoryReducer(undefined, {});
-  it('should check for history syncing request', () => {
-    const action = {
-      type: 'SYNC_HISTORY',
-      payload: '[]',
-    };
-    const expectedState = {
-      data: action.payload,
-    };
-    const result = syncHistoryReducer(undefined, action);
+import Types from '../../../../src/redux/actions/allTypes';
+const initialState = {
+  data: null,
+  loading: false,
+  error: null,
+};
+describe('test syncHistoryReducer', () => {
+  it('should return the initial state', () => {
+      const initialState1 = {
+        data: null,
+        loading: false,
+        error: null,
+      };
+      const result = syncHistoryReducer(undefined, {});
+      expect(result).toEqual(initialState1);
   });
-  it('should check for history syncing', () => {
-    const action = {
-      type: 'SUCCESS_SYNC_HISTORY',
-      payload: '[]',
-    };
-    const expectedState = {
-      data: action.payload,
-    };
-    const result = syncHistoryReducer(undefined, action);
+  const initialState = {
+    data: null,
+    loading: false,
+    error: null,
+  };
+  it('should check for syncHistory load', () => {
+      expect(
+        syncHistoryReducer(initialState, {
+              type: Types.SYNC_HISTORY,
+          }),
+      ).toEqual({
+        data: null,
+        loading: true,
+        error: null,
+      });
   });
-  it('should check for history syncing', () => {
-    const action = {
-      type: 'FAILED_SYNC_HISTORY',
-      payload: '[]',
-    };
-    const expectedState = {
-      data: action.payload,
-    };
-    const result = syncHistoryReducer(undefined, action);
+  it('should check for syncHistory success', () => {
+      expect(
+        syncHistoryReducer(initialState, {
+              type: Types.SUCCESS_SYNC_HISTORY,
+              payload: { status: 'success' },
+          }),
+      ).toEqual({
+        data: undefined,
+        loading: false,
+        error: null,
+      });
+  });
+  it('should check for syncHistory error', () => {
+      expect(
+        syncHistoryReducer(initialState, {
+              type: Types.FAILED_SYNC_HISTORY,
+              payload: 'ERROR',
+          }),
+      ).toEqual({
+        data: null,
+        loading: true,
+        error: undefined,
+      });
   });
 });

@@ -1,35 +1,58 @@
 import ProfileReducer from '../../../../src/redux/reducers/profile/ProfileReducer';
-
-describe('test profile', () => {
-  const result = ProfileReducer(undefined, {});
-  it('should check for profile request', () => {
-    const action = {
-      type: 'SAVE_PROFILE',
-      payload: '[]',
-    };
-    const expectedState = {
-      data: action.payload,
-    };
-    const result = ProfileReducer(undefined, action);
+import Types from '../../../../src/redux/actions/allTypes';
+const initialState = {
+  data: null,
+  loading: false,
+  error: null,
+};
+describe('test ProfileReducer', () => {
+  it('should return the initial state', () => {
+      const initialState1 = {
+        data: null,
+        loading: false,
+        error: null,
+      };
+      const result = ProfileReducer(undefined, {});
+      expect(result).toEqual(initialState1);
   });
-  it('should check for profile success', () => {
-    const action = {
-      type: 'SUCCESS_PROFILE',
-      payload: '[]',
-    };
-    const expectedState = {
-      data: action.payload,
-    };
-    const result = ProfileReducer(undefined, action);
+  const initialState = {
+    data: null,
+    loading: false,
+    error: null,
+  };
+  it('should check for Profile load', () => {
+      expect(
+        ProfileReducer(initialState, {
+              type: Types.SAVE_PROFILE,
+          }),
+      ).toEqual({
+        data: null,
+        loading: true,
+        error: null,
+      });
   });
-  it('should check for profile error', () => {
-    const action = {
-      type: 'FAILED_PROFILE',
-      payload: '[]',
-    };
-    const expectedState = {
-      data: action.payload,
-    };
-    const result = ProfileReducer(undefined, action);
+  it('should check for Profile success', () => {
+      expect(
+        ProfileReducer(initialState, {
+              type: Types.SUCCESS_PROFILE,
+              payload: { status: 'success' },
+          }),
+      ).toEqual({
+        data: undefined,
+        loading: false,
+        error: null,
+      });
+  });
+  it('should check for Profile error', () => {
+      expect(
+        ProfileReducer(initialState, {
+              type: Types.FAILED_PROFILE,
+              payload: 'ERROR',
+          }),
+      ).toEqual({
+        data: null,
+        loading: true,
+        error: undefined,
+      });
   });
 });

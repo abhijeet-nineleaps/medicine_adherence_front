@@ -1,35 +1,58 @@
 import PatientReducer from '../../../../src/redux/reducers/patient/PatientReducer';
-
-describe('test patient', () => {
-  const result = PatientReducer(undefined, {});
-  it('should check for patient request', () => {
-    const action = {
-      type: 'GET_PATIENT',
-      payload: '[]',
-    };
-    const expectedState = {
-      data: action.payload,
-    };
-    const result = PatientReducer(undefined, action);
+import Types from '../../../../src/redux/actions/allTypes';
+const initialState = {
+  data: null,
+  loading: false,
+  error: null,
+};
+describe('test PatientReducer', () => {
+  it('should return the initial state', () => {
+      const initialState1 = {
+        data: null,
+        loading: false,
+        error: null,
+      };
+      const result = PatientReducer(undefined, {});
+      expect(result).toEqual(initialState1);
   });
-  it('should check for patient success', () => {
-    const action = {
-      type: 'SUCCES_PATIENT',
-      payload: '[]',
-    };
-    const expectedState = {
-      data: action.payload,
-    };
-    const result = PatientReducer(undefined, action);
+  const initialState = {
+    data: null,
+    loading: false,
+    error: null,
+  };
+  it('should check for Patient load', () => {
+      expect(
+        PatientReducer(initialState, {
+              type: Types.GET_PATIENT,
+          }),
+      ).toEqual({
+        data: null,
+        loading: true,
+        error: null,
+      });
   });
-  it('should check for patient error', () => {
-    const action = {
-      type: 'FAILED_PATIENT',
-      payload: '[]',
-    };
-    const expectedState = {
-      data: action.payload,
-    };
-    const result = PatientReducer(undefined, action);
+  it('should check for Patient success', () => {
+      expect(
+        PatientReducer(initialState, {
+              type: Types.SUCCES_PATIENT,
+              payload: { status: 'success' },
+          }),
+      ).toEqual({
+        data: undefined,
+        loading: false,
+        error: null,
+      });
+  });
+  it('should check for Patient error', () => {
+      expect(
+        PatientReducer(initialState, {
+              type: Types.FAILED_PATIENT,
+              payload: 'ERROR',
+          }),
+      ).toEqual({
+        data: null,
+        loading: true,
+        error: undefined,
+      });
   });
 });

@@ -1,35 +1,58 @@
 import signupReducer from '../../../../src/redux/reducers/signup/signupReducer';
-
-describe('test signup', () => {
-  const result = signupReducer(undefined, {});
-  it('should check for signup request', () => {
-    const action = {
-      type: 'SIGNUP_REQUEST',
-      payload: '[]',
-    };
-    const expectedState = {
-      data: action.payload,
-    };
-    const result = signupReducer(undefined, action);
+import Types from '../../../../src/redux/actions/allTypes';
+const initialState = {
+  data: null,
+  loading: false,
+  error: null,
+};
+describe('test signupReducer', () => {
+  it('should return the initial state', () => {
+      const initialState1 = {
+        data: null,
+        loading: false,
+        error: null,
+      };
+      const result = signupReducer(undefined, {});
+      expect(result).toEqual(initialState1);
+  });
+  const initialState = {
+    data: null,
+    loading: false,
+    error: null,
+  };
+  it('should check for signup load', () => {
+      expect(
+        signupReducer(initialState, {
+              type: Types.SIGNUP_REQUEST,
+          }),
+      ).toEqual({
+        data: null,
+        loading: true,
+        error: null,
+      });
   });
   it('should check for signup success', () => {
-    const action = {
-      type: 'SUCCESS_SIGNUP',
-      payload: '[]',
-    };
-    const expectedState = {
-      data: action.payload,
-    };
-    const result = signupReducer(undefined, action);
+      expect(
+        signupReducer(initialState, {
+              type: Types.SUCCESS_SIGNUP,
+              payload: { status: 'success' },
+          }),
+      ).toEqual({
+        data: undefined,
+        loading: false,
+        error: null,
+      });
   });
   it('should check for signup error', () => {
-    const action = {
-      type: 'ERROR_SIGNUP',
-      payload: '[]',
-    };
-    const expectedState = {
-      data: action.payload,
-    };
-    const result = signupReducer(undefined, action);
+      expect(
+        signupReducer(initialState, {
+              type: Types.FAILED_SIGNUP,
+              payload: 'ERROR',
+          }),
+      ).toEqual({
+        data: null,
+        loading: true,
+        error: undefined,
+      });
   });
 });

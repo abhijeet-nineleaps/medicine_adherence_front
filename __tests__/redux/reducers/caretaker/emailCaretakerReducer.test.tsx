@@ -1,35 +1,58 @@
 import emailCaretakerReducer from '../../../../src/redux/reducers/caretaker/emailCaretakerReducer';
-
-describe('test email caretaker', () => {
-  const result = emailCaretakerReducer(undefined, {});
-  it('should check for email caretaker request', () => {
-    const action = {
-      type: 'SEND_EMAIL',
-      payload: '[]',
-    };
-    const expectedState = {
-      data: action.payload,
-    };
-    const result = emailCaretakerReducer(undefined, action);
+import Types from '../../../../src/redux/actions/allTypes';
+const initialState = {
+  data: null,
+  loading: false,
+  error: null,
+};
+describe('test emailCaretakerReducer', () => {
+  it('should return the initial state', () => {
+      const initialState1 = {
+        data: null,
+        loading: false,
+        error: null,
+      };
+      const result = emailCaretakerReducer(undefined, {});
+      expect(result).toEqual(initialState1);
   });
-  it('should check for email caretaker', () => {
-    const action = {
-      type: 'SUCCESS_SEND_EMAIL',
-      payload: '[]',
-    };
-    const expectedState = {
-      data: action.payload,
-    };
-    const result = emailCaretakerReducer(undefined, action);
+  const initialState = {
+    data: null,
+    loading: false,
+    error: null,
+  };
+  it('should check for emailCaretaker load', () => {
+      expect(
+        emailCaretakerReducer(initialState, {
+              type: Types.SEND_EMAIL,
+          }),
+      ).toEqual({
+        data: null,
+        loading: true,
+        error: null,
+      });
   });
-  it('should check for email caretaker', () => {
-    const action = {
-      type: 'FAILED_SEND_EMAIL',
-      payload: '[]',
-    };
-    const expectedState = {
-      data: action.payload,
-    };
-    const result = emailCaretakerReducer(undefined, action);
+  it('should check for emailCaretaker success', () => {
+      expect(
+        emailCaretakerReducer(initialState, {
+              type: Types.SUCCESS_SEND_EMAIL,
+              payload: { status: 'success' },
+          }),
+      ).toEqual({
+        data: undefined,
+        loading: false,
+        error: null,
+      });
+  });
+  it('should check for emailCaretaker error', () => {
+      expect(
+        emailCaretakerReducer(initialState, {
+              type: Types.FAILED_SEND_EMAIL,
+              payload: 'ERROR',
+          }),
+      ).toEqual({
+        data: null,
+        loading: true,
+        error: undefined,
+      });
   });
 });
