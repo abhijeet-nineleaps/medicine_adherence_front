@@ -1,39 +1,15 @@
-import {call, put, takeEvery} from 'redux-saga/effects';
-import { logger } from 'react-native-logs';
-import Types from '../../actions/allTypes';
-import {
-  fetchCaretakerserror,
-  fetchCaretakerssuccess,
-} from '../../actions/caretaker/CaretakerActions';
-import fetchcaretaker from '../../apis/fetchcaretaker';
-const defaultConfig = {
-  levels: {
-    debug: 0,
-    info: 1,
-    warn: 2,
-    error: 3,
-  },
-  transportOptions: {
-    colors: {
-      info: 'blueBright',
-      warn: 'yellowBright',
-      error: 'redBright',
-    },
-  },
-};
-var log = logger.createLogger(defaultConfig);
-function* getcaretaker({payload}) {
+import {takeLatest, call, put} from 'redux-saga/effects';
+import notifypatient from '../../apis/notifypatient';
+import { CaretakerActions } from '../../actions/caretaker/CaretakerActions';
+export function* caretakerSaga(value) {
+  const {payload} = value;
   try {
-    const data = yield call(fetchcaretaker, payload);
-    log.info(data, 'called');
-    yield put(fetchCaretakerssuccess(data));
+    const response = yield call(notifypatient, payload);
+    yield put(CaretakerActions.fetchCaretakerssuccess(response?.data));
   } catch (err) {
-    log.error(err, 'sagg');
-
-    yield put(fetchCaretakerserror(err));
+    yield put(CaretakerActions.fetchCaretakerserror(err));
   }
 }
-
-export default function* caretakerSaga() {
-  yield takeEvery(Types.GET_CARETAKERS, getcaretaker);
+export function* caretakerwatcherSaga() {
+  yield takeLatest(CaretakerActions.fetchCaretakers, caretakerSaga);
 }

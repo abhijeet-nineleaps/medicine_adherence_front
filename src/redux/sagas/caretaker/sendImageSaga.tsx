@@ -1,37 +1,15 @@
-import {call, put, takeEvery} from 'redux-saga/effects';
-import { logger } from 'react-native-logs';
-import Types from '../../actions/allTypes';
-import { sendImageFailed, sendImageSuccess } from '../../actions/caretaker/sendImageActions';
-import sendimages from '../../apis/sendimages';
-
-const defaultConfig = {
-  levels: {
-    debug: 0,
-    info: 1,
-    warn: 2,
-    error: 3,
-  },
-  transportOptions: {
-    colors: {
-      info: 'blueBright',
-      warn: 'yellowBright',
-      error: 'redBright',
-    },
-  },
-};
-var log = logger.createLogger(defaultConfig);
-function* sendImage({payload}) {
+import {takeLatest, call, put} from 'redux-saga/effects';
+import notifypatient from '../../apis/notifypatient';
+import { sendImageActions } from '../../actions/caretaker/sendImageActions';
+export function* sendImageSaga(value) {
+  const {payload} = value;
   try {
-    const data = yield call(sendimages,payload);
-    log.info(data, 'called');
-    yield put(sendImageSuccess(data));
+    const response = yield call(notifypatient, payload);
+    yield put(sendImageActions.sendImageSuccess(response?.data));
   } catch (err) {
-    log.error(err, 'sagg');
-
-    yield put(sendImageFailed(err));
+    yield put(sendImageActions.sendImageFailed(err));
   }
 }
-
-export default function* sendImageSaga() {
-  yield takeEvery(Types.SEND_IMAGES, sendImage);
+export function* sendImagewatcherSaga() {
+  yield takeLatest(sendImageActions.sendImageRequest, sendImageSaga);
 }

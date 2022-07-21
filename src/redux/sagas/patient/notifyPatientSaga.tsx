@@ -1,38 +1,15 @@
-import {call, put, takeEvery} from 'redux-saga/effects';
-import { logger } from 'react-native-logs';
-import Types from '../../actions/allTypes';
-import {notifyPatientsError, notifyPatientsSuccess } from '../../actions/patient/notifyPatientActions';
+import {takeLatest, call, put} from 'redux-saga/effects';
 import notifypatient from '../../apis/notifypatient';
-
-
-const defaultConfig = {
-  levels: {
-    debug: 0,
-    info: 1,
-    warn: 2,
-    error: 3,
-  },
-  transportOptions: {
-    colors: {
-      info: 'blueBright',
-      warn: 'yellowBright',
-      error: 'redBright',
-    },
-  },
-};
-var log = logger.createLogger(defaultConfig);
-function* notifyPatient({payload}) {
+import { notifyPatientActions } from '../../actions/patient/notifyPatientActions';
+export function* notifySaga(value) {
+  const {payload} = value;
   try {
-    const data = yield call(notifypatient, payload);
-    log.info(data, 'called');
-    yield put(notifyPatientsSuccess(data));
+    const response = yield call(notifypatient, payload);
+    yield put(notifyPatientActions.notifyPatientsSuccess(response?.data));
   } catch (err) {
-    log.error(err, 'sagg');
-
-    yield put(notifyPatientsError(err));
+    yield put(notifyPatientActions.notifyPatientsError(err));
   }
 }
-
-export default function* notifyPatientSaga() {
-  yield takeEvery(Types.NOTIFY_PATIENT, notifyPatient);
+export function* notifywatcherSaga() {
+  yield takeLatest(notifyPatientActions.notifyPatients, notifySaga);
 }

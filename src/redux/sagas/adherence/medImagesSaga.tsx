@@ -1,7 +1,7 @@
 import {takeLatest, call, put} from 'redux-saga/effects';
 import notifypatient from '../../apis/notifypatient';
 import { medImagesActions } from '../../actions/adherence/medImagesActions';
-export function* syncMedSaga(value) {
+export function* medImagesSaga(value) {
   const {payload} = value;
   try {
     const response = yield call(notifypatient, payload);
@@ -10,6 +10,6 @@ export function* syncMedSaga(value) {
     yield put(medImagesActions.fetchMedImagesError(err));
   }
 }
-export function* syncMedwatcherSaga() {
-  yield takeLatest(medImagesActions.fetchMedImages, syncMedSaga);
+export function* medImageswatcherSaga() {
+  yield takeLatest(medImagesActions.fetchMedImages, medImagesSaga);
 }
