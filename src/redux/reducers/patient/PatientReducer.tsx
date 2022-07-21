@@ -1,5 +1,5 @@
 import Types from '../../actions/allTypes';
-const initialState = {
+export const initialState = {
   data: null,
   loading: false,
   error: null,
