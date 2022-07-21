@@ -23,7 +23,7 @@ var log = logger.createLogger(defaultConfig);
 
 const {config} = RNFetchBlob;
 
-const downloadPdf = async (globalmedId: any) => {
+const DownloadPdf = async (globalmedId: any) => {
   const date = new Date();
 
   let downloaddir = RNFetchBlob.fs.dirs.DownloadDir;
@@ -64,4 +64,4 @@ const downloadPdf = async (globalmedId: any) => {
   }
 };
 
-export default downloadPdf;
+export default DownloadPdf;
