@@ -1,15 +1,15 @@
 import { takeLatest } from "@redux-saga/core/effects"
 import { runSaga } from "redux-saga";
-import { profile } from "../../../../src/redux/apis/profile";
-import { ProfileActions } from "../../../../src/redux/actions/profile/ProfileActions";
-import { profileSaga, profilewatcherSaga } from "../../../../src/redux/sagas/profile/ProfileSaga";
+import { downloadPdfActions } from "../../../../src/redux/actions/adherence/downloadPdfActions";
+import { downloadPdfSaga, downloadPdfwatcherSaga } from "../../../../src/redux/sagas/adherence/downloadPdfSaga";
+import adherence from "../../../../src/redux/apis/adherence";
 
 const initialData = {}
-describe("test signupwatcherSaga", () => {
-  const result = profilewatcherSaga()
+describe("test downloadPdfwatcherSaga", () => {
+  const result = downloadPdfwatcherSaga()
   it("test login loading", () => {
     expect(result.next().value).toEqual(
-      takeLatest(ProfileActions.saveProfile, profileSaga)
+      takeLatest(downloadPdfActions.downloadPdf, downloadPdfSaga)
     )
   })
   it("should be done on next iteration", () => {
@@ -21,36 +21,36 @@ describe("testing loginSaga", () => {
     data: "1"
   }
   it("should dispatch success action", async () => {
-    const generator = jest.spyOn(profile, "saveProfile").mockImplementation(() => Promise.resolve(response));
+    const generator = jest.spyOn(adherence, "downloadPdf").mockImplementation(() => Promise.resolve(response));
     const dispatched = []
     const result = await runSaga(
       {
         dispatch: (action) => dispatched.push(action)
       },
-      profileSaga,
+      downloadPdfSaga,
       initialData
     );
     expect(result).toBeTruthy();
     expect(generator).toHaveBeenCalledTimes(1);
     expect(dispatched).toEqual(
-      [ProfileActions.saveProfileSuccess(response.data)]
+      [downloadPdfActions.downloadPdfSuccess(response.data)]
     );
     generator.mockClear();
   })
   it("should dispatch error action", async () => {
-    const generator = jest.spyOn(profile, "saveProfile").mockImplementation(() => Promise.reject());
+    const generator = jest.spyOn(adherence, "downloadPdf").mockImplementation(() => Promise.reject());
     const dispatched = []
     const result = await runSaga(
       {
         dispatch: (action) => dispatched.push(action)
       },
-      profileSaga,
+      downloadPdfSaga,
       initialData
     );
     expect(result).toBeTruthy();
     expect(generator).toHaveBeenCalledTimes(1);
     expect(dispatched).toEqual(
-      [ProfileActions.saveProfileFailed(undefined)]
+      [downloadPdfActions.downloadPdfError(undefined)]
     );
     generator.mockClear();
   })

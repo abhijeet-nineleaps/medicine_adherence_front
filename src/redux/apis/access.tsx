@@ -38,6 +38,4 @@ export const Signupuser = {
     });
     return response;
   },
-
 };
-

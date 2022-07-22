@@ -1,37 +1,15 @@
-import {call, put, takeEvery} from 'redux-saga/effects';
-import { logger } from 'react-native-logs';
-import Types from '../../actions/allTypes';
-import { fetchPatientReqError, fetchPatientReqSuccess } from '../../actions/patient/patientReqActions';
-import fetchpatientreq from '../../apis/fetchpatientreq';
-
-const defaultConfig = {
-  levels: {
-    debug: 0,
-    info: 1,
-    warn: 2,
-    error: 3,
-  },
-  transportOptions: {
-    colors: {
-      info: 'blueBright',
-      warn: 'yellowBright',
-      error: 'redBright',
-    },
-  },
-};
-var log = logger.createLogger(defaultConfig);
-function* getPatientReq({payload}) {
+import {takeLatest, call, put} from 'redux-saga/effects';
+import { patient } from '../../apis/patient';
+import { patientReqActions } from '../../actions/patient/patientReqActions';
+export function* patientReqSaga(value) {
+  const {payload} = value;
   try {
-    const data = yield call(fetchpatientreq, payload);
-    log.info(data, 'called');
-    yield put(fetchPatientReqSuccess(data));
+    const response = yield call(patient.patientReq, payload);
+    yield put(patientReqActions.fetchPatientReqSuccess(response?.data));
   } catch (err) {
-    log.error(err, 'sagg');
-
-    yield put(fetchPatientReqError(err));
+    yield put(patientReqActions.fetchPatientReqError(err));
   }
 }
-
-export default function* patientReqSaga() {
-  yield takeEvery(Types.GET_PATIENT_REQUEST, getPatientReq);
+export function* patientreqwatcherSaga() {
+  yield takeLatest(patientReqActions.fetchPatientReq, patientReqSaga);
 }

@@ -1,10 +1,10 @@
 import {takeLatest, call, put} from 'redux-saga/effects';
-import notifypatient from '../../apis/notifypatient';
+import adherence from '../../apis/adherence';
 import { downloadPdfActions } from '../../actions/adherence/downloadPdfActions';
 export function* downloadPdfSaga(value) {
   const {payload} = value;
   try {
-    const response = yield call(notifypatient, payload);
+    const response = yield call(adherence.downloadPdf, payload);
     yield put(downloadPdfActions.downloadPdfSuccess(response?.data));
   } catch (err) {
     yield put(downloadPdfActions.downloadPdfError(err));

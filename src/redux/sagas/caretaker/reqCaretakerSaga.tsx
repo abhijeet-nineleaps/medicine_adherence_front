@@ -1,10 +1,10 @@
 import {takeLatest, call, put} from 'redux-saga/effects';
-import notifypatient from '../../apis/notifypatient';
+import { careTaker } from '../../apis/careTaker';
 import { reqCaretakerActions } from '../../actions/caretaker/reqCaretakerActions';
 export function* reqCaretakerSaga(value) {
   const {payload} = value;
   try {
-    const response = yield call(notifypatient, payload);
+    const response = yield call(careTaker.reqCaretaker, payload);
     yield put(reqCaretakerActions.sendReqCaretakerSuccess(response?.data));
   } catch (err) {
     yield put(reqCaretakerActions.sendReqCaretakerFailed(err));

@@ -1,15 +1,15 @@
 import { takeLatest } from "@redux-saga/core/effects"
 import { runSaga } from "redux-saga";
-import { profile } from "../../../../src/redux/apis/profile";
-import { ProfileActions } from "../../../../src/redux/actions/profile/ProfileActions";
-import { profileSaga, profilewatcherSaga } from "../../../../src/redux/sagas/profile/ProfileSaga";
+import { patient } from "../../../../src/redux/apis/patient";
+import { patientReqActions } from "../../../../src/redux/actions/patient/patientReqActions";
+import { patientreqwatcherSaga, patientReqSaga } from "../../../../src/redux/sagas/patient/patientReqSaga";
 
 const initialData = {}
-describe("test signupwatcherSaga", () => {
-  const result = profilewatcherSaga()
+describe("test patientreqwatcherSaga", () => {
+  const result = patientreqwatcherSaga()
   it("test login loading", () => {
     expect(result.next().value).toEqual(
-      takeLatest(ProfileActions.saveProfile, profileSaga)
+      takeLatest(patientReqActions.fetchPatientReq, patientReqSaga)
     )
   })
   it("should be done on next iteration", () => {
@@ -21,36 +21,36 @@ describe("testing loginSaga", () => {
     data: "1"
   }
   it("should dispatch success action", async () => {
-    const generator = jest.spyOn(profile, "saveProfile").mockImplementation(() => Promise.resolve(response));
+    const generator = jest.spyOn(patient, "patientReq").mockImplementation(() => Promise.resolve(response));
     const dispatched = []
     const result = await runSaga(
       {
         dispatch: (action) => dispatched.push(action)
       },
-      profileSaga,
+      patientReqSaga,
       initialData
     );
     expect(result).toBeTruthy();
     expect(generator).toHaveBeenCalledTimes(1);
     expect(dispatched).toEqual(
-      [ProfileActions.saveProfileSuccess(response.data)]
+      [patientReqActions.fetchPatientReqSuccess(response.data)]
     );
     generator.mockClear();
   })
   it("should dispatch error action", async () => {
-    const generator = jest.spyOn(profile, "saveProfile").mockImplementation(() => Promise.reject());
+    const generator = jest.spyOn(patient, "patientReq").mockImplementation(() => Promise.reject());
     const dispatched = []
     const result = await runSaga(
       {
         dispatch: (action) => dispatched.push(action)
       },
-      profileSaga,
+      patientReqSaga,
       initialData
     );
     expect(result).toBeTruthy();
     expect(generator).toHaveBeenCalledTimes(1);
     expect(dispatched).toEqual(
-      [ProfileActions.saveProfileFailed(undefined)]
+      [patientReqActions.fetchPatientReqError(undefined)]
     );
     generator.mockClear();
   })

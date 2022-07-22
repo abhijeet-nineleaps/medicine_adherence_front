@@ -1,18 +1,15 @@
 import { takeLatest } from "@redux-saga/core/effects"
 import { runSaga } from "redux-saga";
-import fetchpatientreqdelete from "../../../../src/redux/apis/fetchpatientreqdelete";
+import { patient } from "../../../../src/redux/apis/patient";
 import { patientReqDeleteActions } from "../../../../src/redux/actions/patient/patientReqDeleteActions";
 import { reqDeletewatcherSaga, reqDeleteSaga } from "../../../../src/redux/sagas/patient/patientReqDeleteSaga";
-import fetchpatientreqaccept from "../../../../src/redux/apis/fetchpatientreqaccept";
-import { patientReqAcceptActions } from "../../../../src/redux/actions/patient/patientReqAcceptActions";
-import { reqAcceptwatcherSaga, reqAcceptSaga } from "../../../../src/redux/sagas/patient/patientReqAcceptSaga";
 
 const initialData = {}
-describe("test reqAcceptwatcherSaga", () => {
-  const result = reqAcceptwatcherSaga()
+describe("test reqDeletewatcherSaga", () => {
+  const result = reqDeletewatcherSaga()
   it("test login loading", () => {
     expect(result.next().value).toEqual(
-      takeLatest(patientReqAcceptActions.acceptPatientReq, reqAcceptSaga)
+      takeLatest(patientReqDeleteActions.deletePatientReq, reqDeleteSaga)
     )
   })
   it("should be done on next iteration", () => {
@@ -24,36 +21,36 @@ describe("testing loginSaga", () => {
     data: "1"
   }
   it("should dispatch success action", async () => {
-    const generator = jest.spyOn(fetchpatientreqaccept, "notifypatient").mockImplementation(() => Promise.resolve(response));
+    const generator = jest.spyOn(patient, "reqDelete").mockImplementation(() => Promise.resolve(response));
     const dispatched = []
     const result = await runSaga(
       {
         dispatch: (action) => dispatched.push(action)
       },
-      reqAcceptSaga,
+      reqDeleteSaga,
       initialData
     );
     expect(result).toBeTruthy();
     expect(generator).toHaveBeenCalledTimes(1);
     expect(dispatched).toEqual(
-      [patientReqAcceptActions.acceptPatientReqSuccess(response.data)]
+      [patientReqDeleteActions.deletePatientReqSuccess(response.data)]
     );
     generator.mockClear();
   })
   it("should dispatch error action", async () => {
-    const generator = jest.spyOn(fetchpatientreqaccept, "notifypatient").mockImplementation(() => Promise.reject());
+    const generator = jest.spyOn(patient, "reqDelete").mockImplementation(() => Promise.reject());
     const dispatched = []
     const result = await runSaga(
       {
         dispatch: (action) => dispatched.push(action)
       },
-      reqAcceptSaga,
+      reqDeleteSaga,
       initialData
     );
     expect(result).toBeTruthy();
     expect(generator).toHaveBeenCalledTimes(1);
     expect(dispatched).toEqual(
-      [patientReqAcceptActions.acceptPatientReqError(undefined)]
+      [patientReqDeleteActions.deletePatientReqError(undefined)]
     );
     generator.mockClear();
   })
