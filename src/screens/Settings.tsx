@@ -15,6 +15,7 @@ const Settings: React.FC<Props> = ({navigation}: Props) => {
         <SettingsList.Header
           headerText="Settings"
           headerStyle={styles.setting}
+          testId='settings'
         />
         <SettingsList.Item
           hasNavArrow={true}

@@ -28,6 +28,7 @@ exports[`About App renders correctly 1`] = `
           "width": 750,
         }
       }
+      testID="aboutImg"
     />
   </View>
   <View

@@ -19,7 +19,7 @@ describe("test caretakerwatcherSaga", () => {
 describe("testing loginSaga", () => {
   const response = {
     data: "1"
-  }
+  };
   it("should dispatch success action", async () => {
     const generator = jest.spyOn(careTaker, "caretaker").mockImplementation(() => Promise.resolve(response));
     const dispatched = []
@@ -36,7 +36,7 @@ describe("testing loginSaga", () => {
       [CaretakerActions.fetchCaretakerssuccess(response.data)]
     );
     generator.mockClear();
-  })
+  });
   it("should dispatch error action", async () => {
     const generator = jest.spyOn(careTaker, "caretaker").mockImplementation(() => Promise.reject());
     const dispatched = []
@@ -53,5 +53,5 @@ describe("testing loginSaga", () => {
       [CaretakerActions.fetchCaretakerserror(undefined)]
     );
     generator.mockClear();
-  })
+  });
 })

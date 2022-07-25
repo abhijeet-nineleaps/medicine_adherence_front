@@ -19,7 +19,24 @@ describe("test reqAcceptwatcherSaga", () => {
 describe("testing loginSaga", () => {
   const response = {
     data: "1"
-  }
+  };
+    it("should dispatch error actions", async () => {
+    const generator = jest.spyOn(patient, "reqAccept").mockImplementation(() => Promise.reject());
+    const dispatched = []
+    const result = await runSaga(
+      {
+        dispatch: (action) => dispatched.push(action)
+      },
+      reqAcceptSaga,
+      initialData
+    );
+    expect(result).toBeTruthy();
+    expect(generator).toHaveBeenCalledTimes(1);
+    expect(dispatched).toEqual(
+      [patientReqAcceptActions.acceptPatientReqError(undefined)]
+    );
+    generator.mockClear();
+  });
   it("should dispatch success action", async () => {
     const generator = jest.spyOn(patient, "reqAccept").mockImplementation(() => Promise.resolve(response));
     const dispatched = []
@@ -36,22 +53,5 @@ describe("testing loginSaga", () => {
       [patientReqAcceptActions.acceptPatientReqSuccess(response.data)]
     );
     generator.mockClear();
-  })
-  it("should dispatch error action", async () => {
-    const generator = jest.spyOn(patient, "reqAccept").mockImplementation(() => Promise.reject());
-    const dispatched = []
-    const result = await runSaga(
-      {
-        dispatch: (action) => dispatched.push(action)
-      },
-      reqAcceptSaga,
-      initialData
-    );
-    expect(result).toBeTruthy();
-    expect(generator).toHaveBeenCalledTimes(1);
-    expect(dispatched).toEqual(
-      [patientReqAcceptActions.acceptPatientReqError(undefined)]
-    );
-    generator.mockClear();
-  })
+  });
 })

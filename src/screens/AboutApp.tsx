@@ -2,11 +2,12 @@ import {Text, View, Image} from 'react-native';
 import React from 'react';
 import styles from "./screenStyles/AboutAppStyles";
 
-const aboutApp = () => {
+const AboutApp = () => {
   return (
     <View style={styles.container}>
       <View style={styles.imageContainer}>
         <Image
+          testID='aboutImg'
           style={styles.image}
           source={require('../../assests/images/Medstick_1.png')}
         />
@@ -20,4 +21,4 @@ const aboutApp = () => {
   );
 };
 
-export default aboutApp;
+export default AboutApp;

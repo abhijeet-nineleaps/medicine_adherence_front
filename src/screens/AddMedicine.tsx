@@ -129,17 +129,20 @@ const Addmedicine = ({navigation}: Props) => {
               </ListItem.Content>
 
               <TouchableOpacity
+               testID='addRem'
                 style={styles.rem}
                 onPress={() =>
                   navigation.navigate('Add Reminder', {id: item.user_id})
                 }>
                 <AntIcon
+                  testID='remIcon'
                   name="clockcircle"
                   color={item.status === 0 ? '#3743ab' : '#4dd0e1'}
                   size={24}
                 />
               </TouchableOpacity>
               <TouchableOpacity
+                testID='deleteMed'
                 onPress={() => {
                   Alert.alert('Delete it!', 'Sure you want delete it', [
                     {
@@ -151,7 +154,7 @@ const Addmedicine = ({navigation}: Props) => {
                     },
                   ]);
                 }}>
-                <Icon name="trash" color="#3743ab" size={24} />
+                <Icon testID='delIcon' name="trash" color="#3743ab" size={24} />
               </TouchableOpacity>
             </ListItem>
           </View>

@@ -19,24 +19,7 @@ describe("test emailCaretakerwatcherSaga", () => {
 describe("testing loginSaga", () => {
   const response = {
     data: "1"
-  }
-  it("should dispatch success action", async () => {
-    const generator = jest.spyOn(careTaker, "emailcaretaker").mockImplementation(() => Promise.resolve(response));
-    const dispatched = []
-    const result = await runSaga(
-      {
-        dispatch: (action) => dispatched.push(action)
-      },
-      emailCaretakerSaga,
-      initialData
-    );
-    expect(result).toBeTruthy();
-    expect(generator).toHaveBeenCalledTimes(1);
-    expect(dispatched).toEqual(
-      [emailCaretakerActions.sendEmailSuccess(response.data)]
-    );
-    generator.mockClear();
-  })
+  };
   it("should dispatch error action", async () => {
     const generator = jest.spyOn(careTaker, "emailcaretaker").mockImplementation(() => Promise.reject());
     const dispatched = []
@@ -53,5 +36,22 @@ describe("testing loginSaga", () => {
       [emailCaretakerActions.sendEmailFailed(undefined)]
     );
     generator.mockClear();
-  })
+  });
+  it("should dispatch success action", async () => {
+    const generator = jest.spyOn(careTaker, "emailcaretaker").mockImplementation(() => Promise.resolve(response));
+    const dispatched = []
+    const result = await runSaga(
+      {
+        dispatch: (action) => dispatched.push(action)
+      },
+      emailCaretakerSaga,
+      initialData
+    );
+    expect(result).toBeTruthy();
+    expect(generator).toHaveBeenCalledTimes(1);
+    expect(dispatched).toEqual(
+      [emailCaretakerActions.sendEmailSuccess(response.data)]
+    );
+    generator.mockClear();
+  });
 })
