@@ -10,8 +10,9 @@ import Profile from './profile/Profile';
 import styles from './screenStyles/HomeScreenStyles';
 
 import Icon from 'react-native-vector-icons/FontAwesome';
+import { NavigationContainer } from '@react-navigation/native';
 
-const Tab = createBottomTabNavigator();
+const Tab = createBottomTabNavigator(); 
 
 const HomeScreen = () => {
   const progress = useRef(new Animated.Value(0)).current;
@@ -24,7 +25,9 @@ const HomeScreen = () => {
     }).start();
   }, []);
   return (
-    <View style={styles.container}>
+    
+<View style={styles.container}>
+<NavigationContainer>
       <StatusBar backgroundColor="#3743ab" />
 
       <Tab.Navigator
@@ -35,7 +38,7 @@ const HomeScreen = () => {
           tabBarActiveBackgroundColor: '#e3f2fd',
 
           headerRight: () => (
-            <Icon name="camera" color="black" size={40}></Icon>
+            <Icon name="camera" color="black" size={40} testID='cameraIcon'></Icon>
           ),
           tabBarActiveTintColor: '#bbdefb',
           tabBarLabelStyle: {
@@ -65,7 +68,7 @@ const HomeScreen = () => {
           options={{
             headerShown: false,
             headerRight: () => (
-              <Icon color="black" size={40} name="camera"></Icon>
+              <Icon color="black" size={40} name="camera" testID='cameraIcon'></Icon>
             ),
             tabBarIcon: () => (
               <LottieView
@@ -93,7 +96,10 @@ const HomeScreen = () => {
           component={Profile}
         />
       </Tab.Navigator>
+      </NavigationContainer>
     </View>
+    
+    
   );
 };
 
