@@ -1,10 +1,14 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
+import { render, cleanup, fireEvent } from '@testing-library/react-native';
 import HomeScreen from '../../src/screens/HomeScreen';
 jest.mock("@react-native-google-signin/google-signin", () => ({
   default: jest.fn(),
 }));
 jest.mock("@react-native-async-storage/async-storage", () => ({
+  default: jest.fn(),
+}));
+jest.mock("react-native-vector-icons/FontAwesome", () => ({
   default: jest.fn(),
 }));
 // jest.mock("@react-navigation/bottom-tabs", () => ({
@@ -31,4 +35,9 @@ describe('Click send image', () => {
   //   const icon = tree.root.findByProps({testID: 'cameraIcon'}).props;
   //   expect(icon.children).toBeTruthy();
   // });
+  // it("renders Right arrow",()=>{
+  //   const container = render(<HomeScreen/>);
+  //   const ele = container.queryByTestId('cameraIcon');
+  //   expect(ele).toBeTruthy();
+  //   });
 });

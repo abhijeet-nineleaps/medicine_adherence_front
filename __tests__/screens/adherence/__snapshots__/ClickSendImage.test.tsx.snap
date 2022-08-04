@@ -16,19 +16,6 @@ exports[`Click send image renders correctly 1`] = `
     }
   >
     <View
-      style={
-        Object {
-          "alignItems": "center",
-          "flex": 1,
-          "justifyContent": "center",
-        }
-      }
-    >
-      <ActivityIndicator
-        size="small"
-      />
-    </View>
-    <View
       accessible={true}
       collapsable={false}
       focusable={true}

@@ -45,7 +45,7 @@ const Settings: React.FC<Props> = ({navigation}: Props) => {
               await Share.share({
                 title: 'Medstick',
                 message:
-                  'Hello Nikunj invited to use Medstick ' +
+                  'Hello you are invited to use Medstick ' +
                   'https://play.google.com/store/apps/details?id=com.animesafar.dinterviewkit',
                 url: 'https://cdn.discordapp.com/attachments/941592669933682699/955175698568462437/vinaylogo.png',
               });

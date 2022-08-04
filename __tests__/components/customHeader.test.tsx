@@ -1,12 +1,6 @@
-import Enzyme, { render } from "enzyme";
-import Adapter from "@wojtekmaj/enzyme-adapter-react-17";
-import { Provider } from "react-redux";
 import React from "react";
 import renderer from 'react-test-renderer';
-import configureStore from "redux-mock-store";
 import enableHooks from "jest-react-hooks-shallow";
-import toJson from "enzyme-to-json";
-import ProfileHeader from "../../src/components/ProfileHeader";
 import CustomHeader from "../../src/components/customHeader";
 enableHooks(jest);
 jest.mock("react-redux", () => ({

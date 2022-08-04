@@ -16,7 +16,6 @@ import UserAvatar from 'react-native-user-avatar';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
 import styles from './patientStyles/MyPatientStyles';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import {logger} from 'react-native-logs';
 import {useDispatch, useSelector} from 'react-redux';
 import {fetchPatients} from '../../redux/actions/patient/PatientActions';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -24,28 +23,10 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 interface Props {
   navigation: any;
 }
-const defaultConfig = {
-  levels: {
-    debug: 0,
-    info: 1,
-    warn: 2,
-    error: 3,
-  },
-  transportOptions: {
-    colors: {
-      debug: 'greenBright',
-      info: 'blueBright',
-      warn: 'yellowBright',
-      error: 'redBright',
-    },
-  },
-};
-
-var log = logger.createLogger(defaultConfig);
 const Mypatient: React.FC<Props> = ({navigation}: Props) => {
   const patients = useSelector(state => state.PatientReducer.patientList);
-  const {load} = useSelector(state => state.PatientReducer);
-  log.info(load, 'load');
+  // const {load} = useSelector(state => state.PatientReducer.patirntList);
+  // log.info(load, 'load');
   const [data, _datastate] = React.useState([]);
   const [refresh, refeereshstate] = React.useState(false);
 

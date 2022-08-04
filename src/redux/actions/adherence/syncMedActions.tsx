@@ -1,24 +1,6 @@
-import {logger} from 'react-native-logs';
+import Logger from '../../../components/logger';
 import Types from '../allTypes';
 
-const defaultConfig = {
-  levels: {
-    debug: 0,
-    info: 1,
-    warn: 2,
-    error: 3,
-  },
-  transportOptions: {
-    colors: {
-      debug: 'greenBright',
-      info: 'blueBright',
-      warn: 'yellowBright',
-      error: 'redBright',
-    },
-  },
-};
-
-var log = logger.createLogger(defaultConfig);
 function syncMeds(user_id: string) {
   return {
     type: Types.SYNC_MEDS,
@@ -26,14 +8,14 @@ function syncMeds(user_id: string) {
   };
 }
 function syncMedSuccess(data) {
-  log.info(data, 'success');
+  Logger.loggerInfo(data);
   return {
     type: Types.SUCCESS_SYNC_MEDS,
     payload: data,
   };
 }
 function syncMedsError(error) {
-  log.error(error, 'ac');
+  Logger.loggerError(error);
   return {
     type: Types.FAILED_SYNC_MEDS,
     payload: error,

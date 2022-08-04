@@ -1,20 +1,20 @@
 import {Text, View, FlatList, Image} from 'react-native';
 import React, {useState} from 'react';
 import SQLite from 'react-native-sqlite-storage';
+import globalDb from '../../repositories/database/globalDb';
+import {useRoute} from '@react-navigation/native';
 var weeks = ['Sun', 'Mon', 'Tue', 'Wed', 'Thur', 'Fri', 'Sat'];
 import Toast from 'react-native-toast-message';
 import styles from './adherenceStyles/TodayPerformanceStyles';
-import { Box } from '../../components/organisms/medicineTime';
+import {Box} from '../../components/organisms/medicineTime';
 
 var cc = 0;
 
-const TodayPerformance = ({route}) => {
-  const db = SQLite.openDatabase({
-    name: 'MedStickdb',
-    location: 'default',
-  });
-
-  const {user_id} = route.params;
+const TodayPerformance = ({}) => {
+ // SQLite.enablePromise(true);
+ const db = globalDb();
+  const route = useRoute();
+  const user_id = route.params;
   const [Timings, setTime] = useState([]);
 
   const updatetimes = async (time: any) => {
@@ -151,5 +151,4 @@ const TodayPerformance = ({route}) => {
     </View>
   );
 };
-
 export default TodayPerformance;

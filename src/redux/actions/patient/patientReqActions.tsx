@@ -1,21 +1,7 @@
 import { logger } from "react-native-logs";
+import Logger from "../../../components/logger";
 import Types from "../allTypes";
-const defaultConfig = {
-  levels: {
-    debug: 0,
-    info: 1,
-    warn: 2,
-    error: 3,
-  },
-  transportOptions: {
-    colors: {
-      info: 'blueBright',
-      warn: 'yellowBright',
-      error: 'redBright',
-    },
-  },
-};
-var log = logger.createLogger(defaultConfig);
+
 function fetchPatientReq(user_id: string) {
   return {
     type: Types.GET_PATIENT_REQUEST,
@@ -23,14 +9,14 @@ function fetchPatientReq(user_id: string) {
   };
 }
 function fetchPatientReqSuccess(data) {
-  log.info(data, 'success');
+  Logger.loggerInfo(data);
   return {
     type: Types.SUCCES_PATIENT_REQUEST,
     payload: data,
   };
 }
 function fetchPatientReqError(error) {
-  log.error(error, 'ac');
+  Logger.loggerError(error);
   return {
     type: Types.FAILED_PATIENT_REQUEST,
     payload: error,

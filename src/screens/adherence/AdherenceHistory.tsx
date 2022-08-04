@@ -13,7 +13,6 @@ import {
 } from 'react-native';
 
 import Toast from 'react-native-toast-message';
-import {logger} from 'react-native-logs';
 import ProgressCircle from 'react-native-progress-circle';
 import {Picker} from '@react-native-picker/picker';
 import {Button, Divider} from 'react-native-elements';
@@ -28,6 +27,7 @@ import MedicinehistoryList from '../../components/organisms/medicineHistoryList'
 import globalDb from '../../repositories/database/globalDb';
 import Carousel, {Pagination} from 'react-native-snap-carousel';
 import styles from './adherenceStyles/AdherenceHistoryStyles';
+import Logger from '../../components/logger';
 
 
 let globalmedId;
@@ -38,22 +38,7 @@ interface singledate {
   not_taken: [];
   taken: [];
 }
-const defaultConfig = {
-  levels: {
-    debug: 0,
-    info: 1,
-    warn: 2,
-    error: 3,
-  },
-  transportOptions: {
-    colors: {
-      info: 'blueBright',
-      warn: 'yellowBright',
-      error: 'redBright',
-    },
-  },
-};
-var log = logger.createLogger(defaultConfig);
+
 const AdherenceHistory: React.FC = () => {
   const [pickerValue, setPickerValue] = React.useState<string>('');
   const [allreminders, reminders_state] = React.useState<[]>([]);
@@ -159,7 +144,7 @@ const AdherenceHistory: React.FC = () => {
                 layout={'stack'}
                 data={imagearray}
                 renderItem={({item}) => {
-                  log.info(item, 'image');
+                  Logger.loggerInfo('image');
                   return (
                     <View style={styles.carousalImageView}>
                       <Image

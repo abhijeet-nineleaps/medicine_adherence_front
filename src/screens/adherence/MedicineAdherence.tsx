@@ -243,17 +243,17 @@ const Medicineadherence = ({navigation}) => {
     }
   }
 
-  useFocusEffect(
-    React.useCallback(() => {
-      fetchallreminders().then(() => {
-        fetchallremindersandsync();
-      });
+  // useFocusEffect(
+  //   React.useCallback(() => {
+  //     fetchallreminders().then(() => {
+  //       fetchallremindersandsync();
+  //     });
 
-      return () => {
-       /* do nothing */
-      };
-    }, []),
-  );
+  //     return () => {
+  //      /* do nothing */
+  //     };
+  //   }, []),
+  // );
 
   return (
     <View

@@ -3,7 +3,7 @@ import {Text, View} from 'react-native';
 import BouncyCheckbox from 'react-native-bouncy-checkbox';
 import styles from '../../screens/adherence/adherenceStyles/TodayPerformanceStyles';
 
-export const Box = (props: any) => {
+const Box = (props: any) => {
   const {time, updatetimes} = props;
   const [med1, setMed1] = useState(false);
   const [taken, takenstatus] = useState(false);
@@ -36,3 +36,4 @@ export const Box = (props: any) => {
     )
   );
 };
+export default Box;

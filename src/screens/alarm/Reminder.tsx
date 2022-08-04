@@ -7,7 +7,6 @@
 import React, {useEffect} from 'react';
 import {View, Text, ScrollView, Alert} from 'react-native';
 import {Button} from 'react-native-elements';
-import {logger} from 'react-native-logs';
 import {Divider} from 'react-native-elements/dist/divider/Divider';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import SectionedMultiSelect from 'react-native-sectioned-multi-select';
@@ -26,40 +25,22 @@ import MultiSlider from '@ptomasroos/react-native-multi-slider';
 import DateTimePicker from 'react-native-modal-datetime-picker'; //NOSONAR false positive
 import globalDb from '../../repositories/database/globalDb';
 import styles from './alarmStyles/ReminderStyles';
-
-const defaultConfig = {
-  levels: {
-    debug: 0,
-    info: 1,
-    warn: 2,
-    error: 3,
-  },
-  transportOptions: {
-    colors: {
-      debug: 'greenBright',
-      info: 'blueBright',
-      warn: 'yellowBright',
-      error: 'redBright',
-    },
-  },
-};
-
-var log = logger.createLogger(defaultConfig);
-
+import Logger from '../../components/logger';
+import { useRoute } from '@react-navigation/native';
 var counter = 0;
 
-const Reminder = ({route, navigation}) => {
+const Reminder = ({ navigation}) => {
   const db = globalDb();
 
   useEffect(() => {
     db.transaction(txn => {
-      log.info('e');
+      Logger.loggerInfo('e');
       txn.executeSql(
         'SELECT * FROM `User_medicines` where user_id = ? AND status = ?',
         [id, 1],
         function (_tx, res) {
-          log.info('success');
-          log.info(res.rows.item(0));
+          Logger.loggerInfo('success');
+          Logger.loggerInfo(res.rows.item(0));
           titlestate(res.rows.item(0).title);
           timearraystate(res.rows.item(0).time.split('-'));
         },
@@ -69,17 +50,17 @@ const Reminder = ({route, navigation}) => {
 
   const multiSliderValuesChange = values => {
     var curr_date = new Date();
-    log.info(curr_date);
-    log.info(curr_date.setDate(curr_date.getDate() + values[0]));
+    Logger.loggerInfo(curr_date);
+    Logger.loggerInfo(curr_date.setDate(curr_date.getDate() + values[0]));
 
-    log.info(curr_date.getDate(), values);
+    Logger.loggerInfo(curr_date.getDate());
     end_datestate(curr_date);
     store_end_datestate(curr_date);
     setMultiSliderValue(values);
   };
-
-  const {id} = route.params;
-  log.info(id);
+ const route = useRoute();
+ const id = route.params;
+  Logger.loggerInfo(id);
 
   const [picker, pickerstate] = React.useState(false);
   const [selectedItems, _slectedstate] = React.useState([]);
@@ -118,9 +99,9 @@ const Reminder = ({route, navigation}) => {
 
     now.setDate(start_date.getDate());
 
-    log.info(now.getDate(), now.getHours(), now.getTime());
-    log.info(new Date(Date.now()));
-    log.info('now', now);
+    //Logger.loggerInfo(now.getDate(), now.getHours(), now.getTime());
+    Logger.loggerInfo(new Date(Date.now()));
+    Logger.loggerInfo(now);
     let sample_date = new Date(start_date);
     var weeks: string[] = ['Sun', 'Mon', 'Tue', 'Wed', 'Thur', 'Fri', 'Sat'];
     var set = new Set<string>(selecteddaysItems);
@@ -169,7 +150,7 @@ const Reminder = ({route, navigation}) => {
 
           now.setHours(timm_array[0]);
           now.setMinutes(timm_array[1]);
-          log.info(now, ' ', now.getHours(), ' ', weeks[now.getDay()]);
+         // Logger.loggerInfo(now, ' ', now.getHours(), ' ', weeks[now.getDay()]);
 
           let num1 = Math.floor(Math.random() * 90000) + 10000;
 
@@ -183,7 +164,7 @@ const Reminder = ({route, navigation}) => {
               importance: Importance.HIGH,
               vibrate: true,
             },
-            created => log.info(`createChannel returned '${created}'`),
+            created => Logger.loggerInfo(`createChannel returned '${created}'`),
           );
           PushNotification.localNotificationSchedule({
             title: titl,
@@ -217,7 +198,7 @@ const Reminder = ({route, navigation}) => {
   };
 
   const handleConfirm = date => {
-    log.info(date);
+    Logger.loggerInfo(date);
 
     pickerstate(false);
 
@@ -226,20 +207,20 @@ const Reminder = ({route, navigation}) => {
   };
 
   const handleConfirmfortime = date => {
-    log.info('A time has been picked: ', date.getHours(), date.getMinutes());
+    Logger.loggerInfo('A time has been picked');
 
     if (date.getHours() > 11) {
-      log.info(timeings);
+      Logger.loggerInfo(timeings);
       timearray.push(date.getHours() + ':' + date.getMinutes() + ' PM');
       timeings.push(date.getHours() + ':' + date.getMinutes());
       timestate(timeings);
-      log.info(timeings);
+      Logger.loggerInfo(timeings);
     } else {
       timearray.push(date.getHours() + ':' + date.getMinutes() + ' AM');
 
       timeings.push(date.getHours() + ':' + date.getMinutes());
       timestate(timeings);
-      log.info(timeings);
+      Logger.loggerInfo(timeings);
     }
     hideDatePickerfortime();
   };
@@ -283,14 +264,14 @@ const Reminder = ({route, navigation}) => {
           days += selecteddaysItems[i] + ':';
         }
       }
-      log.info(time, days);
+     // Logger.loggerInfo({time, days});
     } else if (check1) {
       days += 'Everyday';
       slecteddaysstate(['Sun', 'Mon', 'Tue', 'Wed', 'Thur', 'Fri', 'Sat']);
     }
     setreminderwithselecteddate(title);
 
-    log.info('date', store_end_date.toISOString(), ' total_meds ' + counter);
+    //Logger.loggerInfo('date', store_end_date.toISOString(), ' total_meds ' + counter);
     db.transaction(function (txn) {
       txn.executeSql(
         'CREATE TABLE IF NOT EXISTS User_medicines(user_id INTEGER PRIMARY KEY NOT NULL, medicine_name TEXT, medicine_des TEXT , title TEXT, time TEXT , days TEXT , start_date TEXT , end_date TEXT , status INTEGER , sync INTEGER, total_med_reminders INTEGER , current_count INTEGER)',
@@ -315,7 +296,7 @@ const Reminder = ({route, navigation}) => {
 
       txn.executeSql('SELECT * FROM `User_medicines`', [], function (_tx, res) {
         for (let i = 0; i < res.rows.length; ++i) {
-          log.info('item:', res.rows.item(i));
+          Logger.loggerInfo(res.rows.item(i));
         }
 
         loadstate(false);
@@ -323,7 +304,7 @@ const Reminder = ({route, navigation}) => {
       });
     });
 
-    log.info(selectedItems, selecteddaysItems);
+  //  Logger.loggerInfo(selectedItems, selecteddaysItems);
   };
 
   return (
@@ -332,8 +313,8 @@ const Reminder = ({route, navigation}) => {
         <View style={styles.container1}>
           <TouchableOpacity
             onPress={() => {
-              log.info('p');
-              log.info(picker);
+              Logger.loggerInfo('p');
+              Logger.loggerInfo(picker);
               pickerstate(true);
             }}
             style={styles.containerTouch}>
@@ -407,7 +388,7 @@ const Reminder = ({route, navigation}) => {
                   <TouchableOpacity
                     key={item + '' + index}
                     onPress={() => {
-                      log.info(timearray.splice(timearray.indexOf(item), 1));
+                      Logger.loggerInfo(timearray.splice(timearray.indexOf(item), 1));
                       timearraystate(
                         timearray.splice(timearray.indexOf(item), 1),
                       );

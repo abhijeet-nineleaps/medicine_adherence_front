@@ -1,6 +1,5 @@
 /* eslint-disable prettier/prettier */
 /* eslint-disable no-trailing-spaces */
-
 const queryData = {
   getusermeds: async (txn: any) => {
     const reminder_array: any = [];
@@ -17,7 +16,6 @@ const queryData = {
       );
     });
   },
- 
 };
 
 export default queryData;

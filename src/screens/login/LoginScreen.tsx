@@ -7,30 +7,11 @@ import {
   GoogleSignin,
   GoogleSigninButton,
 } from '@react-native-google-signin/google-signin';
-import {logger} from 'react-native-logs';
 import messaging from '@react-native-firebase/messaging';
-import {Signupuser} from '../../repositories/signup/signUp';
+import { Signupuser } from '../../redux/apis/access';
 import * as Progress from 'react-native-progress';
 import styles from './loginStyles/LoginStyles';
-
-const defaultConfig = {
-  levels: {
-    debug: 0,
-    info: 1,
-    warn: 2,
-    error: 3,
-  },
-  transportOptions: {
-    colors: {
-      debug: 'greenBright',
-      info: 'blueBright',
-      warn: 'yellowBright',
-      error: 'redBright',
-    },
-  },
-};
-
-var log = logger.createLogger(defaultConfig);
+import Logger from '../../components/logger';
 const Loginscreen = ({navigation}) => {
   const [loading, loadingstate] = React.useState(false);
 
@@ -42,7 +23,7 @@ const Loginscreen = ({navigation}) => {
       loadingstate(true);
       const response = await Signupuser.loginuser({userinfo, token});
       const res: any = await response.json();
-      log.info(res);
+     Logger.loggerInfo(res);
       if (res.status === 'Success') {
         await AsyncStorage.setItem('user_id', res.userEntity[0].userId);
         await AsyncStorage.setItem('user_name', res.userEntity[0].userName);
@@ -65,7 +46,7 @@ const Loginscreen = ({navigation}) => {
         });
       }
     } catch (err: any) {
-      log.error(err);
+      Logger.loggerError(err);
       if (await GoogleSignin.isSignedIn()) {
         await GoogleSignin.signOut();
       }
@@ -86,8 +67,8 @@ const Loginscreen = ({navigation}) => {
         color={GoogleSigninButton.Color.Dark}
         onPress={() =>
           loginuser()
-            .then(() => log.info('Google'))
-            .catch(err => log.error(err))
+            .then(() => Logger.loggerInfo('Google'))
+            .catch(err => Logger.loggerError(err))
         }
       />
       {loading && (

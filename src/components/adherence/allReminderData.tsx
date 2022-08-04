@@ -1,25 +1,6 @@
 /* eslint-disable radix */
 import globalDb from '../../repositories/database/globalDb';
-import {logger} from 'react-native-logs';
-
-const defaultConfig = {
-  levels: {
-    debug: 0,
-    info: 1,
-    warn: 2,
-    error: 3,
-  },
-  transportOptions: {
-    colors: {
-      debug: 'greenBright',
-      info: 'blueBright',
-      warn: 'yellowBright',
-      error: 'redBright',
-    },
-  },
-};
-
-var log = logger.createLogger(defaultConfig);
+import Logger from '../logger';
 
 const db = globalDb();
 const allreminderdata = async (med_name: any) => {
@@ -76,7 +57,7 @@ const allreminderdata = async (med_name: any) => {
   }
   map = await reminder_promise();
 
-  log.info(map);
+  Logger.loggerInfo(map);
   return {mapper: map, meds_id: med_id};
 };
 

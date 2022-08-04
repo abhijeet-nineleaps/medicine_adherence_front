@@ -3,26 +3,11 @@
 import React from 'react';
 import {RNCamera} from 'react-native-camera';
 import {useCamera} from 'react-native-camera-hooks';
-import {logger} from 'react-native-logs';
 import {TouchableOpacity, View} from 'react-native';
 import LottieView from 'lottie-react-native';
 import styles from './adherenceStyles/ClickSendImageStyles';
-const defaultConfig = {
-  levels: {
-    debug: 0,
-    info: 1,
-    warn: 2,
-    error: 3,
-  },
-  transportOptions: {
-    colors: {
-      info: 'blueBright',
-      warn: 'yellowBright',
-      error: 'redBright',
-    },
-  },
-};
-var log = logger.createLogger(defaultConfig);
+import Logger from '../../components/logger';
+
 const CameraScreen = ({navigation}) => {
   const [{cameraRef}, {takePicture}] = useCamera(null);
   return (
@@ -36,7 +21,7 @@ const CameraScreen = ({navigation}) => {
         <TouchableOpacity
           onPress={async () => {
             const data = await takePicture();
-            log.info(data.uri);
+            Logger.loggerInfo(data.uri);
             navigation.navigate('Sentocaretaker', {
               image_uri: data.uri,
             });

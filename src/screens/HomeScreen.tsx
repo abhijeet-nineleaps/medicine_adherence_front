@@ -16,7 +16,6 @@ const Tab = createBottomTabNavigator();
 
 const HomeScreen = () => {
   const progress = useRef(new Animated.Value(0)).current;
-
   useEffect(() => {
     Animated.timing(progress, {
       toValue: 1,
@@ -36,7 +35,7 @@ const HomeScreen = () => {
           tabBarInactiveTintColor: '#555',
           tabBarInactiveBackgroundColor: 'white',
           tabBarActiveBackgroundColor: '#e3f2fd',
-
+          
           headerRight: () => (
             <Icon name="camera" color="black" size={40} testID='cameraIcon'></Icon>
           ),

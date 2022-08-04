@@ -1,24 +1,5 @@
-import {logger} from 'react-native-logs';
 import Types from '../allTypes';
 
-const defaultConfig = {
-  levels: {
-    debug: 0,
-    info: 1,
-    warn: 2,
-    error: 3,
-  },
-  transportOptions: {
-    colors: {
-      debug: 'greenBright',
-      info: 'blueBright',
-      warn: 'yellowBright',
-      error: 'redBright',
-    },
-  },
-};
-
-var log = logger.createLogger(defaultConfig);
 function sendEmail(email: any) {
   return {
     type: Types.SEND_EMAIL,

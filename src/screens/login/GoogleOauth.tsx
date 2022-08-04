@@ -6,7 +6,6 @@ import {
   GoogleSignin,
   GoogleSigninButton,
 } from '@react-native-google-signin/google-signin';
-import {logger} from 'react-native-logs';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as Progress from 'react-native-progress';
 import Toast from 'react-native-toast-message';
@@ -14,30 +13,14 @@ import messaging from '@react-native-firebase/messaging';
 import checkConnectivity from '../../connection/checkConnectivity';
 import LottieView from 'lottie-react-native';
 import {Text} from 'react-native-elements';
-import {Signupuser} from '../../repositories/signup/signUp';
+import { Signupuser } from '../../redux/apis/access';
 import styles from './loginStyles/GoogleAuthStyles';
+import Logger from '../../components/logger';
 
 interface Props {
   navigation: any;
 }
-const defaultConfig = {
-  levels: {
-    debug: 0,
-    info: 1,
-    warn: 2,
-    error: 3,
-  },
-  transportOptions: {
-    colors: {
-      debug: 'greenBright',
-      info: 'blueBright',
-      warn: 'yellowBright',
-      error: 'redBright',
-    },
-  },
-};
 
-var log = logger.createLogger(defaultConfig);
 const Login: React.FC<{navigation}> = Props => {
   const {navigation} = Props;
   const [loading, loadingstate] = React.useState(false);
@@ -59,7 +42,7 @@ const Login: React.FC<{navigation}> = Props => {
       await GoogleSignin.hasPlayServices();
       const userinfo = await GoogleSignin.signIn();
       const token = await messaging().getToken();
-      log.info(userinfo);
+      Logger.loggerInfo(userinfo);
       loadingstate(true);
       const response = await Signupuser.signup({userinfo, token});
       const res: any = await response.json();
@@ -113,8 +96,8 @@ const Login: React.FC<{navigation}> = Props => {
         color={GoogleSigninButton.Color.Dark}
         onPress={() =>
           onGoogleButtonPress()
-            .then(() => log.info('Google'))
-            .catch(err => log.error(err))
+            .then(() => Logger.loggerInfo('Google'))
+            .catch(err => Logger.loggerError(err))
         }
       />
 

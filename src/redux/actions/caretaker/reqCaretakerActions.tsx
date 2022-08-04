@@ -1,23 +1,6 @@
-import {logger} from 'react-native-logs';
+import Logger from '../../../components/logger';
 import Types from '../allTypes';
-const defaultConfig = {
-  levels: {
-    debug: 0,
-    info: 1,
-    warn: 2,
-    error: 3,
-  },
-  transportOptions: {
-    colors: {
-      debug: 'greenBright',
-      info: 'blueBright',
-      warn: 'yellowBright',
-      error: 'redBright',
-    },
-  },
-};
 
-var log = logger.createLogger(defaultConfig);
 function sendReqCaretaker(caret_username: string) {
   return {
     type: Types.SEND_CARETAKER_REQUEST,
@@ -25,14 +8,14 @@ function sendReqCaretaker(caret_username: string) {
   };
 }
 function sendReqCaretakerSuccess(data) {
-  log.info(data, 'success');
+  Logger.loggerInfo(data);
   return {
     type: Types.SUCCESS_CARETAKER_REQUEST,
     payload: data,
   };
 }
 function sendReqCaretakerFailed(error) {
-  log.error(error, 'ac');
+  Logger.loggerError(error);
   return {
     type: Types.FAILED_CARETAKER_REQUEST,
     payload: error,

@@ -3,6 +3,9 @@ import renderer from 'react-test-renderer';
 import { shallow, ShallowWrapper } from "enzyme";
 import OnboardingScreen from '../../src/screens/OnboardingScreen';
 import DrawerNavigator from '../../src/navigation/drawerNavigator';
+jest.mock("@react-native-google-signin/google-signin", () => ({
+  default: jest.fn(),
+}));
 // const createTestProps = (props: Object) => ({
 //   navigation: {
 //     navigate: jest.fn()

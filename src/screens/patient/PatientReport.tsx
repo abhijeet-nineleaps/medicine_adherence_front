@@ -15,7 +15,7 @@ import Toast from 'react-native-toast-message';
 import ProgressCircle from 'react-native-progress-circle';
 import {Button, Divider} from 'react-native-elements';
 import {Card} from 'react-native-paper';
-import {useFocusEffect} from '@react-navigation/native';
+import {useFocusEffect, useRoute} from '@react-navigation/native';
 import networkCalls from '../../connection/networkCalls';
 import * as Animatable from 'react-native-animatable';
 import downloadPdf from '../../components/adherence/downloadPdf';
@@ -23,25 +23,7 @@ import LottieView from 'lottie-react-native';
 import HistoryDetail from '../../screens/components/HistoryDetail';
 import AdherencePercentage from '../../components/adherence/adherencePercentage';
 import styles from './patientStyles/PatientReportStyles';
-
-const defaultConfig = {
-  levels: {
-    debug: 0,
-    info: 1,
-    warn: 2,
-    error: 3,
-  },
-  transportOptions: {
-    colors: {
-      debug: 'greenBright',
-      info: 'blueBright',
-      warn: 'yellowBright',
-      error: 'redBright',
-    },
-  },
-};
-
-var log = logger.createLogger(defaultConfig);
+import Logger from '../../components/logger';
 
 let detailData = {};
 
@@ -62,7 +44,7 @@ const months = [
 ];
 
 const Reminders = ({item, index}) => {
-  log.info(item, 'ite');
+  Logger.loggerInfo(item, 'ite');
   const nottaken = item.notTaken.split(',');
   const taken = item.taken.split(',');
   let tl: number, nt: number;
@@ -126,7 +108,7 @@ const Reminders = ({item, index}) => {
     </Animatable.View>
   );
 };
-
+const route = useRoute();
 export default function PatientReport({route}) {
   const {
     medId,
@@ -175,7 +157,7 @@ export default function PatientReport({route}) {
 
   const showDetailfun = sDate => {
     detailData = historyData.find(el => el.date === sDate);
-    log.info(detailData);
+   Logger.loggerInfo(detailData);
     if (detailData === undefined) {
       Toast.show({
         type: 'info',

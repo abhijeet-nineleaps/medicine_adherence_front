@@ -1,28 +1,10 @@
-import {logger} from 'react-native-logs';
+import Logger from '../../../components/logger';
 import Types from '../allTypes';
 
 interface Iparams {
   meds_id: any;
   syncData: any;
 }
-const defaultConfig = {
-  levels: {
-    debug: 0,
-    info: 1,
-    warn: 2,
-    error: 3,
-  },
-  transportOptions: {
-    colors: {
-      debug: 'greenBright',
-      info: 'blueBright',
-      warn: 'yellowBright',
-      error: 'redBright',
-    },
-  },
-};
-
-var log = logger.createLogger(defaultConfig);
 
 function syncHistory(params: Iparams) {
   return {
@@ -31,14 +13,14 @@ function syncHistory(params: Iparams) {
   };
 }
 function syncHitsorySuccess(data) {
-  log.info(data, 'success');
+  Logger.loggerInfo(data);
   return {
     type: Types.SUCCESS_SYNC_HISTORY,
     payload: data,
   };
 }
 function syncHistoryError(error) {
-  log.error(error, 'ac');
+  Logger.loggerError(error);
   return {
     type: Types.FAILED_SYNC_HISTORY,
     payload: error,

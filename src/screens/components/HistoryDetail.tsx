@@ -75,8 +75,8 @@ const HistoryDetail: React.FC<Props> = ({data, modalVisibility}) => {
         />
       </View>
       <View style={{padding: 12, alignItems: 'center'}}>
-        <Text style={{color: 'grey', fontSize: 20, fontWeight: '700'}} testID='dateText'>
-          Date - {data.date}
+        <Text style={{color: 'grey', fontSize: 20, fontWeight: '700'}} testID='dateText' >
+          Date - {data.date}  
         </Text>
       </View>
       <Timeline

@@ -13,35 +13,13 @@ import {
 import {List} from 'react-native-paper';
 import {API_URL} from '../../repositories/var';
 import * as Progress from 'react-native-progress';
-import {logger} from 'react-native-logs';
-
 import {Button} from 'react-native-elements';
 import styles from './patientStyles/PatientProfileStyles';
-
 import Icon from 'react-native-vector-icons/FontAwesome';
-
 import {useDispatch, useSelector} from 'react-redux';
 import {fetchPatients} from '../../redux/actions/patient/PatientActions';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
-const defaultConfig = {
-  levels: {
-    debug: 0,
-    info: 1,
-    warn: 2,
-    error: 3,
-  },
-  transportOptions: {
-    colors: {
-      debug: 'greenBright',
-      info: 'blueBright',
-      warn: 'yellowBright',
-      error: 'redBright',
-    },
-  },
-};
-
-var log = logger.createLogger(defaultConfig);
+import Logger from '../../components/logger';
 
 LogBox.ignoreLogs(['Require cycle:']);
 
@@ -53,14 +31,14 @@ const ViewProfile = ({route, navigation}) => {
     url.searchParams.append('fcmToken', fcm_token);
     url.searchParams.append('medname', medname);
 
-    await fetch(url).then(resp => log.info(resp));
+    await fetch(url).then(resp => Logger.loggerInfo(resp));
   };
 
   const patients = useSelector(
     state => state.PatientProfileReducer.patientList,
   );
-  const {load} = useSelector(state => state.PatientProfileReducer);
-  log.info(load, 'load');
+  // const {load} = useSelector(state => state.PatientProfileReducer);
+  // Logger.loggerInfo(load, 'load');
   const [_refresh, refeereshstate] = React.useState(false);
 
   const dispatch = useDispatch();
@@ -164,7 +142,7 @@ const ViewProfile = ({route, navigation}) => {
                   )}
                   right={() => <Icon name="caret-down"></Icon>}>
                   {userdetails.medicinesList.map(mlistitem => {
-                    log.info(mlistitem.medicineId);
+                    Logger.loggerInfo(mlistitem.medicineId);
                     return (
                       <List.Item
                         description={`${mlistitem.days}\n${mlistitem.time}`}
@@ -184,7 +162,7 @@ const ViewProfile = ({route, navigation}) => {
                                 <TouchableOpacity
                                   style={styles.touch}
                                   onPress={() => {
-                                    log.info(mlistitem.medicineName);
+                                    Logger.loggerInfo(mlistitem.medicineName);
                                     sendnotificationtouser(
                                       userdetails.userEntityList[0].userDetails
                                         .fcmToken,

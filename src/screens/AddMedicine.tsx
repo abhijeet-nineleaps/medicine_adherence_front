@@ -10,31 +10,16 @@ import * as Animatable from 'react-native-animatable';
 import {useFocusEffect} from '@react-navigation/native';
 import globalDb from '../repositories/database/globalDb';
 import styles from './screenStyles/AddMedicineStyles';
-import {logger} from 'react-native-logs';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import AntIcon from 'react-native-vector-icons/AntDesign';
+import Logger from '../components/logger';
 
 const db = globalDb();
 
 interface Props {
   navigation: any;
 }
-const defaultConfig = {
-  levels: {
-    debug: 0,
-    info: 1,
-    warn: 2,
-    error: 3,
-  },
-  transportOptions: {
-    colors: {
-      info: 'blueBright',
-      warn: 'yellowBright',
-      error: 'redBright',
-    },
-  },
-};
-var log = logger.createLogger(defaultConfig);
+
 let Reducerfun = (state: any, action: any) => {
   return {...state, data: action.payload};
 };
@@ -84,8 +69,8 @@ const Addmedicine = ({navigation}: Props) => {
   };
 
   const deleteitem = async (id: number) => {
-    log.info(id);
-    log.warn('del');
+   Logger.loggerInfo(id);
+    Logger.loggerWarn('del');
     let med_del: any[] = [];
     db.transaction(function (txn: any) {
       txn.executeSql('DELETE FROM `User_medicines`  where user_id = ' + id);
@@ -97,7 +82,7 @@ const Addmedicine = ({navigation}: Props) => {
             med_del.push(res.rows.item(i));
           }
 
-          log.info(med_del);
+         Logger.loggerInfo(med_del);
           med_del.length === 0
             ? characterstate({type: 'empty', payload: []})
             : characterstate({type: 'data', payload: med_del});

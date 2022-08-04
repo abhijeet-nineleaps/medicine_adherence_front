@@ -1,11 +1,11 @@
 /* eslint-disable react/self-closing-comp */
 /* eslint-disable react-native/no-inline-styles */
+
 import {View} from 'react-native';
 import React from 'react';
 import {Button, Text} from 'react-native-elements';
 import * as yup from 'yup';
 import Toast from 'react-native-toast-message';
-import {logger} from 'react-native-logs';
 import LottieView from 'lottie-react-native';
 import {TextInput} from 'react-native-paper';
 import SQLite from 'react-native-sqlite-storage';
@@ -15,33 +15,19 @@ import * as Animatable from 'react-native-animatable';
 import globalDb from '../repositories/database/globalDb';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import styles from './screenStyles/UserMedStyles';
+import { useRoute } from '@react-navigation/native';
+import Logger from '../components/logger';
 
-const defaultConfig = {
-  levels: {
-    debug: 0,
-    info: 1,
-    warn: 2,
-    error: 3,
-  },
-  transportOptions: {
-    colors: {
-      info: 'blueBright',
-      warn: 'yellowBright',
-      error: 'redBright',
-    },
-  },
-};
-var log = logger.createLogger(defaultConfig);
 async function createdb() {
   let first = await AsyncStorage.getItem('first');
   if (first === null) {
     SQLite.deleteDatabase(
       {name: 'MedStickdb', location: 'default'},
       () => {
-        log.info('second db deleted');
+       Logger.loggerInfo('second db deleted');
       },
       error => {
-        log.error('Error: ', error);
+        Logger.loggerError('Error while deleting.');
       },
     );
     await AsyncStorage.setItem('first', '1');
@@ -49,15 +35,16 @@ async function createdb() {
   const db = globalDb();
   return db;
 }
-const UserMed = ({route, navigation}) => {
-  const {id} = route.params;
-  log.info(id);
+const UserMed = ({navigation}) => {
+  const route=useRoute();
+  const id = route.params;
+ Logger.loggerInfo(id);
   const sheetRef = React.useRef(null);
   const savemedicinetodb = async ({Name, Description}) => {
     const db = await createdb();
 
     await db.transaction(txn => {
-      log.info(txn);
+     Logger.loggerInfo(txn);
       txn.executeSql(
         'CREATE TABLE IF NOT EXISTS User_medicines(user_id INTEGER PRIMARY KEY NOT NULL, medicine_name TEXT, medicine_des TEXT , title TEXT, time TEXT , days TEXT , start_date TEXT , end_date TEXT , status INTEGER , sync INTEGER , total_med_reminders INTEGER , current_count INTEGER)',
         [],
@@ -93,7 +80,7 @@ const UserMed = ({route, navigation}) => {
             initialValues={{Name: '', Description: ''}}
             validationSchema={schema}
             onSubmit={values => {
-              log.info(values);
+             Logger.loggerInfo(values);
               savemedicinetodb(values);
             }}>
             {formikprops => (
