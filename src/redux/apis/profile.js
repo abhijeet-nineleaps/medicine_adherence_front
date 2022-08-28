@@ -1,5 +1,5 @@
 import axios from './axios';
-import { API_URLS } from '../../constants/apiUrl';
+import { API_URLS } from '../../repositories/apiUrl';
 export const profile = {
     saveProfile: async function saveprofile(payload) {
         const response = await axios.put(`${API_URLS.SAVE_PROFILE}?userId=${payload}`);

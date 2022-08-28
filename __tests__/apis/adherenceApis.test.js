@@ -1,52 +1,42 @@
-import adherence from '../../src/redux/apis/adherence';
-describe('test adherence apis', () => {
-  it('test medimages', () => {
-    const payload = 'payload';
-    expect(adherence.medimages(payload)).toEqual({
-      _U: 0,
-      _V: 0,
-      _W: null,
-      _X: null,
-    });
-  });
- 
-
-  it('test downloadpdf', () => {
-    const payload = 'payload';
-    expect(adherence.downloadPdf(payload)).toEqual({
-      _U: 0,
-      _V: 0,
-      _W: null,
-      _X: null,
-    });
-  });
-
-  it('test getmedhistory', () => {
-    const payload = 'payload';
-    expect(adherence.getmedhistory(payload)).toEqual({
-      _U: 0,
-      _V: 0,
-      _W: null,
-      _X: null,
-    });
-  });
-
-  it('test syncmeds', () => {
-    const payload = 'payload';
-    expect(adherence.syncmeds(payload)).toEqual({
-      _U: 0,
-      _V: 0,
-      _W: null,
-      _X: null,
-    });
-  });
-  it('test syncmedhistory', () => {
-    const payload = 'payload';
-    expect(adherence.syncmedicineHistory(payload)).toEqual({
-      _U: 0,
-      _V: 0,
-      _W: null,
-      _X: null,
-    });
-  });
-});
+import adherence from "../../src/redux/apis/adherence"
+import axios from "../../src/redux/apis/axios";
+describe("test fetchimage",()=>{
+    it("test images",async ()=>{
+        const payload="payload"
+        jest.spyOn(axios,"get").mockImplementation(
+            jest.fn(()=>Promise.resolve({data:"dfghjk"})))
+            adherence.medimages(payload)
+    })
+})
+describe("test downloadpdf",()=>{
+    it("test images",async ()=>{
+        const payload="payload"
+        jest.spyOn(axios,"get").mockImplementation(
+            jest.fn(()=>Promise.resolve({data:"dfghjk"})))
+            adherence.downloadPdf(payload)
+    })
+})
+describe("test syncmed",()=>{
+    it("test images",async ()=>{
+        const payload="payload"
+        jest.spyOn(axios,"get").mockImplementation(
+            jest.fn(()=>Promise.resolve({data:"dfghjk"})))
+            adherence.syncmeds(payload)
+    })
+})
+describe("test getmedhistory",()=>{
+    it("test images",async ()=>{
+        const payload="payload"
+        jest.spyOn(axios,"get").mockImplementation(
+            jest.fn(()=>Promise.resolve({data:"dfghjk"})))
+            adherence.getmedhistory(payload)
+    })
+})
+describe("test syncmedhistory",()=>{
+    it("test images",async ()=>{
+        const payload="payload"
+        jest.spyOn(axios,"get").mockImplementation(
+            jest.fn(()=>Promise.resolve({data:"dfghjk"})))
+            adherence.syncmedicineHistory(payload)
+    })
+})

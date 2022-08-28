@@ -19,7 +19,7 @@ exports[`About App renders correctly 1`] = `
     <Image
       source={
         Object {
-          "testUri": "../../../assests/images/Medstick_1.png",
+          "testUri": "../../../src/assets/images/Medstick_1.png",
         }
       }
       style={

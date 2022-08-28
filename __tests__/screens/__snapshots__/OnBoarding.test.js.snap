@@ -15,7 +15,7 @@ exports[`OnBoarding Screen renders correctly 1`] = `
     resizeMode="contain"
     source={
       Object {
-        "testUri": "../../../assests/images/Medstick_1.png",
+        "testUri": "../../../src/assets/images/Medstick_1.png",
       }
     }
     style={

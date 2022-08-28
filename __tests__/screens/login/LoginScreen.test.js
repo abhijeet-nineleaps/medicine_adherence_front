@@ -9,7 +9,7 @@ jest.mock("@react-native-firebase/messaging", () => ({
   default: jest.fn(),
 }));
 // jest.mock("@react-native-google-signin/google-signin", () => ({
- // default: jest.fn(),
+//  default: jest.fn(),
 //   GoogleSigninButton: {
 //     size : () => ({}),
 //   }
@@ -40,8 +40,6 @@ jest.mock("react-native-progress", () => ({
 jest.mock("react-native-toast-message", () => ({
   default: jest.fn(),
 }));
-
-
 describe('Click send image', () => {
   it('renders correctly', () => {
     const tree = renderer

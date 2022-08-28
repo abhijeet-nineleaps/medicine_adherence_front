@@ -355,7 +355,7 @@ exports[`Click send image renders correctly 1`] = `
                   resizeMode="contain"
                   source={
                     Object {
-                      "testUri": "../../../assests/images/noreminders.png",
+                      "testUri": "../../../src/assets/images/noreminders.png",
                     }
                   }
                   style={

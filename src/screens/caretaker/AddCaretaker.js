@@ -91,7 +91,7 @@ const Addcaretaker = navigation => {
         {load && (
           <View style={styles.imgView}>
             <Image
-              source={require('../../../assests/images/nocaretakers.jpg')}
+              source={require('../../../src/assets/images/nocaretakers.jpg')}
               style={styles.img}
               resizeMode="contain"></Image>
           </View>

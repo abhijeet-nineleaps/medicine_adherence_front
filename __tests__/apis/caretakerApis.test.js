@@ -1,43 +1,42 @@
 import {careTaker} from '../../src/redux/apis/careTaker';
+import axios from "../../src/redux/apis/axios";
 
-describe('test caretaker apis', () => {
-  it('test caretaker', () => {
-    const payload = 'payload';
-    expect(careTaker.caretaker(payload)).toEqual({
-      _U: 0,
-      _V: 0,
-      _W: null,
-      _X: null,
-    });
-  });
+describe("test email caretaker",()=>{
+    it("test images",async ()=>{
+        const payload="payload"
+        jest.spyOn(axios,"get").mockImplementation(
+            jest.fn(()=>Promise.resolve({data:"dfghjk"})))
+            careTaker.emailcaretaker(payload)
+       
+    })
+})
 
-  it('test emailcaretaker', () => {
-    const payload = 'payload';
-    expect(careTaker.emailcaretaker(payload)).toEqual({
-      _U: 0,
-      _V: 0,
-      _W: null,
-      _X: null,
-    });
-  });
+describe("test request caretaker",()=>{
+    it("test images",async ()=>{
+        const payload="payload"
+        jest.spyOn(axios,"get").mockImplementation(
+            jest.fn(()=>Promise.resolve({data:"dfghjk"})))
+            careTaker.reqCaretaker(payload)
+       
+    })
+})
 
-  it('test reqcaretaker', () => {
-    const payload = 'payload';
-    expect(careTaker.reqCaretaker(payload)).toEqual({
-      _U: 0,
-      _V: 0,
-      _W: null,
-      _X: null,
-    });
-  });
+describe("test sending image to caretaker",()=>{
+    it("test images",async ()=>{
+        const payload="payload"
+        jest.spyOn(axios,"post").mockImplementation(
+            jest.fn(()=>Promise.resolve({data:"dfghjk"})))
+            careTaker.sendImage(payload)
+       
+    })
+})
 
-  it('test sendimage', () => {
-    const payload = 'payload';
-    expect(careTaker.sendImage(payload)).toEqual({
-      _U: 0,
-      _V: 0,
-      _W: null,
-      _X: null,
-    });
-  });
-});
+describe("test caretaker",()=>{
+    it("test images",async ()=>{
+        const payload="payload"
+        jest.spyOn(axios,"get").mockImplementation(
+            jest.fn(()=>Promise.resolve({data:"dfghjk"})))
+            careTaker.caretaker(payload)
+       
+    })
+})

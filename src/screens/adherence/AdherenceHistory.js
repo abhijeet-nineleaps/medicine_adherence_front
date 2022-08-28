@@ -189,7 +189,7 @@ const AdherenceHistory = () => {
             <LottieView
               style={{width: 70, height: 70}}
               speed={0.8}
-              source={require('../../../assests/animate/generatepdf.json')}
+              source={require('../../../src/assets/animate/generatepdf.json')}
               autoPlay
               loop
             />

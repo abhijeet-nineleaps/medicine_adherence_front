@@ -131,7 +131,7 @@ const TodayPerformance = () => {
       {Timings.length !== 0 && Timings[0].length === 0 ? (
         <View style={styles.container2}>
           <Image
-            source={require('../../../assests/images/noremtoday.png')}
+            source={require('../../../src/assets/images/noremtoday.png')}
             style={styles.container2Image}
             resizeMode="contain"
           />

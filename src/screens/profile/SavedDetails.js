@@ -27,7 +27,6 @@ const SavedDetails = () => {
       let sgender = await AsyncStorage.getItem('gender');
       let maritalstatus = await AsyncStorage.getItem('maritalstatus');
       let sblood = await AsyncStorage.getItem('bloodgroup');
-
       biostate(sbio);
       contactstate(scontact);
       agestate(sage);
@@ -36,7 +35,6 @@ const SavedDetails = () => {
       msstate(maritalstatus);
       bloodstate(sblood);
     }
-
     getuserdetail();
   });
 

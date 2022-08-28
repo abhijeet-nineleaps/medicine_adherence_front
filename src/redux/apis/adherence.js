@@ -1,5 +1,5 @@
 import axios from './axios';
-import { API_URLS } from '../../constants/apiUrl';
+import { API_URLS } from '../../repositories/apiUrl';
 
 const adherence = {
   syncmedicineHistory: async (params) => {

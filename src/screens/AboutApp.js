@@ -9,7 +9,7 @@ const AboutApp = () => {
         <Image
           testID='aboutImg'
           style={styles.image}
-          source={require('../../assests/images/Medstick_1.png')}
+          source={require('../../src/assets/images/Medstick_1.png')}
         />
       </View>
       <View style={styles.textContainer}>

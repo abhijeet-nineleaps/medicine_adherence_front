@@ -54,7 +54,7 @@ const HomeScreen = () => {
                 <LottieView
                   style={styles.report}
                   speed={0.8}
-                  source={require('../../assests/animate/heart.json')}
+                  source={require('../../src/assets/animate/heart.json')}
                   progress={progress}
                 />
               ),
@@ -70,7 +70,7 @@ const HomeScreen = () => {
               tabBarIcon: () => (
                 <LottieView
                   style={styles.medicine}
-                  source={require('../../assests/animate/med2.json')}
+                  source={require('../../src/assets/animate/med2.json')}
                   progress={progress}
                 />
               ),
@@ -85,7 +85,7 @@ const HomeScreen = () => {
               tabBarIcon: () => (
                 <LottieView
                   style={styles.profile}
-                  source={require('../../assests/animate/profile.json')}
+                  source={require('../../src/assets/animate/profile.json')}
                   progress={progress}
                 />
               ),

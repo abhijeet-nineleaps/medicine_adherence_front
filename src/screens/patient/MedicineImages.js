@@ -116,7 +116,7 @@ const MedicineImages = ({}) => {
       {imageData.length === 0 ? (
         <View style={styles.imgView}>
           <Image
-            source={require('../../../assests/images/noImages.png')}
+            source={require('../../../src/assets/images/noImages.png')}
             style={styles.img}
             resizeMode="contain"></Image>
         </View>

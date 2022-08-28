@@ -145,7 +145,7 @@ const Searchcaretaker = ({navigation}) => {
       {data.length === 0 && (
         <View style={styles.imgContainer}>
           <Image
-            source={require('../../../assests/images/searchcaretaker.png')}
+            source={require('../../../src/assets/images/searchcaretaker.png')}
             style={styles.img}
             resizeMode="stretch"></Image>
         </View>

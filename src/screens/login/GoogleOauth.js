@@ -78,7 +78,7 @@ const Login = (navigation) => {
       <Text style={styles.createText}>Create an account</Text>
       <LottieView
         style={styles.lottie}
-        source={require('../../../assests/animate/google.json')}
+        source={require('../../../src/assets/animate/google.json')}
         autoPlay
         loop
       />

@@ -199,7 +199,7 @@ exports[`Click send image renders correctly 1`] = `
                             resizeMode="contain"
                             source={
                               Object {
-                                "testUri": "../../../assests/images/nomeds.png",
+                                "testUri": "../../../src/assets/images/nomeds.png",
                               }
                             }
                             style={

@@ -10,13 +10,10 @@ import styles from './screenStyles/AddMedicineStyles';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import AntIcon from 'react-native-vector-icons/AntDesign';
 import Logger from '../components/logger';
-
 const db = globalDb();
-
 let Reducerfun = (state, action) => {
   return {...state, data: action.payload};
 };
-
 let initialVal = {data: []};
 const Addmedicine = navigation => {
   const [medicines, characterstate] = useReducer(Reducerfun, initialVal);
@@ -28,17 +25,14 @@ const Addmedicine = navigation => {
       };
     }, []),
   );
-
   const checkformeds = async () => {
     return new Promise(function (resolve) {
       var meds_array = [];
-
       db.transaction(async function (txn) {
         txn.executeSql(
           'CREATE TABLE IF NOT EXISTS User_medicines(user_id INTEGER PRIMARY KEY NOT NULL, medicine_name TEXT, medicine_des TEXT , title TEXT, time TEXT , days TEXT , start_date TEXT , end_date TEXT , status INTEGER , sync INTEGER, total_med_reminders INTEGER , current_count INTEGER)',
           [],
         );
-
         txn.executeSql(
           'SELECT * FROM `User_medicines`',
           [],
@@ -46,21 +40,18 @@ const Addmedicine = navigation => {
             for (let i = 0; i < res.rows.length; ++i) {
               meds_array.push(res.rows.item(i));
             }
-
             resolve(meds_array);
           },
         );
       });
     });
   };
-
   const fetch_meds = async () => {
     const meds_arr = await checkformeds();
     meds_arr.length === 0
       ? characterstate({type: 'empty', payload: []})
       : characterstate({type: 'data', payload: meds_arr});
   };
-
   const deleteitem = async id => {
     Logger.loggerInfo(id);
     Logger.loggerInfo('del');
@@ -71,7 +62,6 @@ const Addmedicine = navigation => {
         for (let i = 0; i < res.rows.length; ++i) {
           med_del.push(res.rows.item(i));
         }
-
         Logger.loggerInfo(med_del);
         med_del.length === 0
           ? characterstate({type: 'empty', payload: []})
@@ -79,7 +69,6 @@ const Addmedicine = navigation => {
       });
     });
   };
-
   const renderitem = ({item, index}) => {
     const addRemFnc = () => {
       navigation.navigate('Add Reminder', {id: item.user_id});
@@ -95,7 +84,6 @@ const Addmedicine = navigation => {
         },
       ]);
     };
-
     return (
       <Animatable.View animation="zoomInUp" duration={400} delay={index * 180}>
         <Card style={styles.card}>
@@ -106,7 +94,7 @@ const Addmedicine = navigation => {
                   <Avatar
                     rounded
                     size={50}
-                    source={require('../../assests/images/meddis.png')}
+                    source={require('../../src/assets/images/meddis.png')}
                   />
                   <View style={styles.medNameView}>
                     <ListItem.Title style={styles.medName}>
@@ -116,7 +104,6 @@ const Addmedicine = navigation => {
                   </View>
                 </View>
               </ListItem.Content>
-
               <TouchableOpacity
                 id="addRem"
                 style={styles.rem}
@@ -148,7 +135,7 @@ const Addmedicine = navigation => {
       {medicines.data.length === 0 ? (
         <View style={styles.imgView}>
           <Image
-            source={require('../../assests/images/nomeds.png')}
+            source={require('../../src/assets/images/nomeds.png')}
             style={styles.img}
             resizeMode="contain"
           />
@@ -161,14 +148,13 @@ const Addmedicine = navigation => {
           numColumns={1}
         />
       )}
-
       <View style={styles.bottom}>
         <TouchableOpacity
           style={styles.addButtonTouch}
           onPress={addMedFnc}
           id="addMedButton">
           <LottieView
-            source={require('../../assests/animate/addicon.json')}
+            source={require('../../src/assets/animate/addicon.json')}
             autoPlay
             loop
             speed={2}
@@ -179,5 +165,4 @@ const Addmedicine = navigation => {
     </View>
   );
 };
-
 export default Addmedicine;

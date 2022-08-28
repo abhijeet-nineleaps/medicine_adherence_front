@@ -345,7 +345,7 @@ const Medicineadherence = ({navigation}) => {
       {reminderdata.length === 0 && (
         <View style={{alignSelf: 'center'}}>
           <Image
-            source={require('../../../assests/images/noreminders.png')}
+            source={require('../../../src/assets/images/noreminders.png')}
             style={{width: 250}}
             resizeMode="contain"></Image>
         </View>

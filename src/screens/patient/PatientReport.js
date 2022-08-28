@@ -225,7 +225,7 @@ export default function PatientReport({route}) {
             <LottieView
               style={styles.lottie}
               speed={0.8}
-              source={require('../../../assests/animate/generatepdf.json')}
+              source={require('../../../src/assets/animate/generatepdf.json')}
               autoPlay
               loop
             />

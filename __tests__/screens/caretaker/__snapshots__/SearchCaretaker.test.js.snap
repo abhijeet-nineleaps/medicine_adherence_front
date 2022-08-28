@@ -333,7 +333,7 @@ exports[`Click send image renders correctly 1`] = `
       resizeMode="stretch"
       source={
         Object {
-          "testUri": "../../../assests/images/searchcaretaker.png",
+          "testUri": "../../../src/assets/images/searchcaretaker.png",
         }
       }
       style={

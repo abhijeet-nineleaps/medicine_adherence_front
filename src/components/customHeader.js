@@ -12,53 +12,56 @@ import {Alert, View} from 'react-native';
 import {Signout} from './caretaker/allIcons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import styles from './componentStyles/styles';
-import { SafeAreaProvider } from 'react-native-safe-area-context';
+import {SafeAreaProvider} from 'react-native-safe-area-context';
 import Logger from './logger';
 const CustomHeader = props => {
-   
-  React.useEffect(/* istanbul ignore next */() => {
-    GoogleSignin.configure({
-      webClientId:
-        '526586885579-90t54t6rmkquqjct1819getnkstse41j.apps.googleusercontent.com',
-    });
-  });
+  React.useEffect(
+    /* istanbul ignore next */ () => {
+      GoogleSignin.configure({
+        webClientId:
+          '526586885579-90t54t6rmkquqjct1819getnkstse41j.apps.googleusercontent.com',
+      });
+    },
+  );
   const [loggedin, loggedinstate] = React.useState(true);
   /* istanbul ignore next */
   async function getuser() {
     try {
       const isllooged = await GoogleSignin.isSignedIn();
       const checkforlogin = await AsyncStorage.getItem('user_id');
-
       Logger.loggerInfo(isllooged);
-
       if (checkforlogin !== null) {
         Logger.loggerInfo(isllooged);
         loggedinstate(true);
         return;
       }
-
       loggedinstate(false);
     } catch (err) {}
-  } 
-  
-  useEffect(/* istanbul ignore next */() => {
-    return props.navigation.addListener('focus', () => {
-      getuser();
-    });
-  }, [props.navigation]);
-  
-  useFocusEffect(/* istanbul ignore next */() => { 
-    Logger.loggerWarn('f');
-    getuser();
-  });
-  const touchFnc = () => {
-    props.navigation.navigate('Profile')
   }
+
+  useEffect(
+    /* istanbul ignore next */ () => {
+      return props.navigation.addListener('focus', () => {
+        getuser();
+      });
+    },
+    [props.navigation],
+  );
+
+  useFocusEffect(
+    /* istanbul ignore next */ () => {
+      Logger.loggerWarn('f');
+      getuser();
+    },
+  );
+  const touchFnc = () => {
+    props.navigation.navigate('Profile');
+  };
   async function signupFnc() {
     props.navigation.navigate('Sign-up');
   }
   async function loginFnc() {
-      props.navigation.navigate('Login');
+    props.navigation.navigate('Login');
   }
   async function alertFnc() {
     {
@@ -87,58 +90,54 @@ const CustomHeader = props => {
     }
   }
   return (
-    <><SafeAreaProvider>
-      <DrawerContentScrollView style={styles.drawer}>
-        <TouchableOpacity
-          style={styles.touch}
-          id='touch'
-          onPress={touchFnc}>
-          {<ProfileHeader></ProfileHeader>}
-        </TouchableOpacity>
-        <DrawerItemList {...props}></DrawerItemList>
-
-        <View style={styles.top}>
-          {!loggedin ? (
-            <>
+    <>
+      <SafeAreaProvider>
+        <DrawerContentScrollView style={styles.drawer}>
+          <TouchableOpacity style={styles.touch} id="touch" onPress={touchFnc}>
+            {<ProfileHeader></ProfileHeader>}
+          </TouchableOpacity>
+          <DrawerItemList {...props}></DrawerItemList>
+          <View style={styles.top}>
+            {!loggedin ? (
+              <>
+                <Button
+                  id="signup"
+                  iconPosition="right"
+                  title="Sign up"
+                  loading={false}
+                  loadingProps={{size: 'small', color: 'white'}}
+                  buttonStyle={styles.button}
+                  titleStyle={styles.buttonTitle}
+                  containerStyle={styles.buttonContainer}
+                  onPress={signupFnc}
+                />
+                <Button
+                  iconPosition="right"
+                  title="Login"
+                  loading={false}
+                  loadingProps={{size: 'small', color: 'white'}}
+                  buttonStyle={styles.button}
+                  titleStyle={styles.buttonTitle}
+                  containerStyle={styles.buttonContainer}
+                  id="login"
+                  onPress={{loginFnc}}
+                />
+              </>
+            ) : (
               <Button
-                id='signup'
+                title="Logout"
                 iconPosition="right"
-                title="Sign up"
-                loading={false}
-                loadingProps={{size: 'small', color: 'white'}}
+                icon={Signout()}
                 buttonStyle={styles.button}
-                titleStyle={styles.buttonTitle}
+                titleStyle={styles.buttonLogOutTitle}
                 containerStyle={styles.buttonContainer}
-                onPress={signupFnc}
-              />
-              <Button
-                iconPosition="right"
-                title="Login"
-                loading={false}
-                loadingProps={{size: 'small', color: 'white'}}
-                buttonStyle={styles.button}
-                titleStyle={styles.buttonTitle}
-                containerStyle={styles.buttonContainer}
-                id='login'
-                onPress={{loginFnc}}
-              />
-            </>
-          ) : (
-            <Button
-              title="Logout"
-              iconPosition="right"
-              icon={Signout()}
-              buttonStyle={styles.button}
-              titleStyle={styles.buttonLogOutTitle}
-              containerStyle={styles.buttonContainer}
-              id='alert'
-              onPress={alertFnc}></Button>
-          )}
-        </View>
-      </DrawerContentScrollView>
+                id="alert"
+                onPress={alertFnc}></Button>
+            )}
+          </View>
+        </DrawerContentScrollView>
       </SafeAreaProvider>
     </>
   );
 };
-
 export default CustomHeader;

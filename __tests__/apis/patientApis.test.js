@@ -1,61 +1,64 @@
 import { patient } from '../../src/redux/apis/patient';
+import axios from "../../src/redux/apis/axios";
 
-describe('test patient apis', () => {
-  it('test fetchPatient', () => {
-    const payload = 'payload';
-    expect(patient.fetchPatient(payload)).toEqual({
-      _U: 0,
-      _V: 0,
-      _W: null,
-      _X: null,
-    });
-  });
+describe("test  patientProfile",()=>{
+    
+    it("test images",async()=>{
+        const payload="payload"
+        jest.spyOn(axios,"get").mockImplementation(
+            jest.fn(()=>Promise.resolve({data:"dfghjk"})))
+        patient.fetchPatient(payload);    
+        })
+})
+describe("test patient details",()=>{
+    it("test images",()=>{
+        const payload="payload"
+        jest.spyOn(axios,"get").mockImplementation(
+            jest.fn(()=>Promise.resolve({data:"dfghjk"})))
+        patient.patientProfile(payload);  
+    })
+})
+describe("test patient profile",()=>{
+    it("test images",()=>{
+        const payload="payload"
+        jest.spyOn(axios,"get").mockImplementation(
+            jest.fn(()=>Promise.resolve({data:"dfghjk"})))
+        patient.patientProfile(payload);  
+    })
+})
+describe("test patient request",()=>{
+    it("test images",()=>{
+        const payload="payload"
+        jest.spyOn(axios,"get").mockImplementation(
+            jest.fn(()=>Promise.resolve({data:"dfghjk"})))
+        patient.patientReq(payload);  
+    })
+})
+describe("test notifypatient",()=>{
+    it("test images",async ()=>{
+        const payload="payload"
+        jest.spyOn(axios,"put").mockImplementation(
+            jest.fn(()=>Promise.resolve({data:"dfghjk"})))
+        patient.notifyPatient(payload)
+       
+    })
+})
+describe("test delete request",()=>{
+    it("test images",async ()=>{
+        const payload="payload"
+        jest.spyOn(axios,"get").mockImplementation(
+            jest.fn(()=>Promise.resolve({data:"dfghjk"})))
+        patient.reqDelete(payload)
+       
+    })
+})
 
-  it('test notifyPatient', () => {
-    const payload = 'payload';
-    expect(patient.notifyPatient(payload)).toEqual({
-      _U: 0,
-      _V: 0,
-      _W: null,
-      _X: null,
-    });
-  });
-
-  it('test patientProfile', () => {
-    const payload = 'payload';
-    expect(patient.patientProfile(payload)).toEqual({
-      _U: 0,
-      _V: 0,
-      _W: null,
-      _X: null,
-    });
-  });
-
-  it('test patientReq', () => {
-    const payload = 'payload';
-    expect(patient.patientReq(payload)).toEqual({
-      _U: 0,
-      _V: 0,
-      _W: null,
-      _X: null,
-    });
-  });
-  it('test reqAccept', () => {
-    const payload = 'payload';
-    expect(patient.reqAccept(payload)).toEqual({
-      _U: 0,
-      _V: 0,
-      _W: null,
-      _X: null,
-    });
-  });
-  it('test reqDelete', () => {
-    const payload = 'payload';
-    expect(patient.reqDelete(payload)).toEqual({
-      _U: 0,
-      _V: 0,
-      _W: null,
-      _X: null,
-    });
-  });
-});
+describe("test reqAccept",()=>{
+    
+    it("test images",async()=>{
+        const payload="payload"
+        jest.spyOn(axios,"get").mockImplementation(
+            jest.fn(()=>Promise.resolve({data:"dfghjk"})))
+        patient.reqAccept(payload);    
+        })
+})

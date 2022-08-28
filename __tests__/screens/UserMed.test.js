@@ -57,7 +57,7 @@ jest.mock("reanimated-bottom-sheet", () => ({
 // }));
 describe('About App', () => {
   it('renders correctly', () => {
-    const tree = renderer.create(<UserMed navigation={undefined}/>);
+    const tree = renderer.create(<UserMed/>);
     expect(tree).toMatchSnapshot();
   });
 });

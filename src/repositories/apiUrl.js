@@ -1,4 +1,4 @@
-import {API_URL} from '../repositories/var';
+import {API_URL} from './var';
 
 export const API_URLS = {
   LOGIN: `${API_URL}/api/v1/login`,
