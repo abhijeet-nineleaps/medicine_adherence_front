@@ -16,11 +16,11 @@ describe('Settings Screen', () => {
   const wrapper = shallow(<Settings shareFnc={mockFn} />);
   wrapper.find("#share").simulate("press");
   });
-  it('test about button', () => {
-    const mockFn = jest.fn();
-   const wrapper = shallow(<Settings aboutFnc={mockFn} />);
-   wrapper.find("#about").simulate("press");
-   });
+  // it('test about button', () => {
+  //   const mockFn = jest.fn();
+  //  const wrapper = shallow(<Settings aboutFnc={mockFn} />);
+  //  wrapper.find("#about").simulate("press");
+  //  });
    it('test open setting button', () => {
     const mockFn = jest.fn();
    const wrapper = shallow(<Settings openSetFnc={mockFn} />);

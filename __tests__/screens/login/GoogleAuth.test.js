@@ -2,8 +2,9 @@ import React from 'react';
 import renderer from 'react-test-renderer';
 import Login from '../../../src/screens/login/GoogleOauth';
 import Enzyme from 'enzyme';
-import {shallow} from 'enzyme';
+import {shallow,render} from 'enzyme';
 import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
+import toJson from 'enzyme-to-json';
 Enzyme.configure({adapter: new Adapter()});
 jest.mock("@react-native-google-signin/google-signin", () => ({
   default: jest.fn(),
@@ -37,10 +38,9 @@ jest.mock("@react-native-google-signin/google-signin", () => ({
 
 describe('Click send image', () => {
   it('renders correctly', () => {
-    const tree = renderer
-      .create(<Login navigation={undefined} />)
-      .toJSON();
-    expect(tree).toMatchSnapshot();
+
+    const wrapper  = shallow(<Login/>).childAt(1).dive();
+    expect(toJson(wrapper)).toMatchSnapshot();
   });
   it('test open save button', () => {
     const mockFn = jest.fn();

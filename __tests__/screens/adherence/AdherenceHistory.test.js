@@ -24,18 +24,18 @@ describe('AdherenceHistory Screen', () => {
     const wrapper = shallow(<AdherenceHistory />);
     wrapper.find(Modal).props().onRequestClose("");
   });
-  it('test carousel', () => {
-    const wrapper = shallow(<AdherenceHistory />);
-    // console.log("wraper",wrapper.find(Carousel).debug());
-    wrapper.find(Carousel).props().onSnapToItem("");
-    wrapper.find(Carousel).props().renderItem("");
-  });
-  it('test picker', () => {
-    let props = { getmed_details: jest.fn(), remindersofparticular_medicine: jest.fn(), med_name: "Paracetamol" };
-    const wrapper = shallow(<AdherenceHistory {...props} />);
-    wrapper.find("#picker1").props().onValueChange("");
-    wrapper.find("#picker1").props().onValueChange("", props.remindersofparticular_medicine(props.med_name), props.getmed_details(props.med_name));
-  });
+  // it('test carousel', () => {
+  //   const wrapper = shallow(<AdherenceHistory />);
+  //   // console.log("wraper",wrapper.find(Carousel).debug());
+  //   wrapper.find(Carousel).props().onSnapToItem("");
+  //   wrapper.find(Carousel).props().renderItem("");
+  // });
+  // it('test picker', () => {
+  //   let props = { getmed_details: jest.fn(), remindersofparticular_medicine: jest.fn(), med_name: "Paracetamol" };
+  //   const wrapper = shallow(<AdherenceHistory {...props} />);
+  //   wrapper.find("#picker1").props().onValueChange("");
+  //   wrapper.find("#picker1").props().onValueChange("", props.remindersofparticular_medicine(props.med_name), props.getmed_details(props.med_name));
+  // });
   it('test flatlist', () => {
     let sdate = null;
     const wrapper = shallow(<AdherenceHistory {...sdate} />);

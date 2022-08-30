@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Click send image renders correctly 1`] = `
+<Text
+  style={
+    Object {
+      "fontSize": 30,
+      "fontWeight": "bold",
+      "margin": 30,
+    }
+  }
+>
+  LOGIN
+</Text>
+`;

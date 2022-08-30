@@ -41,12 +41,12 @@ jest.mock("react-native-vector-icons", () => ({
 }));
 
 describe('Click send image', () => {
-  it('renders correctly', () => {
-    const tree = renderer
-      .create(<Addcaretaker navigation={undefined} />)
-      .toJSON();
-    expect(tree).toMatchSnapshot();
-  });
+  // it('renders correctly', () => {
+  //   const tree = renderer
+  //     .create(<Addcaretaker navigation={undefined} />)
+  //     .toJSON();
+  //   expect(tree).toMatchSnapshot();
+  // });
   it('test open save button', () => {
     const mockFn = jest.fn();
     const wrapper = shallow(<Addcaretaker search={mockFn} />);

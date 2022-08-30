@@ -39,12 +39,12 @@ jest.mock("react-native-paper", () => ({
   default: jest.fn(),
 }));
 describe('Click send image', () => {
-  it('renders correctly', () => {
-    const tree = renderer
-      .create(<Caretakercomp navigation={undefined} />)
-      .toJSON();
-    expect(tree).toMatchSnapshot();
-  });
+  // it('renders correctly', () => {
+  //   const tree = renderer
+  //     .create(<Caretakercomp navigation={undefined} />)
+  //     .toJSON();
+  //   expect(tree).toMatchSnapshot();
+  // });
   it('test open save button', () => {
     const mockFn = jest.fn();
     const wrapper = shallow(<Caretakercomp handleChange={mockFn} />);

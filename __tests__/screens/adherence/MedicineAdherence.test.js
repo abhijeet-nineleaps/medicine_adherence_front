@@ -17,9 +17,9 @@ describe('Medicine Adherence test', () => {
     const wrapper = shallow(<Medicineadherence />);
     wrapper.find('#press').props().onPress("");
   });
-  it('test FlatList', () => {
-    let item = { status: 1 }
-    const wrapper = shallow(<Medicineadherence />);
-    wrapper.find(FlatList).props().renderItem(item);
-  });
+  // it('test FlatList', () => {
+  //   let item = { status: 1 }
+  //   const wrapper = shallow(<Medicineadherence />);
+  //   wrapper.find(FlatList).props().renderItem(item);
+  // });
 });

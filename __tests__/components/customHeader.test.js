@@ -29,11 +29,11 @@ describe('customheader', () => {
         .toJSON();
       expect(tree).toMatchSnapshot();
     }); 
-    it('test open setting button', () => {
-      const mockFn = jest.fn();
-     const wrapper = shallow(<CustomHeader touchFnc={mockFn} />);
-     wrapper.find("#touch").simulate("press");
-     });
+    // it('test open setting button', () => {
+    //   const mockFn = jest.fn();
+    //  const wrapper = shallow(<CustomHeader touchFnc={mockFn} />);
+    //  wrapper.find("#touch").simulate("press");
+    //  });
     //  it('test open setting button', () => {
     //   const mockFn = jest.fn();
     //  const wrapper = shallow(<CustomHeader signupFnc={mockFn} />);

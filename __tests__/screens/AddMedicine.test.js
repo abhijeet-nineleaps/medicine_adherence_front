@@ -28,9 +28,9 @@ describe('Click send image', () => {
   //  const wrapper = shallow(<Addmedicine deleteMedFnc={mockFn} />);
   //  wrapper.find("#deleteMed").simulate("press");
   //  });
-   it('test open setting button', () => {
-    const mockFn = jest.fn();
-   const wrapper = shallow(<Addmedicine addMedFnc={mockFn} />);
-   wrapper.find("#addMedButton").simulate("press");
-   });
+  //  it('test open setting button', () => {
+  //   const mockFn = jest.fn();
+  //  const wrapper = shallow(<Addmedicine addMedFnc={mockFn} />);
+  //  wrapper.find("#addMedButton").simulate("press");
+  //  });
 });
