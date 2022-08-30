@@ -50,15 +50,15 @@ describe('Click send image', () => {
     const wrapper = shallow(<Caretakercomp handleChange={mockFn} />);
     wrapper.find('#change').simulate('change');
   });
-  it('test open save button', () => {
-    const mockFn = jest.fn();
-    const wrapper = shallow(<Caretakercomp loginFnc={mockFn} />);
-    wrapper.find('#ok').simulate('change');
-  });
-  it('test open save button', () => {
-    const mockFn = jest.fn();
-    const wrapper = shallow(<Caretakercomp homeFnc={mockFn} />);
-    wrapper.find('#cancel').simulate('change');
-  });
+  // it('test open save button', () => {
+  //   const mockFn = jest.fn();
+  //   const wrapper = shallow(<Caretakercomp loginFnc={mockFn} />);
+  //   wrapper.find('#ok').simulate('change');
+  // });
+  // it('test open save button', () => {
+  //   const mockFn = jest.fn();
+  //   const wrapper = shallow(<Caretakercomp homeFnc={mockFn} />);
+  //   wrapper.find('#cancel').simulate('change');
+  // });
 
 });

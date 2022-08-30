@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Click send image renders correctly 1`] = `
+exports[`Medicine Adherence test renders correctly 1`] = `
 <View
   style={
     Object {
@@ -10,22 +10,9 @@ exports[`Click send image renders correctly 1`] = `
     }
   }
 >
-  <View
-    accessible={true}
-    collapsable={false}
-    focusable={true}
-    onClick={[Function]}
-    onResponderGrant={[Function]}
-    onResponderMove={[Function]}
-    onResponderRelease={[Function]}
-    onResponderTerminate={[Function]}
-    onResponderTerminationRequest={[Function]}
-    onStartShouldSetResponder={[Function]}
-    style={
-      Object {
-        "opacity": 1,
-      }
-    }
+  <TouchableOpacity
+    id="press"
+    onPress={[Function]}
   >
     <View
       style={
@@ -51,145 +38,26 @@ exports[`Click send image renders correctly 1`] = `
             }
           }
         >
-          <View
-            style={
-              Array [
-                Object {
-                  "alignItems": "center",
-                  "justifyContent": "center",
-                },
-                Object {
-                  "backgroundColor": "#999",
-                  "borderRadius": 26,
-                  "height": 52,
-                  "width": 52,
-                },
-              ]
-            }
+          <PercentageCircle
+            bgColor="#fff"
+            borderWidth={3}
+            color="#00bcd4"
+            containerStyle={null}
+            percent={0}
+            radius={26}
+            shadowColor="#999"
           >
-            <View
+            <Text
               style={
-                Array [
-                  Object {
-                    "left": 0,
-                    "position": "absolute",
-                    "top": 0,
-                  },
-                  Object {
-                    "height": 52,
-                    "width": 26,
-                  },
-                ]
+                Object {
+                  "color": "#4dd0e1",
+                  "fontSize": 15,
+                }
               }
             >
-              <View
-                style={
-                  Array [
-                    Object {
-                      "borderBottomRightRadius": 0,
-                      "borderTopRightRadius": 0,
-                      "left": 0,
-                      "position": "absolute",
-                      "top": 0,
-                    },
-                    Object {
-                      "backgroundColor": "#00bcd4",
-                      "borderRadius": 26,
-                      "height": 52,
-                      "overflow": "hidden",
-                      "transform": Array [
-                        Object {
-                          "translateX": 13,
-                        },
-                        Object {
-                          "rotate": "0deg",
-                        },
-                        Object {
-                          "translateX": -13,
-                        },
-                      ],
-                      "width": 26,
-                    },
-                  ]
-                }
-              />
-            </View>
-            <View
-              style={
-                Array [
-                  Object {
-                    "left": 0,
-                    "position": "absolute",
-                    "top": 0,
-                  },
-                  Object {
-                    "height": 52,
-                    "width": 26,
-                  },
-                ]
-              }
-            >
-              <View
-                style={
-                  Array [
-                    Object {
-                      "borderBottomRightRadius": 0,
-                      "borderTopRightRadius": 0,
-                      "left": 0,
-                      "position": "absolute",
-                      "top": 0,
-                    },
-                    Object {
-                      "backgroundColor": "#999",
-                      "borderRadius": 26,
-                      "height": 52,
-                      "overflow": "hidden",
-                      "transform": Array [
-                        Object {
-                          "translateX": 13,
-                        },
-                        Object {
-                          "rotate": "0deg",
-                        },
-                        Object {
-                          "translateX": -13,
-                        },
-                      ],
-                      "width": 26,
-                    },
-                  ]
-                }
-              />
-            </View>
-            <View
-              style={
-                Array [
-                  Object {
-                    "alignItems": "center",
-                    "justifyContent": "center",
-                    "overflow": "hidden",
-                  },
-                  Object {
-                    "backgroundColor": "#fff",
-                    "borderRadius": 23,
-                    "height": 46,
-                    "width": 46,
-                  },
-                ]
-              }
-            >
-              <Text
-                style={
-                  Object {
-                    "color": "#4dd0e1",
-                    "fontSize": 15,
-                  }
-                }
-              >
-                0%
-              </Text>
-            </View>
-          </View>
+              0%
+            </Text>
+          </PercentageCircle>
         </View>
         <View
           style={
@@ -236,7 +104,7 @@ exports[`Click send image renders correctly 1`] = `
         </Text>
       </View>
     </View>
-  </View>
+  </TouchableOpacity>
   <View
     style={
       Object {
@@ -256,26 +124,10 @@ exports[`Click send image renders correctly 1`] = `
       Reminders
     </Text>
   </View>
-  <RCTScrollView
+  <FlatList
     data={Array []}
-    getItem={[Function]}
-    getItemCount={[Function]}
-    keyExtractor={[Function]}
-    onContentSizeChange={[Function]}
-    onLayout={[Function]}
-    onMomentumScrollBegin={[Function]}
-    onMomentumScrollEnd={[Function]}
-    onScroll={[Function]}
-    onScrollBeginDrag={[Function]}
-    onScrollEndDrag={[Function]}
-    removeClippedSubviews={false}
     renderItem={[Function]}
-    scrollEventThrottle={50}
-    stickyHeaderIndices={Array []}
-    viewabilityConfigCallbackPairs={Array []}
-  >
-    <View />
-  </RCTScrollView>
+  />
   <View
     style={
       Object {

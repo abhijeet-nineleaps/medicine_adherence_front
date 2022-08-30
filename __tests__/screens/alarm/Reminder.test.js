@@ -33,11 +33,11 @@ describe('Click send image', () => {
     const wrapper = shallow(<Reminder savereminder={mockFn} />);
     wrapper.find('#reminder').simulate('press');
   });
-  it('test open save button', () => {
-    const mockFn = jest.fn();
-    const wrapper = shallow(<Reminder timearraystate={mockFn} />);
-    wrapper.find('#timeState').simulate('press');
-  });
+  // it('test open save button', () => {
+  //   const mockFn = jest.fn();
+  //   const wrapper = shallow(<Reminder timearraystate={mockFn} />);
+  //   wrapper.find('#timeState').simulate('press');
+  // });
   it('test open save button', () => {
     const mockFn = jest.fn();
     const wrapper = shallow(<Reminder time_picker_mode_state={mockFn} />);

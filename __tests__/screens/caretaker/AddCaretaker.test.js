@@ -52,11 +52,11 @@ describe('Click send image', () => {
     const wrapper = shallow(<Addcaretaker search={mockFn} />);
     wrapper.find('#search').simulate('press');
   });
-  it('test open save button', () => {
-    const mockFn = jest.fn();
-    const wrapper = shallow(<Addcaretaker emp={mockFn} />);
-    wrapper.find('#emp').simulate('press');
-  });
+  // it('test open save button', () => {
+  //   const mockFn = jest.fn();
+  //   const wrapper = shallow(<Addcaretaker emp={mockFn} />);
+  //   wrapper.find('#emp').simulate('press');
+  // });
   it('test open save button', () => {
     const mockFn = jest.fn();
     const wrapper = shallow(<Addcaretaker del={mockFn} />);

@@ -34,16 +34,16 @@ describe('customheader', () => {
      const wrapper = shallow(<CustomHeader touchFnc={mockFn} />);
      wrapper.find("#touch").simulate("press");
      });
-     it('test open setting button', () => {
-      const mockFn = jest.fn();
-     const wrapper = shallow(<CustomHeader signupFnc={mockFn} />);
-     wrapper.find("#signup").simulate("press");
-     });
-     it('test open setting button', () => {
-      const mockFn = jest.fn();
-     const wrapper = shallow(<CustomHeader loginFnc={mockFn} />);
-     wrapper.find("#login").simulate("press");
-     });
+    //  it('test open setting button', () => {
+    //   const mockFn = jest.fn();
+    //  const wrapper = shallow(<CustomHeader signupFnc={mockFn} />);
+    //  wrapper.find("#signup").simulate("press");
+    //  });
+    //  it('test open setting button', () => {
+    //   const mockFn = jest.fn();
+    //  const wrapper = shallow(<CustomHeader loginFnc={mockFn} />);
+    //  wrapper.find("#login").simulate("press");
+    //  });
      it('test open setting button', () => {
       const mockFn = jest.fn();
      const wrapper = shallow(<CustomHeader alertFnc={mockFn} />);

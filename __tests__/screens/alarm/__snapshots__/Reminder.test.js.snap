@@ -81,7 +81,7 @@ exports[`Click send image renders correctly 1`] = `
                   }
                 }
               >
-                2022-08-28
+                2022-08-30
               </Text>
               <Text
                 style={
@@ -105,7 +105,7 @@ exports[`Click send image renders correctly 1`] = `
                   }
                 }
               >
-                2022-08-28
+                2022-08-30
               </Text>
             </View>
             <Text

@@ -23,14 +23,14 @@ describe('Click send image', () => {
       .toJSON();
     expect(tree).toMatchSnapshot();
   });
-  it('test open save button', () => {
-    const mockFn = jest.fn();
-    const wrapper = shallow(<ViewProfile navigation={mockFn} />);
-    wrapper.find('#image').simulate('press');
-  });
-  it('test open save button', () => {
-    const mockFn = jest.fn();
-    const wrapper = shallow(<ViewProfile sendnotificationtouser={mockFn} />);
-    wrapper.find('#medLog').simulate('press');
-  });
+  // it('test open save button', () => {
+  //   const mockFn = jest.fn();
+  //   const wrapper = shallow(<ViewProfile navigation={mockFn} />);
+  //   wrapper.find('#image').simulate('press');
+  // });
+  // it('test open save button', () => {
+  //   const mockFn = jest.fn();
+  //   const wrapper = shallow(<ViewProfile sendnotificationtouser={mockFn} />);
+  //   wrapper.find('#medLog').simulate('press');
+  // });
 });

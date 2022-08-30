@@ -1,63 +1,32 @@
-import React from 'react';
-import renderer from 'react-test-renderer';
-import UserMed from '../../src/screens/UserMed';
-
-jest.mock('@react-navigation/native', () => ({
-  ...jest.requireActual('@react-navigation/native'),
-  useFocusEffect: jest.fn(),
-  useNavigation: () => ({ goBack: jest.fn() }),
-  useRoute: () => ({
-    params: {
-     id: {}
-    }
-  }),
-}));
-// jest.mock('react-native', () => {
-//   return {
-//     Dimensions: {
-//       get: () => ({}),
-//     },
-//     StyleSheet: {
-//       create: () => ({}),
+// import React from 'react';
+// import renderer from 'react-test-renderer';
+// import UserMed from '../../src/screens/UserMed';
+// jest.mock('@react-navigation/native', () => ({
+//   useNavigation: () => ({ goBack: jest.fn() }),
+//   useRoute: () => ({
+//     params: {
+//      Name:"dummy",
+//      Description:"xyz",
 //     }
-//   };
-// });
-jest.mock("react-native-animatable", () => ({
-  default: jest.fn(),
-}));
-jest.mock("reanimated-bottom-sheet", () => ({
-  default: jest.fn(),
-  BottomSheet: {
-    default: jest.fn(),
-  }
-}));
-// jest.mock("reanimated-bottom-sheet", () => ({
-//   default: jest.fn(),
+//   }),
 // }));
+
+// jest.mock("@react-native-async-storage/async-storage", () => ({
+//     default: jest.fn(),
+//   }));
 // jest.mock("react-native-gesture-handler", () => ({
-//   default: jest.fn(),
-// }));
-// jest.mock("react-native-reanimated", () => ({
-//   default: jest.fn(),
-// }));
-// jest.mock("react-native-paper", () => ({
-//   default: jest.fn(),
-// }));
-// jest.mock("lottie-react-native", () => ({
-//   default: jest.fn(),
-// }));
-// jest.mock("react-native-toast-message", () => ({
-//   default: jest.fn(),
-// }));
-// jest.mock("react-native-elements", () => ({
-//   default: jest.fn(),
-// }));
-// jest.mock("react-native", () => ({
-//   default: jest.fn(),
-// }));
-describe('About App', () => {
-  it('renders correctly', () => {
-    const tree = renderer.create(<UserMed/>);
-    expect(tree).toMatchSnapshot();
-  });
-});
+//     default: jest.fn(),
+//   }));
+  
+//   jest.mock("@react-native-async-storage/async-storage", () => ({
+//     default: jest.fn(),
+//   }));
+
+// describe('User  Screen', () => {
+//   it('renders correctly', () => {
+//     const tree = renderer
+//       .create(< UserMed navigation={undefined}/>)
+//       .toJSON();
+//     expect(tree).toMatchSnapshot();
+//   });
+// });

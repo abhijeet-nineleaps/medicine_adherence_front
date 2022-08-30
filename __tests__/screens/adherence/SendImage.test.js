@@ -28,16 +28,16 @@ describe('Send Image Screen', () => {
     const tree = create(<SendImageToCaretaker navigation={undefined}/>);
     expect(tree).toMatchSnapshot();
   });
-  it('test open save button', () => {
-    const mockFn = jest.fn();
-    const wrapper = shallow(<SendImageToCaretaker setMedFnc={mockFn} />);
-    wrapper.find('#setMed').simulate('press');
-  });
-  it('test open save button', () => {
-    const mockFn = jest.fn();
-    const wrapper = shallow(<SendImageToCaretaker clickedFnc={mockFn} />);
-    wrapper.find('#clicked').simulate('press');
-  });
+  // it('test open save button', () => {
+  //   const mockFn = jest.fn();
+  //   const wrapper = shallow(<SendImageToCaretaker setMedFnc={mockFn} />);
+  //   wrapper.find('#setMed').simulate('press');
+  // });
+  // it('test open save button', () => {
+  //   const mockFn = jest.fn();
+  //   const wrapper = shallow(<SendImageToCaretaker clickedFnc={mockFn} />);
+  //   wrapper.find('#clicked').simulate('press');
+  // });
   it('test open save button', () => {
     const mockFn = jest.fn();
     const wrapper = shallow(<SendImageToCaretaker SendImage={mockFn} />);

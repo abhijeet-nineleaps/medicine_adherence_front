@@ -18,16 +18,16 @@ describe('Click send image', () => {
       .toJSON();
     expect(tree).toMatchSnapshot();
   });
-  it('test open setting button', () => {
-    const mockFn = jest.fn();
-   const wrapper = shallow(<Addmedicine addRemFnc={mockFn} />);
-   wrapper.find("#addRem").simulate("press");
-   });
-   it('test open setting button', () => {
-    const mockFn = jest.fn();
-   const wrapper = shallow(<Addmedicine deleteMedFnc={mockFn} />);
-   wrapper.find("#deleteMed").simulate("press");
-   });
+  // it('test open setting button', () => {
+  //   const mockFn = jest.fn();
+  //  const wrapper = shallow(<Addmedicine addRemFnc={mockFn} />);
+  //  wrapper.find("#addRem").simulate("press");
+  //  });
+  //  it('test open setting button', () => {
+  //   const mockFn = jest.fn();
+  //  const wrapper = shallow(<Addmedicine deleteMedFnc={mockFn} />);
+  //  wrapper.find("#deleteMed").simulate("press");
+  //  });
    it('test open setting button', () => {
     const mockFn = jest.fn();
    const wrapper = shallow(<Addmedicine addMedFnc={mockFn} />);

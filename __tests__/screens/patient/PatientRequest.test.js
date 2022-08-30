@@ -14,14 +14,14 @@ describe('Click send image', () => {
     const tree = renderer.create(<Patientrequest />).toJSON();
     expect(tree).toMatchSnapshot();
   });
-  it('test open save button', () => {
-    const mockFn = jest.fn();
-    const wrapper = shallow(<Patientrequest acceptrequest={mockFn} />);
-    wrapper.find('#accept').simulate('press');
-  });
-  it('test open save button', () => {
-    const mockFn = jest.fn();
-    const wrapper = shallow(<Patientrequest deletereq={mockFn} />);
-    wrapper.find('#delete').simulate('press');
-  });
+  // it('test open save button', () => {
+  //   const mockFn = jest.fn();
+  //   const wrapper = shallow(<Patientrequest acceptrequest={mockFn} />);
+  //   wrapper.find('#accept').simulate('press');
+  // });
+  // it('test open save button', () => {
+  //   const mockFn = jest.fn();
+  //   const wrapper = shallow(<Patientrequest deletereq={mockFn} />);
+  //   wrapper.find('#delete').simulate('press');
+  // });
 });
