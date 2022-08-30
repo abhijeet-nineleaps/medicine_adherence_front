@@ -3,8 +3,8 @@ export const Signupuser = {
   signup: async (params) => {
     const {userinfo, token} = params;
     let url = new URL(API_URLS.SIGNUP);
-    url.searchParams.append('fcmToken', token);
-    url.searchParams.append('picPath', userinfo.user.photo);
+    // url.searchParams.append('fcmToken', token);
+    // url.searchParams.append('picPath', userinfo.user.photo);
 
     const response = await fetch(url, {
       method: 'POST',
@@ -16,7 +16,7 @@ export const Signupuser = {
         'Content-type': 'application/json',
       },
     });
-    return response;
+    return response.data;
   },
   loginuser: async (params) => {
     const {userinfo, token} = params;
@@ -31,6 +31,6 @@ export const Signupuser = {
         'Content-type': 'application/json',
       },
     });
-    return response;
+    return response.data;
   },
 };

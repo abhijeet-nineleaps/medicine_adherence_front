@@ -4,14 +4,14 @@ import { API_URLS } from '../../repositories/apiUrl';
 const adherence = {
   syncmedicineHistory: async (params) => {
     const {meds_id, syncData} = params;
-    let response = await fetch(`${API_URLS.SYNC_HISTORY}?medId=${meds_id}`, {
+    const response = await fetch(`${API_URLS.SYNC_HISTORY}?medId=${meds_id}`, {
       method: 'POST',
       body: JSON.stringify(syncData),
       headers: {
         'Content-type': 'application/json',
       },
     });
-    return response;
+    return response.data;
   },
   medimages: async function fetchmedimages(payload) {
     const response = await axios.get(`${API_URLS.MED_IMAGES}?medId=${payload}`);
