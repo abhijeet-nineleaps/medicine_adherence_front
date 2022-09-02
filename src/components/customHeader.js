@@ -57,10 +57,10 @@ const CustomHeader = props => {
   const touchFnc = () => {
     props.navigation.navigate('Profile');
   };
-  async function signupFnc() {
+  function signupFnc() {
     props.navigation.navigate('Sign-up');
   }
-  async function loginFnc() {
+  function loginFnc() {
     props.navigation.navigate('Login');
   }
   async function alertFnc() {
@@ -112,6 +112,7 @@ const CustomHeader = props => {
                   onPress={signupFnc}
                 />
                 <Button
+                  id="login"
                   iconPosition="right"
                   title="Login"
                   loading={false}
@@ -119,19 +120,18 @@ const CustomHeader = props => {
                   buttonStyle={styles.button}
                   titleStyle={styles.buttonTitle}
                   containerStyle={styles.buttonContainer}
-                  id="login"
-                  onPress={{loginFnc}}
+                  onPress={loginFnc}
                 />
               </>
             ) : (
               <Button
+                id="alert"
                 title="Logout"
                 iconPosition="right"
                 icon={Signout()}
                 buttonStyle={styles.button}
                 titleStyle={styles.buttonLogOutTitle}
                 containerStyle={styles.buttonContainer}
-                id="alert"
                 onPress={alertFnc}></Button>
             )}
           </View>

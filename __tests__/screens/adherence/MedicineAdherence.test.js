@@ -2,11 +2,18 @@ import React from 'react';
 import Medicineadherence from '../../../src/screens/adherence/MedicineAdherence';
 import toJson from "enzyme-to-json";
 import Enzyme, { shallow } from 'enzyme';
+import axios from '../../../src/redux/apis/axios';
 import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
 import { FlatList } from 'react-native';
 Enzyme.configure({ adapter: new Adapter() });
 jest.mock("@react-native-google-signin/google-signin", () => ({
   default: jest.fn(),
+}));
+jest.mock("@react-navigation/native", () => ({
+  ...jest.requireActual("@react-navigation/native"),
+  useFocusEffect: jest.fn(),
+  useEffect: jest.fn(),
+  useState: jest.fn(),
 }));
 describe('Medicine Adherence test', () => {
   it('renders correctly', () => {
@@ -22,4 +29,13 @@ describe('Medicine Adherence test', () => {
   //   const wrapper = shallow(<Medicineadherence />);
   //   wrapper.find(FlatList).props().renderItem(item);
   // });
+  
+  // describe("test querydata",()=>{
+  //   it("test getusermeds",async ()=>{
+  //       const payload="payload"
+  //       jest.spyOn(axios,"get").mockImplementation(
+  //           jest.fn(()=>Promise.resolve({data:"dfghjk"})))
+  //           Medicineadherence(payload)
+  //   })
+  // })
 });

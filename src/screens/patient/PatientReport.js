@@ -107,8 +107,8 @@ const Reminders = ({item, index}) => {
     </Animatable.View>
   );
 };
-export default function PatientReport({route}) {
-  route=useRoute();
+const PatientReport = () => {
+  const route = useRoute();
   const {
     medId,
     medName,
@@ -313,3 +313,4 @@ export default function PatientReport({route}) {
     </View>
   );
 }
+export default PatientReport;

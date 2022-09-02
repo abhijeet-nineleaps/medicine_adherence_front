@@ -21,6 +21,11 @@ describe('Settings Screen', () => {
   //  const wrapper = shallow(<Settings aboutFnc={mockFn} />);
   //  wrapper.find("#about").simulate("press");
   //  });
+
+  // it("test category", () => {
+  //   const wrapper = shallow(<Settings/>).childAt(0).dive();
+  //   wrapper.find("#about").props().onPress();
+  // });
    it('test open setting button', () => {
     const mockFn = jest.fn();
    const wrapper = shallow(<Settings openSetFnc={mockFn} />);

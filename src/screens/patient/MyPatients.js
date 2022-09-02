@@ -20,8 +20,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Mypatient = navigation => {
   const patients = useSelector(state => state.PatientReducer.patientList);
-  const {load} = useSelector(state => state.PatientReducer.patientList);
-  log.info(load, 'load');
+  // const {load} = useSelector(state => state.PatientReducer.patientList);
+  // log.info(load, 'load');
   const [data, _datastate] = React.useState([]);
   const [refresh, refeereshstate] = React.useState(false);
 
