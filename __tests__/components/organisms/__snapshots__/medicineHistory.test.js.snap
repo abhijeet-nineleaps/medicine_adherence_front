@@ -1,30 +1,82 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`test collector category test category 1`] = `
-<ContextProvider
-  value={
-    Object {
-      "getServerState": undefined,
-      "store": Object {
-        "clearActions": [Function],
-        "dispatch": [Function],
-        "getActions": [Function],
-        "getState": [Function],
-        "replaceReducer": [Function],
-        "subscribe": [Function],
+<ForwardRef(AnimatedComponentWrapper)
+  style={
+    Array [
+      undefined,
+      Object {
+        "opacity": 0,
+        "transform": Array [
+          Object {
+            "scale": 0.1,
+          },
+          Object {
+            "translateY": 1000,
+          },
+        ],
       },
-      "subscription": Object {
-        "addNestedSub": [Function],
-        "getListeners": [Function],
-        "handleChangeWrapper": [Function],
-        "isSubscribed": [Function],
-        "notifyNestedSubs": [Function],
-        "trySubscribe": [Function],
-        "tryUnsubscribe": [Function],
-      },
-    }
+      Object {},
+    ]
   }
 >
-  <MedicinehistoryList />
-</ContextProvider>
+  <View
+    key="undefined1"
+    style={
+      Object {
+        "marginBottom": 15,
+        "padding": 4,
+      }
+    }
+  >
+    <withTheme(Card)
+      key="undefined2"
+      style={
+        Object {
+          "borderRadius": 6,
+          "elevation": 2,
+          "marginTop": 8,
+          "padding": 14,
+        }
+      }
+    >
+      <View
+        style={
+          Object {
+            "flexDirection": "row",
+            "justifyContent": "space-between",
+          }
+        }
+      >
+        <View
+          key="undefined3"
+          style={
+            Object {
+              "flexDirection": "row",
+              "justifyContent": "space-around",
+            }
+          }
+        >
+          <Text
+            key="undefined7"
+          >
+            Date - 
+          </Text>
+        </View>
+        <View>
+          <TouchableOpacity
+            id="touchable1"
+            onPress={[Function]}
+          >
+            <Icon
+              allowFontScaling={false}
+              name="image"
+              size={20}
+            />
+          </TouchableOpacity>
+        </View>
+      </View>
+    </withTheme(Card)>
+  </View>
+</ForwardRef(AnimatedComponentWrapper)>
 `;

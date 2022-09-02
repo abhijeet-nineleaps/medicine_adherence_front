@@ -1,30 +1,25 @@
 import Enzyme, { shallow } from "enzyme";
 import Adapter from "@wojtekmaj/enzyme-adapter-react-17";
-import { Provider } from "react-redux";
 import React from "react";
-import configureStore from "redux-mock-store";
 import toJson from "enzyme-to-json";
 import MedicinehistoryList from "../../../src/components/organisms/medicineHistoryList";
 
 Enzyme.configure({ adapter: new Adapter() });
-const mockStore = configureStore([]);
 
 describe("test collector category", () => {
-  let store;
-  store = mockStore({
-    field: {
-      name: "hello",
-      value: "San",
-    },
-  });
   it("test category", () => {
-    const wrapper = shallow(
-      <Provider store={store}>
-        <MedicinehistoryList  />
-      </Provider>
-    );
-
+    const wrapper = shallow(<MedicinehistoryList />).childAt(0).dive();
     expect.assertions(1);
     expect(toJson(wrapper)).toMatchSnapshot();
+  });
+  it("test category", () => {
+    let props = { item: { key: { not_taken: [{},{},{}] } }, showimgfun: "", medName: "" }
+    const wrapper = shallow(<MedicinehistoryList {...props} />).childAt(0).dive();
+    wrapper.find("#touchable1").props().onPress();
+  });
+  it("test category", () => {
+    let props = { item: { key: { taken: [{},{},{}] } }, showimgfun: "", medName: "" }
+    const wrapper = shallow(<MedicinehistoryList {...props} />).childAt(0).dive();
+    wrapper.find("#touchable1").props().onPress();
   });
 });

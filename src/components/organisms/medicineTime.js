@@ -1,17 +1,18 @@
-import React, {useState} from 'react';
-import {Text, View} from 'react-native';
+import React, { useState } from 'react';
+import { Text, View } from 'react-native';
 import BouncyCheckbox from 'react-native-bouncy-checkbox';
 import styles from '../../screens/adherence/adherenceStyles/TodayPerformanceStyles';
 
 const Box = (props) => {
-  const {time, updatetimes} = props;
+  const { time, updatetimes } = props;
   const [med1, setMed1] = useState(false);
   const [taken, takenstatus] = useState(false);
 
   return (
-    time.length !== 0 && (
+    time?.length !== 0 && (
       <View style={styles.cbContainer}>
         <BouncyCheckbox
+          id="box"
           size={22}
           fillColor="#3743ab"
           unfillColor="#FFFFFF"

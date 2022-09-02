@@ -89,7 +89,6 @@ const DrawerNavigator = navigation => {
         navig={this.navigation}
         component={Caretakercomp}
       />
-
       <Drawer.Screen
         name="Settings"
         component={Settings}
@@ -111,5 +110,4 @@ const DrawerNavigator = navigation => {
     </Drawer.Navigator>
   );
 };
-
 export default DrawerNavigator;
