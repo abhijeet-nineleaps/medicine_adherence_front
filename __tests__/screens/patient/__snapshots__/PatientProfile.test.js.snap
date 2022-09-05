@@ -12,85 +12,508 @@ exports[`Click send image renders correctly 1`] = `
   <View
     style={
       Object {
-        "alignItems": "center",
         "backgroundColor": "white",
+        "flexDirection": "column",
         "height": "100%",
-        "justifyContent": "center",
       }
     }
   >
-    <View
-      indeterminateAnimationDuration={1000}
-      style={
-        Array [
-          Object {
-            "backgroundColor": "transparent",
-            "overflow": "hidden",
-          },
-          undefined,
-        ]
-      }
-    >
-      <RNSVGSvgView
-        bbHeight={80}
-        bbWidth={80}
-        collapsable={false}
-        focusable={false}
-        height={80}
-        style={
-          Array [
+    <RCTScrollView>
+      <View>
+        <View
+          style={
             Object {
-              "backgroundColor": "transparent",
-              "borderWidth": 0,
-            },
-            Object {
-              "transform": Array [
-                Object {
-                  "rotate": "0deg",
-                },
-              ],
-            },
-            Object {
-              "flex": 0,
-              "height": 80,
-              "width": 80,
-            },
-          ]
-        }
-        width={80}
-      >
-        <RNSVGGroup
-          matrix={
-            Array [
-              1,
-              0,
-              0,
-              1,
-              0,
-              0,
-            ]
+              "flexDirection": "row",
+              "height": 110,
+              "justifyContent": "space-between",
+              "padding": 10,
+            }
           }
         >
-          <RNSVGPath
-            d="M40 0.5
-          A39.5 39.5 0 1 1 16.782482534447304 8.04382872218958"
-            propList={
+          <View
+            style={
+              Object {
+                "flexDirection": "column",
+              }
+            }
+          >
+            <Text
+              style={
+                Object {
+                  "paddingLeft": 5,
+                  "paddingTop": 9,
+                }
+              }
+            >
+              Name
+            </Text>
+            <Text
+              style={
+                Object {
+                  "color": "black",
+                  "fontSize": 17,
+                  "padding": 5,
+                }
+              }
+            />
+          </View>
+          <View
+            style={
+              Object {
+                "justifyContent": "flex-end",
+              }
+            }
+          >
+            <Image
+              source={
+                Object {
+                  "uri": undefined,
+                }
+              }
+              style={
+                Object {
+                  "borderColor": "white",
+                  "borderRadius": 45,
+                  "borderWidth": 2,
+                  "height": 90,
+                  "width": 90,
+                }
+              }
+            />
+          </View>
+        </View>
+        <View
+          style={
+            Object {
+              "borderBottomColor": "grey",
+              "borderBottomWidth": 0.3,
+            }
+          }
+        />
+        <View
+          style={
+            Object {
+              "flexDirection": "row",
+              "justifyContent": "space-between",
+              "marginBottom": 12,
+              "padding": 15,
+            }
+          }
+        >
+          <Text
+            style={Object {}}
+          >
+            Bio
+          </Text>
+          <Text
+            style={
+              Object {
+                "color": "black",
+                "width": 200,
+              }
+            }
+          />
+        </View>
+        <View
+          style={
+            Object {
+              "borderBottomColor": "grey",
+              "borderBottomWidth": 0.3,
+            }
+          }
+        />
+        <View
+          style={
+            Object {
+              "flexDirection": "row",
+              "justifyContent": "space-between",
+              "marginBottom": 12,
+              "padding": 15,
+            }
+          }
+        >
+          <Text
+            style={Object {}}
+          >
+            Contact Number
+          </Text>
+          <Text
+            style={
+              Object {
+                "color": "black",
+                "width": 200,
+              }
+            }
+          />
+        </View>
+        <View
+          style={
+            Object {
+              "borderBottomColor": "grey",
+              "borderBottomWidth": 0.3,
+            }
+          }
+        />
+        <View
+          style={
+            Object {
+              "flexDirection": "row",
+              "justifyContent": "space-between",
+              "marginBottom": 12,
+              "padding": 15,
+            }
+          }
+        >
+          <Text
+            style={Object {}}
+          >
+            Email Id
+          </Text>
+          <Text
+            style={
+              Object {
+                "color": "black",
+                "width": 200,
+              }
+            }
+          />
+        </View>
+        <View
+          style={
+            Object {
+              "borderBottomColor": "grey",
+              "borderBottomWidth": 0.3,
+            }
+          }
+        />
+        <View
+          style={
+            Object {
+              "flexDirection": "row",
+              "justifyContent": "space-between",
+              "marginBottom": 12,
+              "padding": 15,
+            }
+          }
+        >
+          <Text
+            style={Object {}}
+          >
+            Gender
+          </Text>
+          <Text
+            style={
+              Object {
+                "color": "black",
+                "width": 200,
+              }
+            }
+          />
+        </View>
+        <View
+          style={
+            Object {
+              "borderBottomColor": "grey",
+              "borderBottomWidth": 0.3,
+            }
+          }
+        />
+        <View
+          style={
+            Object {
+              "flexDirection": "row",
+              "justifyContent": "space-between",
+              "marginBottom": 12,
+              "padding": 15,
+            }
+          }
+        >
+          <Text
+            style={Object {}}
+          >
+            Blood Group
+          </Text>
+          <Text
+            style={
+              Object {
+                "color": "black",
+                "width": 200,
+              }
+            }
+          />
+        </View>
+        <View
+          style={
+            Object {
+              "borderBottomColor": "grey",
+              "borderBottomWidth": 0.3,
+            }
+          }
+        />
+        <View
+          style={
+            Object {
+              "flexDirection": "row",
+              "justifyContent": "space-between",
+              "marginBottom": 12,
+              "padding": 15,
+            }
+          }
+        >
+          <Text
+            style={Object {}}
+          >
+            Marital Status
+          </Text>
+          <Text
+            style={
+              Object {
+                "color": "black",
+                "width": 200,
+              }
+            }
+          />
+        </View>
+        <View
+          style={
+            Object {
+              "borderBottomColor": "grey",
+              "borderBottomWidth": 0.3,
+            }
+          }
+        />
+        <View
+          style={
+            Object {
+              "flexDirection": "row",
+              "justifyContent": "space-between",
+              "marginBottom": 12,
+              "padding": 15,
+            }
+          }
+        >
+          <Text
+            style={Object {}}
+          >
+            Age(in yrs)
+          </Text>
+          <Text
+            style={
+              Object {
+                "color": "black",
+                "width": 200,
+              }
+            }
+          />
+        </View>
+        <View>
+          <View
+            style={
               Array [
-                "stroke",
-                "strokeWidth",
-                "strokeLinecap",
+                Object {
+                  "marginVertical": 8,
+                },
+                Object {
+                  "backgroundColor": "white",
+                },
               ]
             }
-            stroke={4278221567}
-            strokeLinecap={0}
-            strokeWidth={1}
-          />
-        </RNSVGGroup>
-      </RNSVGSvgView>
-    </View>
-    <Text>
-      Fetching User Details
-    </Text>
+            theme={
+              Object {
+                "animation": Object {
+                  "scale": 1,
+                },
+                "colors": Object {
+                  "accent": "#03dac4",
+                  "backdrop": "rgba(0, 0, 0, 0.5)",
+                  "background": "#f6f6f6",
+                  "disabled": "rgba(0, 0, 0, 0.26)",
+                  "error": "#B00020",
+                  "notification": "#f50057",
+                  "onSurface": "#000000",
+                  "placeholder": "rgba(0, 0, 0, 0.54)",
+                  "primary": "#6200ee",
+                  "surface": "#ffffff",
+                  "text": "#000000",
+                },
+                "dark": false,
+                "fonts": Object {
+                  "light": Object {
+                    "fontFamily": "System",
+                    "fontWeight": "300",
+                  },
+                  "medium": Object {
+                    "fontFamily": "System",
+                    "fontWeight": "500",
+                  },
+                  "regular": Object {
+                    "fontFamily": "System",
+                    "fontWeight": "400",
+                  },
+                  "thin": Object {
+                    "fontFamily": "System",
+                    "fontWeight": "100",
+                  },
+                },
+                "roundness": 4,
+              }
+            }
+          >
+            <View>
+              <View
+                style={
+                  Object {
+                    "backgroundColor": "#f6f6f6",
+                  }
+                }
+              >
+                <View
+                  accessibilityRole="button"
+                  accessibilityState={
+                    Object {
+                      "disabled": false,
+                      "expanded": false,
+                    }
+                  }
+                  accessible={true}
+                  focusable={true}
+                  onClick={[Function]}
+                  onResponderGrant={[Function]}
+                  onResponderMove={[Function]}
+                  onResponderRelease={[Function]}
+                  onResponderTerminate={[Function]}
+                  onResponderTerminationRequest={[Function]}
+                  onStartShouldSetResponder={[Function]}
+                  style={
+                    Array [
+                      Object {
+                        "overflow": "hidden",
+                      },
+                      Array [
+                        Object {
+                          "padding": 8,
+                        },
+                        undefined,
+                      ],
+                    ]
+                  }
+                >
+                  <View
+                    pointerEvents="none"
+                    style={
+                      Object {
+                        "alignItems": "center",
+                        "flexDirection": "row",
+                      }
+                    }
+                  >
+                    <Text
+                      allowFontScaling={false}
+                      selectable={false}
+                      style={
+                        Array [
+                          Object {
+                            "color": "black",
+                            "fontSize": 16,
+                          },
+                          Object {
+                            "marginLeft": 8,
+                          },
+                          Object {
+                            "fontFamily": "FontAwesome",
+                            "fontStyle": "normal",
+                            "fontWeight": "normal",
+                          },
+                          Object {},
+                        ]
+                      }
+                    >
+                      
+                    </Text>
+                    <View
+                      style={
+                        Array [
+                          Object {
+                            "margin": 8,
+                          },
+                          Object {
+                            "flex": 1,
+                            "justifyContent": "center",
+                          },
+                        ]
+                      }
+                    >
+                      <Text
+                        numberOfLines={1}
+                        selectable={false}
+                        style={
+                          Array [
+                            Object {
+                              "color": "#000000",
+                              "fontFamily": "System",
+                              "fontWeight": "400",
+                            },
+                            Object {
+                              "textAlign": "left",
+                            },
+                            Array [
+                              Object {
+                                "fontSize": 16,
+                              },
+                              Object {
+                                "color": "rgba(0, 0, 0, 0.87)",
+                              },
+                              Object {
+                                "fontSize": 15,
+                                "fontWeight": "500",
+                              },
+                            ],
+                          ]
+                        }
+                      >
+                        Medicines
+                      </Text>
+                    </View>
+                    <View
+                      style={
+                        Array [
+                          Object {
+                            "margin": 8,
+                          },
+                          undefined,
+                        ]
+                      }
+                    >
+                      <Text
+                        allowFontScaling={false}
+                        selectable={false}
+                        style={
+                          Array [
+                            Object {
+                              "color": undefined,
+                              "fontSize": 12,
+                            },
+                            undefined,
+                            Object {
+                              "fontFamily": "FontAwesome",
+                              "fontStyle": "normal",
+                              "fontWeight": "normal",
+                            },
+                            Object {},
+                          ]
+                        }
+                      >
+                        
+                      </Text>
+                    </View>
+                  </View>
+                </View>
+              </View>
+            </View>
+          </View>
+        </View>
+      </View>
+    </RCTScrollView>
   </View>
 </View>
 `;

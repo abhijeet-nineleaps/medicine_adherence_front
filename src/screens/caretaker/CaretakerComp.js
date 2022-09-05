@@ -26,11 +26,13 @@ export default function Caretakercomp({navigation}) {
           [
             { id: 'ok',
               text: 'Ok',
+              testID:"loginF",
               onPress: {loginFnc},
             },
             { 
               id: 'cancel',
               text: 'Cancel',
+              testID:"homeF",
               onPress: {homeFnc},
             },
           ],

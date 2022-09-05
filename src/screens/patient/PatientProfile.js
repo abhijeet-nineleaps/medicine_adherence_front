@@ -20,7 +20,7 @@ import Logger from '../../components/logger';
 
 LogBox.ignoreLogs(['Require cycle:']);
 
-const ViewProfile = ({route, navigation}) => {
+const ViewProfile = ({navigation}) => {
   const [userdetails, _userdetailsstate] = React.useState();
   const [progress, _progress_status] = React.useState(true);
   const sendnotificationtouser = async (fcm_token, medname) => {
@@ -34,8 +34,6 @@ const ViewProfile = ({route, navigation}) => {
   const patients = useSelector(
     state => state.PatientProfileReducer.patientList,
   );
-  // const {load} = useSelector(state => state.PatientProfileReducer);
-  // Logger.loggerInfo(load, 'load');
   const [_refresh, refeereshstate] = React.useState(false);
 
   const dispatch = useDispatch();
@@ -48,25 +46,22 @@ const ViewProfile = ({route, navigation}) => {
   return (
     <View style={styles.container}>
       {progress ? (
-        <View style={styles.conatiner1}>
-          <Progress.Circle size={80} indeterminate={true} />
-          <Text>Fetching User Details</Text>
-        </View>
-      ) : (
+       
+
         <View style={styles.container2}>
           <ScrollView>
             <View style={styles.top}>
               <View style={styles.nameView}>
                 <Text style={styles.name}>Name</Text>
                 <Text style={styles.nameText}>
-                  {userdetails.userEntityList[0].userName}
+                  {userdetails?.userEntityList[0]?.userName}
                 </Text>
               </View>
               <View style={styles.iconView}>
                 <Image
                   style={styles.icon}
                   source={{
-                    uri: userdetails.userEntityList[0].userDetails.picPath,
+                    uri: userdetails?.userEntityList[0]?.userdetails?.picPath,
                   }}
                 />
               </View>
@@ -76,7 +71,7 @@ const ViewProfile = ({route, navigation}) => {
               <Text style={styles.itemleft}>Bio</Text>
 
               <Text style={styles.itemright}>
-                {userdetails.userEntityList[0].userDetails.bio}
+                {userdetails?.userEntityList[0]?.userdetails?.bio}
               </Text>
             </View>
             <View style={styles.itemView} />
@@ -84,14 +79,14 @@ const ViewProfile = ({route, navigation}) => {
               <Text style={styles.itemleft}>Contact Number</Text>
 
               <Text style={styles.itemright}>
-                {userdetails.userEntityList[0].userDetails.userContact}
+                {userdetails?.userEntityList[0]?.userDetails?.userContact}
               </Text>
             </View>
             <View style={styles.itemView} />
             <View style={styles.items}>
               <Text style={styles.itemleft}>Email Id</Text>
               <Text style={styles.itemright}>
-                {userdetails.userEntityList[0].email}
+                {userdetails?.userEntityList[0]?.email}
               </Text>
             </View>
             <View style={styles.itemView} />
@@ -99,7 +94,7 @@ const ViewProfile = ({route, navigation}) => {
               <Text style={styles.itemleft}>Gender</Text>
 
               <Text style={styles.itemright}>
-                {userdetails.userEntityList[0].userDetails.gender}
+                {userdetails?.userEntityList[0]?.userdetails?.gender}
               </Text>
             </View>
             <View style={styles.itemView} />
@@ -107,21 +102,21 @@ const ViewProfile = ({route, navigation}) => {
               <Text style={styles.itemleft}>Blood Group</Text>
 
               <Text style={styles.itemright}>
-                {userdetails.userEntityList[0].userDetails.bloodGroup}
+                {userdetails?.userEntityList[0]?.userdetails?.bloodGroup}
               </Text>
             </View>
             <View style={styles.itemView} />
             <View style={styles.items}>
               <Text style={styles.itemleft}>Marital Status</Text>
               <Text style={styles.itemright}>
-                {userdetails.userEntityList[0].userDetails.martialStatus}
+                {userdetails?.userEntityList[0]?.userdetails?.martialStatus}
               </Text>
             </View>
             <View style={styles.itemView} />
             <View style={styles.items}>
               <Text style={styles.itemleft}>Age(in yrs)</Text>
               <Text style={styles.itemright}>
-                {userdetails.userEntityList[0].userDetails.age}
+                {userdetails?.userEntityList[0]?.userdetails?.age}
               </Text>
             </View>
             <View>
@@ -138,7 +133,7 @@ const ViewProfile = ({route, navigation}) => {
                     />
                   )}
                   right={() => <Icon name="caret-down"></Icon>}>
-                  {userdetails.medicinesList.map(mlistitem => {
+                  {userdetails?.medicinesList.map(mlistitem => {
                     Logger.loggerInfo(mlistitem.medicineId);
                     return (
                       <List.Item
@@ -163,7 +158,7 @@ const ViewProfile = ({route, navigation}) => {
                                   onPress={() => {
                                     Logger.loggerInfo(mlistitem.medicineName);
                                     sendnotificationtouser(
-                                      userdetails.userEntityList[0].userDetails
+                                      userdetails?.userEntityList[0]?.userDetails
                                         .fcmToken,
                                       mlistitem.medicineName,
                                     );
@@ -202,6 +197,12 @@ const ViewProfile = ({route, navigation}) => {
               </List.Section>
             </View>
           </ScrollView>
+        </View>
+
+      ) : (
+         <View style={styles.conatiner1}>
+          <Progress.Circle size={80} indeterminate={true} />
+          <Text>Fetching User Details</Text>
         </View>
       )}
     </View>

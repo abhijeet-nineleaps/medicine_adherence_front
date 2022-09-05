@@ -9,6 +9,8 @@ import OctIcon from 'react-native-vector-icons/Octicons';
 import IonIcon from 'react-native-vector-icons/Ionicons';
 import EntIcon from 'react-native-vector-icons/Entypo';
 
+const bio="";
+
 const SavedDetails = () => {
   const [bio, biostate] = React.useState('');
   const [contact, contactstate] = React.useState('');
@@ -27,6 +29,7 @@ const SavedDetails = () => {
       let sgender = await AsyncStorage.getItem('gender');
       let maritalstatus = await AsyncStorage.getItem('maritalstatus');
       let sblood = await AsyncStorage.getItem('bloodgroup');
+
       biostate(sbio);
       contactstate(scontact);
       agestate(sage);
@@ -35,6 +38,7 @@ const SavedDetails = () => {
       msstate(maritalstatus);
       bloodstate(sblood);
     }
+
     getuserdetail();
   });
 

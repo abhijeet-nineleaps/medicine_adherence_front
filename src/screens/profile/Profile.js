@@ -164,6 +164,7 @@ const Profile = ({navigation}) => {
           </View>
           <View>
             <Button
+            testID='estate'
               id="edit"
               title="Edit profile"
               buttonStyle={styles.editButton}
@@ -172,10 +173,11 @@ const Profile = ({navigation}) => {
           </View>
           <View>
             <View>
-              {editenabled ? (
+              
                 <>
                   <View>
                     <Formik
+                      testID="log"
                       validationSchema={loginValidationSchema}
                       initialValues={{
                         Bio: '',
@@ -186,6 +188,7 @@ const Profile = ({navigation}) => {
                         MaritalStatus: '',
                         BloodGroup: '',
                       }}
+                      
                       onSubmit={values => storeuserdetails(values)}>
                       {({
                         handleChange,
@@ -199,6 +202,7 @@ const Profile = ({navigation}) => {
                       }) => (
                         <View style={styles.inputContainer}>
                           <TextInput
+                          testID="userID"
                             label=" Bio"
                             mode="flat"
                             style={styles.textInput}
@@ -212,6 +216,7 @@ const Profile = ({navigation}) => {
                             <Text style={styles.errorText}>{errors.Bio}</Text>
                           )}
                           <TextInput
+                          testID="phoneID"
                             label=" Contact"
                             mode="flat"
                             keyboardType="numeric"
@@ -249,6 +254,7 @@ const Profile = ({navigation}) => {
                             <Text style={styles.errorText}>{errors.Age}</Text>
                           )}
                           <TextInput
+                          testID="weightID"
                             label=" Weight(in kg)"
                             mode="flat"
                             keyboardType="numeric"
@@ -274,7 +280,7 @@ const Profile = ({navigation}) => {
                               <Picker
                                 mode="dropdown"
                                 selectedValue={values.Gender}
-                                onValueChange={itemchange =>
+                                onValueChange={itemchange => 
                                   setFieldValue('Gender', itemchange)
                                 }>
                                 <Picker.Item
@@ -300,6 +306,7 @@ const Profile = ({navigation}) => {
                             </View>
                             <View style={styles.picker}>
                               <Picker
+                              testID="marital"
                                 mode="dropdown"
                                 selectedValue={values.MaritalStatus}
                                 onValueChange={itemchange =>
@@ -373,9 +380,7 @@ const Profile = ({navigation}) => {
                     </Formik>
                   </View>
                 </>
-              ) : (
-                <SavedDetails />
-              )}
+              
             </View>
           </View>
         </View>

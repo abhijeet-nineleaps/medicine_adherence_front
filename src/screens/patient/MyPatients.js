@@ -18,10 +18,11 @@ import {useDispatch, useSelector} from 'react-redux';
 import {fetchPatients} from '../../redux/actions/patient/PatientActions';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const Mypatient = navigation => {
-  const patients = useSelector(state => state.PatientReducer.patientList);
-  // const {load} = useSelector(state => state.PatientReducer.patientList);
-  // log.info(load, 'load');
+
+export const Mypatient = navigation => {
+   const patients = useSelector(state => state.PatientReducer.patientList);
+  const load = useSelector(state => state.PatientReducer.patientList);
+  
   const [data, _datastate] = React.useState([]);
   const [refresh, refeereshstate] = React.useState(false);
 
@@ -31,6 +32,31 @@ const Mypatient = navigation => {
     dispatch(fetchPatients(user_id));
     refeereshstate(false);
   };
+  async function checkforlog() {
+    const islogged = await GoogleSignin.isSignedIn();
+    if (!islogged) {
+      Alert.alert(
+        'Sign in first to use this feature',
+        'Click ok to proceed',
+        [
+          {
+            text: 'Ok',
+            onPress: () => {
+              navigation.navigate('Login');
+            },
+          },
+          {
+            text: 'Cancel',
+            onPress: () => {
+              navigation.navigate('Home');
+            },
+          },
+        ],
+      );
+    } else {
+      fetchpatients();
+    }
+  }
 
   useFocusEffect(
     React.useCallback(() => {
@@ -75,9 +101,10 @@ const Mypatient = navigation => {
   const empFnc = () => {
     /* do nothing */
   };
+  
   const renderitem = ({item}) => {
     return (
-      <Card id="pressProfile" onPress={() => navProfile} style={styles.card}>
+      <Card id="pressProfile" testID='nav' onPress={() => navProfile} style={styles.card}>
         <View style={styles.top}>
           <ListItem
             style={styles.list}
@@ -121,7 +148,7 @@ const Mypatient = navigation => {
       {data.length === 0 && (
         <View style={styles.imgView}>
           <Image
-            source={require('../../../src/assets/images/nopatients.png')}
+            source={require('../../../src/assests/images/nopatients.png')}
             style={styles.img}
             resizeMode="contain"></Image>
         </View>

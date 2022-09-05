@@ -7,6 +7,7 @@ import {API_URL} from '../../repositories/var';
 import {useFocusEffect} from '@react-navigation/native';
 import styles from './patientStyles/PatientRequestStyles';
 import Logger from '../../components/logger';
+var toast =0;
 
 const Patientrequest = () => {
   const [patients, patientsdata] = React.useState([]);
@@ -96,7 +97,7 @@ const Patientrequest = () => {
                 </ListItem>
                 <View style={styles.buttonView}>
                   <Button
-                    id='accept'
+                    id='accept1'
                     onPress={() => {
                       acceptrequest(item.cid);
                     }}
@@ -120,7 +121,7 @@ const Patientrequest = () => {
       {patients.length === 0 && (
         <View style={styles.imgView}>
           <Image
-            source={require('../../../src/assets/images/nopatientreq.png')}
+            source={require('../../../src/assests/images/nopatientreq.png')}
             style={styles.img}
             resizeMode="contain"></Image>
         </View>
