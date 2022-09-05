@@ -33,9 +33,9 @@ const Loginscreen = (navigation) => {
         });
         loadingstate(false);
 
-        setTimeout(() => {
-          navigation.pop(1);
-        }, 3000);
+        // setTimeout(() => {
+        //   navigation.pop(1);
+        // }, 3000);
       } else {
         await GoogleSignin.signOut();
         loadingstate(false);

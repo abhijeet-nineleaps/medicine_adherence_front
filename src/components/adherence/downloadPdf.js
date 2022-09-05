@@ -1,6 +1,5 @@
 import {API_URL} from '../../repositories/var';
 import RNFetchBlob from 'rn-fetch-blob';
-import {logger} from 'react-native-logs';
 import Logger from '../logger';
 
 const {config} = RNFetchBlob;

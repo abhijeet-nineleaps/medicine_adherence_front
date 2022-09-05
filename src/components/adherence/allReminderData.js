@@ -2,7 +2,7 @@ import globalDb from '../../repositories/database/globalDb';
 import Logger from '../logger';
 
 const db = globalDb();
-const allreminderdata = async (med_name) => {
+const allreminderdata = async med_name => {
   let reminder_obj;
   let map = new Map();
   let med_id = 0;
@@ -37,7 +37,7 @@ const allreminderdata = async (med_name) => {
                     not_taken: [],
                   };
 
-                  overall_timings.forEach((m_time) => {
+                  overall_timings.forEach(m_time => {
                     if (taken_missed_times.has(m_time)) {
                       final_timeings_obj.not_taken.push(m_time);
                     } else {

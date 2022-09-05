@@ -201,9 +201,9 @@ const SendImageToCaretaker = ({navigation}) => {
           type: 'success',
           text1: 'Image sent',
         });
-        setTimeout(() => {
-          navigation.pop(1);
-        }, 1000);
+        // setTimeout(() => {
+        //   navigation.pop(1);
+        // }, 1000);
       })
       .catch(() => {
         setModalVisible(false);
