@@ -2,7 +2,7 @@ import { takeLatest } from "@redux-saga/core/effects"
 import { runSaga } from "redux-saga";
 import { getMedHistoryActions } from "../../../../src/redux/actions/adherence/getMedHistoryActions";
 import { getMedHistorywatcherSaga, getMedHistorySaga } from "../../../../src/redux/sagas/adherence/getMedHistorySaga";
-import adherence from "../../../../src/redux/apis/adherence";
+import adherence from "../../../../src/repositories/apis/adherence";
 
 const initialData = {}
 describe("test downloadPdfwatcherSaga", () => {

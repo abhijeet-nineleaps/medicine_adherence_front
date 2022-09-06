@@ -1,5 +1,5 @@
 import axios from './axios';
-import { API_URLS } from '../../repositories/apiUrl';
+import { API_URLS } from '../apiUrl';
 export const careTaker = {
   emailcaretaker: async function name(payload) {
     const response = await axios.get(

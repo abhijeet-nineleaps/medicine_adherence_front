@@ -1,5 +1,5 @@
 import {takeLatest, call, put} from 'redux-saga/effects';
-import { patient } from '../../apis/patient';
+import { patient } from '../../../repositories/apis/patient';
 import { patientReqActions } from '../../actions/patient/patientReqActions';
 export function* patientReqSaga(value) {
   const {payload} = value;

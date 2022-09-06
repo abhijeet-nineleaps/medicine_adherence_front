@@ -1,5 +1,5 @@
-import {careTaker} from '../../src/redux/apis/careTaker';
-import axios from "../../src/redux/apis/axios";
+import {careTaker} from '../../src/repositories/apis/careTaker';
+import axios from "../../src/repositories/apis/axios";
 
 describe("test email caretaker",()=>{
     it("test images",async ()=>{

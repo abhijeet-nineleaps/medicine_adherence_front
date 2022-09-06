@@ -1,5 +1,5 @@
-import { profile } from "../../src/redux/apis/profile"
-import axios from "../../src/redux/apis/axios";
+import { profile } from "../../src/repositories/apis/profile"
+import axios from "../../src/repositories/apis/axios";
 describe("test profile",()=>{
     it("test images",async ()=>{
         const payload="payload"

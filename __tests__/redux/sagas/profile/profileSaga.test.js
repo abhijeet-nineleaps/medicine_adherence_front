@@ -1,6 +1,6 @@
 import { takeLatest } from "@redux-saga/core/effects"
 import { runSaga } from "redux-saga";
-import { profile } from "../../../../src/redux/apis/profile";
+import { profile } from "../../../../src/repositories/apis/profile";
 import { ProfileActions } from "../../../../src/redux/actions/profile/ProfileActions";
 import { profileSaga, profilewatcherSaga } from "../../../../src/redux/sagas/profile/ProfileSaga";
 

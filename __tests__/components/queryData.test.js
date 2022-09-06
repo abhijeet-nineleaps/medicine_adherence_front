@@ -4,7 +4,7 @@ import Enzyme, { shallow } from 'enzyme';
 import queryData from "../../src/repositories/database/queryData";
 import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
 import toJson from "enzyme-to-json";
-import axios from "../../src/redux/apis/axios";
+import axios from "../../src/repositories/apis/axios";
 Enzyme.configure({ adapter: new Adapter() });
 // enableHooks(jest);
 // jest.mock("react-redux", () => ({

@@ -5,7 +5,7 @@ import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
 Enzyme.configure({ adapter: new Adapter() });
 import checkConnectivity from '../../src/connection/checkConnectivity'
 import toJson from "enzyme-to-json";
-import axios from "../../src/redux/apis/axios";
+import axios from "../../src/repositories/apis/axios";
 enableHooks(jest);
 
 jest.mock("@react-navigation/native", () => ({

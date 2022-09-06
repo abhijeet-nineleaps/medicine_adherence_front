@@ -1,6 +1,6 @@
 import { takeLatest } from "@redux-saga/core/effects"
 import { runSaga } from "redux-saga";
-import { Signupuser } from "../../../../src/redux/apis/access";
+import { Signupuser } from "../../../../src/repositories/apis/access";
 import { signupActions } from "../../../../src/redux/actions/signup/signupActions";
 import { signupwatcherSaga, signupSaga } from "../../../../src/redux/sagas/signup/signupSaga";
 

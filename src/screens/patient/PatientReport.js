@@ -15,7 +15,7 @@ import ProgressCircle from 'react-native-progress-circle';
 import {Button, Divider} from 'react-native-elements';
 import {Card} from 'react-native-paper';
 import {useFocusEffect, useRoute} from '@react-navigation/native';
-import networkCalls from '../../connection/networkCalls';
+import networkCalls from '../../repositories/apis/networkCalls';
 import * as Animatable from 'react-native-animatable';
 import downloadPdf from '../../components/adherence/downloadPdf';
 import LottieView from 'lottie-react-native';

@@ -2,7 +2,7 @@ import { takeLatest } from "@redux-saga/core/effects"
 import { runSaga } from "redux-saga";
 import { syncHistoryActions } from "../../../../src/redux/actions/adherence/syncHistoryActions";
 import { syncHistorywatcherSaga, syncHistorySaga } from "../../../../src/redux/sagas/adherence/syncHistorySaga";
-import adherence from "../../../../src/redux/apis/adherence";
+import adherence from "../../../../src/repositories/apis/adherence";
 
 const initialData = {}
 describe("test syncHistorywatcherSaga", () => {

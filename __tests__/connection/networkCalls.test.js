@@ -1,5 +1,5 @@
-import networkCalls from "../../src/connection/networkCalls"
-import axios from "../../src/redux/apis/axios";
+import networkCalls from "../../src/repositories/apis/networkCalls"
+import axios from "../../src/repositories/apis/axios";
 describe("test fetchimage",()=>{
     it("test images",async ()=>{
         const payload="payload"

@@ -1,7 +1,7 @@
 import React from 'react';
 import Enzyme, { shallow } from "enzyme";
 import Adapter from "@wojtekmaj/enzyme-adapter-react-17";
-import axios from '../../../src/redux/apis/axios';
+import axios from '../../../src/repositories/apis/axios';
 import toJson from 'enzyme-to-json';
 import Allreminderdata from '../../../src/components/adherence/allReminderData';
 

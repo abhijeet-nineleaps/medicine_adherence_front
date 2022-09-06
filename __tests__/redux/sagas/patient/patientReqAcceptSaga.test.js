@@ -1,6 +1,6 @@
 import { takeLatest } from "@redux-saga/core/effects"
 import { runSaga } from "redux-saga";
-import { patient } from "../../../../src/redux/apis/patient";
+import { patient } from "../../../../src/repositories/apis/patient";
 import { patientReqAcceptActions } from "../../../../src/redux/actions/patient/patientReqAcceptActions";
 import { reqAcceptwatcherSaga, reqAcceptSaga } from "../../../../src/redux/sagas/patient/patientReqAcceptSaga";
 

@@ -1,6 +1,6 @@
 import {takeLatest} from '@redux-saga/core/effects';
 import {runSaga} from 'redux-saga';
-import adherence from '../../../../src/redux/apis/adherence';
+import adherence from '../../../../src/repositories/apis/adherence';
 import {medImagesActions} from '../../../../src/redux/actions/adherence/medImagesActions';
 import {
   medImageswatcherSaga,

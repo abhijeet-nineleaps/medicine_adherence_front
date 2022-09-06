@@ -1,4 +1,4 @@
-import {API_URLS} from '../../repositories/apiUrl';
+import {API_URLS} from '../apiUrl';
 export const Signupuser = {
   signup: async (params) => {
     const {userinfo, token} = params;

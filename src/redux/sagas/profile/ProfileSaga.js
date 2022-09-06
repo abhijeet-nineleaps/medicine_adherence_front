@@ -1,6 +1,6 @@
 import {takeLatest, call, put} from 'redux-saga/effects';
 import { ProfileActions } from '../../actions/profile/ProfileActions';
-import { profile } from '../../apis/profile';
+import { profile } from '../../../repositories/apis/profile';
 export function* profileSaga(value) {
   const {payload} = value;
   try {

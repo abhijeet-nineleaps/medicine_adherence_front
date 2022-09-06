@@ -7,7 +7,7 @@ import toJson from 'enzyme-to-json';
 import Enzyme, { shallow } from 'enzyme';
 import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
 import Profile from '../../../src/screens/profile/Profile';
-import { profile } from '../../../src/redux/apis/profile';
+import { profile } from '../../../src/repositories/apis/profile';
 import { TextInput } from 'react-native-paper';
 import { render } from '@testing-library/react-native';
 import Mypatient from '../../../src/screens/patient/MyPatients';

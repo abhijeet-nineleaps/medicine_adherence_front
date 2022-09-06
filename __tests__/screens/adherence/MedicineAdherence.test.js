@@ -2,7 +2,7 @@ import React from 'react';
 import Medicineadherence from '../../../src/screens/adherence/MedicineAdherence';
 import toJson from "enzyme-to-json";
 import Enzyme, { shallow } from 'enzyme';
-import axios from '../../../src/redux/apis/axios';
+import axios from '../../../src/repositories/apis/axios';
 import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
 import { FlatList } from 'react-native';
 Enzyme.configure({ adapter: new Adapter() });

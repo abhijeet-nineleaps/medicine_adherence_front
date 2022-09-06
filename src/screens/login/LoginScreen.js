@@ -7,7 +7,7 @@ import {
   GoogleSigninButton,
 } from '@react-native-google-signin/google-signin';
 import messaging from '@react-native-firebase/messaging';
-import { Signupuser } from '../../redux/apis/access';
+import { Signupuser } from '../../repositories/apis/access';
 import * as Progress from 'react-native-progress';
 import styles from './loginStyles/LoginStyles';
 import Logger from '../../components/logger';

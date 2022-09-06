@@ -1,5 +1,5 @@
 import {takeLatest, call, put} from 'redux-saga/effects';
-import { careTaker } from '../../apis/careTaker';
+import { careTaker } from '../../../repositories/apis/careTaker';
 import { sendImageActions } from '../../actions/caretaker/sendImageActions';
 export function* sendImageSaga(value) {
   const {payload} = value;

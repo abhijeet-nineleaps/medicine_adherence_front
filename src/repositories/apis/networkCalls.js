@@ -1,5 +1,5 @@
-import {API_URL} from '../repositories/var';
-import Logger from '../components/logger';
+import {API_URL} from '../var';
+import Logger from '../../components/logger';
 
 const networkCalls = {
   synchistory: async (medId, medHistory) => {

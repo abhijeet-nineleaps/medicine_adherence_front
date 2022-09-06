@@ -3,7 +3,7 @@ import Enzyme, { shallow } from "enzyme";
 import {cleanup } from '@testing-library/react-native';
 import Adapter from "@wojtekmaj/enzyme-adapter-react-17";
 import renderer from 'react-test-renderer';
-import axios from '../../src/redux/apis/axios';
+import axios from '../../src/repositories/apis/axios';
 import Addmedicine from '../../src/screens/AddMedicine';
 Enzyme.configure({adapter: new Adapter()});
 jest.mock("@react-navigation/native", () => ({

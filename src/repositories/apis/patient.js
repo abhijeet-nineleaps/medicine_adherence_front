@@ -1,5 +1,5 @@
 import axios from './axios';
-import { API_URLS } from '../../repositories/apiUrl';
+import { API_URLS } from '../apiUrl';
 export const patient = {
  fetchPatient: async function fetchPatient(payload) {
     const response = await axios.get(`${API_URLS.GET_PATIENT}?caretakerId=${payload}`);

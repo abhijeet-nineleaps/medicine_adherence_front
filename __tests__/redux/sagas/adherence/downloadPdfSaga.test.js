@@ -2,7 +2,7 @@ import { takeLatest } from "@redux-saga/core/effects"
 import { runSaga } from "redux-saga";
 import { downloadPdfActions } from "../../../../src/redux/actions/adherence/downloadPdfActions";
 import { downloadPdfSaga, downloadPdfwatcherSaga } from "../../../../src/redux/sagas/adherence/downloadPdfSaga";
-import adherence from "../../../../src/redux/apis/adherence";
+import adherence from "../../../../src/repositories/apis/adherence";
 
 const initialData = {}
 describe("test downloadPdfwatcherSaga", () => {

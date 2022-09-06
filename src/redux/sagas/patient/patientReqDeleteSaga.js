@@ -1,6 +1,6 @@
 import {takeLatest, call, put} from 'redux-saga/effects';
 import { patientReqDeleteActions } from '../../actions/patient/patientReqDeleteActions';
-import { patient } from '../../apis/patient';
+import { patient } from '../../../repositories/apis/patient';
 export function* reqDeleteSaga(value) {
   const {payload} = value;
   try {

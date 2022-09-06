@@ -1,5 +1,5 @@
 import {takeLatest, call, put} from 'redux-saga/effects';
-import adherence from '../../apis/adherence';
+import adherence from '../../../repositories/apis/adherence';
 import { syncHistoryActions } from '../../actions/adherence/syncHistoryActions';
 export function* syncHistorySaga(value) {
   const {payload} = value;

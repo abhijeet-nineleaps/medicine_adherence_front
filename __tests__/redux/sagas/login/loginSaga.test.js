@@ -1,7 +1,7 @@
 import { takeLatest } from "@redux-saga/core/effects"
 import { runSaga } from "redux-saga";
 import { loginWatcherSaga, loginSaga } from "../../../../src/redux/sagas/login/loginSaga";
-import { Signupuser } from "../../../../src/redux/apis/access";
+import { Signupuser } from "../../../../src/repositories/apis/access";
 import { loginActions } from "../../../../src/redux/actions/login/loginActions";
 
 const initialData = {}

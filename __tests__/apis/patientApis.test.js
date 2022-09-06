@@ -1,5 +1,5 @@
-import { patient } from '../../src/redux/apis/patient';
-import axios from "../../src/redux/apis/axios";
+import { patient } from '../../src/repositories/apis/patient';
+import axios from "../../src/repositories/apis/axios";
 
 describe("test  patientProfile",()=>{
     

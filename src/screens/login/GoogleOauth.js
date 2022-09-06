@@ -11,7 +11,7 @@ import messaging from '@react-native-firebase/messaging';
 import checkConnectivity from '../../connection/checkConnectivity';
 import LottieView from 'lottie-react-native';
 import {Text} from 'react-native-elements';
-import { Signupuser } from '../../redux/apis/access';
+import { Signupuser } from '../../repositories/apis/access';
 import styles from './loginStyles/GoogleAuthStyles';
 import Logger from '../../components/logger';
 

@@ -1,5 +1,5 @@
 import {takeLatest, call, put} from 'redux-saga/effects';
-import { Signupuser } from '../../apis/access';
+import { Signupuser } from '../../../repositories/apis/access';
 import {loginActions} from '../../actions/login/loginActions';
 export function* loginSaga(value) {
   const {payload} = value;

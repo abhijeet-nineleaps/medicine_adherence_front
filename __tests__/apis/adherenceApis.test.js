@@ -1,5 +1,5 @@
-import adherence from "../../src/redux/apis/adherence"
-import axios from "../../src/redux/apis/axios";
+import adherence from "../../src/repositories/apis/adherence"
+import axios from "../../src/repositories/apis/axios";
 describe("test fetchimage",()=>{
     it("test images",async ()=>{
         const payload="payload"

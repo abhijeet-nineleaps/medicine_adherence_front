@@ -18,7 +18,7 @@ import allreminderdata from '../../components/adherence/allReminderData';
 import queryData from '../../repositories/database/queryData';
 import * as Progress from 'react-native-progress';
 import LottieView from 'lottie-react-native';
-import adherence from '../../redux/apis/adherence';
+import adherence from '../../repositories/apis/adherence';
 import downloadPdf from '../../components/adherence/downloadPdf';
 import MedicinehistoryList from '../../components/organisms/medicineHistoryList';
 import globalDb from '../../repositories/database/globalDb';

@@ -148,7 +148,7 @@ export const Mypatient = navigation => {
       {data.length === 0 && (
         <View style={styles.imgView}>
           <Image
-            source={require('../../../src/assests/images/nopatients.png')}
+            source={require('../../../src/assets/images/nopatients.png')}
             style={styles.img}
             resizeMode="contain"></Image>
         </View>

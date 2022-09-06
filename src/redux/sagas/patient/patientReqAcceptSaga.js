@@ -1,6 +1,6 @@
 import {takeLatest, call, put} from 'redux-saga/effects';
 import { patientReqAcceptActions } from '../../actions/patient/patientReqAcceptActions';
-import { patient } from '../../apis/patient';
+import { patient } from '../../../repositories/apis/patient';
 export function* reqAcceptSaga(value) {
   const {payload} = value;
   try {

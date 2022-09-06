@@ -1,5 +1,5 @@
 import defaultAxios from 'axios';
-import { API_URL } from '../../repositories/var';
+import { API_URL } from '../var';
 
 const axios = defaultAxios.create({
   baseURL: `${API_URL}`,
