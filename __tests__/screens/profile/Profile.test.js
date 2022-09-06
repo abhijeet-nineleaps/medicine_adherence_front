@@ -129,13 +129,13 @@ const storeuserdetails = jest.fn();
     expect(component).toMatchSnapshot();
     component.unmount();
   });
-//   describe('Click send image', () => {
-//   it("should call onDeleteList", () => {
-//     const wrapper = shallow(<Profile navigation={props.navigation} />);
-//     const tree = findNodeByTestId(wrapper, "log");
-//     tree.props().validationSchema;
-//   });
-// });
+  describe('Click send image', () => {
+  it("should call onDeleteList", () => {
+    const wrapper = shallow(<Profile navigation={props.navigation} />);
+    const tree = findNodeByTestId(wrapper, "log");
+    tree.props().validationSchema;
+  });
+});
 });
 
 
