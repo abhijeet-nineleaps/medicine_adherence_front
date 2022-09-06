@@ -30,9 +30,4 @@ describe('Caretaker Request', () => {
     const wrapper = shallow(<Addcaretaker del={mockFn} />);
     wrapper.find('#delete').simulate('press');
   });
-  // it('test open save button', () => {
-  //   const mockFn = jest.fn();
-  //   const wrapper = shallow(<Addcaretaker emp={mockFn} />);
-  //   wrapper.find('#emp').simulate('press');
-  // });
 });

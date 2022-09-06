@@ -40,11 +40,4 @@ describe('Click send image', () => {
       
     expect(tree).toMatchSnapshot();
   });
-  // it("should call onDeleteList", () => {
-  //   const wrapper = shallow(<Mypatient navigation={props.navigation} />);
-  //   const tree = findNodeByTestId(wrapper, "nav");
-  //   tree.props().onPress();
-  // });
-   
-
 });

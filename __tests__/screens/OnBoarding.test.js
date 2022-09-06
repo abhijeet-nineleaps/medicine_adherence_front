@@ -18,8 +18,6 @@ describe('OnBoarding Screen', () => {
   jest.spyOn(global, 'setTimeout');
   test('test timeout', () => {
     const timerGame = require('../../src/screens/OnboardingScreen');
-    //timerGame();
     expect(setTimeout).toHaveBeenCalled;
-   // expect(setTimeout).toHaveBeenLastCalledWith(expect.any(Function), 1000);
   });
 });

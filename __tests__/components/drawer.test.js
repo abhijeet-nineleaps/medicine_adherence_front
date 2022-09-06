@@ -1,7 +1,7 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
 import enableHooks from 'jest-react-hooks-shallow';
-import Enzyme, {shallow, render} from 'enzyme';
+import Enzyme, {shallow} from 'enzyme';
 import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
 Enzyme.configure({adapter: new Adapter()});
 import DrawerNavigator from '../../src/navigation/drawerNavigator';

@@ -36,5 +36,4 @@ describe('Click send image', () => {
     const wrapper = shallow(<Patientcomp setIndex={mockFn} />);
     wrapper.find('#index').simulate('change');
   });
-
 });
