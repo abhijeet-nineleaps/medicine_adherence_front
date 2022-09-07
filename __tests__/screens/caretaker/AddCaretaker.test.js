@@ -30,4 +30,19 @@ describe('Caretaker Request', () => {
     const wrapper = shallow(<Addcaretaker del={mockFn} />);
     wrapper.find('#delete').simulate('press');
   });
+  it('test the only function', () => {
+    const wrapper = renderer.create(<Addcaretaker />);
+    const inst = wrapper.getInstance();
+    expect(inst?.emp()).toMatchSnapshot();
+  });
+  it('test the only function', () => {
+    const wrapper = renderer.create(<Addcaretaker />);
+    const inst = wrapper.getInstance();
+    expect(inst?.del()).toMatchSnapshot();
+  });
+  it('test the only function', () => {
+    const wrapper = renderer.create(<Addcaretaker/>);
+    const inst = wrapper.getInstance();
+    expect(inst?.search()).toMatchSnapshot();
+  });
 });

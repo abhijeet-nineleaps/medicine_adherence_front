@@ -25,4 +25,24 @@ describe('Click send image', () => {
     const wrapper = shallow(<CareTaker eventFnc={mockFn} />);
     wrapper.find('#event').simulate('press');
   });
+  it('test the only function', () => {
+    const wrapper = renderer.create(
+      <NavigationContainer>
+        <CareTaker />
+      </NavigationContainer>,
+    );
+    const inst = wrapper.getInstance();
+    expect(
+      inst?.addMedFnc(<Text onPress={() => eventFnc}>Click</Text>),
+    ).toMatchSnapshot();
+  });
+  it('test the only function', () => {
+    const wrapper = renderer.create(
+      <NavigationContainer>
+        <CareTaker />
+      </NavigationContainer>,
+    );
+    const inst = wrapper.getInstance();
+    expect(inst?.eventFnc( navigation.getParent().navigate('Events'))).toMatchSnapshot();
+  });
 });

@@ -17,4 +17,9 @@ describe('Click send image', () => {
     const wrapper = shallow(<CameraScreen picture={mockFn} />);
     wrapper.find('#picture').simulate('press');
   });
+    it('test the only function', () => {
+    const wrapper = renderer.create(<CameraScreen/>);
+    const inst = wrapper.getInstance();
+    expect(inst?.picture()).toMatchSnapshot();
+  });
 });

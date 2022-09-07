@@ -9,11 +9,9 @@ import {API_URL} from '../../repositories/var';
 import {Button} from 'react-native-elements';
 import {Formik} from 'formik';
 import * as yup from 'yup';
-import styles from './profileStyles/ProfileStyles';
 import SavedDetails from './SavedDetails';
-
+import styles from './profileStyles/ProfileStyles';
 import {useFocusEffect} from '@react-navigation/native';
-
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import OctIcon from 'react-native-vector-icons/Octicons';
 import IonIcon from 'react-native-vector-icons/Ionicons';
@@ -380,7 +378,6 @@ const Profile = ({navigation}) => {
                     </Formik>
                   </View>
                 </>
-              
             </View>
           </View>
         </View>

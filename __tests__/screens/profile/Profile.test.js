@@ -1,6 +1,7 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
 import toJson from 'enzyme-to-json';
+import * as yup from 'yup';
 import Enzyme, {shallow} from 'enzyme';
 import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
 import Profile from '../../../src/screens/profile/Profile';
@@ -12,6 +13,10 @@ jest.mock('@react-native-google-signin/google-signin', () => {
     }),
   };
 });
+jest.mock("@react-native-async-storage/async-storage", () => ({
+  setItem: jest.fn(),
+  getItem: jest.fn(),
+}));
 global.alert = jest.fn();
 jest.mock('@react-navigation/native', () => ({
   ...jest.requireActual('@react-navigation/native'),

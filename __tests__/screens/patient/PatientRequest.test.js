@@ -13,5 +13,16 @@ describe('Click send image', () => {
     const tree = renderer.create(<Patientrequest />).toJSON();
     expect(tree).toMatchSnapshot();
   });
-  
+  it('test the only function', () => {
+    let ci_id = 'asdf';
+    const wrapper = renderer.create(<Patientrequest {...ci_id}/>);
+    const inst = wrapper.getInstance();
+    expect(inst?.acceptrequest()).toMatchSnapshot();
+  });
+  it('test the only function', () => {
+    let ci_id = 'asdf';
+    const wrapper = renderer.create(<Patientrequest {...ci_id}/>);
+    const inst = wrapper.getInstance();
+    expect(inst?.deletereq()).toMatchSnapshot();
+  });
 });

@@ -10,6 +10,7 @@ jest.mock('react-native-push-notification', () => ({
 }));
 jest.mock('@react-navigation/native', () => ({
   ...jest.requireActual('@react-navigation/native'),
+  useEffect: jest.fn(),
   useFocusEffect: jest.fn(),
   useNavigation: () => ({goBack: jest.fn()}),
   useRoute: () => ({

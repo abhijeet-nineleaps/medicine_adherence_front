@@ -1,4 +1,5 @@
 import React from 'react';
+import renderer from 'react-test-renderer';
 import Login from '../../../src/screens/login/GoogleOauth';
 import Enzyme from 'enzyme';
 import {shallow} from 'enzyme';
@@ -37,7 +38,6 @@ jest.mock("@react-native-google-signin/google-signin", () => ({
 
 describe('Click send image', () => {
   it('renders correctly', () => {
-
     const wrapper  = shallow(<Login/>).childAt(1).dive();
     expect(toJson(wrapper)).toMatchSnapshot();
   });

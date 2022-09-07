@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`user med test 1`] = `
+<LoggerProvider
+  enableLogs={false}
+>
+  <ForwardRef />
+</LoggerProvider>
+`;

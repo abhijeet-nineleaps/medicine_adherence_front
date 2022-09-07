@@ -24,7 +24,7 @@ const Box = (props) => {
           onPress={() => {
             setMed1(!med1);
             takenstatus(!taken);
-            updatetimes(time);
+           updatetimes(time);
           }}
         />
         {taken ? (

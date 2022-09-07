@@ -81,3 +81,5 @@ exports[`Click send image renders correctly 1`] = `
   </View>
 </View>
 `;
+
+exports[`Click send image test the only function 1`] = `undefined`;

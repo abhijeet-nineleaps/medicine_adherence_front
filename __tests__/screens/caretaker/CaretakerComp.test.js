@@ -27,11 +27,6 @@ jest.mock('react-native-elements', () => ({
 jest.mock('react-native-paper', () => ({
   default: jest.fn(),
 }));
-const findNodeByTestId = (wrapper, testID) => {
-  return wrapper.findWhere(node => {
-    return node.prop('testID') === testID;
-  });
-};
 const props = {
   check2: true,
   navigation: {
@@ -44,14 +39,9 @@ describe('Click send image', () => {
     const wrapper = shallow(<Caretakercomp />);
     expect(wrapper).toMatchSnapshot();
   });
-  it('should call onDeleteList', () => {
-    const checkforlogin = true;
-
-    React.useState = jest.fn().mockReturnValue([checkforlogin, {}]);
-    const wrapper = shallow(
-      <Caretakercomp props={props} checkforlogin={true} />,
-    );
-    const tree = findNodeByTestId(wrapper, 'loginF');
-    tree.props().onPress();
+  it('test .. ', () => {
+    const mockFn = jest.fn();
+    const wrapper = shallow(<Caretakercomp loginFnc={mockFn}/>);
+    expect(wrapper).toMatchSnapshot();
   });
 });

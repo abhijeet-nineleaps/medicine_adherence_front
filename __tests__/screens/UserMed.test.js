@@ -1,6 +1,9 @@
 import React from 'react';
-import renderer from 'react-test-renderer';
 import UserMed from '../../src/screens/UserMed';
+import Enzyme, {shallow} from 'enzyme';
+import toJson from 'enzyme-to-json';
+import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
+Enzyme.configure({adapter: new Adapter()});
 jest.mock('@react-navigation/native', () => ({
   useNavigation: () => ({ goBack: jest.fn() }),
   useRoute: () => ({
@@ -24,12 +27,11 @@ jest.mock("react-native-gesture-handler", () => ({
   jest.mock("@react-native-async-storage/async-storage", () => ({
     default: jest.fn(),
   }));
-
-describe('User  Screen', () => {
-  it('renders correctly', () => {
-    const tree = renderer
-      .create(< UserMed navigation={undefined}/>)
-      .toJSON();
-    expect(tree).toMatchSnapshot();
+describe('user med', () => {
+  it('test', () => {
+    const wrapper = shallow(<UserMed />)
+      .childAt(0)
+      .dive();
+    expect(toJson(wrapper)).toMatchSnapshot();
   });
 });

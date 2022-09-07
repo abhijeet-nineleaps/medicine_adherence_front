@@ -6,7 +6,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import styles from '../../screens/adherence/adherenceStyles/MedicineHistoryListStyles';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 const MedicinehistoryList = props => {
-  const { item, showimgfun, medName } = props;
+  const { item, medName } = props;
   return (
     <>
       <Animatable.View animation="zoomInUp" duration={200}>
@@ -23,7 +23,7 @@ const MedicinehistoryList = props => {
                     let imgar = await AsyncStorage.getItem(
                       item?.date + ' ' + medName,
                     );
-                    showimgfun(JSON.parse(imgar));
+                    //showimgfun(JSON.parse(imgar));
                   }}>
                   <Icon size={20} name='image'></Icon>
                 </TouchableOpacity>

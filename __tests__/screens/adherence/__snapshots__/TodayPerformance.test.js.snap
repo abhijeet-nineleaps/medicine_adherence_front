@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Today performance  test 1`] = `
+<LoggerProvider
+  enableLogs={false}
+>
+  <ForwardRef
+    visibilityTime={1000}
+  />
+</LoggerProvider>
+`;
