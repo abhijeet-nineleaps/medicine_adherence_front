@@ -55,7 +55,7 @@ const CustomHeader = props => {
     },
   );
   const touchFnc = () => {
-    props.navigation.navigate('Profile');
+    props.navigation?.navigate('Profile');
   };
   function signupFnc() {
     props.navigation.navigate('Sign-up');

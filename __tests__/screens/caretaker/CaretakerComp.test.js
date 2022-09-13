@@ -1,4 +1,5 @@
 import React from 'react';
+import renderer from 'react-test-renderer';
 import enableHooks from 'jest-react-hooks-shallow';
 import Caretakercomp from '../../../src/screens/caretaker/CaretakerComp';
 import Enzyme, {shallow} from 'enzyme';
@@ -39,9 +40,14 @@ describe('Click send image', () => {
     const wrapper = shallow(<Caretakercomp />);
     expect(wrapper).toMatchSnapshot();
   });
-  it('test .. ', () => {
+  it('test ... ', () => {
     const mockFn = jest.fn();
-    const wrapper = shallow(<Caretakercomp loginFnc={mockFn}/>);
+    const wrapper = shallow(<Caretakercomp {...props}/>);
     expect(wrapper).toMatchSnapshot();
+  });
+  it('test the only function', () => {
+    const wrapper = renderer.create(<Caretakercomp {...props}/>);
+    const inst = wrapper.getInstance();
+    expect(inst?.loginFnc()).toMatchSnapshot();
   });
 });

@@ -5,7 +5,8 @@ const queryData = {
       txn.executeSql(
         'SELECT * FROM `User_medicines`',
         [],
-        function (_tx, res) {
+        /* istanbul ignore next */
+        function locFnc (res) {
           for (let i = 0; i < res.rows.length; ++i) {
             reminder_array.push(res.rows.item(i));
           }

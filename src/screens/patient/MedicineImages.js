@@ -1,4 +1,4 @@
-import {useFocusEffect} from '@react-navigation/native';
+import {useFocusEffect, useRoute} from '@react-navigation/native';
 import React, {useState} from 'react';
 import {
   Text,
@@ -9,18 +9,16 @@ import {
   ActivityIndicator,
   LogBox,
 } from 'react-native';
-import { useRoute } from '@react-navigation/native';
 import Carousel, {Pagination} from 'react-native-snap-carousel';
 import {API_URL} from '../../repositories/var';
 import styles from './patientStyles/MedicineImagesStyles';
-import Logger from '../../components/logger';
 
 LogBox.ignoreAllLogs();
 const SLIDER_WIDTH = Dimensions.get('window').width;
 const ITEM_WIDTH = Math.round(SLIDER_WIDTH * 0.84);
+
 const CarouselCardItem = ({item}) => {
   const [load, setload] = useState(true);
- Logger.loggerInfo(item);
   return (
     <View style={styles.container1}>
       <Image
@@ -46,7 +44,6 @@ const CarouselCardItem = ({item}) => {
 };
 
 const SingleImageComponent = ({item}) => {
- Logger.loggerInfo('item', item);
   const [index, setindex] = React.useState(0);
 
   return (
@@ -81,7 +78,7 @@ const SingleImageComponent = ({item}) => {
 
 const MedicineImages = ({}) => {
   const [imageData, setImageData] = useState([]);
-  const route=useRoute();
+  const route = useRoute();
   const medId = route.params;
   function fetchImages() {
     fetch(`${API_URL}/api/v1/medicine-images?medId=${medId}`)
@@ -102,15 +99,6 @@ const MedicineImages = ({}) => {
         setImageData(Arr);
       });
   }
-  useFocusEffect(
-    React.useCallback(() => {
-      fetchImages();
-      return () => {
-        /* do nothing */
-      };
-    }, []),
-  );
-
   return (
     <View style={styles.top}>
       {imageData.length === 0 ? (

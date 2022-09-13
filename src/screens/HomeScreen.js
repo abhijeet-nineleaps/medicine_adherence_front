@@ -22,9 +22,7 @@ const HomeScreen = () => {
     }).start();
   }, []);
   const camIcon = () => {
-    return (
-      <Icon name="camera" color="black" size={40} testID="cameraIcon"></Icon>
-    );
+    return <Icon name="camera" color="black" size={40}></Icon>;
   };
   return (
     <View style={styles.container}>

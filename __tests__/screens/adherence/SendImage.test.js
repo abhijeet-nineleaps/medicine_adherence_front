@@ -31,9 +31,11 @@ jest.mock('@react-navigation/native', () => ({
     },
   }),
 }));
+jest.useFakeTimers();
 describe('Send Image Screen', () => {
   it('renders correctly', () => {
     const tree = create(<SendImageToCaretaker navigation={undefined} />);
+    jest.runAllTimers();
     expect(tree).toMatchSnapshot();
   });
   it('test open save button', () => {

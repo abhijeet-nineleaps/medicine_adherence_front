@@ -5,40 +5,46 @@ import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
 import toJson from 'enzyme-to-json';
 import Loginscreen from '../../../src/screens/login/LoginScreen';
 Enzyme.configure({adapter: new Adapter()});
-jest.mock("@react-native-google-signin/google-signin", () => ({
+jest.mock('@react-native-async-storage/async-storage', () => ({
+  getItem: jest.fn(),
+  setItem: jest.fn(),
+}));
+jest.mock('@react-native-google-signin/google-signin', () => ({
   default: jest.fn(),
 }));
-jest.mock("@react-native-firebase/messaging", () => ({
+jest.mock('@react-native-firebase/messaging', () => ({
   default: jest.fn(),
 }));
-jest.mock("react-native-svg", () => ({
+jest.mock('react-native-svg', () => ({
   default: jest.fn(),
 }));
-jest.mock("react-native-progress", () => ({
+jest.mock('react-native-progress', () => ({
   default: jest.fn(),
 }));
-jest.mock("react-native-toast-message", () => ({
+jest.mock('react-native-toast-message', () => ({
   default: jest.fn(),
 }));
-jest.mock("@react-native-community/netinfo", () => ({
+jest.mock('@react-native-community/netinfo', () => ({
   default: jest.fn(),
 }));
-jest.mock("@react-native-google-signin/google-signin", () => ({
+jest.mock('@react-native-google-signin/google-signin', () => ({
   default: jest.fn(),
   GoogleSigninButton: {
-    Size : {
-      Wide : () => ({}),
+    Size: {
+      Wide: () => ({}),
     },
-    Color : {
-      Dark : () => ({}),
-    }
-  }
+    Color: {
+      Dark: () => ({}),
+    },
+  },
 }));
-
+jest.useFakeTimers();
 describe('Click send image', () => {
   it('renders correctly', () => {
-
-    const wrapper  = shallow(<Loginscreen/>).childAt(1).dive();
+    const wrapper = shallow(<Loginscreen />)
+      .childAt(1)
+      .dive();
+    jest.runAllTimers();
     expect(toJson(wrapper)).toMatchSnapshot();
   });
   it('test open save button', () => {
@@ -47,4 +53,3 @@ describe('Click send image', () => {
     wrapper.find('#signin').simulate('press');
   });
 });
-

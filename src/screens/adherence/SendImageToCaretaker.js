@@ -270,5 +270,4 @@ const SendImageToCaretaker = ({navigation}) => {
     </View>
   );
 };
-
 export default SendImageToCaretaker;

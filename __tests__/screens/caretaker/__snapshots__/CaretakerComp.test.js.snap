@@ -2,4 +2,4 @@
 
 exports[`Click send image renders correctly 1`] = `ShallowWrapper {}`;
 
-exports[`Click send image test ..  1`] = `ShallowWrapper {}`;
+exports[`Click send image test ...  1`] = `ShallowWrapper {}`;

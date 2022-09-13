@@ -35,10 +35,11 @@ jest.mock("@react-native-google-signin/google-signin", () => ({
     }
   }
 }));
-
+jest.useFakeTimers();
 describe('Click send image', () => {
   it('renders correctly', () => {
     const wrapper  = shallow(<Login/>).childAt(1).dive();
+    jest.runAllTimers();
     expect(toJson(wrapper)).toMatchSnapshot();
   });
   it('test open save button', () => {

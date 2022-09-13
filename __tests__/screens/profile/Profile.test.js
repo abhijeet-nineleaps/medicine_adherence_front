@@ -1,7 +1,7 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
 import toJson from 'enzyme-to-json';
-import * as yup from 'yup';
+import {cleanup} from '@testing-library/react-native';
 import Enzyme, {shallow} from 'enzyme';
 import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
 import Profile from '../../../src/screens/profile/Profile';
@@ -13,10 +13,10 @@ jest.mock('@react-native-google-signin/google-signin', () => {
     }),
   };
 });
-jest.mock("@react-native-async-storage/async-storage", () => ({
-  setItem: jest.fn(),
-  getItem: jest.fn(),
-}));
+// jest.mock("@react-native-async-storage/async-storage", () => ({
+//   setItem: jest.fn(),
+//   getItem: jest.fn(),
+// }));
 global.alert = jest.fn();
 jest.mock('@react-navigation/native', () => ({
   ...jest.requireActual('@react-navigation/native'),
@@ -41,6 +41,7 @@ const findNodeByTestId = (wrapper, testID) => {
   });
 };
 describe('Click send image', () => {
+  // afterEach(cleanup);
   it('renders correctly', () => {
     const wrapper = shallow(<Profile />);
     expect.assertions(1);
@@ -53,6 +54,7 @@ describe('Click send image', () => {
   });
 });
 describe('<FirstComponent /> functions', () => {
+  // afterEach(cleanup);
   it('test the only function', () => {
     const wrapper = renderer.create(<Profile />);
     const inst = wrapper.getInstance();
@@ -97,6 +99,7 @@ describe('<FirstComponent /> functions', () => {
     component.unmount();
   });
   describe('Click send image', () => {
+    // afterEach(cleanup);
     it('should call onDeleteList', () => {
       const wrapper = shallow(<Profile navigation={props.navigation} />);
       const tree = findNodeByTestId(wrapper, 'log');

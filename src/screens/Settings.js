@@ -16,7 +16,7 @@ const Settings = (navigation) => {
     } catch (error) {}
   };
   const aboutFnc = () => {
-    navigation.navigate('About');
+    navigation?.navigate('About');
   };
   const openSetFnc = () => {
     Linking.openSettings();

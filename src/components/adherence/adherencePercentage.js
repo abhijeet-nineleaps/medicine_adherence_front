@@ -1,12 +1,9 @@
-const AdherencePercentage = (startDate, days, times, currentCount, _name) => {
+const AdherencePercentage = (startDate, days, times, currentCount) => {
   return new Promise(res => {
     let tilldatecount = 0;
-    let daysarray = days.split(':');
-    let ttimes = times.split('-').length;
-    let daysSet = new Set(daysarray);
+    let msPerDay = 86400000;
+    const weeks = ['Sun', 'Mon', 'Tue', 'Wed', 'Thur', 'Fri', 'Sat'];
     const today = new Date();
-    const _MS_PER_DAY = 1000 * 60 * 60 * 24;
-
     let startingDate = new Date(startDate);
     const utc1 = Date.UTC(
       today.getFullYear(),
@@ -18,12 +15,11 @@ const AdherencePercentage = (startDate, days, times, currentCount, _name) => {
       startingDate.getMonth(),
       startingDate.getDate(),
     );
-
-    let left = Math.abs(Math.floor((utc2 - utc1) / _MS_PER_DAY));
-    const weeks = ['Sun', 'Mon', 'Tue', 'Wed', 'Thur', 'Fri', 'Sat'];
+    let left = (utc2 - utc1) / msPerDay;
+    let daysSet = new Set(days.split(':'));
     while (left >= 0) {
       if (daysSet.has(weeks[startingDate.getDay()])) {
-        tilldatecount += ttimes;
+        tilldatecount += times.split('-').length;
       }
       left--;
       startingDate.setDate(startingDate.getDate() + 1);

@@ -40,4 +40,17 @@ describe('customheader', () => {
     wrapper.find('#alert').props().onPress();
     expect(mockFn).toHaveBeenCalled;
   });
+  // it('test Touchable Opacity', () => {
+  //   const mockFn = jest.fn();
+  //   const wrapper = shallow(<CustomHeader signupFnc={mockFn} />);
+  //   wrapper.find('#signup').props().onPress();
+  //   expect(mockFn).toHaveBeenCalled;
+  // });
+  // it.only('test Touchable Opacity', () => {
+  //   let props = ' ';
+  //   const wrapper = shallow(<CustomHeader {...props} />)
+  //     .childAt(0)
+  //     .dive();
+  //   wrapper.find('#login').props().onPress();
+  // });
 });

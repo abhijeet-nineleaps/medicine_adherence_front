@@ -35,7 +35,7 @@ const ReminderMed = ({ item }) => {
                                     },
                                 ]);
                             } else {
-                                navigation?.navigate('Today Performance', {
+                                navigation.navigate('Today Performance', {
                                     user_id: item?.user_id,
                                 });
                             }

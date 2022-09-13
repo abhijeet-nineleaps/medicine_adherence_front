@@ -21,20 +21,20 @@ const loginValidationSchema = yup.object().shape({
   Bio: yup.string().required('Bio is Required'),
   Contact: yup
     .string()
-    .min(10, ({min}) => `Contact number must be ${min} characters`)
-    .max(10, ({max}) => `Contact number can be only ${max} characters`)
+    .min(10, `Contact number can be only 10 characters`)
+    .max(10, `Contact number can be only 10 characters`)
     .required('Contact is Required'),
-  Age: yup.string().min(2, ({min}) => `Age number must be ${min} characters`),
+  Age: yup.string().min(2, `Age number must be 2 characters`),
   Weight: yup
     .string()
-    .min(2, ({min}) => `Weight must be at least ${min} characters`),
+    .min(2, `Weight must be at least 2 characters`),
   Gender: yup
     .string()
-    .min(3, ({min}) => `Gender must be at least ${min} characters`)
+    .min(3, `Gender must be at least 3 characters`)
     .required(),
   MaritalStatus: yup
     .string()
-    .min(3, ({min}) => `MaritalStatus must be at least ${min} characters`)
+    .min(3, `MaritalStatus must be at least 3 characters`)
     .required(),
   BloodGroup: yup.string().required(),
 });

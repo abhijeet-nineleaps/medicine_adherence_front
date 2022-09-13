@@ -196,15 +196,9 @@ exports[`Click send image renders correctly 1`] = `
                           }
                         >
                           <Image
-                            resizeMode="contain"
                             source={
                               Object {
                                 "testUri": "../../../src/assets/images/nomeds.png",
-                              }
-                            }
-                            style={
-                              Object {
-                                "width": 250,
                               }
                             }
                           />

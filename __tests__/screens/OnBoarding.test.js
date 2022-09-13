@@ -9,15 +9,11 @@ jest.mock('@react-navigation/native', () => ({
   useFocusEffect: jest.fn(),
   setTimeout: jest.fn(),
 }));
+jest.useFakeTimers();
 describe('OnBoarding Screen', () => {
   it('renders correctly', () => {
     const tree = renderer.create(<OnboardingScreen />).toJSON();
+    jest.runAllTimers();
     expect(tree).toMatchSnapshot();
-  });
-  jest.useFakeTimers();
-  jest.spyOn(global, 'setTimeout');
-  test('test timeout', () => {
-    const timerGame = require('../../src/screens/OnboardingScreen');
-    expect(setTimeout).toHaveBeenCalled;
   });
 });

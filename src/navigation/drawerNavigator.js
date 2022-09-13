@@ -46,7 +46,8 @@ const DrawerNavigator = navigation => {
     <Drawer.Navigator
       initialRouteName="Home"
       screenOptions={{headerTitleStyle: {color: 'black'}}}
-      drawerContent={props => <CustomHeader {...props} />}>
+      drawerContent={props => <CustomHeader/>}
+      >
       <Drawer.Screen
         name="Home"
         options={{

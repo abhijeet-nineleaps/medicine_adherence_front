@@ -8,7 +8,6 @@ import {useFocusEffect} from '@react-navigation/native';
 import styles from './patientStyles/PatientRequestStyles';
 import Logger from '../../components/logger';
 var toast =0;
-
 const Patientrequest = () => {
   const [patients, patientsdata] = React.useState([]);
   const [refresh, refreshstate] = React.useState(false);
@@ -17,7 +16,6 @@ const Patientrequest = () => {
     fetch(`${API_URL}/api/v1/patient/requests?userId=${user_id}`)
       .then(res => res.json())
       .then(resp => {
-        Logger.loggerInfo(resp);
         if (resp.status === 'failed') {
           patientsdata([]);
           refreshstate(false);
@@ -39,27 +37,21 @@ const Patientrequest = () => {
       };
     }, []),
   );
-  const acceptrequest = (ci_id) => {
+  const acceptrequest = ci_id => {
     let url = new URL(`${API_URL}/api/v1/accept`);
     url.searchParams.append('cId', ci_id);
 
-    fetch(url, {method: 'PUT'})
-      .then(res => {
-       Logger.loggerInfo(res);
-        fetchpatientreq();
-      })
-      .catch(err => Logger.loggerError(err));
+    fetch(url, {method: 'PUT'}).then(res => {
+      fetchpatientreq();
+    });
   };
-  const deletereq = (ci_id) => {
+  const deletereq = ci_id => {
     let url = new URL(`${API_URL}/api/v1/delete`);
     url.searchParams.append('cId', ci_id);
 
-    fetch(url)
-      .then(res => {
-       Logger.loggerInfo(res);
-        fetchpatientreq();
-      })
-      .catch(err => Logger.loggerError(err));
+    fetch(url).then(res => {
+      fetchpatientreq();
+    });
   };
   return (
     <View style={styles.container}>
@@ -97,7 +89,7 @@ const Patientrequest = () => {
                 </ListItem>
                 <View style={styles.buttonView}>
                   <Button
-                    id='accept1'
+                    id="accept1"
                     onPress={() => {
                       acceptrequest(item.cid);
                     }}
@@ -106,7 +98,7 @@ const Patientrequest = () => {
                     color="#4267B2"></Button>
                   <View style={styles.space} />
                   <Button
-                    id='delete'
+                    id="delete"
                     onPress={() => {
                       deletereq(item.cid);
                     }}
