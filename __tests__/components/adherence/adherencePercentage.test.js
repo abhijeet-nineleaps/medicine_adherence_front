@@ -5,7 +5,6 @@ import toJson from 'enzyme-to-json';
 import axios from '../../../src/repositories/apis/axios';
 import AdherencePercentage from '../../../src/components/adherence/adherencePercentage';
 Enzyme.configure({adapter: new Adapter()});
-Date.UTC = jest.fn(() => new Date(Date.UTC(2017, 1, 14)).valueOf())
 describe('test adherence per', () => {
   it('test category', () => {
     const wrapper = shallow(<AdherencePercentage />);

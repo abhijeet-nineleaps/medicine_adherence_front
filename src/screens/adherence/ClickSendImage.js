@@ -8,12 +8,12 @@ import Logger from '../../components/logger';
 
 const CameraScreen = ({navigation}) => {
   const [{cameraRef}, {takePicture}] = useCamera(null);
-  async function picture() {
-    const data = await takePicture();
-            Logger.loggerInfo(data.uri);
-            navigation.navigate('Sentocaretaker', {
-              image_uri: data.uri,
-            });
+   const picture = () => {
+    const data = takePicture();
+    Logger.loggerInfo(data.uri);
+    navigation.navigate('Sentocaretaker', {
+      image_uri: data.uri,
+    });
   }
   return (
     <View style={styles.container}>
@@ -24,7 +24,7 @@ const CameraScreen = ({navigation}) => {
           style={styles.camera}></RNCamera>
 
         <TouchableOpacity
-          id='picture'
+          id="picture"
           onPress={async () => picture}
           style={styles.image}>
           <LottieView

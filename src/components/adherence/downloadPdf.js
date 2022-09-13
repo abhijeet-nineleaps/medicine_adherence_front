@@ -1,20 +1,15 @@
 import {API_URL} from '../../repositories/var';
 import RNFetchBlob from 'rn-fetch-blob';
-import Logger from '../logger';
 
 const {config} = RNFetchBlob;
 
 const DownloadPdf = async (globalmedId) => {
   const date = new Date();
-
-  let downloaddir = RNFetchBlob.fs.dirs.DownloadDir;
-  let downloadPath = `${downloaddir}/report_${Math.floor(
-    date.getTime() + date.getSeconds() / 2,
-  )}.pdf`;
+  let downloadPath = RNFetchBlob.fs.dirs.DownloadDir.pdf;
   const options = {
     fileCache: true,
     addAndroidDownloads: {
-      useDownloadManager: true, // true will use native manager and be shown on notification bar.
+      useDownloadManager: true, 
       notification: true,
       path: downloadPath,
       description: 'Downloading your report',
@@ -27,7 +22,6 @@ const DownloadPdf = async (globalmedId) => {
     await fetch(generate_pdf_url)
       .then(res => res.json())
       .then(async resp => {
-        Logger.loggerInfo(resp.message);
         await config(options)
           .fetch('GET', `${API_URL}/upload/static/pdf/${resp.message}.pdf`)
           .catch(() => {

@@ -11,7 +11,7 @@ jest.mock('rn-fetch-blob', () => ({
 }));
 describe('test collector category', () => {
   it('test category', () => {
-    let globalmedId = 6;
+    let globalmedId = 7;
     const wrapper = shallow(<DownloadPdf {...globalmedId} />);
     expect.assertions(1);
     expect(toJson(wrapper)).toMatchSnapshot();

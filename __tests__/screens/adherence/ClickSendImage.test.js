@@ -17,8 +17,9 @@ describe('Click send image', () => {
     const wrapper = shallow(<CameraScreen picture={mockFn} />);
     wrapper.find('#picture').simulate('press');
   });
-    it('test the only function', () => {
-    const wrapper = renderer.create(<CameraScreen/>);
+    it('test the only function', async () => {
+      const mockFn = jest.fn();
+    const wrapper = renderer.create(<CameraScreen picture={mockFn} />);
     const inst = wrapper.getInstance();
     expect(inst?.picture()).toMatchSnapshot();
   });

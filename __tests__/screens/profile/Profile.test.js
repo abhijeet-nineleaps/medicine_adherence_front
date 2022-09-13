@@ -91,7 +91,6 @@ describe('<FirstComponent /> functions', () => {
     />
   ));
   const storeuserdetails = jest.fn();
-
   it('button click ', () => {
     const component = shallow(<Profile onSubmit={storeuserdetails} />);
     component.find('Formik').simulate('submit');

@@ -51,13 +51,13 @@ const Profile = ({navigation}) => {
 
   async function storeuserdetails(values) {
     loadstate(true);
-    await AsyncStorage.setItem('bio', values.Bio);
-    await AsyncStorage.setItem('contact', values.Contact);
-    await AsyncStorage.setItem('age', values.Age);
-    await AsyncStorage.setItem('weight', values.Weight);
-    await AsyncStorage.setItem('gender', values.Gender);
-    await AsyncStorage.setItem('maritalstatus', values.MaritalStatus);
-    await AsyncStorage.setItem('bloodgroup', values.BloodGroup);
+    // await AsyncStorage.setItem('bio', values.Bio);
+    // await AsyncStorage.setItem('contact', values.Contact);
+    // await AsyncStorage.setItem('age', values.Age);
+    // await AsyncStorage.setItem('weight', values.Weight);
+    // await AsyncStorage.setItem('gender', values.Gender);
+    // await AsyncStorage.setItem('maritalstatus', values.MaritalStatus);
+    // await AsyncStorage.setItem('bloodgroup', values.BloodGroup);
 
     let sbio = await AsyncStorage.getItem('bio');
     let scontact = await AsyncStorage.getItem('contact');

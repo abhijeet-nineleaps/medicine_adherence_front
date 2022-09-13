@@ -29,7 +29,6 @@ const adherence = {
     const response = await axios.get(`${API_URLS.GET_MED_HISTORY}?medId=${payload}`);
     return response.data;
   }
-
 };
 
 
