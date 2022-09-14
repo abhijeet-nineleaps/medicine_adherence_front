@@ -1,0 +1,7 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`test downloadpdf test the only function 1`] = `undefined`;
+
+exports[`test downloadpdf test the only function 2`] = `undefined`;
+
+exports[`test fetchimage test the only function 1`] = `undefined`;
