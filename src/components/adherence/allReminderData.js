@@ -6,7 +6,6 @@ const allreminderdata = async med_name => {
   let reminder_obj;
   let map = new Map();
   let med_id = 0;
-
   function reminder_promise() {
     return new Promise(resolve => {
       db.transaction(async function (txn) {
@@ -23,28 +22,26 @@ const allreminderdata = async med_name => {
             txn.executeSql(
               'SELECT * FROM `reminder_day` WHERE med_id = ?',
               [med_id],
-              function (_txx, respp) {
-                for (let o = 0; o < respp.rows.length; o++) {
-                  const curr_rem_obj = respp.rows.item(o);
-
+              function (_txx, resp) {
+                for (let o = 0; o < resp.rows.length; o++) {
+                  const curr_rem_obj = resp.rows.item(o);
                   let overall_timings = new Set(reminder_obj.time.split('-'));
                   let taken_missed_times = new Set(
                     curr_rem_obj.timings.split('-'),
                   );
-                  let final_timeings_obj = {
-                    remId: respp.rows.item(o).rem_id,
+                  let final_timings_obj = {
+                    remId: resp.rows.item(o).rem_id,
                     taken: [],
                     not_taken: [],
                   };
-
                   overall_timings.forEach(m_time => {
                     if (taken_missed_times.has(m_time)) {
-                      final_timeings_obj.not_taken.push(m_time);
+                      final_timings_obj.not_taken.push(m_time);
                     } else {
-                      final_timeings_obj.taken.push(m_time);
+                      final_timings_obj.taken.push(m_time);
                     }
                   });
-                  map.set(curr_rem_obj.date, final_timeings_obj);
+                  map.set(curr_rem_obj.date, final_timings_obj);
                 }
                 resolve(map);
               },
@@ -55,9 +52,7 @@ const allreminderdata = async med_name => {
     });
   }
   map = await reminder_promise();
-
   Logger.loggerInfo(map);
   return {mapper: map, meds_id: med_id};
 };
-
 export default allreminderdata;

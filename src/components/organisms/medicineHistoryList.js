@@ -55,5 +55,4 @@ const MedicinehistoryList = props => {
     </>
   );
 };
-
 export default MedicinehistoryList;

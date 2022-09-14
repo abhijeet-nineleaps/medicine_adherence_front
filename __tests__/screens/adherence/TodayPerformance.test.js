@@ -7,6 +7,7 @@ import TodayPerformance from '../../../src/screens/adherence/TodayPerformance';
 Enzyme.configure({adapter: new Adapter()});
 jest.mock('@react-navigation/native', () => ({
   useNavigation: () => ({goBack: jest.fn()}),
+  useEffect: jest.fn() ,
   useRoute: () => ({
     params: {
       user_id: 'sampleID',

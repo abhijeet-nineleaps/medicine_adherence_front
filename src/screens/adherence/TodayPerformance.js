@@ -10,14 +10,12 @@ import {Box} from '../../components/organisms/medicineTime';
 var cc = 0;
 
 const TodayPerformance = () => {
- const db = globalDb();
+  const db = globalDb();
   const route = useRoute();
   const user_id = route.params;
   const [Timings, setTime] = useState([]);
-
-  const updatetimes = async (time) => {
+  const updatetimes = async time => {
     const index = Timings.indexOf(time);
-
     if (index > -1) {
       Timings.splice(index, 1);
     }
@@ -56,7 +54,7 @@ const TodayPerformance = () => {
     });
   };
 
-  React.useEffect(() => { 
+  React.useEffect(() => {
     db.transaction(async function (txn) {
       txn.executeSql(
         'CREATE TABLE IF NOT EXISTS User_medicines(user_id INTEGER PRIMARY KEY NOT NULL, medicine_name TEXT, medicine_des TEXT , title TEXT, time TEXT , days TEXT , start_date TEXT , end_date TEXT , status INTEGER , sync INTEGER)',
