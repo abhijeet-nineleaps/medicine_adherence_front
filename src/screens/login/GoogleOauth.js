@@ -8,7 +8,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as Progress from 'react-native-progress';
 import Toast from 'react-native-toast-message';
 import messaging from '@react-native-firebase/messaging';
-import checkConnectivity from '../../connection/checkConnectivity';
+import checkConnectivity from '../../repositories/checkConnectivity';
 import LottieView from 'lottie-react-native';
 import {Text} from 'react-native-elements';
 import { Signupuser } from '../../repositories/apis/access';

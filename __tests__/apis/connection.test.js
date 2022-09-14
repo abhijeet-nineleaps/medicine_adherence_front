@@ -4,7 +4,7 @@ import enableHooks from 'jest-react-hooks-shallow';
 import Enzyme, {shallow} from 'enzyme';
 import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
 Enzyme.configure({adapter: new Adapter()});
-import checkConnectivity from '../../src/connection/checkConnectivity';
+import checkConnectivity from '../../src/repositories/checkConnectivity';
 import toJson from 'enzyme-to-json';
 import axios from '../../src/repositories/apis/axios';
 enableHooks(jest);
