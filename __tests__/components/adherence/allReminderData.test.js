@@ -4,17 +4,13 @@ import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
 import axios from '../../../src/repositories/apis/axios';
 import toJson from 'enzyme-to-json';
 import Allreminderdata from '../../../src/components/adherence/allReminderData';
-
 Enzyme.configure({adapter: new Adapter()});
-
 jest.mock('@react-native-async-storage/async-storage', () => ({
   default: jest.fn(),
 }));
-
 jest.mock('@react-native-google-signin/google-signin', () => ({
   default: jest.fn(),
 }));
-
 describe('Search Caretaker', () => {
   it('renders correctly', () => {
     let med_name = 'Paracetamol';
