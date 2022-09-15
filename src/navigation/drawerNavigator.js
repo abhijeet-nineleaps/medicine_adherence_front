@@ -7,15 +7,9 @@ import HomeScreen from '../screens/HomeScreen';
 import Settings from '../screens/Settings';
 import CameraScreen from '../screens/adherence/ClickSendImage';
 import {TouchableOpacity} from 'react-native';
-import {
-  homeIcon,
-  medIcon,
-  userIcon,
-  settingIcon,
-  camIcon,
-  manIcon,
-} from '../components/navigation/navIcons';
+import {homeIcon} from '../components/caretaker/allIcons';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import IonIcon from 'react-native-vector-icons/Ionicons';
 
 const Drawer = createDrawerNavigator();
 
@@ -41,7 +35,7 @@ const DrawerNavigator = navigation => {
           drawerActiveTintColor: 'white',
           drawerInactiveTintColor: 'white',
           headerRight: homeFnc(),
-          drawerIcon: homeIcon(),
+          drawerIcon: <Icon name="home" size={22} color="white" />,
         }}
         component={HomeScreen}
       />
@@ -53,7 +47,7 @@ const DrawerNavigator = navigation => {
           drawerActiveTintColor: 'white',
           drawerInactiveTintColor: 'white',
           headerShown: true,
-          drawerIcon: medIcon(),
+          drawerIcon: <Icon color="white" size={20} name="medkit" />,
         }}
       />
       <Drawer.Screen
@@ -63,14 +57,14 @@ const DrawerNavigator = navigation => {
           title: 'My Patient',
           drawerActiveTintColor: 'white',
           drawerInactiveTintColor: 'white',
-          drawerIcon: manIcon(),
+          drawerIcon: <IonIcon size={22} color="white" name="man" />,
         }}
       />
       <Drawer.Screen
         options={{
           drawerActiveTintColor: 'white',
           drawerInactiveTintColor: 'white',
-          drawerIcon: userIcon(),
+          drawerIcon: <Icon size={22} color="white" name="user-md" />,
         }}
         name="My Caretaker"
         navig={this.navigation}
@@ -82,7 +76,7 @@ const DrawerNavigator = navigation => {
         options={{
           drawerActiveTintColor: 'white',
           drawerInactiveTintColor: 'white',
-          drawerIcon: settingIcon(),
+          drawerIcon: <IonIcon size={22} color="white" name="settings" />,
         }}
       />
       <Drawer.Screen
@@ -91,7 +85,7 @@ const DrawerNavigator = navigation => {
         options={{
           drawerActiveTintColor: 'white',
           drawerInactiveTintColor: 'white',
-          drawerIcon: camIcon(),
+          drawerIcon: <Icon size={20} color="white" name="camera" />,
         }}
       />
     </Drawer.Navigator>
