@@ -14,6 +14,10 @@ jest.mock('@react-navigation/native', () => ({
 jest.mock('rn-fetch-blob', () => ({
   default: jest.fn(),
 }));
+jest.mock('react-native-toast-message', () => ({
+  show: jest.fn(),
+  hide: jest.fn()
+}));
 describe('AdherenceHistory Screen', () => {
   it('renders correctly', () => {
     const wrapper = shallow(<AdherenceHistory />);

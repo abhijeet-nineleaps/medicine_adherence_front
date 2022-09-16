@@ -22,7 +22,8 @@ jest.mock('react-native-progress', () => ({
   default: jest.fn(),
 }));
 jest.mock('react-native-toast-message', () => ({
-  default: jest.fn(),
+  show: jest.fn(),
+  hide: jest.fn()
 }));
 jest.mock('@react-native-community/netinfo', () => ({
   default: jest.fn(),

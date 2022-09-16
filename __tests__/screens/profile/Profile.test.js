@@ -85,7 +85,6 @@ describe('<FirstComponent /> functions', () => {
     <input
       testID="marital"
       onValueChange={() => {
-        console.log(props.onChange);
         props.onValueChange('maritalstatus');
       }}
     />

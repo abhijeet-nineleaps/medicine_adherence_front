@@ -12,7 +12,6 @@ exports[`Medicine Adherence test renders correctly 1`] = `
 >
   <TouchableOpacity
     id="press"
-    onPress={[Function]}
   >
     <View
       style={

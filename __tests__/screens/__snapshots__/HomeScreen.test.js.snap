@@ -81,7 +81,7 @@ exports[`Click send image renders correctly 1`] = `
               <View
                 accessible={true}
                 collapsable={false}
-                focusable={true}
+                focusable={false}
                 onClick={[Function]}
                 onResponderGrant={[Function]}
                 onResponderMove={[Function]}

@@ -7,6 +7,10 @@ Enzyme.configure({adapter: new Adapter()});
 jest.mock('@react-native-google-signin/google-signin', () => ({
   default: jest.fn(),
 }));
+jest.mock('react-native-toast-message', () => ({
+  show: jest.fn(),
+  hide: jest.fn()
+}));
 jest.mock('@react-navigation/native', () => ({
   ...jest.requireActual('@react-navigation/native'),
   useFocusEffect: jest.fn(),

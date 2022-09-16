@@ -536,7 +536,14 @@ Array [
             onScrollEndDrag={[Function]}
             refreshControl={
               <RefreshControlMock
-                onRefresh={[Function]}
+                onRefresh={
+                  Promise {
+                    "_U": 0,
+                    "_V": 0,
+                    "_W": null,
+                    "_X": null,
+                  }
+                }
                 refreshing={false}
               />
             }
