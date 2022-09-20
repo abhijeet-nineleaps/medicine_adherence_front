@@ -13,6 +13,10 @@ jest.mock('@react-native-google-signin/google-signin', () => {
     }),
   };
 });
+// jest.mock('react-native-toast-message', () => ({
+//   show: jest.fn(),
+//   hide: jest.fn()
+// }));
 // jest.mock("@react-native-async-storage/async-storage", () => ({
 //   setItem: jest.fn(),
 //   getItem: jest.fn(),
@@ -103,5 +107,9 @@ describe('<FirstComponent /> functions', () => {
       const tree = findNodeByTestId(wrapper, 'log');
       tree.props().validationSchema;
     });
+    // it('test toast', () => {
+    //   const wrapper = shallow(<Profile/>);
+    //   expect(Toast.show).toHaveBeenCalled;
+    // });
   });
 });

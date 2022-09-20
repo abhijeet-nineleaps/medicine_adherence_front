@@ -46,7 +46,7 @@ describe('customheader', () => {
   //   wrapper.find('#signup').props().onPress();
   //   expect(mockFn).toHaveBeenCalled;
   // });
-  // it.only('test Touchable Opacity', () => {
+  // it('test Touchable Opacity', () => {
   //   let props = ' ';
   //   const wrapper = shallow(<CustomHeader {...props} />)
   //     .childAt(0)
