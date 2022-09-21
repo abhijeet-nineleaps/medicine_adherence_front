@@ -2,5 +2,5 @@ projectKey=medicine_adherence_keys
 serverUrl=http://localhost:9000
 serverVersion=9.4.0.54424
 dashboardUrl=http://localhost:9000/dashboard?id=medicine_adherence_keys
-ceTaskId=AYMNBjdGGBEcuGMTAFJm
-ceTaskUrl=http://localhost:9000/api/ce/task?id=AYMNBjdGGBEcuGMTAFJm
+ceTaskId=AYNehgSUO3jX-wC2WEX-
+ceTaskUrl=http://localhost:9000/api/ce/task?id=AYNehgSUO3jX-wC2WEX-
