@@ -3,9 +3,7 @@ import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
 import React from 'react';
 import toJson from 'enzyme-to-json';
 import MedicinehistoryList from '../../../src/components/organisms/medicineHistoryList';
-
 Enzyme.configure({adapter: new Adapter()});
-
 describe('test collector category', () => {
   it('test category', () => {
     const wrapper = shallow(<MedicinehistoryList />)

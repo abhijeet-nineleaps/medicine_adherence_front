@@ -1,9 +1,7 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
-
 import enableHooks from 'jest-react-hooks-shallow';
 import {Mypatient} from '../../../src/screens/patient/MyPatients';
-import {Enzyme, shallow} from 'enzyme';
 
 enableHooks(jest);
 jest.mock('react-redux', () => ({
@@ -18,13 +16,11 @@ const props = {
     navigate: jest.fn(),
   },
 };
-
 const findNodeByTestId = (wrapper, testID) => {
   return wrapper.findWhere(node => {
     return node.prop('testID') === testID;
   });
 };
-
 jest.mock('@react-navigation/native', () => ({
   ...jest.requireActual('@react-navigation/native'),
   useFocusEffect: jest.fn().mockImplementation(func => func()),

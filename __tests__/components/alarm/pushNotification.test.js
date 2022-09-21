@@ -7,18 +7,14 @@ import {
   PlaySound,
 } from '../../../src/components/alarm/pushNotificationConfig';
 import Sound from 'react-native-sound';
-
 Enzyme.configure({adapter: new Adapter()});
-
 jest.mock('react-native-push-notification', () => ({
   default: jest.fn(),
 }));
 jest.mock('react-native-sound', () => ({
   Sound: jest.fn(),
 }));
-
 const mockSound = Sound;
-
 describe('test collector category', () => {
   it('test category', () => {
     const wrapper = shallow(<PlaySound />)
@@ -29,7 +25,7 @@ describe('test collector category', () => {
     expect(mockSound).toHaveBeenCalled;
   });
   it('test category', () => {
-    let mssg = {notification: {title: 'caretaker', body: 'Hello Muskan'}};
+    let mssg = {notification: {title: 'caretaker', body: 'Hello'}};
     const wrapper = shallow(<Pushnotificationforeground {...mssg} />)
       .childAt(0)
       .dive();

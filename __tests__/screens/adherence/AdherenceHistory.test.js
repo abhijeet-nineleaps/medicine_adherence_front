@@ -5,7 +5,6 @@ import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
 import toJson from 'enzyme-to-json';
 import {FlatList, Modal} from 'react-native';
 import Toast from 'react-native-toast-message';
-
 Enzyme.configure({adapter: new Adapter()});
 jest.mock('@react-navigation/native', () => ({
   ...jest.requireActual('@react-navigation/native'),

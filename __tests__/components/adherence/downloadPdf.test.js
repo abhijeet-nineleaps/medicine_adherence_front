@@ -3,9 +3,7 @@ import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
 import React from 'react';
 import toJson from 'enzyme-to-json';
 import DownloadPdf from '../../../src/components/adherence/downloadPdf';
-
 Enzyme.configure({adapter: new Adapter()});
-
 jest.mock('rn-fetch-blob', () => ({
   default: jest.fn(),
 }));

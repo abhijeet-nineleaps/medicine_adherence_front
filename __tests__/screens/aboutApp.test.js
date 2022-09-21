@@ -1,7 +1,6 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
 import AboutApp from '../../src/screens/AboutApp';
-
 describe('About App', () => {
   it('renders correctly', () => {
     const tree = renderer.create(<AboutApp/>);

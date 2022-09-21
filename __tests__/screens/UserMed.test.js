@@ -13,7 +13,6 @@ jest.mock('@react-navigation/native', () => ({
     },
   }),
 }));
-
 jest.mock('@react-native-async-storage/async-storage', () => ({
   default: jest.fn(),
 }));
@@ -23,7 +22,6 @@ jest.mock('reanimated-bottom-sheet', () => ({
 jest.mock('react-native-gesture-handler', () => ({
   default: jest.fn(),
 }));
-
 jest.mock('@react-native-async-storage/async-storage', () => ({
   default: jest.fn(),
 }));

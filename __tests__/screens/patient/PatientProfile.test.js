@@ -2,11 +2,7 @@ import React from 'react';
 import renderer from 'react-test-renderer';
 import enableHooks from "jest-react-hooks-shallow";
 import ViewProfile from '../../../src/screens/patient/PatientProfile';
-import {Enzyme,shallow} from 'enzyme';
-
 import { useDispatch, useSelector } from 'react-redux';
-import { TouchableOpacity } from 'react-native-gesture-handler';
-
 enableHooks(jest);
 jest.mock("react-redux", () => ({
   ...jest.requireActual("react-redux"),
@@ -45,13 +41,6 @@ const mockStore={
     loading:false,
     error:null,
 }
-
-
-
-
-
-
-
   it('renders correctly', () => {
     const tree = renderer
       .create(<ViewProfile route={undefined} navigation={undefined}/>)

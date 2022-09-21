@@ -1,5 +1,4 @@
-import React from 'react';
-import renderer from 'react-test-renderer';
+import React from 'react';  
 import Login from '../../../src/screens/login/GoogleOauth';
 import Enzyme from 'enzyme';
 import {shallow} from 'enzyme';

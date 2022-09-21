@@ -4,7 +4,6 @@ import Enzyme, {shallow} from 'enzyme';
 import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
 import CustomHeader from '../../src/components/customHeader';
 import toJson from 'enzyme-to-json';
-
 Enzyme.configure({adapter: new Adapter()});
 enableHooks(jest);
 jest.mock('react-redux', () => ({
@@ -17,6 +16,10 @@ jest.mock('@react-native-google-signin/google-signin', () => ({
   GoogleSignin: {
     Configure: () => ({}),
   },
+}));
+jest.mock('@react-navigation/native', () => ({
+  ...jest.requireActual('@react-navigation/native'),
+  useFocusEffect: jest.fn().mockImplementation(() => {}),
 }));
 jest.mock('@react-navigation/native', () => ({
   ...jest.requireActual('@react-navigation/native'),
@@ -40,17 +43,4 @@ describe('customheader', () => {
     wrapper.find('#alert').props().onPress();
     expect(mockFn).toHaveBeenCalled;
   });
-  // it('test Touchable Opacity', () => {
-  //   const mockFn = jest.fn();
-  //   const wrapper = shallow(<CustomHeader signupFnc={mockFn} />);
-  //   wrapper.find('#signup').props().onPress();
-  //   expect(mockFn).toHaveBeenCalled;
-  // });
-  // it('test Touchable Opacity', () => {
-  //   let props = ' ';
-  //   const wrapper = shallow(<CustomHeader {...props} />)
-  //     .childAt(0)
-  //     .dive();
-  //   wrapper.find('#login').props().onPress();
-  // });
 });

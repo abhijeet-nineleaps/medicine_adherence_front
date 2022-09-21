@@ -5,10 +5,8 @@ import React from 'react';
 import configureStore from 'redux-mock-store';
 import toJson from 'enzyme-to-json';
 import Logger from '../../src/components/logger';
-
 Enzyme.configure({adapter: new Adapter()});
 const mockStore = configureStore([]);
-
 describe('test collector category', () => {
   let store;
   store = mockStore({
@@ -23,7 +21,6 @@ describe('test collector category', () => {
         <Logger />
       </Provider>,
     );
-
     expect.assertions(1);
     expect(toJson(wrapper)).toMatchSnapshot();
   });
