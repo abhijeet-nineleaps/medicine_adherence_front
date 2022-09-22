@@ -19,12 +19,8 @@ jest.mock('@react-native-google-signin/google-signin', () => ({
 }));
 jest.mock('@react-navigation/native', () => ({
   ...jest.requireActual('@react-navigation/native'),
-  useFocusEffect: jest.fn().mockImplementation(() => {}),
-}));
-jest.mock('@react-navigation/native', () => ({
-  ...jest.requireActual('@react-navigation/native'),
-  useFocusEffect: jest.fn(),
   useEffect: jest.fn(),
+  useFocusEffect: jest.fn(),
 }));
 describe('customheader', () => {
   it('render component', () => {

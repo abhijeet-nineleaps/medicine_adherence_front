@@ -13,47 +13,33 @@ import {Signout} from './caretaker/allIcons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import styles from './componentStyles/styles';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
-import Logger from './logger';
 const CustomHeader = props => {
-  React.useEffect(
-     () => {
-      GoogleSignin.configure({
-        webClientId:
-          '526586885579-90t54t6rmkquqjct1819getnkstse41j.apps.googleusercontent.com',
-      });
-    },
-  );
+  React.useEffect(() => {
+    GoogleSignin.configure({
+      webClientId:
+        '526586885579-90t54t6rmkquqjct1819getnkstse41j.apps.googleusercontent.com',
+    });
+  });
   const [loggedin, loggedinstate] = React.useState(true);
-  
   async function getuser() {
     try {
       const isllooged = await GoogleSignin.isSignedIn();
       const checkforlogin = await AsyncStorage.getItem('user_id');
-      Logger.loggerInfo(isllooged);
       if (checkforlogin !== null) {
-        Logger.loggerInfo(isllooged);
         loggedinstate(true);
         return;
       }
       loggedinstate(false);
     } catch (err) {}
   }
-
-  useEffect(
-     () => {
-      return props.navigation.addListener('focus', () => {
-        getuser();
-      });
-    },
-    [props.navigation],
-  );
-
-  useFocusEffect(
-     () => {
-      Logger.loggerWarn('f');
+  useEffect(() => {
+    return props.navigation.addListener('focus', () => {
       getuser();
-    },
-  );
+    });
+  }, [props.navigation]);
+  useFocusEffect(() => {
+    getuser();
+  });
   const touchFnc = () => {
     props.navigation?.navigate('Profile');
   };
@@ -68,7 +54,7 @@ const CustomHeader = props => {
       Alert.alert('Do you want to Logout?', '', [
         {
           text: 'Logout',
-          onPress: async () =>  {
+          onPress: async () => {
             await GoogleSignin.signOut();
             await AsyncStorage.setItem('bio', '-');
             await AsyncStorage.setItem('contact', '-');
