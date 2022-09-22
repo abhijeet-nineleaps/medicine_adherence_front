@@ -16,7 +16,7 @@ import {SafeAreaProvider} from 'react-native-safe-area-context';
 import Logger from './logger';
 const CustomHeader = props => {
   React.useEffect(
-    /* istanbul ignore next */ () => {
+     () => {
       GoogleSignin.configure({
         webClientId:
           '526586885579-90t54t6rmkquqjct1819getnkstse41j.apps.googleusercontent.com',
@@ -24,7 +24,7 @@ const CustomHeader = props => {
     },
   );
   const [loggedin, loggedinstate] = React.useState(true);
-  /* istanbul ignore next */
+  
   async function getuser() {
     try {
       const isllooged = await GoogleSignin.isSignedIn();
@@ -40,7 +40,7 @@ const CustomHeader = props => {
   }
 
   useEffect(
-    /* istanbul ignore next */ () => {
+     () => {
       return props.navigation.addListener('focus', () => {
         getuser();
       });
@@ -49,7 +49,7 @@ const CustomHeader = props => {
   );
 
   useFocusEffect(
-    /* istanbul ignore next */ () => {
+     () => {
       Logger.loggerWarn('f');
       getuser();
     },
@@ -68,7 +68,7 @@ const CustomHeader = props => {
       Alert.alert('Do you want to Logout?', '', [
         {
           text: 'Logout',
-          onPress: async () => /* istanbul ignore next */ {
+          onPress: async () =>  {
             await GoogleSignin.signOut();
             await AsyncStorage.setItem('bio', '-');
             await AsyncStorage.setItem('contact', '-');

@@ -8,7 +8,7 @@ import styles from './componentStyles/styles';
 const ProfileHeader = () => {
   const [umg, imgstate] = React.useState('https://i.stack.imgur.com/l60Hf.png');
   const [name, namestate] = React.useState('');
-  useFocusEffect(/* istanbul ignore next */() => {
+  useFocusEffect(() => {
     async function getuser() {
       try {
         if (!(await GoogleSignin.isSignedIn())) {
