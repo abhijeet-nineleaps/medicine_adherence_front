@@ -1,6 +1,4 @@
 import globalDb from '../../repositories/database/globalDb';
-import Logger from '../logger';
-
 const db = globalDb();
 const allreminderdata = async med_name => {
   let reminder_obj;
@@ -52,7 +50,6 @@ const allreminderdata = async med_name => {
     });
   }
   map = await reminder_promise();
-  Logger.loggerInfo(map);
   return {mapper: map, meds_id: med_id};
 };
 export default allreminderdata;

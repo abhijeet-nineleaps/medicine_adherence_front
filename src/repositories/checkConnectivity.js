@@ -7,7 +7,6 @@ const checkConnectivity = async () => {
       state_type = state.isConnected;
       res(state_type);
     });
-
     unsubscribe();
   });
 };

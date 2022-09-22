@@ -3,7 +3,6 @@ import Logger from '../../components/logger';
 
 const networkCalls = {
   synchistory: async (medId, medHistory) => {
-    Logger.loggerInfo(medHistory);
     const response = await fetch(
       `${API_URL}/api/v1/medicine-history/sync?medId=${medId}`,
       {

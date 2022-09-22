@@ -9,16 +9,12 @@ import globalDb from '../repositories/database/globalDb';
 import styles from './screenStyles/AddMedicineStyles';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import AntIcon from 'react-native-vector-icons/AntDesign';
-import Logger from '../components/logger';
- 
+
 const db = globalDb();
- 
 let Reducerfun = (state, action) => {
   return {...state, data: action.payload};
 };
- 
 let initialVal = {data: []};
- 
 const Addmedicine = navigation => {
   const [medicines, characterstate] = useReducer(Reducerfun, initialVal);
   useFocusEffect(
@@ -29,17 +25,14 @@ const Addmedicine = navigation => {
       };
     }, []),
   );
- 
   const checkformeds = async () => {
     return new Promise(function (resolve) {
       var meds_array = [];
- 
       db.transaction(async function (txn) {
         txn.executeSql(
           'CREATE TABLE IF NOT EXISTS User_medicines(user_id INTEGER PRIMARY KEY NOT NULL, medicine_name TEXT, medicine_des TEXT , title TEXT, time TEXT , days TEXT , start_date TEXT , end_date TEXT , status INTEGER , sync INTEGER, total_med_reminders INTEGER , current_count INTEGER)',
           [],
         );
- 
         txn.executeSql(
           'SELECT * FROM `User_medicines`',
           [],
@@ -47,21 +40,18 @@ const Addmedicine = navigation => {
             for (let i = 0; i < res.rows.length; ++i) {
               meds_array.push(res.rows.item(i));
             }
- 
             resolve(meds_array);
           },
         );
       });
     });
   };
- 
   const fetch_meds = async () => {
     const meds_arr = await checkformeds();
     meds_arr.length === 0
       ? characterstate({type: 'empty', payload: []})
       : characterstate({type: 'data', payload: meds_arr});
   };
- 
   const deleteitem = async id => {
     let med_del = [];
     db.transaction(function (txn) {
@@ -76,7 +66,6 @@ const Addmedicine = navigation => {
       });
     });
   };
- 
   const renderitem = ({item, index}) => {
     const addRemFnc = () => {
       navigation?.navigate('Add Reminder', {id: item.user_id});
@@ -85,14 +74,13 @@ const Addmedicine = navigation => {
       Alert.alert('Delete it!', 'Sure you want delete it', [
         {
           text: 'Delete',
-          onPress: () => deleteitem(item.user_id),
+          onPress: deleteitem(item.user_id),
         },
         {
           text: 'Cancel',
         },
       ]);
     };
- 
     return (
       <Animatable.View animation="zoomInUp" duration={400} delay={index * 180}>
         <Card style={styles.card}>
@@ -113,10 +101,9 @@ const Addmedicine = navigation => {
                   </View>
                 </View>
               </ListItem.Content>
- 
               <TouchableOpacity
                 id="addRem"
-                testID='addR'
+                testID="addR"
                 style={styles.rem}
                 onPress={addRemFnc}>
                 <AntIcon
@@ -144,9 +131,7 @@ const Addmedicine = navigation => {
     <View style={styles.container}>
       {medicines.data.length === 0 ? (
         <View style={styles.imgView}>
-          <Image
-            source={require('../../src/assets/images/nomeds.png')}
-          />
+          <Image source={require('../../src/assets/images/nomeds.png')} />
         </View>
       ) : (
         <FlatList
@@ -156,7 +141,6 @@ const Addmedicine = navigation => {
           numColumns={1}
         />
       )}
- 
       <View style={styles.bottom}>
         <TouchableOpacity
           style={styles.addButtonTouch}
@@ -174,5 +158,4 @@ const Addmedicine = navigation => {
     </View>
   );
 };
- 
 export default Addmedicine;

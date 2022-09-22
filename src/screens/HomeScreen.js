@@ -6,7 +6,6 @@ import Medicineadherence from './adherence/MedicineAdherence';
 import Addmedicine from './AddMedicine';
 import Profile from './profile/Profile';
 import styles from './screenStyles/HomeScreenStyles';
-
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {NavigationContainer} from '@react-navigation/native';
 
@@ -35,8 +34,7 @@ const HomeScreen = () => {
             tabBarInactiveTintColor: '#555',
             tabBarInactiveBackgroundColor: 'white',
             tabBarActiveBackgroundColor: '#e3f2fd',
-
-            headerRight: {camIcon},
+            headerRight: camIcon(),
             tabBarActiveTintColor: '#bbdefb',
             tabBarLabelStyle: {
               fontSize: 16,
