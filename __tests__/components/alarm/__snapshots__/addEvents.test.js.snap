@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`test collector category test category 1`] = `
+<View
+  style={
+    Object {
+      "backgroundColor": "white",
+      "height": "100%",
+      "width": "100%",
+    }
+  }
+/>
+`;

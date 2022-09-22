@@ -5,9 +5,6 @@ import Stackscreen from '../../../src/screens/stackscreens/StackScreen';
 jest.mock('rn-fetch-blob', () => ({
   default: jest.fn(),
 }));
-jest.mock('react-native-share', () => ({
-  default: jest.fn(),
-}));
 jest.mock('react-native-push-notification', () => ({
   default: jest.fn(),
 }));
