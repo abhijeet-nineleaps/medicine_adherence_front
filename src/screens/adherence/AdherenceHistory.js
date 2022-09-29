@@ -160,7 +160,6 @@ const AdherenceHistory = () => {
                 layout={'stack'}
                 data={imagearray}
                 renderItem={({item}) => {
-                  Logger.loggerInfo('image');
                   return (
                     <View style={styles.carousalImageView}>
                       <Image

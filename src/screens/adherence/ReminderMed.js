@@ -31,7 +31,7 @@ const ReminderMed = ({ item }) => {
                                 Alert.alert('Reminder duration over', '', [
                                     {
                                         text: 'Ok',
-                                        onPress: () => undefined,
+                                        onPress: {undefined},
                                     },
                                 ]);
                             } else {

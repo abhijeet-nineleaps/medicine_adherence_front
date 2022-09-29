@@ -50,7 +50,7 @@ export default function Caretakercomp({navigation}) {
       <Tab
         id='change'
         value={index}
-        onChange={handleChange}
+        onChange={handleChange()}
         indicatorStyle={styles.tabIndicator}
         style={styles.tab}
         variant="primary">

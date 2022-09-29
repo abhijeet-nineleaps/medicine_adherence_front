@@ -16,10 +16,8 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import {useDispatch, useSelector} from 'react-redux';
 import {fetchPatients} from '../../redux/actions/patient/PatientActions';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import Logger from '../../components/logger';
- 
+
 LogBox.ignoreLogs(['Require cycle:']);
- 
 const ViewProfile = ({navigation}) => {
   const [userdetails, _userdetailsstate] = React.useState();
   const [progress, _progress_status] = React.useState(true);
@@ -27,22 +25,18 @@ const ViewProfile = ({navigation}) => {
     let url = new URL(`${API_URL}/api/v1/notifyuser`);
     url.searchParams.append('fcmToken', fcm_token);
     url.searchParams.append('medname', medname);
- 
-    await fetch(url)
+    await fetch(url);
   };
- 
   const patients = useSelector(
     state => state.PatientProfileReducer?.patientList,
   );
   const [_refresh, refeereshstate] = React.useState(false);
- 
   const dispatch = useDispatch();
   const fetchpatients = async () => {
     let user_id = await AsyncStorage.getItem('user_id');
     dispatch(fetchPatients(user_id));
     refeereshstate(false);
   };
- 
   return (
     <View style={styles.container}>
       {progress ? (
@@ -67,7 +61,6 @@ const ViewProfile = ({navigation}) => {
             <View style={styles.itemView} />
             <View style={styles.items}>
               <Text style={styles.itemleft}>Bio</Text>
- 
               <Text style={styles.itemright}>
                 {userdetails?.userEntityList[0]?.userdetails?.bio}
               </Text>
@@ -75,7 +68,6 @@ const ViewProfile = ({navigation}) => {
             <View style={styles.itemView} />
             <View style={styles.items}>
               <Text style={styles.itemleft}>Contact Number</Text>
- 
               <Text style={styles.itemright}>
                 {userdetails?.userEntityList[0]?.userDetails?.userContact}
               </Text>
@@ -90,7 +82,6 @@ const ViewProfile = ({navigation}) => {
             <View style={styles.itemView} />
             <View style={styles.items}>
               <Text style={styles.itemleft}>Gender</Text>
- 
               <Text style={styles.itemright}>
                 {userdetails?.userEntityList[0]?.userdetails?.gender}
               </Text>
@@ -98,7 +89,6 @@ const ViewProfile = ({navigation}) => {
             <View style={styles.itemView} />
             <View style={styles.items}>
               <Text style={styles.itemleft}>Blood Group</Text>
- 
               <Text style={styles.itemright}>
                 {userdetails?.userEntityList[0]?.userdetails?.bloodGroup}
               </Text>
@@ -142,20 +132,18 @@ const ViewProfile = ({navigation}) => {
                             <>
                               <View style={styles.medContainerRight}>
                                 <Button
-                                  id='image'
+                                  id="image"
                                   title="Images"
-                                  onPress={() =>
-                                    navigation.navigate('Images', {
-                                      medId: mlistitem.medicineId,
-                                    })
-                                  }></Button>
+                                  onPress={navigation.navigate('Images', {
+                                    medId: mlistitem.medicineId,
+                                  })}></Button>
                                 <TouchableOpacity
-                                  id='medLog'
+                                  id="medLog"
                                   style={styles.touch}
                                   onPress={() => {
                                     sendnotificationtouser(
-                                      userdetails?.userEntityList[0]?.userDetails
-                                        .fcmToken,
+                                      userdetails?.userEntityList[0]
+                                        ?.userDetails.fcmToken,
                                       mlistitem.medicineName,
                                     );
                                   }}>
@@ -168,7 +156,7 @@ const ViewProfile = ({navigation}) => {
                             </>
                           );
                         }}
-                        id='navReport'
+                        id="navReport"
                         onPress={() => {
                           let id = mlistitem.medicineId;
                           navigation.navigate('Patient report', {
@@ -194,7 +182,6 @@ const ViewProfile = ({navigation}) => {
             </View>
           </ScrollView>
         </View>
- 
       ) : (
         <View style={styles.conatiner1}>
           <Progress.Circle size={80} indeterminate={true} />
@@ -204,5 +191,4 @@ const ViewProfile = ({navigation}) => {
     </View>
   );
 };
- 
 export default ViewProfile;

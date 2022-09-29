@@ -6,8 +6,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {API_URL} from '../../repositories/var';
 import {useFocusEffect} from '@react-navigation/native';
 import styles from './patientStyles/PatientRequestStyles';
-import Logger from '../../components/logger';
-var toast =0;
+var toast = 0;
 const Patientrequest = () => {
   const [patients, patientsdata] = React.useState([]);
   const [refresh, refreshstate] = React.useState(false);
@@ -27,11 +26,9 @@ const Patientrequest = () => {
         refreshstate(false);
       });
   };
-
   useFocusEffect(
     React.useCallback(() => {
       fetchpatientreq();
-
       return () => {
         /* do nothing */
       };
@@ -40,7 +37,6 @@ const Patientrequest = () => {
   const acceptrequest = ci_id => {
     let url = new URL(`${API_URL}/api/v1/accept`);
     url.searchParams.append('cId', ci_id);
-
     fetch(url, {method: 'PUT'}).then(res => {
       fetchpatientreq();
     });
@@ -48,7 +44,6 @@ const Patientrequest = () => {
   const deletereq = ci_id => {
     let url = new URL(`${API_URL}/api/v1/delete`);
     url.searchParams.append('cId', ci_id);
-
     fetch(url).then(res => {
       fetchpatientreq();
     });
@@ -59,7 +54,7 @@ const Patientrequest = () => {
         refreshControl={
           <RefreshControl
             refreshing={refresh}
-            onRefresh={fetchpatientreq}></RefreshControl>
+            onRefresh={fetchpatientreq()}></RefreshControl>
         }
         data={patients}
         renderItem={({item}) => (
@@ -90,18 +85,14 @@ const Patientrequest = () => {
                 <View style={styles.buttonView}>
                   <Button
                     id="accept1"
-                    onPress={() => {
-                      acceptrequest(item.cid);
-                    }}
+                    onPress={acceptrequest(item.cid)}
                     title="Confirm"
                     buttonStyle={styles.confirmButton}
                     color="#4267B2"></Button>
                   <View style={styles.space} />
                   <Button
                     id="delete"
-                    onPress={() => {
-                      deletereq(item.cid);
-                    }}
+                    onPress={deletereq(item.cid)}
                     title="Delete"
                     buttonStyle={styles.deleteButton}
                     color="#e53935"></Button>
@@ -121,5 +112,4 @@ const Patientrequest = () => {
     </View>
   );
 };
-
 export default Patientrequest;

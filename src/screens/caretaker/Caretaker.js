@@ -11,7 +11,7 @@ const CareTaker = ({navigation}) => {
   };
   const addMedFnc = () => {
     return (
-      <Text onPress={() => eventFnc} >
+      <Text onPress={() => eventFnc()} >
         Click
       </Text>
     );
@@ -24,7 +24,7 @@ const CareTaker = ({navigation}) => {
         id="event"
         options={{
           headerShown: false,
-          headerRight: {addMedFnc},
+          headerRight: addMedFnc(),
         }}></Stack.Screen>
       <Stack.Screen
         name="UserMed"

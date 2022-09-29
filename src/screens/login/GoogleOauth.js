@@ -11,14 +11,13 @@ import messaging from '@react-native-firebase/messaging';
 import checkConnectivity from '../../repositories/checkConnectivity';
 import LottieView from 'lottie-react-native';
 import {Text} from 'react-native-elements';
-import { Signupuser } from '../../repositories/apis/access';
+import {Signupuser} from '../../repositories/apis/access';
 import styles from './loginStyles/GoogleAuthStyles';
 import Logger from '../../components/logger';
 
-const Login = (navigation) => { 
+const Login = navigation => {
   const [loading, loadingstate] = React.useState(false);
   const [_connected, connectedstate] = React.useState(false);
-
   async function checkconnection() {
     let conn = await checkConnectivity();
     connectedstate(conn);
@@ -35,11 +34,9 @@ const Login = (navigation) => {
       await GoogleSignin.hasPlayServices();
       const userinfo = await GoogleSignin.signIn();
       const token = await messaging().getToken();
-      Logger.loggerInfo(userinfo);
       loadingstate(true);
       const response = await Signupuser.signup({userinfo, token});
       const res = await response.json();
-
       if (res.status === 'Success') {
         await AsyncStorage.setItem('user_id', res.userEntity[0].userId);
         await AsyncStorage.setItem('user_name', res.userEntity[0].userName);
@@ -49,10 +46,6 @@ const Login = (navigation) => {
           text1: 'Account created successfully',
         });
         loadingstate(false);
-
-        // setTimeout(() => {
-        //   navigation.pop(1);
-        // }, 3000);
       } else {
         await GoogleSignin.signOut();
         loadingstate(false);
@@ -71,7 +64,6 @@ const Login = (navigation) => {
       });
     }
   }
-
   return (
     <View style={styles.container}>
       <Toast visibilityTime={3000} />
@@ -82,19 +74,15 @@ const Login = (navigation) => {
         autoPlay
         loop
       />
-
       <GoogleSigninButton
         style={styles.googleSignIn}
         size={GoogleSigninButton.Size.Wide}
         color={GoogleSigninButton.Color.Dark}
-        id='signin'
-        onPress={() =>
-          onGoogleButtonPress()
-            .then(() => Logger.loggerInfo('Google'))
-            .catch(err => Logger.loggerError(err))
-        }
+        id="signin"
+        onPress={onGoogleButtonPress()
+          .then(() => Logger.loggerInfo('Google'))
+          .catch(err => Logger.loggerError(err))}
       />
-
       {loading && (
         <Progress.CircleSnail
           spinDuration={1000}
@@ -105,5 +93,4 @@ const Login = (navigation) => {
     </View>
   );
 };
-
 export default Login;

@@ -4,48 +4,36 @@ import {Button, Text} from 'react-native-elements';
 import * as yup from 'yup';
 import LottieView from 'lottie-react-native';
 import {TextInput} from 'react-native-paper';
-import SQLite from 'react-native-sqlite-storage';
 import {Formik} from 'formik';
 import BottomSheet from 'reanimated-bottom-sheet';
 import * as Animatable from 'react-native-animatable';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import styles from './screenStyles/UserMedStyles';
 import {useRoute} from '@react-navigation/native';
-import Logger from '../components/logger';
- 
- 
- 
- 
-const UserMed = (navigation) => {
+
+const UserMed = navigation => {
   const route = useRoute();
   const id = route.params;
   const sheetRef = React.useRef(null);
   const savemedicinetodb = async ({Name, Description}) => {
- 
     await db.transaction(txn => {
       txn.executeSql(
         'CREATE TABLE IF NOT EXISTS User_medicines(user_id INTEGER PRIMARY KEY NOT NULL, medicine_name TEXT, medicine_des TEXT , title TEXT, time TEXT , days TEXT , start_date TEXT , end_date TEXT , status INTEGER , sync INTEGER , total_med_reminders INTEGER , current_count INTEGER)',
         [],
       );
       var value = Math.floor(10000 + Math.random() * 90000);
- 
       txn.executeSql(
         'INSERT INTO User_medicines (user_id,medicine_name,medicine_des,title,time,days,start_date,end_date,status,sync,total_med_reminders,current_count) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)',
         [value, Name, Description, '', '', '', '', '', 0, 0, 0, 0],
       );
     });
   };
- 
   const schema = yup.object({
     Name: yup.string().required().min(4),
     Description: yup.string().required().min(10),
   });
- 
   const renderContent = () => {
     return (
-      <Animatable.View animation="slideInUp" 
-      duration={1000} 
-      delay={80}>
+      <Animatable.View animation="slideInUp" duration={1000} delay={80}>
         <View style={styles.container1}>
           <Text style={styles.addMedText}>Add New Medicine</Text>
           <Formik
@@ -90,7 +78,6 @@ const UserMed = (navigation) => {
       </Animatable.View>
     );
   };
- 
   return (
     <View style={styles.container}>
       <View style={styles.lottieView}>
@@ -111,5 +98,4 @@ const UserMed = (navigation) => {
     </View>
   );
 };
- 
 export default UserMed;

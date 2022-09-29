@@ -8,14 +8,11 @@ import * as yup from 'yup';
 import UserAvatar from 'react-native-user-avatar';
 import styles from './caretakerStyles/SearchCaretakerStyles';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
-
 import Toast from 'react-native-toast-message';
 import Logger from '../../components/logger';
-
 const Searchcaretaker = ({navigation}) => {
   const [data, datastate] = React.useState([]);
   const [searchload, searchloadstate] = React.useState(false);
-
   const sendmailtouser = async (email) => {
     searchloadstate(true);
     let udet = await GoogleSignin.getCurrentUser();
@@ -25,14 +22,12 @@ const Searchcaretaker = ({navigation}) => {
         text1: 'You cannot be self caretaker',
       });
       searchloadstate(false);
-
       return;
     }
     fetch(`${API_URL}/api/v1/email?email=${email}&sender={udet.user.givenName}`)
       .then(res => res.json())
       .then(resp => {
-        searchloadstate(false);
-
+        searchloadstate(false); 
         datastate([resp]);
       })
       .catch(() => {
@@ -45,7 +40,6 @@ const Searchcaretaker = ({navigation}) => {
         datastate([]);
       });
   };
-
   const sendreqtocaretaker = async (
     caret_id,
     caret_username,
@@ -73,7 +67,6 @@ const Searchcaretaker = ({navigation}) => {
         if (resp.status === 'Success') {
           navigation.pop(1);
         } else {
-          Logger.loggerInfo(resp);
           Toast.show({
             type: 'info',
             text1: resp.message,
@@ -82,14 +75,12 @@ const Searchcaretaker = ({navigation}) => {
       })
       .catch(err => Logger.loggerError(err));
   };
-
   const loginValidationSchema = yup.object().shape({
     email: yup
       .string()
       .email('Please enter valid email')
       .required('Email Address is Required'),
   });
-
   const Renderitem = ({item}) => {
     const [sendloader, setloadstate] = useState(false);
 
@@ -108,7 +99,7 @@ const Searchcaretaker = ({navigation}) => {
           title="Send request"
           buttonStyle={styles.listButton}
           id='senReq'
-          onPress={async () => {
+          onPress={async = () => {
             setloadstate(true);
             await sendreqtocaretaker(item.userId, item.userName);
             setloadstate(false);
@@ -131,13 +122,12 @@ const Searchcaretaker = ({navigation}) => {
               value={values.email}
               onChangeText={handleChange('email')}></SearchBar>
             <Text style={styles.text}>{touched.email && errors.email}</Text>
-
             <Button
               loading={searchload}
               buttonStyle={styles.button}
               title="Search"
               id='search'
-              onPress={() => handleSubmit()}
+              onPress={handleSubmit()}
               containerStyle={styles.buttonContainer}></Button>
           </>
         )}

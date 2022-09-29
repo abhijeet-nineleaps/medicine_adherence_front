@@ -1,4 +1,4 @@
-import {useFocusEffect, useRoute} from '@react-navigation/native';
+import {useRoute} from '@react-navigation/native';
 import React, {useState} from 'react';
 import {
   Text,
@@ -16,7 +16,6 @@ import styles from './patientStyles/MedicineImagesStyles';
 LogBox.ignoreAllLogs();
 const SLIDER_WIDTH = Dimensions.get('window').width;
 const ITEM_WIDTH = Math.round(SLIDER_WIDTH * 0.84);
-
 const CarouselCardItem = ({item}) => {
   const [load, setload] = useState(true);
   return (
@@ -26,11 +25,10 @@ const CarouselCardItem = ({item}) => {
           uri: `${API_URL}/upload/static/images/${item.imageUrl}`,
         }}
         style={styles.image}
-        onLoadStart={() => setload(true)}
-        onLoadEnd={() => setload(false)}
+        onLoadStart={setload(true)}
+        onLoadEnd={setload(false)}
       />
       {load && <ActivityIndicator />}
-
       <View style={styles.bodyView}>
         <Text style={styles.body}>Medicine taken time:</Text>
         <Text style={styles.body1}>{item.time}</Text>
@@ -42,10 +40,8 @@ const CarouselCardItem = ({item}) => {
     </View>
   );
 };
-
 const SingleImageComponent = ({item}) => {
   const [index, setindex] = React.useState(0);
-
   return (
     <>
       <View style={styles.container}>
@@ -55,8 +51,8 @@ const SingleImageComponent = ({item}) => {
         <Carousel
           layoutCardOffset={9}
           data={item}
-          onSnapToItem={inde => setindex(inde)}
-          renderItem={({item}) => <CarouselCardItem item={item} />}
+          onSnapToItem={setindex(inde)}
+          renderItem={<CarouselCardItem item={item} />}
           sliderWidth={SLIDER_WIDTH}
           itemWidth={ITEM_WIDTH}
           inactiveSlideShift={0}
@@ -75,7 +71,6 @@ const SingleImageComponent = ({item}) => {
     </>
   );
 };
-
 const MedicineImages = ({}) => {
   const [imageData, setImageData] = useState([]);
   const route = useRoute();
@@ -111,7 +106,7 @@ const MedicineImages = ({}) => {
       ) : (
         <FlatList
           data={imageData}
-          renderItem={({item}) => <SingleImageComponent item={item} />}
+          renderItem={<SingleImageComponent item={item} />}
         />
       )}
     </View>

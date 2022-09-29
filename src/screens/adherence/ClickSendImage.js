@@ -10,7 +10,6 @@ const CameraScreen = ({navigation}) => {
   const [{cameraRef}, {takePicture}] = useCamera(null);
    const picture = () => {
     const data = takePicture();
-    Logger.loggerInfo(data.uri);
     navigation.navigate('Sentocaretaker', {
       image_uri: data.uri,
     });
@@ -25,7 +24,7 @@ const CameraScreen = ({navigation}) => {
 
         <TouchableOpacity
           id="picture"
-          onPress={async () => picture}
+          onPress={picture()}
           style={styles.image}>
           <LottieView
             style={styles.lottieAnimation}

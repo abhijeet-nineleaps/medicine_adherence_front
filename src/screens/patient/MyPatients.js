@@ -18,14 +18,11 @@ import {useDispatch, useSelector} from 'react-redux';
 import {fetchPatients} from '../../redux/actions/patient/PatientActions';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-
 export const Mypatient = navigation => {
-   const patients = useSelector(state => state.PatientReducer.patientList);
+  const patients = useSelector(state => state.PatientReducer.patientList);
   const load = useSelector(state => state.PatientReducer.patientList);
-  
   const [data, _datastate] = React.useState([]);
   const [refresh, refeereshstate] = React.useState(false);
-
   const dispatch = useDispatch();
   const fetchpatients = async () => {
     let user_id = await AsyncStorage.getItem('user_id');
@@ -35,29 +32,24 @@ export const Mypatient = navigation => {
   async function checkforlog() {
     const islogged = await GoogleSignin.isSignedIn();
     if (!islogged) {
-      Alert.alert(
-        'Sign in first to use this feature',
-        'Click ok to proceed',
-        [
-          {
-            text: 'Ok',
-            onPress: () => {
-              navigation.navigate('Login');
-            },
+      Alert.alert('Sign in first to use this feature', 'Click ok to proceed', [
+        {
+          text: 'Ok',
+          onPress: () => {
+            navigation.navigate('Login');
           },
-          {
-            text: 'Cancel',
-            onPress: () => {
-              navigation.navigate('Home');
-            },
+        },
+        {
+          text: 'Cancel',
+          onPress: () => {
+            navigation.navigate('Home');
           },
-        ],
-      );
+        },
+      ]);
     } else {
       fetchpatients();
     }
   }
-
   useFocusEffect(
     React.useCallback(() => {
       async function checkforlog() {
@@ -85,9 +77,7 @@ export const Mypatient = navigation => {
           fetchpatients();
         }
       }
-
       checkforlog();
-
       return () => {
         /* do nothing */
       };
@@ -101,17 +91,19 @@ export const Mypatient = navigation => {
   const empFnc = () => {
     /* do nothing */
   };
-  
   const renderitem = ({item}) => {
     return (
-      <Card id="pressProfile" testID='nav' onPress={() => navProfile} style={styles.card}>
+      <Card
+        id="pressProfile"
+        testID="nav"
+        onPress={navProfile()}
+        style={styles.card}>
         <View style={styles.top}>
           <ListItem
             style={styles.list}
             hasTVPreferredFocus={undefined}
             tvParallaxProperties={undefined}>
             <UserAvatar size={60} name={item.patientName}></UserAvatar>
-
             <ListItem.Content>
               <ListItem.Title style={styles.patientName}>
                 {item.patientName}
@@ -120,11 +112,7 @@ export const Mypatient = navigation => {
                 {' Created on :' + item.createdAt}
               </ListItem.Subtitle>
             </ListItem.Content>
-
-            <TouchableOpacity
-              id="emp"
-              onPress={() => empFnc}
-              style={styles.touch}>
+            <TouchableOpacity id="emp" onPress={empFnc()} style={styles.touch}>
               <View style={styles.icon}>
                 <Icon name="angle-right" color={'black'} size={25} />
               </View>
@@ -134,7 +122,6 @@ export const Mypatient = navigation => {
       </Card>
     );
   };
-
   return (
     <View style={styles.container}>
       <FlatList

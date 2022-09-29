@@ -7,13 +7,13 @@ import {
   GoogleSigninButton,
 } from '@react-native-google-signin/google-signin';
 import messaging from '@react-native-firebase/messaging';
-import { Signupuser } from '../../repositories/apis/access';
+import {Signupuser} from '../../repositories/apis/access';
 import * as Progress from 'react-native-progress';
 import styles from './loginStyles/LoginStyles';
 import Logger from '../../components/logger';
-const Loginscreen = (navigation) => {
-  const [loading, loadingstate] = React.useState(false);
 
+const Loginscreen = navigation => {
+  const [loading, loadingstate] = React.useState(false);
   async function loginuser() {
     try {
       await GoogleSignin.hasPlayServices();
@@ -22,7 +22,6 @@ const Loginscreen = (navigation) => {
       loadingstate(true);
       const response = await Signupuser.loginuser({userinfo, token});
       const res = await response.json();
-     Logger.loggerInfo(res);
       if (res.status === 'Success') {
         await AsyncStorage.setItem('user_id', res.userEntity[0].userId);
         await AsyncStorage.setItem('user_name', res.userEntity[0].userName);
@@ -32,10 +31,6 @@ const Loginscreen = (navigation) => {
           text1: 'Account created successfully',
         });
         loadingstate(false);
-
-        // setTimeout(() => {
-        //   navigation.pop(1);
-        // }, 3000);
       } else {
         await GoogleSignin.signOut();
         loadingstate(false);
@@ -45,7 +40,6 @@ const Loginscreen = (navigation) => {
         });
       }
     } catch (err) {
-      Logger.loggerError(err);
       if (await GoogleSignin.isSignedIn()) {
         await GoogleSignin.signOut();
       }
@@ -55,7 +49,6 @@ const Loginscreen = (navigation) => {
       });
     }
   }
-
   return (
     <View style={styles.container}>
       <Toast visibilityTime={3000} />
@@ -64,12 +57,10 @@ const Loginscreen = (navigation) => {
         style={styles.signInButton}
         size={GoogleSigninButton.Size.Wide}
         color={GoogleSigninButton.Color.Dark}
-        id='signin'
-        onPress={() =>
-          loginuser()
-            .then(() => Logger.loggerInfo('Google'))
-            .catch(err => Logger.loggerError(err))
-        }
+        id="signin"
+        onPress={loginuser()
+          .then(() => Logger.loggerInfo('Google'))
+          .catch(err => Logger.loggerError(err))}
       />
       {loading && (
         <Progress.CircleSnail
@@ -81,5 +72,4 @@ const Loginscreen = (navigation) => {
     </View>
   );
 };
-
 export default Loginscreen;

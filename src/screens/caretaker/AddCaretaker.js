@@ -21,7 +21,6 @@ const Addcaretaker = navigation => {
     state => state.CareTakerReducer.userCaretakerList,
   );
   const load = useSelector(state => state.CareTakerReducer);
-  Logger.loggerInfo(load);
   const [refresh, refeereshstate] = React.useState(false);
   const [open, setOpen] = React.useState(false);
   const dispatch = useDispatch();
@@ -30,7 +29,6 @@ const Addcaretaker = navigation => {
     dispatch(fetchCaretakers(user_id));
     refeereshstate(false);
   };
-
   useEffect(() => {
     fetchcaretakers();
   }, []);
@@ -44,10 +42,8 @@ const Addcaretaker = navigation => {
     Logger.loggerInfo('Delete Something');
   };
   const renderitem = ({item}) => {
-    Logger.loggerInfo(item.patientId);
-
     return (
-      <Card id="emp" onPress={() => emp} style={styles.cardContainer}>
+      <Card id="emp" onPress={() => emp()} style={styles.cardContainer}>
         <View style={styles.top}>
           <ListItem
             style={styles.listContainer}
@@ -62,10 +58,9 @@ const Addcaretaker = navigation => {
                 {' Accepted on : ' + item.createdAt}
               </ListItem.Subtitle>
             </ListItem.Content>
-
             <TouchableOpacity
               id="emp"
-              onPress={() => emp}
+              onPress={emp()}
               style={styles.iconTouch}>
               <View style={styles.icon}>
                 <Icon name="angle-right" color={'black'} size={17} />
@@ -112,7 +107,7 @@ const Addcaretaker = navigation => {
               style={styles.sdHeight}
               buttonStyle={styles.sdButton}
               id="search"
-              onPress={() => search}
+              onPress={() => search()}
             />
             <SpeedDial.Action
               icon={styles.sdDeleteIcon}
@@ -120,7 +115,7 @@ const Addcaretaker = navigation => {
               buttonStyle={styles.sdButton}
               style={styles.sdHeight}
               id="delete"
-              onPress={() => del}
+              onPress={del()}
             />
           </SpeedDial>
           <Button buttonStyle={styles.button} title="A"></Button>
@@ -129,5 +124,4 @@ const Addcaretaker = navigation => {
     </React.Fragment>
   );
 };
-
 export default Addcaretaker;
